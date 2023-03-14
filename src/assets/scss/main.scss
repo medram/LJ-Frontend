@@ -115,3 +115,17 @@ footer {
 .pricing-card .pricing-body ul li {
     margin: 0.3em 0;
 }
+
+@media screen and (max-width: 768px)
+{
+    .pricing-section {
+        flex-direction: column;
+        width: 100%;
+        //margin: 1em;
+        padding: 2em;
+    }
+
+    .pricing-section .pricing-card {
+        margin-bottom: 1em;
+    }
+}

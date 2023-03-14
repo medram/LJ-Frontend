@@ -18,8 +18,8 @@ export default function ContactPage() {
                             <input type="email" id="email" className="form-control form-control-lg" />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Password:</label>
-                            <textarea id="password" className="form-control form-control-lg" rows={5} />
+                            <label htmlFor="message" className="form-label">Message:</label>
+                            <textarea id="message" className="form-control form-control-lg" rows={5} />
                         </div>
                         <button className="btn btn-primary btn-lg btn-block my-4">Send to us</button>
                     </div>

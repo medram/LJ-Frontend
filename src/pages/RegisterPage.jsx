@@ -1,7 +1,14 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import Switch from "../components/Switch";
+//import Switch from "react-switch";
+
 import BasePage from "./layouts/BasePage";
 
+
 export default function RegisterPage() {
+    const [ checked, toggleSwitch ] = useState(false)
+
     return (
         <BasePage>
             <section className="container">
@@ -20,6 +27,10 @@ export default function RegisterPage() {
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Password:</label>
                             <input type="password" id="password" className="form-control form-control-lg" />
+                        </div>
+                        <div className="d-flex mb-3">
+                            <Switch onChange={() => toggleSwitch((checked) => !checked)} checked={checked} size="small" className="mx-2 mt-1" />
+                            <label htmlFor="agree" className="form-label" onClick={() => toggleSwitch((checked) => !checked)}>I read and agree on terms of use & privacy policy of the website.</label>
                         </div>
                         <button className="btn btn-primary btn-lg btn-block my-4">Sign In</button>
                         <span>Have an account? <Link to="/login">Sign In</Link></span>

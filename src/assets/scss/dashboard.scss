@@ -1,0 +1,247 @@
+$primary: #080b16;
+$secondary: #eee;
+
+// Navbar
+$dashboard-navbar-height: 80px;
+$dashboard-navbar-bg-color: $primary;
+$dashboard-sidebar-bg-color: $primary;
+$dashboard-sidebar-link-active-bg-color: lighten($dashboard-sidebar-bg-color, 30);
+$dashboard-sidebar-link-active-color: lighten($dashboard-sidebar-bg-color, 80);
+$dashboard-sidebar-width: 260px;
+
+
+// Brand
+$dashboard-brand-bg-color: $primary;
+$dashboard-brand-color: lighten($primary, 80);
+
+$font-primary-color: #5a7dc2;
+$dashboard-font-color: lighten($font-primary-color, 25);
+
+// font colors
+$font-color: #080b16;
+$font-secondary: lighten($font-color, 50);
+
+
+.dashboard {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.dashboard .dashboard-container {
+    background-color: $secondary;
+    //min-height: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    //width: calc(100% - $dashboard-sidebar-width);
+    margin-left: $dashboard-sidebar-width;
+    padding-top: $dashboard-navbar-height;
+    transition: margin-left .5s;
+}
+
+.dashboard .dashboard-content {
+    padding: 2em;
+}
+
+/*=================== Dashboard Brand ====================*/
+
+.dashboard .dashboard-brand {
+    background-color: $dashboard-brand-bg-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $dashboard-sidebar-width - 16*2;
+    height: $dashboard-navbar-height - 1;
+    cursor: pointer;
+}
+
+.dashboard .dashboard-brand a {
+    color: $dashboard-brand-color;
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+.dashboard .dashboard-brand a:hover {
+    color: lighten($dashboard-brand-color, 15)
+}
+
+/*=================== Dashboard header ====================*/
+.dashboard .dashboard-header {
+    color: $dashboard-font-color;
+    background-color: $dashboard-navbar-bg-color;
+    height: $dashboard-navbar-height;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 1em;
+    z-index: 3 !important;
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid lighten($dashboard-navbar-bg-color, 11);
+}
+
+.dashboard .dashboard-header .bars {
+    display: none;
+    cursor: pointer;
+    left: 2em;
+    padding: 0.7em;
+    border-radius: 50%;
+}
+
+.dashboard .dashboard-header .bars:hover {
+    background-color: lighten($dashboard-sidebar-bg-color, 10);
+}
+
+.dashboard .dashboard-header .dots {
+    display: none;
+    cursor: pointer;
+    right: 2em;
+    padding: 0.7em;
+    border-radius: 50%;
+}
+
+.dashboard .dashboard-header .dots:hover {
+    background-color: lighten($dashboard-sidebar-bg-color, 10);
+}
+
+/*=================== Dashboard Sidebar ====================*/
+.dashboard .dashboard-sidebar {
+    color: $dashboard-font-color;
+    background-color: $dashboard-sidebar-bg-color;
+    width: $dashboard-sidebar-width;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    //transition: flex-basis .5s;
+    transition: all .5s;
+    z-index: 2;
+}
+
+.dashboard .dashboard-sidebar nav {
+    margin: 1em 0;
+    display: flex;
+    flex-direction: column;
+    margin-top: $dashboard-navbar-height + 20px;
+}
+
+.dashboard .dashboard-sidebar nav a {
+    display: block;
+    color: $dashboard-font-color;
+    text-decoration: none;
+    padding: 0.8em 1.2em 0.7em 1.2em;
+    margin: 2px 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dashboard .dashboard-sidebar nav a:hover {
+    background-color: lighten($dashboard-sidebar-bg-color, 10);
+}
+
+.dashboard .dashboard-sidebar nav a.active {
+    color: $dashboard-sidebar-link-active-color;
+    background-color: $dashboard-sidebar-link-active-bg-color;
+}
+
+.dashboard .dashboard-sidebar nav a svg {
+    margin-right: 3px;
+}
+
+/*=================== Dashboard Header navbar ====================*/
+.dashboard .dashboard-header nav {
+    margin: 1em 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboard .dashboard-header nav a {
+    display: block;
+    color: $dashboard-font-color;
+    text-decoration: none;
+    padding: 0.5em 0.8em;
+    margin: 0.3em;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dashboard .dashboard-header nav a:hover {
+    background-color: lighten($dashboard-sidebar-bg-color, 10);
+}
+
+.dashboard .dashboard-header nav a.active {
+    background-color: lighten($dashboard-sidebar-bg-color, 10);
+}
+
+.dashboard .dashboard-header .right-nav {
+    margin-left: auto;
+}
+
+
+/*=================== Media Screen (768px) ====================*/
+
+@media screen and (max-width: 768px)
+{
+    .dashboard .dashboard-brand {
+        margin: 0 auto;
+    }
+
+    .dashboard .dashboard-header .bars {
+        display: block;
+    }
+
+    .dashboard .dashboard-header .dots {
+        display: block;
+    }
+
+    .dashboard .dashboard-header .avatar-dropdown {
+        position: absolute;
+        right: 2em;
+        display: none;
+    }
+
+    .dashboard .dashboard-header .right-nav {
+        position: absolute;
+        top: $dashboard-navbar-height;
+        left: 0;
+        margin: 0;
+        padding: 1em;
+        flex-direction: column;
+        width: 100%;
+        //height: 0px;
+        display: none;
+        background-color: lighten($dashboard-navbar-bg-color, 5);
+        z-index: 0;
+        transition: all 1s;
+        overflow: hidden;
+        box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .dashboard .dashboard-header .right-nav.show {
+        //height: auto;
+        display: block;
+    }
+
+    .dashboard .dashboard-header .right-nav a {
+        padding: 1.2em 1.5em;
+    }
+
+    .dashboard .dashboard-container {
+        margin-left: 0;
+    }
+
+    .dashboard .dashboard-sidebar {
+        transform: translateX(-$dashboard-sidebar-width);
+    }
+
+    .dashboard .dashboard-sidebar.show {
+        transform: translateX(0px);
+        z-index: 2;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
+    }
+}
