@@ -13,6 +13,7 @@ $dashboard-sidebar-width: 260px;
 // Brand
 $dashboard-brand-bg-color: $primary;
 $dashboard-brand-color: lighten($primary, 80);
+$dashboard-brand-font-size: 1.5rem;
 
 $font-primary-color: #5a7dc2;
 $dashboard-font-color: lighten($font-primary-color, 25);
@@ -57,7 +58,7 @@ $font-secondary: lighten($font-color, 50);
 
 .dashboard .dashboard-brand a {
     color: $dashboard-brand-color;
-    font-size: 2rem;
+    font-size: $dashboard-brand-font-size;
     text-decoration: none;
 }
 
@@ -210,7 +211,7 @@ $font-secondary: lighten($font-color, 50);
         top: $dashboard-navbar-height;
         left: 0;
         margin: 0;
-        padding: 1em;
+        padding: 0.7em;
         flex-direction: column;
         width: 100%;
         //height: 0px;
@@ -223,12 +224,15 @@ $font-secondary: lighten($font-color, 50);
     }
 
     .dashboard .dashboard-header .right-nav.show {
-        //height: auto;
         display: block;
     }
 
     .dashboard .dashboard-header .right-nav a {
-        padding: 1.2em 1.5em;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 5px;
+        padding: .7em 1em .6em 1em;
     }
 
     .dashboard .dashboard-container {
@@ -244,4 +248,8 @@ $font-secondary: lighten($font-color, 50);
         z-index: 2;
         box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
     }
+}
+
+.avatar {
+    border-radius: 50%;
 }

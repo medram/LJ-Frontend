@@ -14,14 +14,14 @@ export default function AdminDashboardLayout()
     return (
         <div className="dashboard">
             <header className="dashboard-header">
-                <Navbar sidebarStatus={showSidebar} onClickBars={() => toggleSidebar(show => !show)} />
+                <Navbar sidebarStatus={showSidebar} toggleSidebar={toggleSidebar} onClickBars={() => toggleSidebar(show => !show)} />
             </header>
             <Sidebar show={showSidebar} />
             <main className="dashboard-container">
                 <div className="dashboard-content">
                     {<Outlet />}
                 </div>
-                <footer>All rights reserved.</footer>
+                <footer>&copy; All rights reserved.</footer>
             </main>
         </div>
     )
