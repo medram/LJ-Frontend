@@ -183,6 +183,26 @@ $font-secondary: lighten($font-color, 50);
     margin-left: auto;
 }
 
+/*=================== Navbar dropdown-menu ====================*/
+.dashboard .dashboard-header .dropdown-menu {
+    background-color: $dashboard-navbar-bg-color;
+    width: 200px;
+    padding: 1em;
+    border-radius: 12px;
+}
+
+.dashboard .dashboard-header .dropdown-menu > hr {
+    border-color: lighten($dashboard-navbar-bg-color, 20);
+}
+
+.dashboard .dashboard-header .dropdown-menu > a {
+    padding: 0.5em 0.8em;
+}
+
+.dashboard .dashboard-header .dropdown-menu > :hover {
+    background-color: lighten($dashboard-sidebar-bg-color, 10);
+    border-radius: 10px;
+}
 
 /*=================== Media Screen (768px) ====================*/
 

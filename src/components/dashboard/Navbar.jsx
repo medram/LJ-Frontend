@@ -55,11 +55,11 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
             <button className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                 <Avatar src="https://dolinker-demo.mr4web.com/uploads/users/profile-images/30700620a0490526be49accbfdfa50cb.png?v=84111" alt="Avatar" size={45} /> Hi, Mohammed
             </button>
-            <ul className="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
-                <li><Link className="dropdown-item"><FeatherIcon icon="user" /> Profile</Link></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><Link className="dropdown-item"><FeatherIcon icon="log-out" /> Logout</Link></li>
-            </ul>
+            <div className="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
+                <Link className="dropdown-item"><FeatherIcon icon="user" /> Profile</Link>
+                <hr className="dropdown-divider" />
+                <Link className="dropdown-item"><FeatherIcon icon="log-out" /> Logout</Link>
+            </div>
         </div>
     </>
 }
