@@ -1,0 +1,117 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+
+// Override default color variables
+$blue: #080b16 !default;
+
+
+//$body-color: #5a7dc2 !default;
+$body-color: #363f5c !default;
+
+
+// Override font
+$font-family-sans-serif: DM Sans, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+
+
+// Override Navbar
+$navbar-brand-font-size: 2rem !default;
+$navbar-nav-link-padding-x: 0.9rem !default;
+$navbar-brand-padding-y: .45rem !default;
+
+
+// importing Bootstrap
+@import "bootstrap/scss/bootstrap.scss";
+//@import "bootstrap/dist/css/bootstrap.min.css";
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+
+/*=================== Footer ====================*/
+footer {
+    text-align: center;
+    margin: 2em 0;
+}
+/*=================== Not Found Page ====================*/
+.not-found-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+.not-found-page h1 {
+    font-size: 4rem;
+}
+
+
+/*=================== Pricing Section ====================*/
+.pricing-section {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    width: 100%;
+    padding: 5em;
+}
+
+.pricing-card {
+    padding: 1rem;
+    min-width: 250px;
+    border-radius: 10px;
+    border: 1px solid #CCC;
+}
+
+.pricing-card.popular {
+    border: none;
+    outline: 3px solid lighten($primary, 30) !important;
+    transform: scale(1.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.pricing-card.popular::before {
+    content: "Popular";
+    background: lighten($primary, 30);
+    border-radius: 5px;
+    color: #FFF;
+    font-size: 0.8rem;
+    padding: 2px 10px;
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pricing-card .pricing-title {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.pricing-card .pricing {
+    font-size: 2rem;
+    text-align: center;
+    margin: 0.5em 0;
+}
+
+.pricing-card .pricing .small-text {
+    font-size: 0.5em !important;
+    color: $text-muted;
+}
+
+.pricing-card .pricing-body {
+    text-align: left;
+}
+
+.pricing-card .pricing-body ul {
+    list-style: none;
+    margin: 0;
+    padding: 1em;
+}
+
+.pricing-card .pricing-body ul li {
+    margin: 0.3em 0;
+}
