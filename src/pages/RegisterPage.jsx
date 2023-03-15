@@ -54,7 +54,7 @@ export default function RegisterPage() {
                                 <label htmlFor="accept" className="form-label" onClick={() => formik.setFieldValue("accept", !formik.values.accept)} >I read and accept terms of use & privacy policy of the website.</label>
                             </div>
 
-                            <SuperButton type="submit" onClick={() => toastFormikErrors(formik.errors)} className="btn btn-primary btn-lg btn-block my-4">Sign In</SuperButton>
+                            <SuperButton type="submit" disabled={!formik.values.accept} onClick={() => toastFormikErrors(formik.errors)} className="btn btn-primary btn-lg btn-block my-4">Sign In</SuperButton>
                         </form>
                         <span>Already Have an account? <Link to="/login">Sign In</Link></span>
                     </div>
