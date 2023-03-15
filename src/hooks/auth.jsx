@@ -34,15 +34,6 @@ export function useAuth()
 export function useUser()
 {
     const { isAuthenticated, user } = useStore()
-    // const [isAdmin, setIsAdmin] = useState(user.role == 1)
-
-    // useEffect(() => {
-    //     if (user.role == 1)
-    //         setIsAdmin(true)
-    //     else
-    //         setIsAdmin(false)
-    // })
-
 
     return { isAuthenticated, isAdmin: user.role == 1, user }
 }
