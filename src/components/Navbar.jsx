@@ -1,9 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
+import { useUser } from "../hooks/auth";
 
 
 
 export default function Navbar()
 {
+    const { isAuthenticated, user } = useUser()
+
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
@@ -25,12 +29,18 @@ export default function Navbar()
                     </ul>
 
                     <ul className="nav navbar-nav navbar-right">
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/login">Sign In</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/register">Sign Up</NavLink>
-                        </li>
+                        {isAuthenticated? (
+                            <li className="nav-item"><Link to="/admin" className="nav-link" >Account</Link></li>
+                        ) : (
+                            <>
+                                <li className="nav-item">
+                                    <NavLink className="nav-link" to="/login">Sign In</NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink className="nav-link" to="/register">Sign Up</NavLink>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>

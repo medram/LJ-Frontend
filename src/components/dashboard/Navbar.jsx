@@ -1,11 +1,14 @@
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth, useUser } from "../../hooks/auth";
 import Avatar from "../Avatar";
 
 
 export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
 {
+    const { user } = useUser()
+    const { Logout } = useAuth()
     const [showRightNav, toggleRightNav] = useState(false);
     const rightNav = useRef();
 
@@ -33,6 +36,10 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
         }
     }, [showRightNav])
 
+    const handleLogout = () => {
+        Logout()
+    }
+
 
     return <>
         <span className="bars" onClick={(e) => onClickBars(e)}><FeatherIcon icon={properIcon} strokeWidth={1.5} /></span>
@@ -53,12 +60,12 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
         </nav>
         <div className="btn-group avatar-dropdown">
             <button className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                <Avatar src="https://dolinker-demo.mr4web.com/uploads/users/profile-images/30700620a0490526be49accbfdfa50cb.png?v=84111" alt="Avatar" size={45} /> Hi, Mohammed
+                <Avatar src="https://dolinker-demo.mr4web.com/uploads/users/profile-images/30700620a0490526be49accbfdfa50cb.png?v=84111" alt="Avatar" size={45} /> Hi, {user.username}
             </button>
             <div className="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
                 <Link className="dropdown-item"><FeatherIcon icon="user" /> Profile</Link>
                 <hr className="dropdown-divider" />
-                <Link className="dropdown-item"><FeatherIcon icon="log-out" /> Logout</Link>
+                <Link onClick={handleLogout} className="dropdown-item"><FeatherIcon icon="log-out" /> Logout</Link>
             </div>
         </div>
     </>

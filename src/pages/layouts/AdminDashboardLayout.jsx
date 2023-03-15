@@ -1,28 +1,26 @@
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
+import { useUser } from "../../hooks/auth";
+import DashboardLayout from "./DashboardLayout";
+
+// Loading Dashboard css
 import "../../assets/scss/dashboard.scss"
-import Navbar from "../../components/dashboard/Navbar";
-import Sidebar from "../../components/dashboard/Sidebar";
 
 
 export default function AdminDashboardLayout()
 {
-    const [showSidebar, toggleSidebar] = useState(false);
+    const { isAuthenticated, isAdmin } = useUser()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!isAuthenticated || !isAdmin)
+            navigate("/login", { replace: true })
+    }, [isAuthenticated, isAdmin])
 
     return (
-        <div className="dashboard">
-            <header className="dashboard-header">
-                <Navbar sidebarStatus={showSidebar} toggleSidebar={toggleSidebar} onClickBars={() => toggleSidebar(show => !show)} />
-            </header>
-            <Sidebar show={showSidebar} />
-            <main className="dashboard-container">
-                <div className="dashboard-content">
-                    {<Outlet />}
-                </div>
-                <footer>&copy; All rights reserved.</footer>
-            </main>
-        </div>
+        <DashboardLayout>
+            <Outlet />
+        </DashboardLayout>
     )
 }

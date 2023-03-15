@@ -1,10 +1,11 @@
-import { createContext } from "react"
+import { createContext, useContext } from "react"
 import { usePersistedReducer } from "../hooks"
 import reducer from "./reducer"
 
 const initialValues = {
     theme: "dark",
-    isAuthenticated: false
+    isAuthenticated: false,
+    user: {}
 }
 
 const StoreContext = createContext(initialValues)
@@ -21,3 +22,11 @@ export function StoreProvider({ children }) {
 }
 
 export default StoreContext
+
+
+// Store React hook
+
+export function useStore()
+{
+    return useContext(StoreContext)
+}

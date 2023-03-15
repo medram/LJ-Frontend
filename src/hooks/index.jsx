@@ -2,27 +2,6 @@ import { useContext, useEffect, useReducer, useState } from "react"
 import StoreContext from "../context/StoreContext"
 
 
-export function useTheme() {
-    const { theme, dispatch } = useContext(StoreContext)
-
-    function toggleTheme() {
-        console.log("Toggle theme")
-        dispatch({ type: "TOGGLE_THEME" })
-    }
-
-    return [theme, toggleTheme]
-}
-
-export function useAuth() {
-    const { isAuthenticated, dispatch } = useContext(StoreContext)
-
-    function setAuthenticated(value) {
-        dispatch({ type: "IS_AUTHENTICATED", payload: value })
-    }
-
-    return { isAuthenticated, setAuthenticated }
-}
-
 export function useLocalStorage(key, value = null) {
     const [persistedValue, SetPersistedValue] = useState(() => {
         try {
@@ -69,3 +48,24 @@ export function usePersistedReducer(reducer, initialValues) {
 
     return [stats, dispatch]
 }
+
+// export function useTheme() {
+//     const { theme, dispatch } = useContext(StoreContext)
+
+//     function toggleTheme() {
+//         console.log("Toggle theme")
+//         dispatch({ type: "TOGGLE_THEME" })
+//     }
+
+//     return [theme, toggleTheme]
+// }
+
+// export function useAuth() {
+//     const { isAuthenticated, dispatch } = useContext(StoreContext)
+
+//     function setAuthenticated(value) {
+//         dispatch({ type: "IS_AUTHENTICATED", payload: value })
+//     }
+
+//     return { isAuthenticated, setAuthenticated }
+// }
