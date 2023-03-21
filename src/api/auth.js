@@ -16,9 +16,7 @@ export async function logout()
     return req.data
 }
 
-
-// export async function currentUser()
-// {
-//     const req = await axiosApi.get("/user")
-//     return req.data
-// }
+export default function register(user)
+{
+    return axiosApi.post("/auth/register", user)
+}

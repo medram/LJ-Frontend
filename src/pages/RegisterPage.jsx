@@ -1,14 +1,19 @@
 import { Formik, useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SuperButton from "../components/SuperBotton";
 import Switch from "../components/Switch";
 import * as Yup from "yup"
 import BasePage from "./layouts/BasePage";
 import { useEffect } from "react";
 import { toastFormikErrors } from "../utils";
+import register from "../api/auth";
+import { toast } from "react-toastify";
 
 
 export default function RegisterPage() {
+    const navigate = useNavigate()
+
+
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -23,7 +28,19 @@ export default function RegisterPage() {
             accept: Yup.boolean().required().oneOf([true], "You must accept the terms and conditions.")
         }),
         onSubmit: (values) => {
-            console.log("submited", values)
+            register(values).then(({ data }) => {
+                if (data.error === false)
+                {
+                    formik.resetForm()
+                    toast.success(data.message)
+                    return navigate('/login')
+                }
+                return toast.error(data.message)
+            }).catch(error => {
+                toast.error(error.response.data.message)
+            }).finally(() => {
+                formik.setSubmitting(false)
+            })
         }
     })
 
@@ -54,7 +71,7 @@ export default function RegisterPage() {
                                 <label htmlFor="accept" className="form-label" onClick={() => formik.setFieldValue("accept", !formik.values.accept)} >I read and accept terms of use & privacy policy of the website.</label>
                             </div>
 
-                            <SuperButton type="submit" disabled={!formik.values.accept} onClick={() => toastFormikErrors(formik.errors)} className="btn btn-primary btn-lg btn-block my-4">Sign In</SuperButton>
+                            <SuperButton type="submit" isLoading={formik.isSubmitting} disabled={!formik.values.accept || formik.isSubmitting} onClick={() => toastFormikErrors(formik.errors)} className="btn btn-primary btn-lg btn-block my-4">Sign In</SuperButton>
                         </form>
                         <span>Already Have an account? <Link to="/login">Sign In</Link></span>
                     </div>
