@@ -1,4 +1,6 @@
 import { useContext, useEffect, useReducer, useState } from "react"
+import { useQuery } from "react-query"
+import { getSettings } from "../api"
 import StoreContext from "../context/StoreContext"
 
 
@@ -48,6 +50,14 @@ export function usePersistedReducer(reducer, initialValues) {
 
     return [stats, dispatch]
 }
+
+export function useSettings()
+{
+    const { isLoading, isError, error, data: settings } = useQuery("settings", getSettings)
+
+    return settings
+}
+
 
 // export function useTheme() {
 //     const { theme, dispatch } = useContext(StoreContext)

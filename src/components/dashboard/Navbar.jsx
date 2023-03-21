@@ -1,12 +1,17 @@
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { useEffect, useRef, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { getSettings } from "../../api";
+import { useSettings } from "../../hooks";
 import { useAuth, useUser } from "../../hooks/auth";
 import Avatar from "../Avatar";
 
 
 export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
 {
+    const settings = useSettings()
+
     const { user } = useUser()
     const { Logout } = useAuth()
     const [showRightNav, toggleRightNav] = useState(false);
@@ -43,7 +48,7 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
 
     return <>
         <span className="bars" onClick={(e) => onClickBars(e)}><FeatherIcon icon={properIcon} strokeWidth={1.5} /></span>
-        <div className="dashboard-brand"><Link to="/admin">LongJourney</Link></div>
+        <div className="dashboard-brand"><Link to="/admin">{settings?.SITE_NAME}</Link></div>
         <span className="dots" onClick={() => toggleRightNav(show => !show)}><FeatherIcon icon={rightNavProperIcon} strokeWidth={1.5} /></span>
 
         <nav className="right-nav" ref={rightNav}>
