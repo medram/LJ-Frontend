@@ -1,8 +1,7 @@
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import { faArrowRightFromBracket, faBarsStaggered, faBell, faEllipsisV, faGaugeHigh, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { getSettings } from "../../api";
 import { useSettings } from "../../hooks";
 import { useAuth, useUser } from "../../hooks/auth";
 import Avatar from "../Avatar";
@@ -17,8 +16,8 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
     const [showRightNav, toggleRightNav] = useState(false);
     const rightNav = useRef();
 
-    let properIcon = sidebarStatus? "x" : "menu"
-    let rightNavProperIcon = showRightNav ? "x" : "more-vertical"
+    let properIcon = sidebarStatus? faXmark : faBarsStaggered
+    let rightNavProperIcon = showRightNav ? faXmark : faEllipsisV
 
     useEffect(() => {
         if (sidebarStatus && showRightNav) {
@@ -47,20 +46,20 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
 
 
     return <>
-        <span className="bars" onClick={(e) => onClickBars(e)}><FeatherIcon icon={properIcon} strokeWidth={1.5} /></span>
-        <div className="dashboard-brand"><Link to="/admin">{settings?.SITE_NAME}</Link></div>
-        <span className="dots" onClick={() => toggleRightNav(show => !show)}><FeatherIcon icon={rightNavProperIcon} strokeWidth={1.5} /></span>
+        <span className="bars" onClick={(e) => onClickBars(e)}><FontAwesomeIcon icon={properIcon} /></span>
+        <div className="dashboard-brand"><Link to="/">{settings?.SITE_NAME}</Link></div>
+        <span className="dots" onClick={() => toggleRightNav(show => !show)}><FontAwesomeIcon icon={rightNavProperIcon} /></span>
 
         <nav className="right-nav" ref={rightNav}>
             <div className="d-md-none d-flex flex-column align-items-center mb-4">
                 <Avatar src="https://dolinker-demo.mr4web.com/uploads/users/profile-images/30700620a0490526be49accbfdfa50cb.png?v=84111" alt="Avatar" size={100} className="my-3" />
                 <span>Hi, Mohammed</span>
             </div>
-            <Link to=""><FeatherIcon icon="bell" strokeWidth={1.5} /> <span className="d-md-none">Notifications</span></Link>
+            <Link to=""><FontAwesomeIcon icon={faBell} /> <span className="d-md-none">Notifications</span></Link>
             <div className="d-md-none">
-                <Link to=""><FeatherIcon icon="layout" strokeWidth={1.5} /> Dashboard</Link>
-                <Link to=""><FeatherIcon icon="user" /> Profile</Link>
-                <Link to=""><FeatherIcon icon="log-out" /> Logout</Link>
+                <Link to=""><FontAwesomeIcon icon={faGaugeHigh} /> Dashboard</Link>
+                <Link to=""><FontAwesomeIcon icon={faUser} /> Profile</Link>
+                <Link to=""><FontAwesomeIcon icon={faArrowRightFromBracket} /> Logout</Link>
             </div>
         </nav>
         <div className="btn-group avatar-dropdown">
@@ -68,9 +67,9 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
                 <Avatar src="https://dolinker-demo.mr4web.com/uploads/users/profile-images/30700620a0490526be49accbfdfa50cb.png?v=84111" alt="Avatar" size={45} /> Hi, {user.username}
             </button>
             <div className="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
-                <Link className="dropdown-item"><FeatherIcon icon="user" /> Profile</Link>
+                <Link className="dropdown-item"><FontAwesomeIcon icon={faUser} /> Profile</Link>
                 <hr className="dropdown-divider" />
-                <Link onClick={handleLogout} className="dropdown-item"><FeatherIcon icon="log-out" /> Logout</Link>
+                <Link onClick={handleLogout} className="dropdown-item"><FontAwesomeIcon icon={faArrowRightFromBracket} /> Logout</Link>
             </div>
         </div>
     </>

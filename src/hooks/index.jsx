@@ -53,7 +53,7 @@ export function usePersistedReducer(reducer, initialValues) {
 
 export function useSettings()
 {
-    const { isLoading, isError, error, data: settings } = useQuery("settings", getSettings)
+    const { isLoading, isError, error, data: settings } = useQuery("settings", getSettings, {staleTime: Infinity})
 
     return settings
 }

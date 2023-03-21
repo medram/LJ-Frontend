@@ -26,7 +26,7 @@ export default function LoginPage() {
         }),
         onSubmit: (values) => {
             Authenticate(values.email, values.password).then(data => {
-                if (data.success)
+                if (!data.errors)
                     toast.success(data.message)
                 else
                     toast.error(data.message)

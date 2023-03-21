@@ -116,6 +116,32 @@ footer {
     margin: 0.3em 0;
 }
 
+/*======================= infobox =========================*/
+.infobox {
+    border-radius: 15px;
+    //min-width: 200px;
+}
+
+.infobox .infobox-icon {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 1.3rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    transition: padding .3s;
+}
+
+.infobox.bg-primary .infobox-icon {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+    .infobox:hover .infobox-icon {
+    padding: 1.5rem;
+}
+
 @media screen and (max-width: 768px)
 {
     .pricing-section {

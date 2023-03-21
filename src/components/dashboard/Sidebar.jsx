@@ -1,5 +1,5 @@
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import { useCallback, useEffect, useRef } from "react";
+import { faFile, faGaugeHigh, faGear, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 
@@ -12,10 +12,10 @@ export default function Sidebar({ show })
     return (
         <aside className={classes}>
             <nav>
-                <Link to="#"><FeatherIcon icon="grid" strokeWidth={1.5} /> Dashboard</Link>
-                <Link to="#"><FeatherIcon icon="users" strokeWidth={1.5} /> Users</Link>
-                <Link to="#"><FeatherIcon icon="file-text" strokeWidth={1.5} /> Pages</Link>
-                <Link to="#"><FeatherIcon icon="sliders" strokeWidth={1.5} /> Settings</Link>
+                <Link to=""><FontAwesomeIcon icon={faGaugeHigh} size="lg" /> Dashboard</Link>
+                <Link to="customers"><FontAwesomeIcon icon={faUserGroup} size="lg" /> Customers</Link>
+                <Link to="#"><FontAwesomeIcon icon={faFile} size="lg" /> Pages</Link>
+                <Link to="#"><FontAwesomeIcon icon={faGear} size="lg" /> Settings</Link>
                 <Link to="#">Generate</Link>
             </nav>
         </aside>

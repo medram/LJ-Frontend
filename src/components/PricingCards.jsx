@@ -1,4 +1,5 @@
-import FeatherIcon from "feather-icons-react"
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 
 
@@ -11,11 +12,11 @@ export default function PricingCards()
                 <div className="pricing">$2.99<span className="small-text">/month</span></div>
                 <div className="pricing-body">
                     <ul>
-                        <li><FeatherIcon icon="check" className="text-success" /> Feature 1</li>
-                        <li><FeatherIcon icon="check" className="text-success" /> Feature 2</li>
-                        <li className="text-muted"><FeatherIcon icon="x" /> Feature 3</li>
-                        <li className="text-muted"><FeatherIcon icon="x" /> Feature 4</li>
-                        <li className="text-muted"><FeatherIcon icon="x" /> Feature 5</li>
+                        <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Feature 1</li>
+                        <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Feature 2</li>
+                        <li className="text-muted"><FontAwesomeIcon icon={faXmark} /> Feature 3</li>
+                        <li className="text-muted"><FontAwesomeIcon icon={faXmark} /> Feature 4</li>
+                        <li className="text-muted"><FontAwesomeIcon icon={faXmark} /> Feature 5</li>
                     </ul>
                 </div>
                 <Link className="btn btn-primary btn-lg d-block" >Order Now</Link>
@@ -26,11 +27,11 @@ export default function PricingCards()
                 <div className="pricing">$4.99<span className="small-text">/month</span></div>
                 <div className="pricing-body">
                     <ul>
-                        <li><FeatherIcon icon="check" className="text-success" /> Feature 1</li>
-                        <li><FeatherIcon icon="check" className="text-success" /> Feature 2</li>
-                        <li><FeatherIcon icon="check" className="text-success" /> Feature 3</li>
-                        <li className="text-muted"><FeatherIcon icon="x" /> Feature 4</li>
-                        <li className="text-muted"><FeatherIcon icon="x" /> Feature 5</li>
+                        <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Feature 1</li>
+                        <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Feature 2</li>
+                        <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Feature 3</li>
+                        <li className="text-muted"><FontAwesomeIcon icon={faXmark} /> Feature 4</li>
+                        <li className="text-muted"><FontAwesomeIcon icon={faXmark} /> Feature 5</li>
                     </ul>
                 </div>
                 <Link className="btn btn-primary btn-lg d-block" >Order Now</Link>
@@ -41,11 +42,11 @@ export default function PricingCards()
                 <div className="pricing">$9.48<span className="small-text">/month</span></div>
                 <div className="pricing-body">
                     <ul>
-                        <li><FeatherIcon icon="check" className="text-success" /> Feature 1</li>
-                        <li><FeatherIcon icon="check" className="text-success" /> Feature 2</li>
-                        <li><FeatherIcon icon="check" className="text-success" /> Feature 3</li>
-                        <li><FeatherIcon icon="check" className="text-success" /> Feature 4</li>
-                        <li><FeatherIcon icon="check" className="text-success" /> Feature 5</li>
+                        <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Feature 1</li>
+                        <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Feature 2</li>
+                        <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Feature 3</li>
+                        <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Feature 4</li>
+                        <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Feature 5</li>
                     </ul>
                 </div>
                 <Link className="btn btn-primary btn-lg d-block" >Order Now</Link>

@@ -18,6 +18,7 @@ import ContactPage from "./pages/ContactPage";
 import AdminDashboardLayout from "./pages/layouts/AdminDashboardLayout";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import NoAuthRequired from "./pages/middlewares/NoAuthRequired";
+import CustomersPage from "./pages/admin/CustomersPage";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
 
         <Route path="/admin" element={<AdminDashboardLayout />}>
           <Route path="" element={<AdminDashboardPage />} />
+          <Route path="customers" element={<CustomersPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />
