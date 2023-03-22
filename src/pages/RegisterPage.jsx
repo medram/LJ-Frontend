@@ -23,7 +23,7 @@ export default function RegisterPage() {
         },
         validationSchema: Yup.object({
             username: Yup.string().required("Username required.").min(4, "Username must be 4 characters or more."),
-            email: Yup.string().required("Email required."),
+            email: Yup.string().required("Email required.").email("Invalid email."),
             password: Yup.string().required("Password required.").min(6, "Password must be 6 characters or more."),
             accept: Yup.boolean().required().oneOf([true], "You must accept the terms and conditions.")
         }),

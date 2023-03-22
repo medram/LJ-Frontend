@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -15,13 +16,18 @@ import "bootstrap/dist/js/bootstrap"
 
 import PricingPage from "./pages/PricingPage";
 import ContactPage from "./pages/ContactPage";
-import AdminDashboardLayout from "./pages/layouts/AdminDashboardLayout";
+//import AdminDashboardLayout from "./pages/layouts/AdminDashboardLayout";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import NoAuthRequired from "./pages/middlewares/NoAuthRequired";
 import CustomersPage from "./pages/admin/CustomersPage";
+import { useSettings } from "./hooks";
+
+// Lazy loading
+const AdminDashboardLayout = lazy(() => import("./pages/layouts/AdminDashboardLayout"))
 
 
 function App() {
+
   return (
     <BrowserRouter>
       <Routes>

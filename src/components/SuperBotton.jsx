@@ -2,7 +2,7 @@
 
 export default function SuperButton(props)
 {
-    let { isLoading = false, loadingText = "Loading...", children, spinnerClassName = "", ...rest } = props
+    let { isLoading = false, loadingText, children, spinnerClassName = "", ...rest } = props
 
 
     return (
