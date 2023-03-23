@@ -10,7 +10,7 @@ export default function GoBackButton({ onClick })
 
     if (!onClick)
     {
-        const onClick = () => {
+        onClick = () => {
             navigate(-1)
         }
     }
