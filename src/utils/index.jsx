@@ -8,3 +8,10 @@ export function toastFormikErrors(errors)
         toast.error(Object.values(errors).slice(0, 1).pop())
     }
 }
+
+export function getAvailableTimezones()
+{
+    return (["UTC"]).concat(Intl.supportedValuesOf('timeZone'));
+}
+
+export const AVAILABLE_TIMEZONES_OPTIONS = getAvailableTimezones().map(timezone => ({label: timezone, value: timezone}))

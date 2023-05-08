@@ -150,6 +150,28 @@ footer {
     position: absolute;
 }
 
+/*======================= dropzone =========================*/
+
+.dropzone {
+    color: #666;
+    background-color: #EEE;
+    border-radius: 10px;
+    border: 2px dashed #ccc;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+}
+
+.dropzone.focused {
+    color: lighten($blue, 50%);
+    border-color: lighten($blue, 50%);
+    background-color: lighten($blue, 90%);
+}
+
 /*======================= spinner-border =========================*/
 .spinner-border {
     border-width: 0.15em;
