@@ -66,7 +66,7 @@ export default function EditPagePage({ onGoBack }) {
 
     return (
         <>
-            <h1 className="mb-3">Add Page</h1>
+            <h1 className="mb-3">Edit Page</h1>
             <div className="row">
                 <div className="col-6">
                     <GoBackButton />
