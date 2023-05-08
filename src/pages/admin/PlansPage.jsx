@@ -46,7 +46,7 @@ export default function PlansPage() {
     }
 
     return <>
-        <h1 className="mb-3">Customers</h1>
+        <h1 className="mb-3">Plans</h1>
         <div className="d-flex flex-row-reverse gap-3 mb-4">
             <Link to="add" className="btn btn-primary"><FontAwesomeIcon icon={faPlus} /> New Plan</Link>
         </div>

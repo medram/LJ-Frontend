@@ -106,7 +106,7 @@ export default function EditCustomerPage()
                                 <label htmlFor="is_active" className="form-label" onClick={() => formik.setFieldValue("is_active", !formik.values.is_active)} >Active</label>
                             </div>
 
-                            <SuperButton isLoading={formik.isSubmitting} type="submit" className="btn btn-primary" onClick={() => toastFormikErrors(formik.errors)}><FontAwesomeIcon icon={faPlus} /> Add</SuperButton>
+                            <SuperButton isLoading={formik.isSubmitting} type="submit" className="btn btn-primary" onClick={() => toastFormikErrors(formik.errors)}>Update</SuperButton>
                         </form>
                     </section>
                 </div>

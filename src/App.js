@@ -24,6 +24,9 @@ import { useSettings } from "./hooks";
 import AddCustomerPage from "./pages/admin/AddCustomerPage";
 import EditCustomerPage from "./pages/admin/EditCustomerPage";
 import PlansPage from "./pages/admin/PlansPage";
+import { PagesPage } from "./pages/admin/PagesPage";
+import AddPagePage from "./pages/admin/AddPagePage";
+import EditPagePage from "./pages/admin/EditPagePage";
 
 // Lazy loading
 const AdminDashboardLayout = lazy(() => import("./pages/layouts/AdminDashboardLayout"))
@@ -50,6 +53,10 @@ function App() {
           <Route path="customers/edit/:id" element={<EditCustomerPage />} />
 
           <Route path="plans" element={<PlansPage />} />
+
+          <Route path="pages" element={<PagesPage />} />
+          <Route path="pages/add" element={<AddPagePage />} />
+          <Route path="pages/edit/:id" element={<EditPagePage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />

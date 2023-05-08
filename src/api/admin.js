@@ -40,3 +40,32 @@ export async function getPlans()
     const req = await axiosApi.get("/admin/plans")
     return req.data
 }
+
+
+export async function getPages()
+{
+    const req = await axiosApi.get("/admin/pages")
+
+    return req.data
+}
+
+export async function getPage(id) {
+    const req = await axiosApi.get("/admin/pages/details/" + id)
+    return req.data
+}
+
+export async function addPage(values) {
+    const req = await axiosApi.post("/admin/pages/add", values)
+    return req.data
+}
+
+export async function editPage(id, values) {
+    const req = await axiosApi.post("/admin/pages/edit/" + id, values)
+    return req.data
+}
+
+export async function deletePage(id) {
+    const req = await axiosApi.post("/admin/pages/delete", {id})
+    return req.data
+}
+
