@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import Select from "react-select"
 import { AVAILABLE_TIMEZONES_OPTIONS } from "../../utils";
 import Dropzone from "../Dropzone"
+import axiosApi from "../../api/axiosApi";
+import { uploadFile } from "../../api";
+import { toast } from "react-toastify";
 
 
 const CURRENCY_POSITION = [
@@ -11,9 +14,28 @@ const CURRENCY_POSITION = [
     {label: "xxx$ (right)", value: "RIGHT"},
 ]
 
+const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone }) => {
+
+    uploadFile("admin/upload", files[0], {
+        onUploadProgress: (e) => {
+            setProgress(e.loaded / e.total * 100)
+        }
+    }).then(() => {
+        toast.success("Uploaded Successfully.")
+        setIsSuccessUpload(true)
+    }).catch(err => {
+        toast.error(err.message)
+        resetDropzone()
+    })
+}
+
+const onError = (rejectedFiles) => {
+    toast.error("Invalid image!")
+}
 
 export default function GeneralSettings()
 {
+
     return (
         <>
             <div className="d-flex flex-row-reverse gap-3 mb-4">
@@ -27,11 +49,11 @@ export default function GeneralSettings()
                 <div className="row">
                     <div className="mb-4 col-md-6">
                         <label htmlFor="currency">Logo:</label>
-                        <Dropzone />
+                        <Dropzone onUpload={onUpload} onError={onError} />
                     </div>
                     <div className="mb-4 col-md-6">
                         <label htmlFor="currency_symbol">Favicon:</label>
-                        <Dropzone />
+                        <Dropzone onUpload={onUpload} onError={onError} />
                     </div>
                 </div>
                 <div className="row">
