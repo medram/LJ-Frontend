@@ -10,6 +10,8 @@ export default function Dropzone({
     completedUploadMessage="Uploaded Successfully.",
     showProgressBar=true,
     showProgress=true,
+    name=null,
+    extraOnUploadProps={},
     dropzoneOptions={}
 })
 {
@@ -39,7 +41,7 @@ export default function Dropzone({
         if (typeof onUpload === "function" && acceptedFiles.length)
         {
             setIsUploading(true)
-            onUpload({ files: acceptedFiles, setProgress, setIsSuccessUpload, resetDropzone })
+            onUpload({ ...extraOnUploadProps, files: acceptedFiles, setProgress, setIsSuccessUpload, resetDropzone, name })
         }
     }), [acceptedFiles.length])
 

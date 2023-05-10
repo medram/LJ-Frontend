@@ -15,6 +15,7 @@ import { saveDashboardSettings } from "../../api/admin";
 import SuperButton from "../SuperBotton";
 import { useQueryClient } from "react-query";
 import * as Yup from "yup"
+import Switch from "../Switch";
 
 
 const CURRENCY_POSITIONS = [
@@ -22,7 +23,7 @@ const CURRENCY_POSITIONS = [
     {label: "xxx$ (right)", value: "RIGHT"},
 ]
 
-const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone }) => {
+const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name, formik }) => {
 
     uploadFile("admin/upload", files[0], {
         onUploadProgress: (e) => {
@@ -32,7 +33,8 @@ const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone }) => 
         if (res.data && !res.data?.errors)
         {
             console.log(res.data)
-            toast.success("Uploaded Successfully.")
+            formik.setFieldValue(name, res.data?.url)
+            toast.info("Ensure to save the settings.")
             setIsSuccessUpload(true)
         }
         else
@@ -58,6 +60,9 @@ export default function GeneralSettings()
     const formik = useFormik({
         initialValues: {
             "SITE_NAME": "",
+            "SITE_LOGO": "",
+            "SHOW_LOGO": false,
+            "SITE_FAVICON": "",
             "TIMEZONE": "",
             "CURRENCY": "",
             "CURRENCY_SYMBOL": "",
@@ -66,6 +71,9 @@ export default function GeneralSettings()
         },
         validationSchema: Yup.object({
             "SITE_NAME": Yup.string().required("Site Name is required"),
+            "SITE_LOGO": Yup.string(),
+            "SHOW_LOGO": Yup.boolean(),
+            "SITE_FAVICON": Yup.string(),
             "TIMEZONE": Yup.string().required("Timezone is required."),
             "CURRENCY": Yup.string().required("Currency is required."),
             "CURRENCY_SYMBOL": Yup.string().required("Currency symbol is required."),
@@ -74,6 +82,7 @@ export default function GeneralSettings()
         }),
         enableReinitialize: true,
         onSubmit: (values) => {
+
             saveDashboardSettings(values).then((data) => {
                 if (data?.errors)
                 {
@@ -112,11 +121,6 @@ export default function GeneralSettings()
     return (
         <>
             <form onSubmit={formik.handleSubmit}>
-                <div className="d-flex flex-row-reverse gap-3 mb-4">
-                    <SuperButton type="submit" disabled={formik.isSubmitting} isLoading={formik.isSubmitting} className="btn btn-primary" onClick={() => toastFormikErrors(formik.errors)}>
-                        <FontAwesomeIcon icon={faFloppyDisk} /> Save
-                    </SuperButton>
-                </div>
 
                 <div className="mb-4">
                     <label htmlFor="sitename">Site Name:</label>
@@ -125,12 +129,19 @@ export default function GeneralSettings()
                 <div className="row">
                     <div className="mb-4 col-md-6">
                         <label htmlFor="currency">Logo:</label>
-                        <Dropzone onUpload={onUpload} onError={onError} />
+                        <input type="hidden" {...formik.getFieldProps("SITE_LOGO")} />
+                        <Dropzone onUpload={onUpload} onError={onError} name="SITE_LOGO" extraOnUploadProps={{formik}} />
                     </div>
                     <div className="mb-4 col-md-6">
                         <label htmlFor="currency_symbol">Favicon:</label>
-                        <Dropzone onUpload={onUpload} onError={onError} />
+                        <input type="hidden" {...formik.getFieldProps("SITE_FAVICON")} />
+                        <Dropzone onUpload={onUpload} onError={onError} name="SITE_FAVICON" extraOnUploadProps={{ formik }} />
                     </div>
+                </div>
+                <div className="d-flex mb-5">
+                    <Switch onChange={(checked) => formik.setFieldValue("SHOW_LOGO", checked)} name="show-logo" checked={!!formik.values.SHOW_LOGO} size="small" className="mx-2 mt-1" />
+
+                    <label htmlFor="show-logo" className="form-label" onClick={() => formik.setFieldValue("SHOW_LOGO", !formik.values.SHOW_LOGO)} >show logo instead of site name.</label>
                 </div>
                 <div className="row">
                     <div className="mb-4 col-md-4 col-sm-12">
@@ -155,6 +166,12 @@ export default function GeneralSettings()
                 <div className="mb-4">
                     <label htmlFor="head_code">Head Code:</label>
                     <textarea rows={7} className="form-control" placeholder="Accept Javascripts code snippets, and will be pleaced beteen <head> tag." id="head_code" {...formik.getFieldProps("HEAD_CODE")} ></textarea>
+                </div>
+
+                <div className="d-flex flex-row-reverse gap-3 mb-4">
+                    <SuperButton type="submit" disabled={formik.isSubmitting} isLoading={formik.isSubmitting} className="btn btn-primary" onClick={() => toastFormikErrors(formik.errors)}>
+                        <FontAwesomeIcon icon={faFloppyDisk} /> Save
+                    </SuperButton>
                 </div>
             </form>
         </>
