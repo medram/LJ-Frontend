@@ -1,19 +1,26 @@
 import { Link, NavLink } from "react-router-dom";
 import { useSettings } from "../hooks";
 import { useUser } from "../hooks/auth";
+import Logo from "./Logo";
+import SectionLoading from "./SectionLoading";
 
 
 
 export default function Navbar()
 {
-    const { settings } = useSettings()
+    const { isLoading, settings } = useSettings()
     const { isAuthenticated, user } = useUser()
 
+    if (isLoading)
+    {
+        return <SectionLoading center={true} />
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
-                <Link className="navbar-brand" to="/">{settings?.SITE_NAME}</Link>
+                <Logo settings={settings} className="navbar-brand" to="/" />
+
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

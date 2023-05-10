@@ -5,11 +5,14 @@ import { Link } from "react-router-dom";
 import { useSettings } from "../../hooks";
 import { useAuth, useUser } from "../../hooks/auth";
 import Avatar from "../Avatar";
+import FullscreenLoading from "../FullscreenLoading"
+import SectionLoading from "../SectionLoading";
+import Logo from "../Logo";
 
 
 export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
 {
-    const { settings } = useSettings()
+    const { isLoading, settings } = useSettings()
 
     const { user } = useUser()
     const { Logout } = useAuth()
@@ -26,17 +29,20 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
     }, [sidebarStatus])
 
     useEffect(() => {
-        if (showRightNav && sidebarStatus)
-            toggleSidebar(false)
+        if (!isLoading)
+        {
+            if (showRightNav && sidebarStatus)
+                toggleSidebar(false)
 
 
-        if (showRightNav)
-        {
-            rightNav.current.classList.add('show')
-        }
-        else
-        {
-            rightNav.current.classList.remove('show')
+            if (showRightNav)
+            {
+                rightNav.current.classList.add('show')
+            }
+            else
+            {
+                rightNav.current.classList.remove('show')
+            }
         }
     }, [showRightNav])
 
@@ -44,10 +50,16 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
         Logout()
     }
 
+    if (isLoading)
+    {
+        return <SectionLoading center={true} />
+    }
 
     return <>
         <span className="bars" onClick={(e) => onClickBars(e)}><FontAwesomeIcon icon={properIcon} /></span>
-        <div className="dashboard-brand"><Link to="/">{settings?.SITE_NAME}</Link></div>
+        <div className="dashboard-brand">
+            <Logo settings={settings} />
+        </div>
         <span className="dots" onClick={() => toggleRightNav(show => !show)}><FontAwesomeIcon icon={rightNavProperIcon} /></span>
 
         <nav className="right-nav" ref={rightNav}>
