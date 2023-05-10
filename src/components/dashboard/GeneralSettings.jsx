@@ -11,6 +11,9 @@ import { useFormik } from "formik";
 import { useDashboardSettings, useSettings } from "../../hooks";
 import { useCallback, useEffect, useState } from "react";
 import SectionLoading from "../SectionLoading";
+import { saveDashboardSettings } from "../../api/admin";
+import SuperButton from "../SuperBotton";
+import { useQueryClient } from "react-query";
 
 
 const CURRENCY_POSITIONS = [
@@ -49,7 +52,8 @@ const onError = (rejectedFiles) => {
 export default function GeneralSettings()
 {
     const { isLoading, isError, error, settings } = useDashboardSettings()
-    //console.log(settings)
+    const queryClient = useQueryClient()
+
     const formik = useFormik({
         initialValues: {
             "SITE_NAME": "",
@@ -62,14 +66,30 @@ export default function GeneralSettings()
         enableReinitialize: true,
         onSubmit: (values) => {
             console.log(values)
+            saveDashboardSettings(values).then((data) => {
+                if (data?.errors)
+                {
+                    toast.error(data?.message)
+                }
+                else
+                {
+                    queryClient.invalidateQueries("admin.settings")
+                    queryClient.invalidateQueries("settings")
+                    toast.success(data.message)
+                }
+            }).catch(err => {
+                toast.error(err)
+            }).finally(() => {
+                formik.setSubmitting(false)
+            })
         }
     })
 
-    useEffect(() => {
+    useEffect(useCallback(() => {
         if (Object.keys(settings).length) {
             formik.setValues(settings)
         }
-    }, [settings])
+    }), [settings])
 
     // formik.values.SITE_NAME == ""
     if (isLoading || !formik.values.SITE_NAME)
@@ -84,7 +104,9 @@ export default function GeneralSettings()
         <>
             <form onSubmit={formik.handleSubmit}>
                 <div className="d-flex flex-row-reverse gap-3 mb-4">
-                    <button type="submit" className="btn btn-primary" ><FontAwesomeIcon icon={faFloppyDisk} /> Save</button>
+                    <SuperButton type="submit" disabled={formik.isSubmitting} isLoading={formik.isSubmitting} className="btn btn-primary">
+                        <FontAwesomeIcon icon={faFloppyDisk} /> Save
+                    </SuperButton>
                 </div>
 
                 <div className="mb-4">
@@ -110,7 +132,7 @@ export default function GeneralSettings()
                 <div className="row">
                     <div className="mb-4 col-md-4">
                         <label htmlFor="currency">Currency:</label>
-                        <input type="text" className="form-control" placeholder="e.g. USD" id="currency" {...formik.getFieldProps("CURRENCY")} />
+                        <input type="text" className="form-control" placeholder="e.g. USD" id="currency" {...formik.getFieldProps("CURRENCY")} onChange={(e) => formik.setFieldValue("CURRENCY", e.target.value?.toUpperCase())} />
                     </div>
                     <div className="mb-4 col-md-4">
                         <label htmlFor="currency_symbol">Currency symbol:</label>
@@ -123,7 +145,7 @@ export default function GeneralSettings()
                 </div>
                 <div className="mb-4">
                     <label htmlFor="head_code">Head Code:</label>
-                    <textarea rows={7} className="form-control" placeholder="Accept Javascripts code snippets, and will be pleaced beteen <head> tag." id="head_code" />
+                    <textarea rows={7} className="form-control" placeholder="Accept Javascripts code snippets, and will be pleaced beteen <head> tag." id="head_code" {...formik.getFieldProps("HEAD_CODE")} ></textarea>
                 </div>
             </form>
         </>

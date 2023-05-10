@@ -69,3 +69,8 @@ export async function deletePage(id) {
     return req.data
 }
 
+export async function saveDashboardSettings(settings)
+{
+    const req = await axiosApi.post('/admin/settings', settings)
+    return req.data
+}
