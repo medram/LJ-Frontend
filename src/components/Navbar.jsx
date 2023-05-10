@@ -6,7 +6,7 @@ import { useUser } from "../hooks/auth";
 
 export default function Navbar()
 {
-    const settings = useSettings()
+    const { settings } = useSettings()
     const { isAuthenticated, user } = useUser()
 
 

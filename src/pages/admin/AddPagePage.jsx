@@ -30,7 +30,7 @@ export default function AddPagePage({ onGoBack }) {
             content: Yup.string(),
             status: Yup.boolean()
         }),
-        onSubmit: (values,) => {
+        onSubmit: (values) => {
             addPage(values).then((data) => {
                 if (data.errors === false) {
                     formik.resetForm()

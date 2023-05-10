@@ -1,6 +1,6 @@
 import { useContext, useEffect, useReducer, useState } from "react"
 import { useQuery } from "react-query"
-import { getSettings } from "../api"
+import { getDashboardSettings, getSettings } from "../api"
 import StoreContext from "../context/StoreContext"
 
 
@@ -53,9 +53,15 @@ export function usePersistedReducer(reducer, initialValues) {
 
 export function useSettings()
 {
-    const { isLoading, isError, error, data: settings } = useQuery("settings", getSettings, {staleTime: Infinity})
+    const { data: settings, ...rest } = useQuery("settings", getSettings, {staleTime: Infinity})
 
-    return settings
+    return { ...rest, settings }
+}
+
+export function useDashboardSettings() {
+    const { data, ...rest } = useQuery("admin.settings", getDashboardSettings, { staleTime: Infinity })
+
+    return { ...rest, settings: data?.settings || {} }
 }
 
 

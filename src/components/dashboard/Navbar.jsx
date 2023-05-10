@@ -9,7 +9,7 @@ import Avatar from "../Avatar";
 
 export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
 {
-    const settings = useSettings()
+    const { settings } = useSettings()
 
     const { user } = useUser()
     const { Logout } = useAuth()

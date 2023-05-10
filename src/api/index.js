@@ -8,6 +8,12 @@ export async function getSettings()
     return req.data.settings
 }
 
+export async function getDashboardSettings()
+{
+    const req = await axiosApi.get("/admin/settings")
+    return req.data
+}
+
 export function uploadFile(uri, file, { onUploadProgress })
 {
     const formData = new FormData()
