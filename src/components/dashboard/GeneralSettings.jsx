@@ -2,7 +2,7 @@ import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import Select from "react-select"
-import { AVAILABLE_TIMEZONES_OPTIONS } from "../../utils";
+import { AVAILABLE_TIMEZONES_OPTIONS, toastFormikErrors } from "../../utils";
 import Dropzone from "../Dropzone"
 import axiosApi from "../../api/axiosApi";
 import { uploadFile } from "../../api";
@@ -14,6 +14,7 @@ import SectionLoading from "../SectionLoading";
 import { saveDashboardSettings } from "../../api/admin";
 import SuperButton from "../SuperBotton";
 import { useQueryClient } from "react-query";
+import * as Yup from "yup"
 
 
 const CURRENCY_POSITIONS = [
@@ -63,9 +64,16 @@ export default function GeneralSettings()
             "CURRENCY_POSITION": "",
             "HEAD_CODE": ""
         },
+        validationSchema: Yup.object({
+            "SITE_NAME": Yup.string().required("Site Name is required"),
+            "TIMEZONE": Yup.string().required("Timezone is required."),
+            "CURRENCY": Yup.string().required("Currency is required."),
+            "CURRENCY_SYMBOL": Yup.string().required("Currency symbol is required."),
+            "CURRENCY_POSITION": Yup.string().required("Currency position is required."),
+            "HEAD_CODE": Yup.string()
+        }),
         enableReinitialize: true,
         onSubmit: (values) => {
-            console.log(values)
             saveDashboardSettings(values).then((data) => {
                 if (data?.errors)
                 {
@@ -91,11 +99,12 @@ export default function GeneralSettings()
         }
     }), [settings])
 
-    // formik.values.SITE_NAME == ""
-    if (isLoading || !formik.values.SITE_NAME)
+
+    if (isLoading || !formik.values.TIMEZONE)
     {
         return <SectionLoading />
     }
+
 
     const defaultTimezone = { label: formik.values.TIMEZONE, value: formik.values.TIMEZONE }
     const defaultCurrencyPosition = { label: formik.values.CURRENCY_POSITION, value: formik.values.CURRENCY_POSITION }
@@ -104,7 +113,7 @@ export default function GeneralSettings()
         <>
             <form onSubmit={formik.handleSubmit}>
                 <div className="d-flex flex-row-reverse gap-3 mb-4">
-                    <SuperButton type="submit" disabled={formik.isSubmitting} isLoading={formik.isSubmitting} className="btn btn-primary">
+                    <SuperButton type="submit" disabled={formik.isSubmitting} isLoading={formik.isSubmitting} className="btn btn-primary" onClick={() => toastFormikErrors(formik.errors)}>
                         <FontAwesomeIcon icon={faFloppyDisk} /> Save
                     </SuperButton>
                 </div>
