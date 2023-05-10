@@ -52,22 +52,21 @@ const onError = (rejectedFiles) => {
     toast.error("Invalid image!")
 }
 
-export default function GeneralSettings()
+export default function GeneralSettings({ settings })
 {
-    const { isLoading, isError, error, settings } = useDashboardSettings()
     const queryClient = useQueryClient()
 
     const formik = useFormik({
         initialValues: {
-            "SITE_NAME": "",
-            "SITE_LOGO": "",
-            "SHOW_LOGO": false,
-            "SITE_FAVICON": "",
-            "TIMEZONE": "",
-            "CURRENCY": "",
-            "CURRENCY_SYMBOL": "",
-            "CURRENCY_POSITION": "",
-            "HEAD_CODE": ""
+            "SITE_NAME": settings.SITE_NAME,
+            "SITE_LOGO": settings.SITE_LOGO,
+            "SHOW_LOGO": settings.SHOW_LOGO,
+            "SITE_FAVICON": settings.SITE_FAVICON,
+            "TIMEZONE": settings.TIMEZONE,
+            "CURRENCY": settings.CURRENCY,
+            "CURRENCY_SYMBOL": settings.CURRENCY_SYMBOL,
+            "CURRENCY_POSITION": settings.CURRENCY_POSITION,
+            "HEAD_CODE": settings.HEAD_CODE,
         },
         validationSchema: Yup.object({
             "SITE_NAME": Yup.string().required("Site Name is required"),
@@ -101,19 +100,6 @@ export default function GeneralSettings()
             })
         }
     })
-
-    useEffect(useCallback(() => {
-        if (Object.keys(settings).length) {
-            formik.setValues(settings)
-        }
-    }), [settings])
-
-
-    if (isLoading || !formik.values.TIMEZONE)
-    {
-        return <SectionLoading />
-    }
-
 
     const defaultTimezone = { label: formik.values.TIMEZONE, value: formik.values.TIMEZONE }
     const defaultCurrencyPosition = { label: formik.values.CURRENCY_POSITION, value: formik.values.CURRENCY_POSITION }

@@ -2,10 +2,20 @@ import { faFloppyDisk, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import GeneralSettings from "../../components/dashboard/GeneralSettings";
+import { useDashboardSettings } from "../../hooks";
+import SectionLoading from "../../components/SectionLoading";
+import SMTPSettings from "../../components/dashboard/SMTPSettings";
 
 
 export function SettingsPage()
 {
+    const { isLoading, isError, error, settings } = useDashboardSettings()
+
+    if (isLoading || !Object.keys(settings).length)
+    {
+        return <SectionLoading />
+    }
+
     return (
         <>
             <h1 className="mb-3">Settings</h1>
@@ -23,11 +33,15 @@ export function SettingsPage()
                             <div className="tab-content" id="v-pills-tabContent" style={{width: "100%"}}>
                                 <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabIndex="0">
 
-                                    <GeneralSettings />
+                                    <GeneralSettings settings={settings} />
 
                                 </div>
 
-                                <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabIndex="0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id accusantium blanditiis minus ad. Numquam sint iusto assumenda vero quae minima enim fugiat ducimus neque! Consequuntur totam ab at incidunt. Voluptates!</div>
+                                <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabIndex="0">
+
+                                    <SMTPSettings settings={settings} />
+
+                                </div>
 
                                 <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabIndex="0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, ab repellat quam perferendis in et similique veritatis. Eveniet illum cumque, cum totam enim expedita recusandae illo animi architecto magnam similique, nesciunt ad deleniti mollitia delectus modi non aliquid optio facere inventore pariatur eligendi quidem in exercitationem? Accusamus totam ducimus illum!</div>
 
