@@ -12,6 +12,7 @@ import { useQueryClient } from "react-query";
 import Switch from "../../components/Switch"
 import { usePage } from "../../hooks/admin";
 import { useEffect } from "react";
+import SectionLoading from "../../components/SectionLoading";
 
 
 export default function EditPagePage({ onGoBack }) {
@@ -62,6 +63,11 @@ export default function EditPagePage({ onGoBack }) {
             })
         }
     }, [page])
+
+    if (isLoading)
+    {
+        return <SectionLoading center={true} />
+    }
 
 
     return (

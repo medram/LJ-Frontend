@@ -14,8 +14,8 @@ export default function Sidebar({ show })
             <nav>
                 <Link to=""><FontAwesomeIcon icon={faGaugeHigh} size="lg" /> Dashboard</Link>
                 <Link to="customers"><FontAwesomeIcon icon={faUserGroup} size="lg" /> Customers</Link>
-                <Link to="subscriptions"><FontAwesomeIcon icon={faRepeat} size="lg" /> Subscriptions</Link>
                 <Link to="plans"><FontAwesomeIcon icon={faRankingStar} size="lg" /> Plans</Link>
+                <Link to="subscriptions"><FontAwesomeIcon icon={faRepeat} size="lg" /> Subscriptions</Link>
                 <Link to="pages"><FontAwesomeIcon icon={faFile} size="lg" /> Pages</Link>
                 <Link to="settings"><FontAwesomeIcon icon={faSliders} size="lg" /> Settings</Link>
             </nav>

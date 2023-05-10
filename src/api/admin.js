@@ -54,6 +54,12 @@ export async function getPage(id) {
     return req.data
 }
 
+export async function getDashboardPlans()
+{
+    const req = await axiosApi.get("/admin/plans")
+    return req.data
+}
+
 export async function addPage(values) {
     const req = await axiosApi.post("/admin/pages/add", values)
     return req.data

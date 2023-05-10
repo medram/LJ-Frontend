@@ -2,6 +2,7 @@ import { useContext, useEffect, useReducer, useState } from "react"
 import { useQuery } from "react-query"
 import { getDashboardSettings, getSettings } from "../api"
 import StoreContext from "../context/StoreContext"
+import { getDashboardPlans } from "../api/admin"
 
 
 export function useLocalStorage(key, value = null) {
@@ -63,6 +64,18 @@ export function useDashboardSettings() {
 
     return { ...rest, settings: data?.settings || {} }
 }
+
+export function useDashboardPlans()
+{
+    const { data, ...rest } = useQuery("admin.plans", getDashboardPlans, { staleTime: Infinity })
+    return { ...rest, plans: data?.plans }
+}
+
+
+
+
+
+
 
 
 // export function useTheme() {
