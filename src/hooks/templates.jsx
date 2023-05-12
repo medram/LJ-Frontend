@@ -1,6 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import CustomOffCanvas from "../components/CustomOffCanvas";
-
+import { useCallback, useState } from "react"
 
 
 export function useOffCanvas()

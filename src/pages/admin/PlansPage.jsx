@@ -7,14 +7,20 @@ import SectionLoading from "../../components/SectionLoading";
 import Swal from "sweetalert2";
 import { getPlans } from "../../api/admin";
 import { useDashboardPlans, useSettings } from "../../hooks";
+import { useRef, useState } from "react";
+import { useOffCanvas } from "../../hooks/templates";
+import CustomOffCanvas from "../../components/CustomOffCanvas";
+import AddPlanForm from "../../components/dashboard/forms/AddPlanForm";
 
 
 export default function PlansPage() {
 
     const queryClient = useQueryClient()
     const { isLoading, isError, error, plans } = useDashboardPlans()
+    const { isOpen, open, close, offCanvasProps } = useOffCanvas()
+    const { isLoading: settingsIsLoading, settings } = useSettings()
 
-    if (isLoading) {
+    if (isLoading || settingsIsLoading) {
         return <SectionLoading />
     }
 
@@ -47,10 +53,11 @@ export default function PlansPage() {
     const monthlyPlans = plans.filter(plan => plan.billing_cycle === "monthly")
     const yearlyPlans = plans.filter(plan => plan.billing_cycle === "yearly")
 
+
     return <>
         <h1 className="mb-3">Plans</h1>
         <div className="d-flex flex-row-reverse gap-3 mb-4">
-            <Link to="add" className="btn btn-primary"><FontAwesomeIcon icon={faPlus} /> New Plan</Link>
+            <button className="btn btn-primary" onClick={open}><FontAwesomeIcon icon={faPlus} /> New Plan</button>
             <Link to="#" className="btn btn-primary"><FontAwesomeIcon icon={faCreditCard} /> Manage Payment methods</Link>
             <Link to="#" className="btn btn-primary"><FontAwesomeIcon icon={faGear} /> Manage Free Trail / demo</Link>
         </div>
@@ -58,7 +65,7 @@ export default function PlansPage() {
         <div className="row">
             <div className="col-12">
                 <section className="bg-light rounded p-4">
-                    <h2 className="h6 mb-3">Monthly plans:</h2>
+                    <h2 className="h6 mb-3"><b>Monthly plans:</b></h2>
                     <table className="table table-responsive">
                         <thead>
                             <tr>
@@ -74,7 +81,7 @@ export default function PlansPage() {
                             {monthlyPlans?.map((plan, i) => {
                                 return <tr key={i}>
                                     <td>{plan.name} {plan.is_free ? <span className="badge bg-success">Free</span> : ""}</td>
-                                    <td>{plan.price}<small>/month</small></td>
+                                    <td>{settings?.CURRENCY_SYMBOL}{plan.price}<small>/month</small></td>
                                     <td>{plan.is_popular ? (
                                         <span className="badge text-bg-success">Yes</span>
                                     ) : (
@@ -104,7 +111,7 @@ export default function PlansPage() {
         <div className="row">
             <div className="col-12">
                 <section className="bg-light rounded p-4">
-                    <h2 className="h6 mb-3">Yearly plans:</h2>
+                    <h2 className="h6 mb-3"><b>Yearly plans:</b></h2>
                     <table className="table table-responsive">
                         <thead>
                             <tr>
@@ -120,7 +127,7 @@ export default function PlansPage() {
                             {yearlyPlans?.map((plan, i) => {
                                 return <tr key={i}>
                                     <td>{plan.name} {plan.is_free ? <span className="badge bg-success">Free</span> : ""}</td>
-                                    <td>{plan.price}<small>/year</small></td>
+                                    <td>{settings?.CURRENCY_SYMBOL}{plan.price}<small>/year</small></td>
                                     <td>{plan.is_popular ? (
                                         <span className="badge text-bg-success">Yes</span>
                                     ) : (
@@ -147,5 +154,9 @@ export default function PlansPage() {
                 </section>
             </div>
         </div>
+
+        <CustomOffCanvas title="New Plan" placement="end" {...offCanvasProps} >
+           <AddPlanForm close={close} />
+        </CustomOffCanvas>
     </>
 }

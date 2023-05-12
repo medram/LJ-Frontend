@@ -80,3 +80,8 @@ export async function saveDashboardSettings(settings)
     const req = await axiosApi.post('/admin/settings', settings)
     return req.data
 }
+
+export async function addPlan(values) {
+    const req = await axiosApi.post("/admin/plans/add", values)
+    return req.data
+}

@@ -1,10 +1,10 @@
 import { faFloppyDisk, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import GeneralSettings from "../../components/dashboard/GeneralSettings";
+import GeneralSettings from "../../components/dashboard/forms/GeneralSettings";
 import { useDashboardSettings } from "../../hooks";
 import SectionLoading from "../../components/SectionLoading";
-import SMTPSettings from "../../components/dashboard/SMTPSettings";
+import SMTPSettings from "../../components/dashboard/forms/SMTPSettings";
 
 
 export function SettingsPage()
