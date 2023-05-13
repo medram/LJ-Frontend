@@ -79,7 +79,6 @@ export default function GeneralSettings({ settings })
             "CURRENCY_POSITION": Yup.string().required("Currency position is required."),
             "HEAD_CODE": Yup.string()
         }),
-        enableReinitialize: true,
         onSubmit: (values) => {
 
             saveDashboardSettings(values).then((data) => {

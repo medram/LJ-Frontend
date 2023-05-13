@@ -1,4 +1,4 @@
-import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import { faFloppyDisk, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import Select from "react-select"
@@ -49,10 +49,12 @@ export default function SMTPSettings({ settings }) {
         onSubmit: (values) => {
             //console.log(values)
             saveDashboardSettings(values).then((data) => {
-                if (data?.errors) {
+                if (data?.errors)
+                {
                     toast.error(data?.message)
                 }
-                else {
+                else
+                {
                     queryClient.invalidateQueries("admin.settings")
                     queryClient.invalidateQueries("settings")
                     toast.success(data.message)
@@ -76,7 +78,7 @@ export default function SMTPSettings({ settings }) {
 
                 <div className="mb-4">
                     <label htmlFor="smtp_port">SMTP Port:</label>
-                    <input type="number" className="form-control" placeholder="e.g. 465" id="smtp_port" {...formik.getFieldProps("SMTP_PORT")} />
+                    <input type="number" className="form-control" placeholder="e.g. 465 or 587" id="smtp_port" {...formik.getFieldProps("SMTP_PORT")} />
                 </div>
 
                 <div className="mb-4">
@@ -108,7 +110,7 @@ export default function SMTPSettings({ settings }) {
                     </SuperButton>
 
                     <SuperButton disabled={true} isLoading={false} className="btn btn-primary" onClick={() => { /* TODO: send a test email */ }}>
-                        <FontAwesomeIcon icon={faFloppyDisk} /> Send a test email
+                        <FontAwesomeIcon icon={faPaperPlane} /> Send a test email
                     </SuperButton>
                 </div>
             </form>
