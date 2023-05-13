@@ -16,6 +16,7 @@ import SuperButton from "../../SuperBotton";
 import { useQueryClient } from "react-query";
 import * as Yup from "yup"
 import Switch from "../../Switch";
+import PasswordInput from "../../PasswordInput";
 
 
 const SMTP_MAIL_ENCRIPTION_OPTIONS = [
@@ -46,7 +47,7 @@ export default function SMTPSettings({ settings }) {
         }),
         enableReinitialize: true,
         onSubmit: (values) => {
-            console.log(values)
+            //console.log(values)
             saveDashboardSettings(values).then((data) => {
                 if (data?.errors) {
                     toast.error(data?.message)
@@ -85,7 +86,7 @@ export default function SMTPSettings({ settings }) {
 
                 <div className="mb-4">
                     <label htmlFor="smtp_password">SMTP Password:</label>
-                    <input type="password" className="form-control" placeholder="" id="smtp_password" {...formik.getFieldProps("SMTP_PASSWORD")} />
+                    <PasswordInput {...formik.getFieldProps("SMTP_PASSWORD")} />
                 </div>
 
                 <div className="row">
