@@ -11,6 +11,7 @@ import { useRef, useState } from "react";
 import { useOffCanvas } from "../../hooks/templates";
 import CustomOffCanvas from "../../components/CustomOffCanvas";
 import AddPlanForm from "../../components/dashboard/forms/AddPlanForm";
+import EditPlanForm from "../../components/dashboard/forms/EditPlanForm";
 
 
 export default function PlansPage() {
@@ -18,7 +19,10 @@ export default function PlansPage() {
     const queryClient = useQueryClient()
     const { isLoading, isError, error, plans } = useDashboardPlans()
     const { isOpen, open, close, offCanvasProps } = useOffCanvas()
+    const { isOpen: isEditOpen, open: editOpen, close: editClose, offCanvasProps: editPlanOffCanvasProps } = useOffCanvas()
     const { isLoading: settingsIsLoading, settings } = useSettings()
+    const [ planToEdit, setPlanToEdit ] = useState(0)
+
 
     if (isLoading || settingsIsLoading) {
         return <SectionLoading />
@@ -48,6 +52,11 @@ export default function PlansPage() {
         //         }) // delete plan by ID
         //     }
         // })
+    }
+
+    const handleEditPlan = (planId) => {
+        setPlanToEdit(planId)
+        editOpen(true)
     }
 
     const monthlyPlans = plans.filter(plan => plan.billing_cycle === "monthly")
@@ -94,7 +103,7 @@ export default function PlansPage() {
                                     )}</td>
                                     <td>{plan.created_at}</td>
                                     <td>
-                                        <Link to={`edit/${plan.id}`} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></Link>
+                                        <button onClick={() => handleEditPlan(plan.id)} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></button>
 
                                         <button onClick={() => handleDelete(plan.id)} className="btn btn-danger btn-sm mx-1 mb-1"><FontAwesomeIcon icon={faTrash} /></button>
                                     </td>
@@ -140,7 +149,7 @@ export default function PlansPage() {
                                     )}</td>
                                     <td>{plan.created_at}</td>
                                     <td>
-                                        <Link to={`edit/${plan.id}`} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></Link>
+                                        <button onClick={() => handleEditPlan(plan.id)} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></button>
 
                                         <button onClick={() => handleDelete(plan.id)} className="btn btn-danger btn-sm mx-1 mb-1"><FontAwesomeIcon icon={faTrash} /></button>
                                     </td>
@@ -157,6 +166,10 @@ export default function PlansPage() {
 
         <CustomOffCanvas title="New Plan" placement="end" {...offCanvasProps} >
            <AddPlanForm close={close} />
+        </CustomOffCanvas>
+
+        <CustomOffCanvas title="Edit Plan" placement="end" {...editPlanOffCanvasProps}>
+            <EditPlanForm close={editClose} planId={planToEdit} />
         </CustomOffCanvas>
     </>
 }

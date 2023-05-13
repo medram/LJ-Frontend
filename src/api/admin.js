@@ -85,3 +85,8 @@ export async function addPlan(values) {
     const req = await axiosApi.post("/admin/plans/add", values)
     return req.data
 }
+
+export async function editPlan(id, values) {
+    const req = await axiosApi.post("/admin/plans/edit/" + id, values)
+    return req.data
+}

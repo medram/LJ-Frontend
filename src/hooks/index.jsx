@@ -71,7 +71,13 @@ export function useDashboardPlans()
     return { ...rest, plans: data?.plans }
 }
 
+export function useDashboardPlan(planId)
+{
+    const { data, ...rest } = useQuery("admin.plans", getDashboardPlans, { staleTime: Infinity })
+    const [ plan ] = data?.plans.filter(plan => plan.id === planId)
 
+    return { ...rest, plan }
+}
 
 
 
