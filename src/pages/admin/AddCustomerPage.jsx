@@ -10,6 +10,7 @@ import SuperButton from "../../components/SuperBotton";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import Switch from "../../components/Switch"
+import PasswordInput from "../../components/PasswordInput";
 
 
 export default function AddCustomerPage({ onGoBack }) {
@@ -66,7 +67,7 @@ export default function AddCustomerPage({ onGoBack }) {
 
                             <div className="mb-4">
                                 <label htmlFor="password">Password:</label>
-                                <input type="password" className="form-control" placeholder="+6 characters required" id="password" {...formik.getFieldProps("password")} />
+                                <PasswordInput className="form-control" id="password" {...formik.getFieldProps("password")} />
                             </div>
 
                             <div className="d-flex mb-3">

@@ -12,6 +12,7 @@ import SectionLoading from "../../components/SectionLoading"
 import SuperButton from "../../components/SuperBotton"
 import Switch from "../../components/Switch"
 import { toastFormikErrors } from "../../utils"
+import PasswordInput from "../../components/PasswordInput"
 
 
 export default function EditCustomerPage()
@@ -97,7 +98,7 @@ export default function EditCustomerPage()
 
                             <div className="mb-4">
                                 <label htmlFor="password">Password:</label>
-                                <input type="password" className="form-control" id="password" {...formik.getFieldProps("password")} />
+                                <PasswordInput className="form-control" id="password" {...formik.getFieldProps("password")} />
                             </div>
 
                             <div className="d-flex mb-3">
