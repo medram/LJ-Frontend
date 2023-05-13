@@ -11,6 +11,7 @@ import { useQueryClient } from "react-query";
 import Switch from "../../Switch"
 import Select from "react-select";
 import { useSettings } from "../../../hooks";
+import SectionLoading from "../../SectionLoading";
 
 
 const BILLING_CYCLE_OPTIONS = [
@@ -19,7 +20,7 @@ const BILLING_CYCLE_OPTIONS = [
 ]
 
 
-export default function AddPlan({ close }) {
+export default function AddPlanForm({ close }) {
     const queryClient = useQueryClient()
     const { settings } = useSettings()
 
@@ -52,6 +53,7 @@ export default function AddPlan({ close }) {
             questions: Yup.number("Questions field must be a number.")
         }),
         onSubmit: (values) => {
+
             addPlan(values).then((data) => {
                 if (data.errors === false) {
                     formik.resetForm()
@@ -71,11 +73,12 @@ export default function AddPlan({ close }) {
         }
     })
 
+
     return (
         <form onSubmit={formik.handleSubmit} autoComplete="off">
             <div className="mb-4">
                 <label htmlFor="name">Name:</label>
-                <input type="text" className="form-control" placeholder="e.g. Premium" id="name" {...formik.getFieldProps("name")} />
+                <input type="text" className="form-control" placeholder="e.g. Premium" id="name" {...formik.getFieldProps("name")} autoFocus />
             </div>
 
             <div className="mb-4">
