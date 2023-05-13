@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import SectionLoading from "../../components/SectionLoading";
 import Swal from "sweetalert2";
-import { getPlans } from "../../api/admin";
+import { deletePlan, getPlans } from "../../api/admin";
 import { useDashboardPlans, useSettings } from "../../hooks";
 import { useRef, useState } from "react";
 import { useOffCanvas } from "../../hooks/templates";
@@ -33,25 +33,25 @@ export default function PlansPage() {
     }
 
     const handleDelete = (id) => {
-        // Swal.fire({
-        //     title: "Are you sure you want to delete this customer?",
-        //     icon: "warning",
-        //     confirmButtonText: "Yes, delete!",
-        //     cancelButtonText: "No, cancel!",
-        //     showCancelButton: true
-        // }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         deleteCustomer(id).then(data => {
-        //             if (!data?.errors) {
-        //                 queryClient.invalidateQueries("admin.customers")
-        //                 toast.success(data?.message)
-        //             }
-        //             else {
-        //                 toast.error(data?.message)
-        //             }
-        //         }) // delete plan by ID
-        //     }
-        // })
+        Swal.fire({
+            title: "Are you sure you want to delete this plan?",
+            icon: "warning",
+            confirmButtonText: "Yes, delete!",
+            cancelButtonText: "No, cancel!",
+            showCancelButton: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deletePlan(id).then(data => {
+                    if (!data?.errors) {
+                        queryClient.invalidateQueries("admin.plans")
+                        toast.success(data?.message)
+                    }
+                    else {
+                        toast.error(data?.message)
+                    }
+                }) // delete plan by ID
+            }
+        })
     }
 
     const handleEditPlan = (planId) => {

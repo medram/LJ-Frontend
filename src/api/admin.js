@@ -90,3 +90,8 @@ export async function editPlan(id, values) {
     const req = await axiosApi.post("/admin/plans/edit/" + id, values)
     return req.data
 }
+
+export async function deletePlan(id) {
+    const req = await axiosApi.post("/admin/plans/delete", {id})
+    return req.data
+}
