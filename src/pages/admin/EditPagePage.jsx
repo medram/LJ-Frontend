@@ -13,6 +13,7 @@ import Switch from "../../components/Switch"
 import { usePage } from "../../hooks/admin";
 import { useEffect } from "react";
 import SectionLoading from "../../components/SectionLoading";
+import TextEditor from "../../components/TextEditor";
 
 
 export default function EditPagePage({ onGoBack }) {
@@ -74,7 +75,7 @@ export default function EditPagePage({ onGoBack }) {
         <>
             <h1 className="mb-3">Edit Page</h1>
             <div className="row">
-                <div className="col-6">
+                <div className="col-8">
                     <GoBackButton />
                     <section className="rounded text-bg-light p-4">
                         <form onSubmit={formik.handleSubmit}>
@@ -90,7 +91,7 @@ export default function EditPagePage({ onGoBack }) {
 
                             <div className="mb-4">
                                 <label htmlFor="content">Content:</label>
-                                <textarea rows={10} className="form-control" placeholder="Page content here..." id="content" {...formik.getFieldProps("content")} ></textarea>
+                                <TextEditor onEditorChange={(content) => formik.setFieldValue("content", content)} initialValue={formik.values.content} />
                             </div>
 
                             <div className="d-flex mb-3">

@@ -67,7 +67,7 @@ export default function PlansPage() {
         <h1 className="mb-3">Plans</h1>
         <div className="d-flex flex-row-reverse gap-3 mb-4">
             <button className="btn btn-primary" onClick={open}><FontAwesomeIcon icon={faPlus} /> New Plan</button>
-            <Link to="#" className="btn btn-primary"><FontAwesomeIcon icon={faCreditCard} /> Manage Payment methods</Link>
+            <Link to="../payment-methods" className="btn btn-primary"><FontAwesomeIcon icon={faCreditCard} /> Manage Payment methods</Link>
             <Link to="#" className="btn btn-primary"><FontAwesomeIcon icon={faGear} /> Manage Free Trail / demo</Link>
         </div>
 

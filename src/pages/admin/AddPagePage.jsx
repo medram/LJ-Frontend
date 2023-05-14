@@ -10,6 +10,7 @@ import SuperButton from "../../components/SuperBotton";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import Switch from "../../components/Switch"
+import TextEditor from "../../components/TextEditor";
 
 
 export default function AddPagePage({ onGoBack }) {
@@ -52,7 +53,7 @@ export default function AddPagePage({ onGoBack }) {
         <>
             <h1 className="mb-3">Add Page</h1>
             <div className="row">
-                <div className="col-6">
+                <div className="col-8">
                     <GoBackButton />
                     <section className="rounded text-bg-light p-4">
                         <form onSubmit={formik.handleSubmit}>
@@ -68,7 +69,7 @@ export default function AddPagePage({ onGoBack }) {
 
                             <div className="mb-4">
                                 <label htmlFor="content">Content:</label>
-                                <textarea rows={10} className="form-control" placeholder="Page content here..." id="content" {...formik.getFieldProps("content")} ></textarea>
+                                <TextEditor onEditorChange={(content) => formik.setFieldValue("content", content)} />
                             </div>
 
                             <div className="d-flex mb-3">
