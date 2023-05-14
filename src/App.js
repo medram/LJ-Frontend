@@ -28,6 +28,7 @@ import { PagesPage } from "./pages/admin/PagesPage";
 import AddPagePage from "./pages/admin/AddPagePage";
 import EditPagePage from "./pages/admin/EditPagePage";
 import { SettingsPage } from "./pages/admin/SettingsPage";
+import PaymentMethodsPage from "./pages/admin/PaymentMethodsPage";
 
 // Lazy loading
 const AdminDashboardLayout = lazy(() => import("./pages/layouts/AdminDashboardLayout"))
@@ -54,10 +55,12 @@ function App() {
           <Route path="customers/edit/:id" element={<EditCustomerPage />} />
 
           <Route path="plans" element={<PlansPage />} />
+          <Route path="payment-methods" element={<PaymentMethodsPage />} />
 
           <Route path="pages" element={<PagesPage />} />
           <Route path="pages/add" element={<AddPagePage />} />
           <Route path="pages/edit/:id" element={<EditPagePage />} />
+
 
           <Route path="settings" element={<SettingsPage />} />
         </Route>
