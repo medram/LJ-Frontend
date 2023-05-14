@@ -12,6 +12,7 @@ import { useOffCanvas } from "../../hooks/templates";
 import CustomOffCanvas from "../../components/CustomOffCanvas";
 import AddPlanForm from "../../components/dashboard/forms/AddPlanForm";
 import EditPlanForm from "../../components/dashboard/forms/EditPlanForm";
+import { datetimeFormat } from "../../utils";
 
 
 export default function PlansPage() {
@@ -101,7 +102,7 @@ export default function PlansPage() {
                                     ) : (
                                         <span className="badge text-bg-warning">Inactive</span>
                                     )}</td>
-                                    <td>{plan.created_at}</td>
+                                    <td>{datetimeFormat(plan.created_at)}</td>
                                     <td>
                                         <button onClick={() => handleEditPlan(plan.id)} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></button>
 
@@ -147,7 +148,7 @@ export default function PlansPage() {
                                     ) : (
                                         <span className="badge text-bg-warning">Inactive</span>
                                     )}</td>
-                                    <td>{plan.created_at}</td>
+                                    <td>{datetimeFormat(plan.created_at)}</td>
                                     <td>
                                         <button onClick={() => handleEditPlan(plan.id)} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></button>
 

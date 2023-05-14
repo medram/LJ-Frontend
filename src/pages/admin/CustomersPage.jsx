@@ -8,6 +8,7 @@ import { deleteCustomer } from "../../api/admin";
 import SectionLoading from "../../components/SectionLoading";
 import { useCustomers } from "../../hooks/admin";
 import Swal from "sweetalert2";
+import { datetimeFormat } from "../../utils";
 
 
 export default function CustomersPage()
@@ -109,7 +110,7 @@ export default function CustomersPage()
                                     ): (
                                             <span className="badge text-bg-warning">Inactive</span>
                                     )}</td>
-                                    <td>{customer.created_at}</td>
+                                    <td>{datetimeFormat(customer.created_at)}</td>
                                     <td>
                                         <Link to={`edit/${customer.id}`} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></Link>
 

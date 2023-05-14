@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 import { deletePage } from "../../api/admin"
 import Swal from "sweetalert2"
 import { useQueryClient } from "react-query"
+import { datetimeFormat } from "../../utils"
 
 
 export function PagesPage()
@@ -58,7 +59,6 @@ export function PagesPage()
                         <table className="table table-responsive">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Title</th>
                                     <th>Slug</th>
                                     <th>Published</th>
@@ -69,7 +69,6 @@ export function PagesPage()
                             <tbody>
                                 {pages?.map((page, i) => {
                                     return <tr key={i}>
-                                        <td>{page.id}</td>
                                         <td>{page.title}</td>
                                         <td><code>{page.slug}</code></td>
                                         <td>{page.status ? (
@@ -77,7 +76,7 @@ export function PagesPage()
                                         ) : (
                                             <span className="badge text-bg-warning">No</span>
                                         )}</td>
-                                        <td>{page.created_at}</td>
+                                        <td>{datetimeFormat(page.created_at)}</td>
                                         <td>
                                             <Link to={`edit/${page.id}`} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></Link>
 
