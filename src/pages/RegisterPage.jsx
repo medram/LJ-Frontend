@@ -1,5 +1,5 @@
 import { Formik, useFormik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import SuperButton from "../components/SuperBotton";
 import Switch from "../components/Switch";
 import * as Yup from "yup"
@@ -8,11 +8,13 @@ import { useEffect } from "react";
 import { toastFormikErrors } from "../utils";
 import register from "../api/auth";
 import { toast } from "react-toastify";
+import PasswordInput from "../components/PasswordInput";
 
 
 export default function RegisterPage() {
     const navigate = useNavigate()
-
+    const [ searchParams ] = useSearchParams()
+    const redirectTo = searchParams.get('to')
 
     const formik = useFormik({
         initialValues: {
@@ -33,7 +35,10 @@ export default function RegisterPage() {
                 {
                     formik.resetForm()
                     toast.success(data.message)
-                    return navigate('/login')
+                    if (redirectTo)
+                        return navigate(`/login?to=${redirectTo}`)
+                    else
+                        return navigate('/login')
                 }
                 return toast.error(data.message)
             }).catch(error => {
@@ -63,7 +68,8 @@ export default function RegisterPage() {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">Password:</label>
-                                <input type="password" id="password" className="form-control form-control-lg" {...formik.getFieldProps("password")} />
+
+                                <PasswordInput id="password" className="form-control form-control-lg" placeholder="+6 character or more" {...formik.getFieldProps("password")} />
                             </div>
                             <div className="d-flex mb-3">
                                 <Switch onChange={(checked) => formik.setFieldValue("accept", checked)} name="accept" checked={formik.values.accept} size="small" className="mx-2 mt-1" />
@@ -71,7 +77,7 @@ export default function RegisterPage() {
                                 <label htmlFor="accept" className="form-label" onClick={() => formik.setFieldValue("accept", !formik.values.accept)} >I read and accept terms of use & privacy policy of the website.</label>
                             </div>
 
-                            <SuperButton type="submit" isLoading={formik.isSubmitting} disabled={!formik.values.accept || formik.isSubmitting} onClick={() => toastFormikErrors(formik.errors)} className="btn btn-primary btn-lg btn-block my-4">Sign In</SuperButton>
+                            <SuperButton type="submit" isLoading={formik.isSubmitting} disabled={!formik.values.accept || !formik.values.username || !formik.values.email || !formik.values.password || formik.isSubmitting} onClick={() => toastFormikErrors(formik.errors)} className="btn btn-primary btn-lg btn-block my-4">Sign In</SuperButton>
                         </form>
                         <span>Already Have an account? <Link to="/login">Sign In</Link></span>
                     </div>
