@@ -43,3 +43,15 @@ export function uploadFiles(uri, files, { onUploadProgress }) {
         onUploadProgress
     })
 }
+
+export async function getPlans()
+{
+    const req = await axiosApi.get("/plans")
+    return req.data
+}
+
+export async function getAvailablePaymentMethods()
+{
+    const req = await axiosApi.get("/payment-methods")
+    return req.data
+}

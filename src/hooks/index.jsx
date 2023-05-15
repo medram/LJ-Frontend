@@ -1,6 +1,6 @@
 import { useContext, useEffect, useReducer, useState } from "react"
 import { useQuery } from "react-query"
-import { getDashboardSettings, getSettings } from "../api"
+import { getAvailablePaymentMethods, getDashboardSettings, getPlans, getSettings } from "../api"
 import StoreContext from "../context/StoreContext"
 import { getDashboardPlans } from "../api/admin"
 
@@ -59,6 +59,8 @@ export function useSettings()
     return { ...rest, settings }
 }
 
+//############################### DASHBOARD HOOKS ######################################
+
 export function useDashboardSettings() {
     const { data, ...rest } = useQuery("admin.settings", getDashboardSettings, { staleTime: Infinity })
 
@@ -79,10 +81,39 @@ export function useDashboardPlan(planId)
     return { ...rest, plan }
 }
 
+//############################### COMMON HOOKS ######################################
 
+export function usePlans()
+{
+    const { data, ...rest } = useQuery("plans", getPlans, { staleTime: Infinity })
+    const plans = data?.plans
+    const monthlyPlans = plans?.filter(plan => plan.billing_cycle === "monthly")
+    const yearlyPlans = plans?.filter(plan => plan.billing_cycle === "yearly")
 
+    return { ...rest, plans, monthlyPlans, yearlyPlans }
+}
 
+export function usePlan(id) {
+    const [plan, setPlan] = useState(null)
+    const { plans, ...rest } = usePlans()
 
+    useEffect(() => {
+        if (plans?.length)
+        {
+            const [ plan ] = plans?.filter(plan => plan.id == id)
+            setPlan(plan)
+        }
+    }, [plans])
+
+    return { ...rest, plan }
+}
+
+export function useAvailablePaymentMethods()
+{
+    const { data, ...rest } = useQuery("available_payment_methods", getAvailablePaymentMethods)
+
+    return { ...rest, paymentMethods: data?.payment_methods }
+}
 
 // export function useTheme() {
 //     const { theme, dispatch } = useContext(StoreContext)

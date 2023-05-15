@@ -41,7 +41,7 @@ export default function AddPlanForm({ close }) {
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Name is required"),
-            description: Yup.string(),
+            description: Yup.string().nullable(),
             price: Yup.number("Price must be a number."),
             is_popular: Yup.boolean("Popular field must be boolean"),
             is_free: Yup.boolean("Free field must be boolean"),

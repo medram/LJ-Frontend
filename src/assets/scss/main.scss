@@ -250,3 +250,27 @@ footer {
         margin-bottom: 1em;
     }
 }
+
+/*======================= payment-method =========================*/
+
+.payment-method {
+    border-radius: 10px;
+    border: 1px solid #EEE;
+    padding: 1em;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payment-method:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.payment-method.active {
+    outline: 3px solid lighten($blue, 20%);
+}
+
+.payment-method > input[type=radio] {
+    margin: 0;
+}
