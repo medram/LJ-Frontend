@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify"
 
 import * as Yup from "yup"
@@ -14,6 +14,9 @@ import BasePage from "./layouts/BasePage";
 
 export default function LoginPage() {
     const { Authenticate } = useAuth()
+    const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
+    const redirectTo = searchParams.get('to')
 
     const formik = useFormik({
         initialValues: {
@@ -27,7 +30,11 @@ export default function LoginPage() {
         onSubmit: (values) => {
             Authenticate(values.email, values.password).then(data => {
                 if (!data.errors)
+                {
                     toast.success(data.message)
+                    if (redirectTo)
+                        return navigate(redirectTo)
+                }
                 else
                     toast.error(data.message)
 
