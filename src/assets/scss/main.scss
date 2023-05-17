@@ -268,7 +268,8 @@ footer {
 }
 
 .payment-method.active {
-    outline: 3px solid lighten($blue, 20%);
+    outline: 2px solid lighten($blue, 20%);
+    background-color: lighten($blue, 88%);
 }
 
 .payment-method > input[type=radio] {

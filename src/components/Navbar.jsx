@@ -11,10 +11,11 @@ export default function Navbar()
     const { isLoading, settings } = useSettings()
     const { isAuthenticated, user } = useUser()
 
-    if (isLoading)
+    if (isLoading || !Object.keys(settings).length)
     {
         return <SectionLoading center={true} />
     }
+
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
