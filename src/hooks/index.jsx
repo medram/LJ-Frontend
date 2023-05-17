@@ -54,9 +54,9 @@ export function usePersistedReducer(reducer, initialValues) {
 
 export function useSettings()
 {
-    const { data: settings, ...rest } = useQuery("settings", getSettings, {staleTime: Infinity})
+    const { data, ...rest } = useQuery("settings", getSettings, { staleTime: Infinity })
 
-    return { ...rest, settings }
+    return { ...rest, settings: data?.settings || {} }
 }
 
 //############################### DASHBOARD HOOKS ######################################
