@@ -5,7 +5,7 @@ export async function getSettings()
 {
     const req = await axiosApi.get("/settings")
 
-    return req.data.settings
+    return req.data
 }
 
 export async function getDashboardSettings()
