@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 import { usePlans, useSettings } from "../hooks"
 import SectionLoading from "./SectionLoading"
-import Switch from "./Switch"
 import { useUser } from "../hooks/auth"
 
 
