@@ -30,11 +30,11 @@ export default function PricingCards({ yearly })
                         <div className="text-center">{plan.description}</div>
                         <div className="pricing-body">
                             <ul>
-                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.pdfs}</b> PDFs</li>
-                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.pdf_pages}</b> pages/pdf (max)</li>
-                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Max PDF size <b>{plan.pdf_size}MB/pdf</b>
+                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.pdfs ? plan.pdfs : "Unlimited"}</b> PDFs</li>
+                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.pdf_pages ? plan.pdf_pages : "Unlimited"}</b> pages/pdf (max)</li>
+                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Max PDF size: <b>{plan.pdf_size ? plan.pdf_size : "Unlimited "}MB/pdf</b>
                                 </li>
-                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.questions}</b> PDF Questions</li>
+                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.questions ? plan.questions : "Unlimited"}</b> PDF Questions</li>
                                 {plan.features?.split("\n")?.map((feature, i) => {
                                     return <li key={i}><FontAwesomeIcon icon={faCheck} /> {feature}</li>
                                 })}

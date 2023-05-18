@@ -89,7 +89,7 @@ export default function AddPlanForm({ close }) {
             <label htmlFor="price">Price (in {settings?.CURRENCY}):</label>
             <div className="input-group mb-4">
                 <span className="input-group-text">{settings?.CURRENCY_SYMBOL}</span>
-                <input type="number" className="form-control" disabled={formik.values.is_free} placeholder="e.g. 5.99" id="price" {...formik.getFieldProps("price")} min={0} />
+                <input type="number" className="form-control" disabled={formik.values.is_free} placeholder="e.g. 5.99" id="price" {...formik.getFieldProps("price")} min={0} step={0.01} />
             </div>
 
             <div className="mb-4">
@@ -127,7 +127,7 @@ export default function AddPlanForm({ close }) {
 
             <div className="mb-4">
                 <label htmlFor="pdf_size">Max PDF size (in MB) <small>(0 = unlimited)</small>:</label>
-                <input type="number" className="form-control" placeholder="e.g. 10" id="pdf_size" {...formik.getFieldProps("pdf_size")} min={0} />
+                <input type="number" className="form-control" placeholder="e.g. 10" id="pdf_size" {...formik.getFieldProps("pdf_size")} min={0} step={0.1} />
             </div>
 
             <div className="mb-4">
