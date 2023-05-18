@@ -143,11 +143,11 @@ export default function PaymentMethodsPage()
                                 </span>
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="stripe-public-key">Strip Public Key:</label>
+                                <label htmlFor="stripe-public-key">Stripe Public Key:</label>
                                 <input type="text" className="form-control" id="stripe-public-key" {...formik.getFieldProps("PM_STRIP_PUBLIC_KEY")} />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="stripe-private-key">Strip Private Key:</label>
+                                <label htmlFor="stripe-private-key">Stripe Private Key:</label>
                                 <PasswordInput id="stripe-private-key" {...formik.getFieldProps("PM_STRIP_PRIVATE_KEY")} />
                             </div>
                             <div className="d-flex">
