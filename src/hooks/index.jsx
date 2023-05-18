@@ -85,7 +85,7 @@ export function useDashboardPlan(planId)
 
 export function usePlans()
 {
-    const { data, ...rest } = useQuery("plans", getPlans, { staleTime: Infinity })
+    const { data, ...rest } = useQuery("plans", getPlans, { staleTime: 1000 * 60 })
     const plans = data?.plans
     const monthlyPlans = plans?.filter(plan => plan.billing_cycle === "monthly")
     const yearlyPlans = plans?.filter(plan => plan.billing_cycle === "yearly")

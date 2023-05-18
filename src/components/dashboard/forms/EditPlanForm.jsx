@@ -12,6 +12,7 @@ import Switch from "../../Switch"
 import Select from "react-select";
 import { useDashboardPlan, useSettings } from "../../../hooks";
 import SectionLoading from "../../SectionLoading";
+import { useCallback, useEffect } from "react";
 
 
 const BILLING_CYCLE_OPTIONS = [
@@ -25,23 +26,27 @@ export default function EditPlanForm({ close, planId }) {
     const { settings } = useSettings()
     const { isLoading, isError, error, plan } = useDashboardPlan(planId)
 
+    // fixing null values
+    plan.description = plan?.description == null ? "" : plan?.description
+    plan.features = plan?.features == null ? "" : plan?.features
+
+
     const formik = useFormik({
-        initialValues: {
-            ...plan
-        },
+        initialValues: {...plan},
         validationSchema: Yup.object({
             name: Yup.string().required("Name is required"),
             description: Yup.string().nullable(),
             price: Yup.number("Price must be a number."),
+            billing_cycle: Yup.string().oneOf([plan?.billing_cycle], "Billing Cycle can't be changed!"),
             is_popular: Yup.boolean("Popular field must be boolean"),
             is_free: Yup.boolean("Free field must be boolean"),
-            billing_cycle: Yup.string(),
             status: Yup.boolean("Status field must be boolean"),
             pdfs: Yup.number("Pdfs field must be a number."),
             pdf_size: Yup.number("Pdf Size field must be a number."),
             pdf_pages: Yup.number("Pdf Pages field must be a number."),
             questions: Yup.number("Questions field must be a number.")
         }),
+        enableReinitialize: true,
         onSubmit: (values) => {
 
             editPlan(plan.id, values).then((data) => {
@@ -62,10 +67,14 @@ export default function EditPlanForm({ close, planId }) {
         }
     })
 
+
     if (isLoading && !Object.keys(plan).length)
     {
         return <SectionLoading center={true} />
     }
+
+    const defaultBillingCycle = formik.values.billing_cycle === "monthly" ? BILLING_CYCLE_OPTIONS[0] : BILLING_CYCLE_OPTIONS[1]
+
 
     return (
         <form onSubmit={formik.handleSubmit} autoComplete="off">
@@ -87,23 +96,29 @@ export default function EditPlanForm({ close, planId }) {
 
             <div className="mb-4">
                 <label htmlFor="billing_cycle">Billing Cycle:</label>
-                <Select options={BILLING_CYCLE_OPTIONS} isSearchable={false} defaultValue={BILLING_CYCLE_OPTIONS[0]} id="billing_cycle" onChange={(option) => formik.setFieldValue("billing_cycle", option.value || BILLING_CYCLE_OPTIONS[0].value)} />
+                <Select options={BILLING_CYCLE_OPTIONS} isSearchable={false} defaultValue={defaultBillingCycle} id="billing_cycle" isDisabled={true} />
             </div>
 
             <div className="d-flex mb-3">
-                <Switch onChange={(checked) => formik.setFieldValue("is_free", checked)} name="accept" checked={formik.values.is_free} size="small" className="mx-2 mt-1" />
+                <Switch onChange={(checked) => {
+                    formik.setFieldValue("is_free", checked)
+                    formik.setFieldValue("price", 0)
+                    }} name="accept" checked={!!formik.values.is_free} size="small" className="mx-2 mt-1" />
 
-                <label htmlFor="is_free" className="form-label" onClick={() => formik.setFieldValue("is_free", !formik.values.is_free)} >Free plan!</label>
+                <label htmlFor="is_free" className="form-label" onClick={() => {
+                    formik.setFieldValue("is_free", !formik.values.is_free)
+                    formik.setFieldValue("price", 0)
+                    }} >Free plan!</label>
             </div>
 
             <div className="d-flex mb-3">
-                <Switch onChange={(checked) => formik.setFieldValue("is_popular", checked)} name="accept" checked={formik.values.is_popular} size="small" className="mx-2 mt-1" />
+                <Switch onChange={(checked) => formik.setFieldValue("is_popular", checked)} name="accept" checked={!!formik.values.is_popular} size="small" className="mx-2 mt-1" />
 
                 <label htmlFor="is_popular" className="form-label" onClick={() => formik.setFieldValue("is_popular", !formik.values.is_popular)} >set as popular (show popular mark)!</label>
             </div>
 
             <div className="d-flex mb-3">
-                <Switch onChange={(checked) => formik.setFieldValue("status", checked)} name="accept" checked={formik.values.status} size="small" className="mx-2 mt-1" />
+                <Switch onChange={(checked) => formik.setFieldValue("status", checked)} name="accept" checked={!!formik.values.status} size="small" className="mx-2 mt-1" />
 
                 <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("status", !formik.values.status)} >Status</label>
             </div>

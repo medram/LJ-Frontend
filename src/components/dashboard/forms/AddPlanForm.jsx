@@ -98,9 +98,15 @@ export default function AddPlanForm({ close }) {
             </div>
 
             <div className="d-flex mb-3">
-                <Switch onChange={(checked) => formik.setFieldValue("is_free", checked)} name="accept" checked={formik.values.is_free} size="small" className="mx-2 mt-1" />
+                <Switch onChange={(checked) => {
+                    formik.setFieldValue("is_free", checked)
+                    formik.setFieldValue("price", 0)
+                    }} name="accept" checked={formik.values.is_free} size="small" className="mx-2 mt-1" />
 
-                <label htmlFor="is_free" className="form-label" onClick={() => formik.setFieldValue("is_free", !formik.values.is_free)} >Free plan!</label>
+                <label htmlFor="is_free" className="form-label" onClick={() => {
+                    formik.setFieldValue("is_free", !formik.values.is_free)
+                    formik.setFieldValue("price", 0)
+                    }} >Free plan!</label>
             </div>
 
             <div className="d-flex mb-3">

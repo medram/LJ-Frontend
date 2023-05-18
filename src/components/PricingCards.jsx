@@ -32,7 +32,7 @@ export default function PricingCards({ yearly })
                             <ul>
                                 <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.pdfs ? plan.pdfs : "Unlimited"}</b> PDFs</li>
                                 <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.pdf_pages ? plan.pdf_pages : "Unlimited"}</b> pages/pdf (max)</li>
-                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Max PDF size: <b>{plan.pdf_size ? plan.pdf_size : "Unlimited "}MB/pdf</b>
+                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Max PDF size: <b>{plan.pdf_size ? plan.pdf_size + "MB/pdf" : "Unlimited"}</b>
                                 </li>
                                 <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.questions ? plan.questions : "Unlimited"}</b> PDF Questions</li>
                                 {plan.features?.split("\n")?.map((feature, i) => {

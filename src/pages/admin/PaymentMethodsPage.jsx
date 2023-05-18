@@ -11,6 +11,7 @@ import { useEffect } from "react"
 import { saveDashboardSettings } from "../../api/admin"
 import { toast } from "react-toastify"
 import { useQueryClient } from "react-query"
+import PasswordInput from "../../components/PasswordInput"
 
 
 export default function PaymentMethodsPage()
@@ -42,6 +43,7 @@ export default function PaymentMethodsPage()
             PM_STRIP_STATUS: Yup.boolean(),
         }),
         onSubmit: (values) => {
+
             if (values.PM_PAYPAL_STATUS && (!values.PM_PAYPAL_CLIENT_ID.length || !values.PM_PAYPAL_CLIENT_SECRET.length))
             {
                 toast.warning("Please fill up PayPal Client ID and Secret fields first before activation!")
@@ -113,12 +115,13 @@ export default function PaymentMethodsPage()
                                 </span>
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="title">Client ID:</label>
-                                <input type="text" className="form-control" id="title" {...formik.getFieldProps("PM_PAYPAL_CLIENT_ID")} />
+                                <label htmlFor="client-id">Client ID:</label>
+                                <input type="text" className="form-control" id="client-id" {...formik.getFieldProps("PM_PAYPAL_CLIENT_ID")} />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="title">Client Secret:</label>
-                                <input type="text" className="form-control" id="title" {...formik.getFieldProps("PM_PAYPAL_CLIENT_SECRET")} />
+                                <label htmlFor="client-secret">Client Secret:</label>
+
+                                <PasswordInput id="client-secret" {...formik.getFieldProps("PM_PAYPAL_CLIENT_SECRET")} />
                             </div>
                             <div className="d-flex">
                                 <Switch onChange={(checked) => formik.setFieldValue("PM_PAYPAL_SANDBOX", checked)} name="accept" checked={formik.values.PM_PAYPAL_SANDBOX} size="small" className="mx-2 mt-1" />
@@ -140,12 +143,12 @@ export default function PaymentMethodsPage()
                                 </span>
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="title">Strip Public Key:</label>
-                                <input type="text" className="form-control" id="title" {...formik.getFieldProps("PM_STRIP_PUBLIC_KEY")} />
+                                <label htmlFor="stripe-public-key">Strip Public Key:</label>
+                                <input type="text" className="form-control" id="stripe-public-key" {...formik.getFieldProps("PM_STRIP_PUBLIC_KEY")} />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="title">Strip Private Key:</label>
-                                <input type="text" className="form-control" id="title" {...formik.getFieldProps("PM_STRIP_PRIVATE_KEY")} />
+                                <label htmlFor="stripe-private-key">Strip Private Key:</label>
+                                <PasswordInput id="stripe-private-key" {...formik.getFieldProps("PM_STRIP_PRIVATE_KEY")} />
                             </div>
                             <div className="d-flex">
                                 <Switch onChange={(checked) => formik.setFieldValue("PM_STRIP_SANDBOX", checked)} name="accept" checked={formik.values.PM_STRIP_SANDBOX} size="small" className="mx-2 mt-1" />
