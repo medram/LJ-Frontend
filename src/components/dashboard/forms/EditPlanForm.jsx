@@ -32,14 +32,25 @@ export default function EditPlanForm({ close, planId }) {
 
 
     const formik = useFormik({
-        initialValues: {...plan},
+        initialValues: {
+            "name": plan.name,
+            "description": plan.description,
+            "price": plan.price,
+            "billing_cycle": plan.billing_cycle,
+            "is_popular": plan.is_popular,
+            "is_free": plan.is_free,
+            "status": plan.status,
+            "pdfs": plan.pdfs,
+            "pdf_size": plan.pdf_size,
+            "pdf_pages": plan.pdf_pages,
+            "questions": plan.questions,
+        },
         validationSchema: Yup.object({
             name: Yup.string().required("Name is required"),
             description: Yup.string().nullable(),
-            price: Yup.number("Price must be a number."),
+            price: Yup.number("Price must be a number.").moreThan(0, "The Plan can't be free, the price must be more than 0!"),
             billing_cycle: Yup.string().oneOf([plan?.billing_cycle], "Billing Cycle can't be changed!"),
             is_popular: Yup.boolean("Popular field must be boolean"),
-            is_free: Yup.boolean("Free field must be boolean"),
             status: Yup.boolean("Status field must be boolean"),
             pdfs: Yup.number("Pdfs field must be a number."),
             pdf_size: Yup.number("Pdf Size field must be a number."),
@@ -91,7 +102,7 @@ export default function EditPlanForm({ close, planId }) {
             <label htmlFor="price">Price (in {settings?.CURRENCY}):</label>
             <div className="input-group mb-4">
                 <span className="input-group-text">{settings?.CURRENCY_SYMBOL}</span>
-                <input type="number" className="form-control" disabled={formik.values.is_free} placeholder="e.g. 5.99" id="price" {...formik.getFieldProps("price")} min={0} step={0.01} />
+                <input type="number" className="form-control" disabled={formik.values.is_free} placeholder="e.g. 5.99" id="price" {...formik.getFieldProps("price")} min={0.01} step={0.01} />
             </div>
 
             <div className="mb-4">
@@ -100,15 +111,9 @@ export default function EditPlanForm({ close, planId }) {
             </div>
 
             <div className="d-flex mb-3">
-                <Switch onChange={(checked) => {
-                    formik.setFieldValue("is_free", checked)
-                    formik.setFieldValue("price", 0)
-                    }} name="accept" checked={!!formik.values.is_free} size="small" className="mx-2 mt-1" />
+                <Switch name="is_free" checked={!!formik.values.is_free} disabled={true} size="small" className="mx-2 mt-1" onChange={() => {}} />
 
-                <label htmlFor="is_free" className="form-label" onClick={() => {
-                    formik.setFieldValue("is_free", !formik.values.is_free)
-                    formik.setFieldValue("price", 0)
-                    }} >Free plan!</label>
+                <label htmlFor="is_free" className="form-label text-muted" >Free plan!</label>
             </div>
 
             <div className="d-flex mb-3">
