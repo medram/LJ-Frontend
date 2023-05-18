@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 import { usePlans, useSettings } from "../hooks"
 import SectionLoading from "./SectionLoading"
 import { useUser } from "../hooks/auth"
+import SuperButton from "./SuperBotton"
+import { useCallback } from "react"
 
 
 export default function PricingCards({ yearly })
@@ -13,12 +15,18 @@ export default function PricingCards({ yearly })
 
     const { isAuthenticated } = useUser()
 
+    const handlePlanActivation = useCallback(plan_id => {
+        console.log("clicked")
+    })
+
+
     if (isLoading || !Object.keys(settings).length || isPlansLoading)
     {
         return <SectionLoading center={true} />
     }
 
     const plansToRender = yearly ? yearlyPlans : monthlyPlans
+
 
     return (
         <div className="pricing-section">
@@ -40,7 +48,13 @@ export default function PricingCards({ yearly })
                                 })}
                             </ul>
                         </div>
-                        <Link to={isAuthenticated ? `../checkout/${plan.id}` : "../register?to=/pricing"} className="btn btn-primary btn-lg d-block" >Order Now</Link>
+                        {isAuthenticated && (plan.is_free || plan.price == 0) ? (
+                            <SuperButton onClick={() => handlePlanActivation(plan.id)} className="btn btn-primary btn-lg w-100" >Subscribe Now</SuperButton>
+                        ) : (
+                            <Link to={isAuthenticated ? `../checkout/${plan.id}` : "../login?to=/pricing"} className="btn btn-primary btn-lg d-block" >
+                                    {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Order Now"}
+                            </Link>
+                        )}
                     </div>
                 )
             })}
