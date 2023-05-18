@@ -2,7 +2,7 @@ import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import Select from "react-select"
-import { AVAILABLE_TIMEZONES_OPTIONS, toastFormikErrors } from "../../../utils";
+import { AVAILABLE_TIMEZONES_OPTIONS, CURRENCY_OPTIONS, toastFormikErrors } from "../../../utils";
 import Dropzone from "../../Dropzone"
 import axiosApi from "../../../api/axiosApi";
 import { uploadFile } from "../../../api";
@@ -100,8 +100,11 @@ export default function GeneralSettings({ settings })
         }
     })
 
+
+    const defaultCurrency = { label: formik.values.CURRENCY, value: formik.values.CURRENCY }
     const defaultTimezone = { label: formik.values.TIMEZONE, value: formik.values.TIMEZONE }
     const defaultCurrencyPosition = { label: formik.values.CURRENCY_POSITION, value: formik.values.CURRENCY_POSITION }
+
 
     return (
         <>
@@ -113,12 +116,12 @@ export default function GeneralSettings({ settings })
                 </div>
                 <div className="row">
                     <div className="mb-4 col-md-6">
-                        <label htmlFor="currency">Logo:</label>
+                        <label htmlFor="logo">Logo:</label>
                         <input type="hidden" {...formik.getFieldProps("SITE_LOGO")} />
                         <Dropzone onUpload={onUpload} onError={onError} name="SITE_LOGO" extraOnUploadProps={{formik}} />
                     </div>
                     <div className="mb-4 col-md-6">
-                        <label htmlFor="currency_symbol">Favicon:</label>
+                        <label htmlFor="favicon">Favicon:</label>
                         <input type="hidden" {...formik.getFieldProps("SITE_FAVICON")} />
                         <Dropzone onUpload={onUpload} onError={onError} name="SITE_FAVICON" extraOnUploadProps={{ formik }} />
                     </div>
@@ -137,7 +140,8 @@ export default function GeneralSettings({ settings })
                 <div className="row">
                     <div className="mb-4 col-md-4">
                         <label htmlFor="currency">Currency:</label>
-                        <input type="text" className="form-control" placeholder="e.g. USD" id="currency" {...formik.getFieldProps("CURRENCY")} onChange={(e) => formik.setFieldValue("CURRENCY", e.target.value?.toUpperCase())} />
+
+                        <Select options={CURRENCY_OPTIONS} defaultValue={defaultCurrency} onChange={(option) => formik.setFieldValue("CURRENCY", option.value)} />
                     </div>
                     <div className="mb-4 col-md-4">
                         <label htmlFor="currency_symbol">Currency symbol:</label>
