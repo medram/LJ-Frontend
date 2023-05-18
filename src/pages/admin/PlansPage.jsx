@@ -13,6 +13,7 @@ import CustomOffCanvas from "../../components/CustomOffCanvas";
 import AddPlanForm from "../../components/dashboard/forms/AddPlanForm";
 import EditPlanForm from "../../components/dashboard/forms/EditPlanForm";
 import { datetimeFormat } from "../../utils";
+import ManageTrialForm from "../../components/dashboard/forms/ManageTrialForm";
 
 
 export default function PlansPage() {
@@ -21,6 +22,7 @@ export default function PlansPage() {
     const { isLoading, isError, error, plans } = useDashboardPlans()
     const { isOpen, open, close, offCanvasProps } = useOffCanvas()
     const { isOpen: isEditOpen, open: editOpen, close: editClose, offCanvasProps: editPlanOffCanvasProps } = useOffCanvas()
+    const { isOpen: isTrialOpen, open: trialOpen, close: trialClose, offCanvasProps: trialOffCanvasProps } = useOffCanvas()
     const { isLoading: settingsIsLoading, settings } = useSettings()
     const [ planToEdit, setPlanToEdit ] = useState(0)
 
@@ -68,8 +70,10 @@ export default function PlansPage() {
         <h1 className="mb-3">Plans</h1>
         <div className="d-flex flex-row-reverse gap-3 mb-4">
             <button className="btn btn-primary" onClick={open}><FontAwesomeIcon icon={faPlus} /> New Plan</button>
+
             <Link to="../payment-methods" className="btn btn-primary"><FontAwesomeIcon icon={faCreditCard} /> Manage Payment methods</Link>
-            <Link to="#" className="btn btn-primary"><FontAwesomeIcon icon={faGear} /> Manage Free Trial / demo</Link>
+
+            {/* <button className="btn btn-primary" onClick={trialOpen} ><FontAwesomeIcon icon={faGear} /> Manage Free Trial / demo</button> */}
         </div>
 
         <div className="row">
@@ -172,5 +176,10 @@ export default function PlansPage() {
         <CustomOffCanvas title="Edit Plan" placement="end" {...editPlanOffCanvasProps}>
             <EditPlanForm close={editClose} planId={planToEdit} />
         </CustomOffCanvas>
+
+        {/* <CustomOffCanvas title="Manage Free Trial / demo" placement="end" {...trialOffCanvasProps}>
+            <ManageTrialForm close={trialClose} />
+        </CustomOffCanvas> */}
+
     </>
 }

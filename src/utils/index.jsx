@@ -1,3 +1,4 @@
+import * as cc from "currency-codes"
 import { toast } from "react-toastify";
 
 
@@ -21,3 +22,10 @@ export function datetimeFormat(datetime)
 {
     return new Date(datetime).toLocaleString()
 }
+
+export function currencyList()
+{
+    return cc.codes()
+}
+
+export const CURRENCY_OPTIONS = currencyList().map(code => ({ label: code, value: code }))
