@@ -37,22 +37,31 @@ export default function AddPlanForm({ close }) {
             pdfs: 0,
             pdf_size: 0,
             pdf_pages: 0,
-            questions: 0
+            questions: 0,
+            features: "",
+            paypal_plan_id: "",
+            stripe_plan_id: "",
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Name is required"),
             description: Yup.string().nullable(),
             price: Yup.number("Price must be a number."),
+            billing_cycle: Yup.string().oneOf(["monthly", "yearly"], "Invalid Billing Cycle!"),
             is_popular: Yup.boolean("Popular field must be boolean"),
-            is_free: Yup.boolean("Free field must be boolean"),
-            billing_cycle: Yup.string(),
+            is_free: Yup.boolean("Free Plan field must be boolean"),
             status: Yup.boolean("Status field must be boolean"),
             pdfs: Yup.number("Pdfs field must be a number."),
             pdf_size: Yup.number("Pdf Size field must be a number."),
             pdf_pages: Yup.number("Pdf Pages field must be a number."),
-            questions: Yup.number("Questions field must be a number.")
+            questions: Yup.number("Questions field must be a number."),
+            features: Yup.string().nullable(),
+            paypal_plan_id: Yup.string().nullable(),
+            stripe_plan_id: Yup.string().nullable()
         }),
         onSubmit: (values) => {
+
+            if (!values.paypal_plan_id && !values.stripe_plan_id)
+                return toast.warning("PayPal or Stripe subscription plan ID required!")
 
             addPlan(values).then((data) => {
                 if (data.errors === false) {
@@ -116,10 +125,22 @@ export default function AddPlanForm({ close }) {
             </div>
 
             <div className="d-flex mb-3">
-                <Switch onChange={(checked) => formik.setFieldValue("status", checked)} name="accept" checked={formik.values.status} size="small" className="mx-2 mt-1" />
+                <Switch onChange={(checked) => formik.setFieldValue("status", checked)} name="status" checked={formik.values.status} size="small" className="mx-2 mt-1" />
 
                 <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("status", !formik.values.status)} >Status</label>
             </div>
+            <hr />
+
+            <div className="mb-4">
+                <label htmlFor="paypal-plan-id">PayPal Subscription Plan ID <small><i className="text-danger">(required for PayPal)</i></small>:</label>
+                <input type="text" className="form-control" placeholder="e.g. P-6C235282FB245950NMRTE5II" id="paypal-plan-id" {...formik.getFieldProps("paypal_plan_id")} />
+            </div>
+
+            <div className="mb-4">
+                <label htmlFor="stripe-plan-id">Stripe Subscription Plan ID <small><i className="text-danger">(required for Stripe)</i></small>:</label>
+                <input type="text" className="form-control" placeholder="e.g. price_1N9SeE2eZvKYlo2CJwmvOCr6" id="stripe-plan-id" {...formik.getFieldProps("stripe_plan_id")} />
+            </div>
+
             <hr />
             <div className="mb-4">
                 <label htmlFor="pdfs">Max PDFs <small>(0 = unlimited)</small>:</label>
@@ -139,6 +160,13 @@ export default function AddPlanForm({ close }) {
             <div className="mb-4">
                 <label htmlFor="questions">Max questions <small>(0 = unlimited)</small>:</label>
                 <input type="number" className="form-control" placeholder="e.g. 10" id="questions" {...formik.getFieldProps("questions")} min={0} onChange={(e) => formik.setFieldValue('questions', parseInt(e.target.value))} />
+            </div>
+
+            <hr />
+
+            <div className="mb-4">
+                <label htmlFor="features">More Plan Features <small><i>(feature per line)</i></small>:</label>
+                <textarea className="form-control" placeholder="e.g. 24/7 Support." id="features" {...formik.getFieldProps("features")} rows={3} onChange={(e) => formik.setFieldValue('features', e.target.value)} ></textarea>
             </div>
 
             <SuperButton isLoading={formik.isSubmitting} type="submit" className="btn btn-primary btn-lg btn-block" onClick={() => toastFormikErrors(formik.errors)}><FontAwesomeIcon icon={faPlus} /> Add</SuperButton>

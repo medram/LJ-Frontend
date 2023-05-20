@@ -30,8 +30,6 @@ export default function EditPlanForm({ close, planId }) {
     plan.description = plan?.description == null ? "" : plan?.description
     plan.features = plan?.features == null ? "" : plan?.features
 
-    const freeCouldBeEdited = !plan.paypal_plan_id && !plan.stripe_plan_id
-
 
     const formik = useFormik({
         initialValues: {
@@ -46,22 +44,31 @@ export default function EditPlanForm({ close, planId }) {
             "pdf_size": plan.pdf_size,
             "pdf_pages": plan.pdf_pages,
             "questions": plan.questions,
+            "features": plan.features,
+            "paypal_plan_id": plan.paypal_plan_id,
+            "stripe_plan_id": plan.stripe_plan_id,
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Name is required"),
             description: Yup.string().nullable(),
-            price: freeCouldBeEdited ? Yup.number("Price must be a number.") : Yup.number("Price must be a number.").moreThan(0, "The Plan can't be free, the price must be more than 0!"),
-            billing_cycle: Yup.string().oneOf([plan?.billing_cycle], "Billing Cycle can't be changed!"),
+            price: Yup.number("Price must be a number."),
+            billing_cycle: Yup.string().oneOf(["monthly", "yearly"], "Invalid Billing Cycle!"),
             is_popular: Yup.boolean("Popular field must be boolean"),
             is_free: Yup.boolean("Free Plan field must be boolean"),
             status: Yup.boolean("Status field must be boolean"),
             pdfs: Yup.number("Pdfs field must be a number."),
             pdf_size: Yup.number("Pdf Size field must be a number."),
             pdf_pages: Yup.number("Pdf Pages field must be a number."),
-            questions: Yup.number("Questions field must be a number.")
+            questions: Yup.number("Questions field must be a number."),
+            features: Yup.string().nullable(),
+            paypal_plan_id: Yup.string().nullable(),
+            stripe_plan_id: Yup.string().nullable()
         }),
         enableReinitialize: true,
         onSubmit: (values) => {
+
+            if (!values.paypal_plan_id && !values.stripe_plan_id)
+                return toast.warning("PayPal or Stripe subscription plan ID required!")
 
             editPlan(plan.id, values).then((data) => {
                 if (data.errors === false) {
@@ -98,37 +105,39 @@ export default function EditPlanForm({ close, planId }) {
             </div>
 
             <div className="mb-4">
-                <label htmlFor="description">Description (optional):</label>
+                <label htmlFor="description">Heading (optional):</label>
                 <input type="text" className="form-control" id="slug" placeholder="e.g. The Best for Startups" {...formik.getFieldProps("description")} />
             </div>
 
             <label htmlFor="price">Price (in {settings?.CURRENCY}):</label>
             <div className="input-group mb-4">
                 <span className="input-group-text">{settings?.CURRENCY_SYMBOL}</span>
-                <input type="number" className="form-control" disabled={formik.values.is_free} placeholder="e.g. 5.99" id="price" {...formik.getFieldProps("price")} min={freeCouldBeEdited ? 0 : 0.01} step={0.01} />
+                <input type="number" className="form-control" disabled={formik.values.is_free} placeholder="e.g. 5.99" id="price" {...formik.getFieldProps("price")} onChange={e => {
+                    formik.setFieldValue("price", e.target.value)
+                    if (e.target.value == 0)
+                        formik.setFieldValue("is_free", true)
+                    else
+                        formik.setFieldValue("is_free", false)
+
+                }} min={0} step={0.01} />
             </div>
 
             <div className="mb-4">
                 <label htmlFor="billing_cycle">Billing Cycle:</label>
-                <Select options={BILLING_CYCLE_OPTIONS} isSearchable={false} defaultValue={defaultBillingCycle} id="billing_cycle" isDisabled={true} />
+                <Select options={BILLING_CYCLE_OPTIONS} isSearchable={false} defaultValue={defaultBillingCycle} id="billing_cycle" onChange={(option) => formik.setFieldValue("billing_cycle", option.value)} />
             </div>
 
-            {freeCouldBeEdited ? (
-                <div className="d-flex mb-3">
-                    <Switch name="is_free" checked={!!formik.values.is_free} size="small" className="mx-2 mt-1" onChange={() => {
-                        formik.setFieldValue("is_free", !formik.values.is_free)
-                        formik.setFieldValue("price", 0)
-                        }} />
+            <div className="d-flex mb-3">
+                <Switch name="is_free" checked={!!formik.values.is_free} size="small" className="mx-2 mt-1" onChange={() => {
+                    formik.setFieldValue("is_free", !formik.values.is_free)
+                    formik.setFieldValue("price", 0)
+                    }} />
 
-                    <label htmlFor="is_free" className="form-label" onClick={() => formik.setFieldValue("is_free", !formik.values.is_free)} >Free plan!</label>
-                </div>
-            ) : (
-                <div className="d-flex mb-3">
-                    <Switch name="is_free" checked={!!formik.values.is_free} disabled={true} size="small" className="mx-2 mt-1" onChange={() => {}} />
-
-                    <label htmlFor="is_free" className="form-label text-muted" >Free plan!</label>
-                </div>
-            )}
+                <label htmlFor="is_free" className="form-label" onClick={() => {
+                    formik.setFieldValue("is_free", !formik.values.is_free)
+                    formik.setFieldValue("price", 0)
+                    }} >Free plan!</label>
+            </div>
 
             <div className="d-flex mb-3">
                 <Switch onChange={(checked) => formik.setFieldValue("is_popular", checked)} name="accept" checked={!!formik.values.is_popular} size="small" className="mx-2 mt-1" />
@@ -141,6 +150,18 @@ export default function EditPlanForm({ close, planId }) {
 
                 <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("status", !formik.values.status)} >Status</label>
             </div>
+            <hr />
+
+            <div className="mb-4">
+                <label htmlFor="paypal-plan-id">PayPal Subscription Plan ID <small><i className="text-danger">(required for PayPal)</i></small>:</label>
+                <input type="text" className="form-control" placeholder="e.g. P-6C235282FB245950NMRTE5II" id="paypal-plan-id" {...formik.getFieldProps("paypal_plan_id")} />
+            </div>
+
+            <div className="mb-4">
+                <label htmlFor="stripe-plan-id">Stripe Subscription Plan ID <small><i className="text-danger">(required for Stripe)</i></small>:</label>
+                <input type="text" className="form-control" placeholder="e.g. price_1N9SeE2eZvKYlo2CJwmvOCr6" id="stripe-plan-id" {...formik.getFieldProps("stripe_plan_id")} />
+            </div>
+
             <hr />
             <div className="mb-4">
                 <label htmlFor="pdfs">Max PDFs <small>(0 = unlimited)</small>:</label>
@@ -160,6 +181,13 @@ export default function EditPlanForm({ close, planId }) {
             <div className="mb-4">
                 <label htmlFor="questions">Max questions <small>(0 = unlimited)</small>:</label>
                 <input type="number" className="form-control" placeholder="e.g. 10" id="questions" {...formik.getFieldProps("questions")} min={0} onChange={(e) => formik.setFieldValue('questions', parseInt(e.target.value))} />
+            </div>
+
+            <hr />
+
+            <div className="mb-4">
+                <label htmlFor="features">More Plan Features <small><i>(feature per line)</i></small>:</label>
+                <textarea className="form-control" placeholder="e.g. 24/7 Support." id="features" {...formik.getFieldProps("features")} rows={3} onChange={(e) => formik.setFieldValue('features', e.target.value)} ></textarea>
             </div>
 
             <SuperButton isLoading={formik.isSubmitting} type="submit" className="btn btn-primary btn-lg btn-block" onClick={() => toastFormikErrors(formik.errors)}>Update</SuperButton>
