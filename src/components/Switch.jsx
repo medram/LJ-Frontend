@@ -1,7 +1,8 @@
+import { memo } from "react";
 import ReactSwitch from "react-switch";
 
 
-export default function Switch(props)
+export default memo(function Switch(props)
 {
     let { size, ...rest } = props
 
@@ -13,4 +14,4 @@ export default function Switch(props)
     return (
         <ReactSwitch {...rest} />
     )
-}
+})

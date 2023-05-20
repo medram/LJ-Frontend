@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 
 import { useUser } from "../../hooks/auth";
 import DashboardLayout from "./DashboardLayout";
@@ -11,12 +11,10 @@ import "../../assets/scss/dashboard.scss"
 export default function AdminDashboardLayout()
 {
     const { isAuthenticated, isAdmin } = useUser()
-    const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!isAuthenticated || !isAdmin)
-            navigate("/login", { replace: true })
-    }, [isAuthenticated, isAdmin])
+
+    if (!isAuthenticated || !isAdmin)
+        return <Navigate to="/login" replace={true} />
 
     return (
         <DashboardLayout>

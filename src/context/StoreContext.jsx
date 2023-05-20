@@ -4,7 +4,6 @@ import reducer from "./reducer"
 
 const initialValues = {
     theme: "dark",
-    isAuthenticated: false,
     user: {}
 }
 

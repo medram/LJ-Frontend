@@ -1,9 +1,9 @@
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 
-export default function PasswordInput({ ...restProps })
+export default memo(function PasswordInput({ ...restProps })
 {
     const [show, setShow] = useState(false)
 
@@ -15,4 +15,4 @@ export default function PasswordInput({ ...restProps })
             </span>
         </div>
     )
-}
+})

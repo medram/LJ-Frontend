@@ -3,10 +3,10 @@ import { useSettings } from "../hooks";
 import { useUser } from "../hooks/auth";
 import Logo from "./Logo";
 import SectionLoading from "./SectionLoading";
+import { memo } from "react";
 
 
-
-export default function Navbar()
+export default memo(function Navbar()
 {
     const { isLoading, settings } = useSettings()
     const { isAuthenticated, user } = useUser()
@@ -56,4 +56,4 @@ export default function Navbar()
             </div>
         </nav>
     )
-}
+})

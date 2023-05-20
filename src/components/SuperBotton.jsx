@@ -1,6 +1,7 @@
+import { memo } from "react"
 
 
-export default function SuperButton(props)
+export default memo(function SuperButton(props)
 {
     let { isLoading = false, loadingText, children, spinnerClassName = "", ...rest } = props
 
@@ -16,4 +17,4 @@ export default function SuperButton(props)
             )}
         </button>
     )
-}
+})

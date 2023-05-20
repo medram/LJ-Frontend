@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify"
 
@@ -43,9 +43,9 @@ export default function LoginPage() {
         }
     });
 
-    const onClickSignIn = () => {
+    const onClickSignIn = useCallback(() => {
         toastFormikErrors(formik.errors)
-    }
+    }, [])
 
     return (
         <BasePage>
