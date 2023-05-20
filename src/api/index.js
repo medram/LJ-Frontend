@@ -55,3 +55,8 @@ export async function getAvailablePaymentMethods()
     const req = await axiosApi.get("/payment-methods")
     return req.data
 }
+
+export async function payNow(data) {
+    const req = await axiosApi.post("/checkout", data)
+    return req.data
+}

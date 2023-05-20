@@ -237,6 +237,12 @@ footer {
     border-width: 0.15em;
 }
 
+.spinner-border-sm {
+    border-width: 0.09em;
+    --bs-spinner-width: 1.3rem;
+    --bs-spinner-height: 1.3rem;
+}
+
 @media screen and (max-width: 768px)
 {
     .pricing-section {

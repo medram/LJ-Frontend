@@ -8,8 +8,10 @@ import PayPalIcon from "../components/icons/PayPalIcon";
 import StripIcon from "../components/icons/StripIcon";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShield, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
-import { useUser } from "../hooks/auth";
+import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
+import SuperButton from "../components/SuperBotton";
+import { toast } from "react-toastify";
+import { payNow } from "../api";
 
 
 export default function CheckoutPage()
@@ -19,17 +21,34 @@ export default function CheckoutPage()
     const { isLoading: isPlanLoading, plan } = usePlan(id)
     const { isLoading: isPaymentMethodsLoading, paymentMethods } = useAvailablePaymentMethods()
     const [ selectedPaymentMethod, setSelectedPaymentMethod ] = useState(null)
-    const { isAuthenticated } = useUser()
+    const [ isProcessingPayment, setProcessingPayment ] = useState(false)
 
-    if (isLoading || isPlanLoading)
+    const handlePayment = () => {
+        setProcessingPayment(true)
+        payNow({
+            gateway: selectedPaymentMethod,
+            type: "subscription",
+            id: parseInt(id)
+        }).then(data => {
+            if (data?.errors)
+                return toast.info(data.message)
+
+            console.log(data)
+            // Redirect to Paymet gateway.
+            //window.location.href = data.gateway_link
+        }).catch (err => {
+            toast.danger(err)
+        }).finally(() => {
+            setProcessingPayment(false)
+        })
+    }
+
+
+    if (isLoading || isPlanLoading || !Object.keys(plan).length)
     {
         return <SectionLoading center={true} />
     }
 
-    if (!isAuthenticated)
-    {
-        return <Navigate to={`/login?to=/checkout/${id}`} />
-    }
 
     return (
         <BasePage>
@@ -39,12 +58,15 @@ export default function CheckoutPage()
                     <div className="col-md-8">
                         <Card border="light mb-4 rounded-4 shadow-sm">
                             <Card.Body className="p-4">
-                                <Card.Title className="mb-5">PAYMENT METHODS</Card.Title>
+                                <Card.Title className="mb-4">PAYMENT METHODS</Card.Title>
 
                                 {(isPaymentMethodsLoading) ? (
                                     <SectionLoading center={true} />
                                 ) : (
-                                    <div className="row row-cols-1 row-cols-md-2 g-3">
+                                    <>
+                                    {!paymentMethods?.length ? <span>No available payment methods.</span> : <span>Select your favorite payment method:</span>}
+                                    <div className="row row-cols-1 row-cols-md-2 g-3 mt-2">
+
                                         {paymentMethods?.map((method, i) => {
                                             return <div className="col" key={i}>
                                                 <div onClick={() => setSelectedPaymentMethod(method.type)} className={["payment-method", selectedPaymentMethod === method.type && "active"].join(" ")}>
@@ -61,8 +83,8 @@ export default function CheckoutPage()
                                             </div>
                                         })}
 
-                                        {!paymentMethods?.length && <span>No available payment methods.</span>}
                                     </div>
+                                    </>
                                 )}
 
                             </Card.Body>
@@ -87,7 +109,7 @@ export default function CheckoutPage()
                                 </Card.Title>
                             </Card.Body>
                         </Card>
-                        <button className="btn btn-primary btn-lg btn-block">Pay Now</button>
+                        <SuperButton onClick={handlePayment} className="btn btn-primary btn-lg btn-block" isLoading={isProcessingPayment} disabled={!selectedPaymentMethod}>Pay Now</SuperButton>
 
                         <Card border="light" className="mb-4 rounded-4 shadow-sm mt-4">
                             <Card.Body className="p-4">
