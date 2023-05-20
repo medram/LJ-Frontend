@@ -1,42 +1,40 @@
-import { useEffect } from "react"
-import { useLocalStorage, useLocalStore } from "."
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { useLocalStorage, useLocalStore, useNaiveLocalStorage } from "."
 import { auth, logout } from "../api/auth"
 
 
 export function useAuth() {
-    const [isAuthenticated, setAuthenticated] = useLocalStore("isAuth", false)
     const [user, setUser] = useLocalStore("user", {})
-    const [token, setToken] = useLocalStorage("tk", "")
+    const [getToken, setToken] = useNaiveLocalStorage("tk", "")
+    const token = getToken()
 
-    useEffect(() => {
-        if (token == "")
+    useEffect(useCallback(() => {
+        if (token == "" && user?.id !== undefined)
         {
-            setAuthenticated(false)
+            setUser({})
         }
-    }, [token])
+    }, []))
 
-    const Authenticate = async (email, password) => {
+    const Authenticate = useCallback(async (email, password) => {
         let data = await auth(email, password)
 
         if (!data?.errors) {
             setUser(data.user)
-            setAuthenticated(true)
             setToken(data.token)
         }
 
         return data
-    }
+    }, [])
 
-    const Logout = async () => {
+    const Logout = useCallback(async () => {
         // to inform the database
         let data = await logout()
 
         setUser({})
-        setAuthenticated(false)
         setToken("")
-    }
+    }, [])
 
-    return { isAuthenticated, user, Authenticate, Logout, token }
+    return { user, Authenticate, Logout, token }
 }
 
 // export function useAuth()
@@ -73,6 +71,6 @@ export function useUser()
 {
     const { isAuthenticated, user } = useAuth()
 
-    return { isAuthenticated, isAdmin: user?.role == 1, user }
+    return { isAuthenticated: user?.id ? true : false, isAdmin: user?.role == 1, user }
 }
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useReducer, useState } from "react"
+import { useCallback, useContext, useEffect, useReducer, useState } from "react"
 import { useQuery } from "react-query"
 import { getAvailablePaymentMethods, getDashboardSettings, getPlans, getSettings } from "../api"
 import StoreContext, { useStore } from "../context/StoreContext"
@@ -25,6 +25,30 @@ export function useLocalStorage(key, value = null ) {
     }
 
     return [persistedValue, setPersistedValueDecorator]
+}
+
+
+export function useNaiveLocalStorage(key, value)
+{
+    const getter = useCallback(() => {
+        try {
+            let storedValue = localStorage.getItem(key)
+            if (storedValue != null)
+                return JSON.parse(storedValue)
+        } catch (error) {
+
+        }
+
+        return value
+    }, [])
+
+    const setter = useCallback((value) => {
+        return localStorage.setItem(key, JSON.stringify(value))
+    }, [])
+
+    if (getter(key) === null)
+        setter(value)
+    return [getter, setter]
 }
 
 
