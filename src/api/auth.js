@@ -20,3 +20,9 @@ export default function register(user)
 {
     return axiosApi.post("/auth/register", user)
 }
+
+export async function currentUser()
+{
+    const req = await axiosApi.post("/auth/user")
+    return req.data
+}

@@ -6,12 +6,34 @@ const axiosApi = axios.create({
 })
 
 axiosApi.interceptors.request.use(async (config) => {
-    const token = JSON.parse(localStorage.getItem("tk"))
+    let token = null
+    try {
+        token = JSON.parse(localStorage.getItem("tk"))
+    } catch (err) {
+        token = ""
+    }
 
     if (token)
         config.headers["Authorization"] = `Bearer ${token}`
 
     return config
 })
+
+
+// Check if login is required
+axiosApi.interceptors.response.use(
+    (response) => {
+        // Handle a successful response
+        return response;
+    },
+    (error) => {
+        // Handle an error response
+        if (error.response.status === 401) {
+            // Handle unauthorized error
+            return window.location.href = `/login?to=${window.location.pathname}`
+        }
+        return Promise.reject(error);
+    }
+);
 
 export default axiosApi
