@@ -33,9 +33,8 @@ export default function CheckoutPage()
             if (data?.errors)
                 return toast.info(data.message)
 
-            console.log(data)
             // Redirect to Paymet gateway.
-            //window.location.href = data.gateway_link
+            window.location.href = data.gateway_link
         }).catch (err => {
             toast.danger(err)
         }).finally(() => {

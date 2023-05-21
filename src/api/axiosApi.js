@@ -29,7 +29,7 @@ axiosApi.interceptors.response.use(
     (error) => {
         // Handle an error response
         if (error.response.status === 401) {
-            // Handle unauthorized error
+            localStorage.removeItem("tk")
             return window.location.href = `/login?to=${window.location.pathname}`
         }
         return Promise.reject(error);

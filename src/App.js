@@ -32,6 +32,7 @@ import PaymentMethodsPage from "./pages/admin/PaymentMethodsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import { SubscriptionsPage } from "./pages/admin/SubscriptionsPage";
 import UserRequired from "./pages/middlewares/UserRequired";
+import ThankYouPage from "./pages/ThankYouPage";
 
 // Lazy loading
 const AdminDashboardLayout = lazy(() => import("./pages/layouts/AdminDashboardLayout"))
@@ -53,6 +54,7 @@ function App() {
 
         <Route element={<UserRequired />}>
           <Route path="/checkout/:id" element={<CheckoutPage />} />
+          <Route path="/thank-you" element={<ThankYouPage />} />
         </Route>
 
 
