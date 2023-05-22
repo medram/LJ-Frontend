@@ -95,3 +95,9 @@ export async function deletePlan(id) {
     const req = await axiosApi.post("/admin/plans/delete", {id})
     return req.data
 }
+
+export async function getSubscriptions()
+{
+    const req = await axiosApi.get("/admin/subscriptions")
+    return req.data
+}
