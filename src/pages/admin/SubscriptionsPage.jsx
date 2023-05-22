@@ -9,10 +9,15 @@ import Swal from "sweetalert2"
 import { useQueryClient } from "react-query"
 import { datetimeFormat } from "../../utils"
 import { Badge } from "react-bootstrap"
+import { useDashboardSettings } from "../../hooks"
+import PayPalIcon from "../../components/icons/PayPalIcon"
+import StripIcon from "../../components/icons/StripIcon"
 
 
 export function SubscriptionsPage() {
     const { isLoading, isError, error, subscriptions } = useSubscriptions()
+    const { settings } = useDashboardSettings()
+
 
     if (isLoading || !Object.keys(subscriptions).length)
     {
@@ -32,19 +37,23 @@ export function SubscriptionsPage() {
                                     <th>ID</th>
                                     <th>User</th>
                                     <th>Plan</th>
-                                    <th>Status</th>
+                                    <th>Subscription Status</th>
+                                    <th>Billing Cycle</th>
                                     <th>Gateway</th>
+                                    <th>Subscribed on</th>
                                     <th>Expiring at</th>
-                                    <th>Created at</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {subscriptions?.map((subscription, i) => (
-                                    <tr key={i}>
+                                    <tr key={i} valign="middle">
                                         <td>{subscription.sub_id}</td>
-                                        <td>{subscription.user_id}</td>
-                                        <td>{subscription.plan_id}</td>
+                                        <td>{subscription.user_email}</td>
+                                        <td>
+                                            <b>{subscription.plan_name}</b><br />
+                                            <span className="text-muted">{settings.CURRENCY_SYMBOL}{subscription.price}</span>
+                                        </td>
                                         <td>{subscription.status === 1 ? (
                                             <Badge bg="success">Active</Badge>
                                         ) : (subscription.status === 0 ? (
@@ -53,13 +62,18 @@ export function SubscriptionsPage() {
                                             <Badge bg="danger">Cancelled</Badge>
                                         )
                                         )}</td>
-                                        <td>{subscription.payment_gateway === "PAYPAL"? (
-                                            <Badge bg="info">PayPal</Badge>
-                                        ) : (subscription.payment_gateway === "STRIPE" &&
-                                            <Badge bg="secondary">Stripe</Badge>
+                                        <td>{subscription.billing_cycle === "monthly" ? (
+                                            <Badge pill bg="primary">Monthly</Badge>
+                                        ) : (subscription.billing_cycle === "yearly" &&
+                                            <Badge pill bg="warning">Yearly</Badge>
                                         )}</td>
-                                        <td>{datetimeFormat(subscription.expiring_at)}</td>
+                                        <td>{subscription.payment_gateway === "PAYPAL" ? (
+                                            <PayPalIcon height={30} />
+                                        ) : (subscription.payment_gateway === "STRIPE" &&
+                                            <StripIcon height={30} />
+                                        )}</td>
                                         <td>{datetimeFormat(subscription.created_at)}</td>
+                                        <td>{datetimeFormat(subscription.expiring_at)}</td>
                                         <td>-</td>
                                     </tr>
                                 ))}
