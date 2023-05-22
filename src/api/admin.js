@@ -101,3 +101,10 @@ export async function getSubscriptions()
     const req = await axiosApi.get("/admin/subscriptions")
     return req.data
 }
+
+export async function cancelSubscription(sub_id)
+{
+    const req = await axiosApi.post(`/admin/subscriptions/${sub_id}/cancel`)
+    return req.data
+}
+

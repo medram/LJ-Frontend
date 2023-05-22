@@ -36,6 +36,9 @@ $navbar-brand-padding-y: .45rem !default;
     width: 100%;
 }
 
+section {
+    overflow-x: auto;
+}
 
 /*=================== Footer ====================*/
 footer {
