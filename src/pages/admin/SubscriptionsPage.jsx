@@ -90,11 +90,11 @@ export function SubscriptionsPage() {
                                             <span className="text-muted">{settings.CURRENCY_SYMBOL}{subscription.price}</span>
                                         </td>
                                         <td>{subscription.status === 1 ? (
-                                            <Badge bg="success">Active</Badge>
+                                            <Badge pill bg="success">Active</Badge>
                                         ) : (subscription.status === 0 ? (
-                                            <Badge bg="warning">Expired</Badge>
+                                            <Badge pill bg="warning">Expired</Badge>
                                         ): (subscription.status === 2 &&
-                                            <Badge bg="danger">Canceled</Badge>
+                                            <Badge pill bg="danger">Canceled</Badge>
                                         )
                                         )}</td>
                                         <td>{subscription.billing_cycle === "monthly" ? (
