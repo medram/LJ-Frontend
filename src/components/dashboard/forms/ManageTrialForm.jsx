@@ -5,7 +5,7 @@ import * as Yup from "yup"
 import { Alert } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons"
-import SuperButton from "../../SuperBotton"
+import SuperButton from "../../SuperButton"
 import { toastFormikErrors } from "../../../utils"
 
 

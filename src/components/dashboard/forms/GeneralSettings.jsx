@@ -12,7 +12,7 @@ import { useDashboardSettings, useSettings } from "../../../hooks";
 import { useCallback, useEffect, useState } from "react";
 import SectionLoading from "../../SectionLoading";
 import { saveDashboardSettings } from "../../../api/admin";
-import SuperButton from "../../SuperBotton";
+import SuperButton from "../../SuperButton";
 import { useQueryClient } from "react-query";
 import * as Yup from "yup"
 import Switch from "../../Switch";

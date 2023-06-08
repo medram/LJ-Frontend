@@ -9,7 +9,7 @@ import StripIcon from "../components/icons/StripIcon";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
-import SuperButton from "../components/SuperBotton";
+import SuperButton from "../components/SuperButton";
 import { toast } from "react-toastify";
 import { payNow } from "../api";
 

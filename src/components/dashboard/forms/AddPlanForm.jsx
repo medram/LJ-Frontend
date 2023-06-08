@@ -6,7 +6,7 @@ import * as Yup from "yup"
 import { toastFormikErrors } from "../../../utils";
 import { addPlan } from "../../../api/admin";
 import { toast } from "react-toastify";
-import SuperButton from "../../SuperBotton";
+import SuperButton from "../../SuperButton";
 import { useQueryClient } from "react-query";
 import Switch from "../../Switch"
 import Select from "react-select";

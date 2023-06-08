@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 
 import * as Yup from "yup"
 
-import SuperButton from "../components/SuperBotton";
+import SuperButton from "../components/SuperButton";
 import { useAuth } from "../hooks/auth";
 import { toastFormikErrors } from "../utils";
 import BasePage from "./layouts/BasePage";

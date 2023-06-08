@@ -13,7 +13,7 @@ import { useDashboardSettings } from "../../hooks"
 import PayPalIcon from "../../components/icons/PayPalIcon"
 import StripIcon from "../../components/icons/StripIcon"
 import { useCallback, useState } from "react"
-import SuperBotton from "../../components/SuperBotton"
+import SuperBotton from "../../components/SuperButton"
 
 
 export function SubscriptionsPage() {

@@ -5,7 +5,7 @@ import { toastFormikErrors } from "../../../utils";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { saveDashboardSettings } from "../../../api/admin";
-import SuperButton from "../../SuperBotton";
+import SuperButton from "../../SuperButton";
 import { useQueryClient } from "react-query";
 import * as Yup from "yup"
 import Switch from "../../Switch";

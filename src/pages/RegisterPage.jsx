@@ -1,6 +1,6 @@
 import { Formik, useFormik } from "formik";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import SuperButton from "../components/SuperBotton";
+import SuperButton from "../components/SuperButton";
 import Switch from "../components/Switch";
 import * as Yup from "yup"
 import BasePage from "./layouts/BasePage";

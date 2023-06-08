@@ -20,3 +20,8 @@ export async function getUserInvoices() {
     return req.data
 }
 
+export async function updateUserPassword(data)
+{
+    const req = await axiosApi.post("/user/update-password", data)
+    return req.data
+}

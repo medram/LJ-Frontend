@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { usePlans, useSettings } from "../hooks"
 import SectionLoading from "./SectionLoading"
 import { useUser } from "../hooks/auth"
-import SuperButton from "./SuperBotton"
+import SuperButton from "./SuperButton"
 import { useCallback } from "react"
 
 

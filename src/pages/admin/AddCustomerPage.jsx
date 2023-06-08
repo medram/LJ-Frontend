@@ -6,7 +6,7 @@ import { toastFormikErrors } from "../../utils";
 import { AddCustomer } from "../../api/admin";
 import { toast } from "react-toastify";
 import GoBackButton from "../../components/GoBackButton";
-import SuperButton from "../../components/SuperBotton";
+import SuperButton from "../../components/SuperButton";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import Switch from "../../components/Switch"
