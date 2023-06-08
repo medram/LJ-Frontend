@@ -42,7 +42,7 @@ export default function InvoicesPage()
                                 )}</td>
                                 <td>{settings.CURRENCY_SYMBOL}{invoice.price}</td>
                                 <td>{invoice.payment_gateway}</td>
-                                <td>{datetimeFormat(invoice.paid_at)}</td>
+                                <td>{invoice.paid_at ? datetimeFormat(invoice.paid_at) : "-"}</td>
                                 <td>{datetimeFormat(invoice.created_at)}</td>
                             </tr>
                         )
