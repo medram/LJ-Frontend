@@ -34,7 +34,7 @@ export function useAuth() {
         setToken("")
     }, [])
 
-    return { user, Authenticate, Logout, token }
+    return { user, setUser, Authenticate, Logout, token }
 }
 
 // export function useAuth()
@@ -69,8 +69,8 @@ export function useAuth() {
 
 export function useUser()
 {
-    const { isAuthenticated, user } = useAuth()
+    const { isAuthenticated, user, setUser } = useAuth()
 
-    return { isAuthenticated: user?.id ? true : false, isAdmin: user?.role == 1, user }
+    return { isAuthenticated: user?.id ? true : false, isAdmin: user?.role == 1, user, setUser }
 }
 

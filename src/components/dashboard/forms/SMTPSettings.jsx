@@ -1,16 +1,9 @@
 import { faFloppyDisk, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 import Select from "react-select"
-import { AVAILABLE_TIMEZONES_OPTIONS, toastFormikErrors } from "../../../utils";
-import Dropzone from "../../Dropzone"
-import axiosApi from "../../../api/axiosApi";
-import { uploadFile } from "../../../api";
+import { toastFormikErrors } from "../../../utils";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { useDashboardSettings, useSettings } from "../../../hooks";
-import { useCallback, useEffect, useState } from "react";
-import SectionLoading from "../../SectionLoading";
 import { saveDashboardSettings } from "../../../api/admin";
 import SuperButton from "../../SuperBotton";
 import { useQueryClient } from "react-query";
