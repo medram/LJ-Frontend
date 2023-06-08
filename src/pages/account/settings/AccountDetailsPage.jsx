@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
-import { useUser } from "../../hooks/auth";
+import { useUser } from "../../../hooks/auth";
 import * as Yup from "yup"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { toastFormikErrors } from "../../utils";
+import { toastFormikErrors } from "../../../utils";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-import SuperButton from "../../components/SuperBotton";
-import { updateAccountDetails } from "../../api/account";
+import SuperButton from "../../../components/SuperBotton";
+import { updateAccountDetails } from "../../../api/account";
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
@@ -13,7 +13,6 @@ import { toast } from "react-toastify";
 export default function AccountDetailsPage()
 {
     const { user, setUser } = useUser()
-    const queryClient = useQueryClient()
 
     const formik = useFormik({
         initialValues: {
@@ -45,6 +44,8 @@ export default function AccountDetailsPage()
 
     return (
         <div>
+            <h1 className="h3 mb-5">Profile</h1>
+
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="username">Username:</label>
