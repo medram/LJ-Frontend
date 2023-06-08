@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import AvatarPalceholder from "../../components/AvatarPalceholder";
 import { useUser } from "../../hooks/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faReceipt, faStar, faUser } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function AccountSettingsLayout() {
@@ -20,8 +20,8 @@ export default function AccountSettingsLayout() {
                         </div>
                         <Link to="" className="list-group-item list-group-item-action"><FontAwesomeIcon icon={faUser} /> Profile</Link>
                         <Link to="subscription" className="list-group-item list-group-item-action"><FontAwesomeIcon icon={faStar} /> My Subscription</Link>
-                        <Link to="" className="list-group-item list-group-item-action">Payment History</Link>
-                        <Link to="" className="list-group-item list-group-item-action">Change Password</Link>
+                        <Link to="invoices" className="list-group-item list-group-item-action"><FontAwesomeIcon icon={faReceipt} /> Invoices</Link>
+                        <Link to="change-password" className="list-group-item list-group-item-action"><FontAwesomeIcon icon={faLock} /> Change Password</Link>
                     </div>
                 </div>
                 <div className="col border rounded p-5 mx-3">

@@ -13,3 +13,10 @@ export async function currentSubscription()
     const req = await axiosApi.get("/user/subscription")
     return req.data
 }
+
+
+export async function getUserInvoices() {
+    const req = await axiosApi.get("/user/invoices")
+    return req.data
+}
+

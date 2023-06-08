@@ -36,6 +36,8 @@ import ThankYouPage from "./pages/ThankYouPage";
 import AccountDetailsPage from "./pages/account/settings/AccountDetailsPage";
 import AccountSettingsLayout from "./pages/layouts/AccountSettingsLayout";
 import MySubscriptionPage from "./pages/account/settings/MySubscribtionPage";
+import InvoicesPage from "./pages/account/settings/InvoicesPage";
+import ChangePasswordPage from "./pages/account/settings/ChangePasswordPage";
 
 
 // Lazy loading
@@ -66,8 +68,8 @@ function App() {
           <Route path="settings" element={<AccountSettingsLayout />}>
             <Route path="" element={<AccountDetailsPage />} />
             <Route path="subscription" element={<MySubscriptionPage />} />
-            <Route path="paymant-history" />
-            <Route path="password" />
+            <Route path="invoices" element={<InvoicesPage />} />
+            <Route path="change-password" element={<ChangePasswordPage />} />
           </Route>
         </Route>
 
