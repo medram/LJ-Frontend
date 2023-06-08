@@ -33,9 +33,13 @@ import CheckoutPage from "./pages/CheckoutPage";
 import { SubscriptionsPage } from "./pages/admin/SubscriptionsPage";
 import UserRequired from "./pages/middlewares/UserRequired";
 import ThankYouPage from "./pages/ThankYouPage";
+import AccountDetailsPage from "./pages/account/AccountDetailsPage";
+import AccountSettingsLayout from "./pages/layouts/AccountSettingsLayout";
+
 
 // Lazy loading
 const AdminDashboardLayout = lazy(() => import("./pages/layouts/AdminDashboardLayout"))
+const AccountLayout = lazy(() => import("./pages/layouts/AccountLayout"))
 
 
 function App() {
@@ -57,6 +61,14 @@ function App() {
           <Route path="/thank-you" element={<ThankYouPage />} />
         </Route>
 
+        <Route path="/account" element={<AccountLayout />}>
+          <Route path="settings" element={<AccountSettingsLayout />}>
+            <Route path="" element={<AccountDetailsPage />} />
+            <Route path="subscription" />
+            <Route path="paymant-history" />
+            <Route path="password" />
+          </Route>
+        </Route>
 
         <Route path="/admin" element={<AdminDashboardLayout />}>
           <Route path="" element={<AdminDashboardPage />} />
