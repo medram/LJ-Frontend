@@ -10,7 +10,7 @@ export default function BasePage({ children }) {
             { children }
         </main>
         <footer className="container">
-            2023 &copy; all right reserved.
+            {new Date().getUTCFullYear()} &copy; all right reserved.
         </footer>
     </>
 }

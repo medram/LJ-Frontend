@@ -28,9 +28,13 @@ axiosApi.interceptors.response.use(
     },
     (error) => {
         // Handle an error response
-        if (error.response.status === 401) {
+        if (error.response.status === 401)
+        {
             localStorage.removeItem("tk")
-            return window.location.href = `/login?to=${window.location.pathname}`
+            if (window.location.href.includes("/admin") || window.location.href.includes("/account"))
+            {
+                return window.location.href = `/login?to=${window.location.pathname}`
+            }
         }
         return Promise.reject(error);
     }
