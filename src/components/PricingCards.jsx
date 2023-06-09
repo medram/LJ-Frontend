@@ -52,10 +52,16 @@ export default function PricingCards({ yearly })
                             </ul>
                         </div>
                         {isAuthenticated ? (
-                            subscription && subscription?.plan_id == plan.id ? (
-                                <SuperButton onClick={() => handlePlanActivation(plan.id)} className="btn btn-primary btn-lg w-100" disabled >Current</SuperButton>
+                            subscription ? (
+                                subscription?.plan_id == plan.id ? (
+                                    <SuperButton onClick={() => handlePlanActivation(plan.id)} className="btn btn-primary btn-lg w-100" disabled >Current</SuperButton>
+                                ) : (
+                                    <Link to={`../checkout/${plan.id}`} className="btn btn-primary btn-lg d-block" >Upgrade</Link>
+                                )
                             ) : (
-                                <Link to={`../checkout/${plan.id}`} className="btn btn-primary btn-lg d-block" >Upgrade</Link>
+                                <Link to={`../checkout/${plan.id}`} className="btn btn-primary btn-lg d-block" >
+                                    {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Order Now"}
+                                </Link>
                             )
                         ) : (
                             <Link to="../login?to=/pricing" className="btn btn-primary btn-lg d-block" >
