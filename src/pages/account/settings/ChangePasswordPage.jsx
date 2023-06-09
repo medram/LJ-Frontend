@@ -36,6 +36,7 @@ export default function ChangePasswordPage()
                 }
                 else {
                     toast.success(data.message)
+                    formik.resetForm()
                 }
             }).catch(err => {
                 toast.error(err)
