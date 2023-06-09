@@ -6,6 +6,7 @@ import SectionLoading from "./SectionLoading"
 import { useUser } from "../hooks/auth"
 import SuperButton from "./SuperButton"
 import { useCallback } from "react"
+import { useCurrentSubscription } from "../hooks/account"
 
 
 export default function PricingCards({ yearly })
@@ -14,6 +15,8 @@ export default function PricingCards({ yearly })
     const { isLoading: isPlansLoading, plans, monthlyPlans, yearlyPlans } = usePlans()
 
     const { isAuthenticated } = useUser()
+    const { subscription } = useCurrentSubscription()
+
 
     const handlePlanActivation = useCallback(plan_id => {
         console.log("clicked")
@@ -48,10 +51,14 @@ export default function PricingCards({ yearly })
                                 })}
                             </ul>
                         </div>
-                        {isAuthenticated && (plan.is_free || plan.price == 0) ? (
-                            <SuperButton onClick={() => handlePlanActivation(plan.id)} className="btn btn-primary btn-lg w-100" >Subscribe Now</SuperButton>
+                        {isAuthenticated ? (
+                            subscription && subscription?.plan_id == plan.id ? (
+                                <SuperButton onClick={() => handlePlanActivation(plan.id)} className="btn btn-primary btn-lg w-100" disabled >Current</SuperButton>
+                            ) : (
+                                <Link to={`../checkout/${plan.id}`} className="btn btn-primary btn-lg d-block" >Upgrade</Link>
+                            )
                         ) : (
-                            <Link to={isAuthenticated ? `../checkout/${plan.id}` : "../login?to=/pricing"} className="btn btn-primary btn-lg d-block" >
+                            <Link to="../login?to=/pricing" className="btn btn-primary btn-lg d-block" >
                                     {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Order Now"}
                             </Link>
                         )}
