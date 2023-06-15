@@ -60,3 +60,10 @@ export async function payNow(data) {
     const req = await axiosApi.post("/checkout", data)
     return req.data
 }
+
+
+export async function contactUs(data)
+{
+    const req = await axiosApi.post("/contact", data)
+    return req.data
+}
