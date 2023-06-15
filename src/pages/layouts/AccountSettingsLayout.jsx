@@ -14,7 +14,7 @@ export default function AccountSettingsLayout() {
             <div className="row my-5 gap-5">
                 <div className="col-md-3 col-12">
                     <div className="list-group">
-                        <div className="list-group-item list-group-item-action d-flex justify-content-center align-items-center flex-column" aria-current="true">
+                        <div className="list-group-item py-4 d-flex justify-content-center align-items-center flex-column" aria-current="true">
                             <AvatarPalceholder size={100} username={user.username} />
                             <b className="my-2">{user.username.slice(0, 1).toUpperCase() + user.username.slice(1)}</b>
                         </div>
