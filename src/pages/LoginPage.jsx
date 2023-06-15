@@ -9,6 +9,7 @@ import SuperButton from "../components/SuperButton";
 import { useAuth } from "../hooks/auth";
 import { toastFormikErrors } from "../utils";
 import BasePage from "./layouts/BasePage";
+import ForgotPasswordForm from "../components/ForgotPasswordForm";
 
 
 
@@ -17,6 +18,9 @@ export default function LoginPage() {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
     const redirectTo = searchParams.get('to')
+
+    // To show forget password form
+    const [show, setShow] = useState(false)
 
     const formik = useFormik({
         initialValues: {
@@ -59,7 +63,10 @@ export default function LoginPage() {
                                 <input type="text" {...formik.getFieldProps("email")} id="email" className="form-control form-control-lg" />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="password" className="form-label">Password:</label>
+                                <div>
+                                    <label htmlFor="password" className="form-label">Password:</label>
+                                    <Link onClick={() => setShow(prev => !prev)} className="float-end">Forgot password?</Link>
+                                </div>
                                 <input type="password" {...formik.getFieldProps("password")} id="password" className="form-control form-control-lg" />
                             </div>
                             <SuperButton isLoading={formik.isSubmitting} loadingText="Sign In..." onClick={onClickSignIn} className="btn btn-primary btn-lg btn-block my-4" type="submit" disabled={!formik.isValid} >Sign In</SuperButton>
@@ -68,6 +75,8 @@ export default function LoginPage() {
                     </div>
                 </div>
             </section>
+
+            <ForgotPasswordForm show={show} onHide={() => setShow(prev => !prev)} setShow={setShow} />
         </BasePage>
     )
 }
