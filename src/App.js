@@ -38,6 +38,8 @@ import AccountSettingsLayout from "./pages/layouts/AccountSettingsLayout";
 import MySubscriptionPage from "./pages/account/settings/MySubscribtionPage";
 import InvoicesPage from "./pages/account/settings/InvoicesPage";
 import ChangePasswordPage from "./pages/account/settings/ChangePasswordPage";
+import AccountPage from "./pages/account/AccountPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 
 // Lazy loading
@@ -57,6 +59,7 @@ function App() {
         <Route element={<NoAuthRequired />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/reset/:token" element={<ResetPasswordPage />} />
         </Route>
 
         <Route element={<UserRequired />}>
@@ -65,6 +68,8 @@ function App() {
         </Route>
 
         <Route path="/account" element={<AccountLayout />}>
+          <Route path="" element={<AccountPage />}></Route>
+
           <Route path="settings" element={<AccountSettingsLayout />}>
             <Route path="" element={<AccountDetailsPage />} />
             <Route path="subscription" element={<MySubscriptionPage />} />
