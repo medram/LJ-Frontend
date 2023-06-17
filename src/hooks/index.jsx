@@ -147,6 +147,29 @@ export function useAvailablePaymentMethods()
     return { ...rest, paymentMethods: data?.payment_methods }
 }
 
+
+export function useEventListener(eventName, defaultValue, callback)
+{
+    const [ value, setValue ] = useState(defaultValue)
+
+
+    const handleCallback = useCallback((e) => {
+        if (typeof callback === "function")
+            setValue(callback({ e, prevValue: value }))
+    }, [])
+
+    useEffect(() => {
+        window.addEventListener(eventName, handleCallback)
+
+        return () => {
+            window.removeEventListener(eventName, handleCallback)
+        }
+    }, [])
+
+    return [value, setValue]
+}
+
+
 // export function useTheme() {
 //     const { theme, dispatch } = useContext(StoreContext)
 
