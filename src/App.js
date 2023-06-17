@@ -40,6 +40,8 @@ import InvoicesPage from "./pages/account/settings/InvoicesPage";
 import ChangePasswordPage from "./pages/account/settings/ChangePasswordPage";
 import AccountPage from "./pages/account/AccountPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import PlaygroundPage from "./pages/PlaygroundPage";
+import PlaygroundLayout from "./pages/layouts/PlaygroundLayout";
 
 
 // Lazy loading
@@ -55,6 +57,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/contact" element={<ContactPage />} />
+
+        <Route path="/playground" element={<PlaygroundPage />} />
 
         <Route element={<NoAuthRequired />}>
           <Route path="/login" element={<LoginPage />} />

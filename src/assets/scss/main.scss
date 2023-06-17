@@ -284,3 +284,125 @@ footer {
 .payment-method > input[type=radio] {
     margin: 0;
 }
+
+/*======================= Playground =========================*/
+.playground {
+    display: flex;
+    height: 100%;      // with navbar: calc(100vh - 79px)
+}
+
+.playground-sidebar {
+    padding: 1em;
+    padding-right: 0.5em !important;
+    padding-left: 0.5em !important;
+    color: #EEE;
+    background-color: #363f5c;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+}
+
+.playground-sidebar .dropzone {
+    background-color: lighten(#363f5c, 10%);
+    color: #EEE;
+}
+
+.playground-sidebar .chat-labels-list {
+    overflow-y: auto;
+    flex-grow: 1 !important;
+}
+
+.playground-sidebar .sidebar-buttom-section {
+
+}
+
+.playground-chat-section {
+    position: relative;
+    flex-grow: 1;
+    height: 100vh;
+    padding: 0;
+}
+
+.playground-chat-section section {
+    height: 100%;
+}
+
+.playground-chat-section .chats {
+    overflow-y: auto;
+}
+
+.playground-chat-section .prompt-input {
+    //box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2)
+}
+
+.playground-chat-section .prompt-input .btn {
+    width: clamp(90px, 10%, 150px);
+}
+
+.playground-chat-section .chats .container {
+    display: flex;
+    flex-direction: column;
+}
+
+.playground-chat-section .chats .container .message {
+    //border: 1px solid $primary;
+    border-radius: 15px;
+    padding: 0.8em 1.2em;
+    margin: 1em 0;
+    width: fit-content;
+}
+
+.playground-chat-section .chats .container .user-message {
+    background-color: #363f5c;
+    color: #dadada;
+    margin-top: 2em;
+    margin-left: auto;
+    border-end-end-radius: 0;
+}
+
+.playground-chat-section .chats .container .ai-message {
+    background-color: #f0f0f0;
+    color: lighten($primary, 10%);
+    border-bottom-left-radius: 0;
+}
+
+.chat-label {
+    background-color: lighten(#363f5c, 10%);
+    padding: 0.7em 1em;
+    margin-top: 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.chat-label:hover {
+    background-color: lighten(#363f5c, 12%);
+}
+
+.chat-label .delete {
+    background-color: lighten(#363f5c, 5%);
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    font-size: 12px;
+    top: 5px;
+    right: 4px;
+    border-radius: 6px;
+}
+
+.chat-label .delete:hover {
+    background-color: lighten(#363f5c, 7%);
+}
+
+.toggle-sidebar-button {
+    position: absolute;
+    top: 20px;
+    left: 25px;
+}
