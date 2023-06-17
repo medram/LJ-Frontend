@@ -1,7 +1,7 @@
 import Navbar from "../../components/Navbar";
 
 
-export default function BasePage({ children }) {
+export default function BasePage({ children, showFooter=true }) {
     return <>
         <header>
             <Navbar />
@@ -9,8 +9,10 @@ export default function BasePage({ children }) {
         <main>
             { children }
         </main>
-        <footer className="container">
-            {new Date().getUTCFullYear()} &copy; all right reserved.
-        </footer>
+        {showFooter && (
+            <footer className="container">
+                {new Date().getUTCFullYear()} &copy; all right reserved.
+            </footer>
+        )}
     </>
 }
