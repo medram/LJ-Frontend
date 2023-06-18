@@ -40,13 +40,13 @@ import InvoicesPage from "./pages/account/settings/InvoicesPage";
 import ChangePasswordPage from "./pages/account/settings/ChangePasswordPage";
 import AccountPage from "./pages/account/AccountPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
-import PlaygroundPage from "./pages/PlaygroundPage";
-import PlaygroundLayout from "./pages/layouts/PlaygroundLayout";
 
 
 // Lazy loading
 const AdminDashboardLayout = lazy(() => import("./pages/layouts/AdminDashboardLayout"))
 const AccountLayout = lazy(() => import("./pages/layouts/AccountLayout"))
+const PlaygroundPage = lazy(() => import("./pages/PlaygroundPage"))
+//const PlaygroundLayout = lazy(() => import("./pages/layouts/PlaygroundLayout"))
 
 
 function App() {

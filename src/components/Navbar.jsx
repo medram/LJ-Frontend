@@ -34,6 +34,9 @@ export default memo(function Navbar()
                             <NavLink className="nav-link" to="/pricing">Pricing</NavLink>
                         </li>
                         <li className="nav-item">
+                            <NavLink className="nav-link" to="/playground">Playground</NavLink>
+                        </li>
+                        <li className="nav-item">
                             <NavLink className="nav-link" to="/contact">Contact</NavLink>
                         </li>
                     </ul>

@@ -295,12 +295,14 @@ footer {
     padding: 1em;
     padding-right: 0.5em !important;
     padding-left: 0.5em !important;
-    color: #EEE;
+    //color: #EEE;
+    color: lighten(#363f5c, 60%);
     background-color: #363f5c;
     display: flex;
     flex-direction: column;
     height: 100%;
-
+    max-height: 100%;
+    //overflow-y: auto;
 }
 
 .playground-sidebar .dropzone {
@@ -310,11 +312,11 @@ footer {
 
 .playground-sidebar .chat-labels-list {
     overflow-y: auto;
-    flex-grow: 1 !important;
+    //flex-grow: 1 !important;
 }
 
-.playground-sidebar .sidebar-buttom-section {
-
+.playground-sidebar .sidebar-bottom-section {
+    margin-top: auto;
 }
 
 .playground-chat-section {
@@ -405,4 +407,30 @@ footer {
     position: absolute;
     top: 20px;
     left: 25px;
+}
+
+.playground-sidebar h1,
+.playground-sidebar h2,
+.playground-sidebar h3,
+.playground-sidebar h4,
+.playground-sidebar h5,
+.playground-sidebar h6 {
+    color: lighten(#363f5c, 60%)
+}
+
+.playground-sidebar .quota {
+    padding: 1em;
+}
+
+.playground-sidebar .quota span {
+    font-size: 0.8rem;
+    color: lighten(#363f5c, 50%)
+}
+
+.playground-sidebar .profile {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin: 0.6em 1em 0.2em 1em;
 }

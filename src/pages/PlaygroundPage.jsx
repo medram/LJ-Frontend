@@ -8,6 +8,7 @@ import Dropzone from "../components/Dropzone"
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { useState } from "react";
 import { useEventListener } from "../hooks";
+import AvatarPalceholder from "../components/AvatarPalceholder";
 
 
 const onUpload = () => {
@@ -49,15 +50,24 @@ export default function PlaygroundPage()
                         <div className="chat-labels-list">
                             <ChatSection title="Math.pdf" />
                             <ChatSection title="Science-of-rockts.pdf" />
+                            <ChatSection title="Science-of-rockts.pdf" />
+                            <ChatSection title="Science-of-rockts.pdf" />
                         </div>
 
-                        <div className="sidebar-buttom-section">
-                            <div>
-                                Subscription quata:<br />
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit totam, sint non enim corporis ipsam ipsum beatae commodi ab, dolorem accusamus? Saepe repellendus quis similique molestiae obcaecati ipsa nobis velit!
+                        <div className="sidebar-bottom-section">
+                            <div className="quota">
+                                <h3 className="h6">Quota:</h3>
+                                <span>10 PDFs</span><br />
+                                <span>100 pages/pdf (max)</span><br />
+                                <span>Max PDF size: 10MB/pdf</span><br />
+                                <span>30 PDF Questions</span><br />
                             </div>
-                            <div>
-                                Admin (admin@test.com)
+                            <div className="profile">
+                                <AvatarPalceholder username="Admin" size={45} />
+                                <div>
+                                    <b>Admin</b><br />
+                                    <span>(admin@test.com)</span>
+                                </div>
                             </div>
                         </div>
                     </div>
