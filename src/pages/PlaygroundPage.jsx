@@ -54,6 +54,7 @@ export default function PlaygroundPage()
                             <ChatSection title="Science-of-rockts.pdf" />
                         </div>
 
+
                         <div className="sidebar-bottom-section">
                             <div className="quota">
                                 <h3 className="h6">Quota:</h3>
@@ -69,6 +70,14 @@ export default function PlaygroundPage()
                                     <span>(admin@test.com)</span>
                                 </div>
                             </div>
+
+                            <footer>
+                                <a href="">Home</a>
+                                <a href="">Pricing</a>
+                                <a href="">Support</a>
+                                <a href="">API access</a>
+                            </footer>
+
                         </div>
                     </div>
 

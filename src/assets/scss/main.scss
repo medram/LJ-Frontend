@@ -434,3 +434,20 @@ footer {
     gap: 0.8em;
     margin: 0.6em 1em 0.2em 1em;
 }
+
+.playground-sidebar footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin: 20px 0 0 0;
+}
+
+.playground-sidebar footer a {
+    display: block;
+    color: lighten(#363f5c, 50%);
+    padding: 0.1em 0.7em;;
+}
+.playground-sidebar footer a:hover {
+    color: lighten(#363f5c, 60%)
+}
