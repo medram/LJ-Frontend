@@ -58,7 +58,7 @@ function App() {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/contact" element={<ContactPage />} />
 
-        <Route path="/playground" element={<PlaygroundPage />} />
+        <Route path="/playground/:uuid?" element={<PlaygroundPage />} />
 
         <Route element={<NoAuthRequired />}>
           <Route path="/login" element={<LoginPage />} />

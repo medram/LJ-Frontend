@@ -3,12 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SuperButton from "../components/SuperButton";
 import UserMessage from "../components/playground/UserMessage";
 import AIMessage from "../components/playground/AIMessage";
-import ChatSection from "../components/playground/ChatSection";
 import Dropzone from "../components/Dropzone"
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { useState } from "react";
 import { useEventListener } from "../hooks";
 import AvatarPalceholder from "../components/AvatarPalceholder";
+import ChatLabel from "../components/playground/ChatLabel";
+import ChatSection from "../components/playground/ChatSection";
+import { useParams } from "react-router-dom";
+import { useUser } from "../hooks/auth";
+import SectionLoading from "../components/SectionLoading";
+import FullscreenLoading from "../components/FullscreenLoading";
 
 
 const onUpload = () => {
@@ -26,6 +31,24 @@ export default function PlaygroundPage()
     const [ collapsed, setCollapsed ] = useState(false)
     const [windowInnerWidth, setWindowInnerWidth] = useEventListener('resize', window.innerWidth, () => window.innerWidth)
 
+    const { user } = useUser()
+
+    const { uuid } = useParams()
+    const [ currentChatSectionUUID, setCurrentChatSectionUUID ] = useState(uuid)
+
+    const [ chatLabelList, setChatLabelList ] = useState([
+        { title: "Math.pdf", "uuid": "qsdflkjsdflkqsdflkqsjdfkqsdlkdk"},
+        { title: "Science-of-rockts.pdf", "uuid": "qsdflkjsdlkqsdflkqsjdfkqsdqsdqsdq"},
+        { title: "Science-of-rockts.pdf", "uuid": "qsdflkjsdlkqsdflkqsjdfkqsdqsdqsdq"},
+        { title: "Science-of-rockts.pdf", "uuid": "qsdflkjsdlkqsdflkqsjdfkqsdqsdqsdq"},
+        { title: "Science-of-rockts.pdf", "uuid": "qsdflkjsdlkqsdflkqsjdfkqsdqsdqsdq"},
+    ])
+
+
+    if (!Object.keys(user).length)
+    {
+        return <FullscreenLoading />
+    }
 
 
     return (
@@ -48,12 +71,10 @@ export default function PlaygroundPage()
                         </Dropzone>
 
                         <div className="chat-labels-list">
-                            <ChatSection title="Math.pdf" />
-                            <ChatSection title="Science-of-rockts.pdf" />
-                            <ChatSection title="Science-of-rockts.pdf" />
-                            <ChatSection title="Science-of-rockts.pdf" />
+                            {chatLabelList.map((chatLabel, i) => {
+                                return <ChatLabel key={i} title={chatLabel.title} onClick={() => setCurrentChatSectionUUID(chatLabel.uuid)} />
+                            })}
                         </div>
-
 
                         <div className="sidebar-bottom-section">
                             <div className="quota">
@@ -63,19 +84,21 @@ export default function PlaygroundPage()
                                 <span>Max PDF size: 10MB/pdf</span><br />
                                 <span>30 PDF Questions</span><br />
                             </div>
-                            <div className="profile">
-                                <AvatarPalceholder username="Admin" size={45} />
-                                <div>
-                                    <b>Admin</b><br />
-                                    <span>(admin@test.com)</span>
+                            {user && (
+                                <div className="profile">
+                                    <AvatarPalceholder username={user.username} size={45} />
+                                    <div>
+                                        <b>{user.username}</b><br />
+                                        <span>({user.email})</span>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
                             <footer>
-                                <a href="">Home</a>
-                                <a href="">Pricing</a>
-                                <a href="">Support</a>
-                                <a href="">API access</a>
+                                <a href="/">Home</a>
+                                <a href="/pricing">Pricing</a>
+                                <a href="/contact">Contact us</a>
+                                <a href="/api">API access</a>
                             </footer>
 
                         </div>
@@ -89,27 +112,7 @@ export default function PlaygroundPage()
                     )}
 
                     <section className="d-flex flex-column">
-                        <div className="chats flex-grow-1">
-                            <div className="container px-4">
-                                <UserMessage content="Hello" />
-                                <AIMessage content="Hello, How can I help you?" />
-
-                                <UserMessage content="Hello" />
-                                <AIMessage content="Hello, How can I help you?" />
-
-                                <UserMessage content="Hello" />
-                                <AIMessage content="Hello, How can I help you?" />
-
-                                <UserMessage content="Hello" />
-                                <AIMessage content="Hello, How can I help you?" />
-                            </div>
-                        </div>
-                        <div className="container prompt-input d-flex gap-2 pt-5 pb-5 px-4">
-                            <input type="text" className="form-control form-control-lg" placeholder="Ask anything..." />
-                            <SuperButton className="btn btn-primary btn-lg" onClick={() => {}}>
-                                <FontAwesomeIcon icon={faPaperPlane} />
-                            </SuperButton>
-                        </div>
+                        <ChatSection uuid={currentChatSectionUUID} />
                     </section>
                 </section>
             </main>
