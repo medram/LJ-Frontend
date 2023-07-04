@@ -5,15 +5,16 @@ import UserMessage from "../components/playground/UserMessage";
 import AIMessage from "../components/playground/AIMessage";
 import Dropzone from "../components/Dropzone"
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEventListener } from "../hooks";
 import AvatarPalceholder from "../components/AvatarPalceholder";
 import ChatLabel from "../components/playground/ChatLabel";
 import ChatSection from "../components/playground/ChatSection";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../hooks/auth";
 import SectionLoading from "../components/SectionLoading";
 import FullscreenLoading from "../components/FullscreenLoading";
+import { useUserChatRoomList } from "../hooks/account";
 
 
 const onUpload = () => {
@@ -33,21 +34,25 @@ export default function PlaygroundPage()
 
     const { user } = useUser()
 
+    const navigate = useNavigate()
     const { uuid } = useParams()
-    const [ currentChatSectionUUID, setCurrentChatSectionUUID ] = useState(uuid)
+    const [ currentChatRoomUUID, setCurrentChatRoomUUID ] = useState(uuid)
 
-    const [ chatLabelList, setChatLabelList ] = useState([
-        { title: "Math.pdf", "uuid": "qsdflkjsdflkqsdflkqsjdfkqsdlkdk"},
-        { title: "Science-of-rockts.pdf", "uuid": "qsdflkjsdlkqsdflkqsjdfkqsdqsdqsdq"},
-        { title: "Science-of-rockts.pdf", "uuid": "qsdflkjsdlkqsdflkqsjdfkqsdqsdqsdq"},
-        { title: "Science-of-rockts.pdf", "uuid": "qsdflkjsdlkqsdflkqsjdfkqsdqsdqsdq"},
-        { title: "Science-of-rockts.pdf", "uuid": "qsdflkjsdlkqsdflkqsjdfkqsdqsdqsdq"},
-    ])
+    const { isLoading, userChatRoomList } = useUserChatRoomList()
+
+    const handleChatLabelClick = (uuid) => {
+        setCurrentChatRoomUUID(uuid)
+        navigate(`/playground/${uuid}`)
+    }
 
 
-    if (!Object.keys(user).length)
+    if (!Object.keys(user).length || isLoading || !Object.keys(userChatRoomList).length)
     {
         return <FullscreenLoading />
+    }
+    else if (!uuid)
+    {
+        return <Navigate to={`/playground/${userChatRoomList[0]?.uuid}`} replace={true} />
     }
 
 
@@ -71,8 +76,8 @@ export default function PlaygroundPage()
                         </Dropzone>
 
                         <div className="chat-labels-list">
-                            {chatLabelList.map((chatLabel, i) => {
-                                return <ChatLabel key={i} title={chatLabel.title} onClick={() => setCurrentChatSectionUUID(chatLabel.uuid)} />
+                            {userChatRoomList?.map((chat, i) => {
+                                return <ChatLabel key={i} title={chat.title} onClick={() => handleChatLabelClick(chat.uuid)} />
                             })}
                         </div>
 
@@ -112,7 +117,7 @@ export default function PlaygroundPage()
                     )}
 
                     <section className="d-flex flex-column">
-                        <ChatSection uuid={currentChatSectionUUID} />
+                        <ChatSection uuid={currentChatRoomUUID} key={uuid} />
                     </section>
                 </section>
             </main>
