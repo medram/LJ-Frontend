@@ -370,7 +370,7 @@ footer {
 }
 
 .chat-label {
-    background-color: lighten(#363f5c, 10%);
+    background-color: lighten(#363f5c, 9%);
     padding: 0.7em 1em;
     margin-top: 1em;
     border-radius: 10px;
@@ -382,7 +382,23 @@ footer {
 }
 
 .chat-label:hover {
-    background-color: lighten(#363f5c, 12%);
+    background-color: lighten(#363f5c, 11%);
+}
+
+.chat-label.active {
+    background-color: lighten(#363f5c, 15%);
+}
+
+.chat-label.active::before {
+    // border-left: 5px solid #198754;
+    background-color: #198754;
+    content: "";
+    display: block;
+    width: 5px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
 }
 
 .chat-label .delete {
