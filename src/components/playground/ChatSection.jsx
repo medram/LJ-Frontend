@@ -15,6 +15,7 @@ export default function ChatSection({ uuid })
     // const { uuid } = useParams()
     const { isLoading, isError, error, chat } = useChatRoom(uuid)
     const [ chatHistory, setChatHistory ] = useState([])
+    const [ prompt, setPrompt ] = useState("")
 
     useEffect(() => {
         if (chat?.chat_history)
@@ -36,6 +37,14 @@ export default function ChatSection({ uuid })
         }
     }, [isLoading, chat])
 
+    useEffect(() => {
+        if (chatHistory.length === 0)
+        {
+            setChatHistory([<AIMessage key={Math.random()} content="Hi, how can I help you" />])
+        }
+    }, [])
+
+
     if (isLoading)
     {
         return <SectionLoading center={true} />
@@ -46,16 +55,24 @@ export default function ChatSection({ uuid })
         toast.error(error)
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log("submitted")
+    }
+
 
     return (
         <>
-            <div className="chats flex-grow-1">
+            <div className="chats flex-grow-1 d-flex align-items-end">
                 <div className="container px-4">
                     {chatHistory.map((message, i) => message)}
                 </div>
             </div>
             <div className="container prompt-input d-flex gap-2 pt-5 pb-5 px-4">
-                <input type="text" className="form-control form-control-lg" placeholder="Ask anything..." />
+                <form onSubmit={handleSubmit} className="flex-grow-1">
+                    <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} className="form-control form-control-lg" placeholder="Ask anything..." />
+                </form>
+
                 <SuperButton className="btn btn-primary btn-lg" onClick={() => { }}>
                     <FontAwesomeIcon icon={faPaperPlane} />
                 </SuperButton>
