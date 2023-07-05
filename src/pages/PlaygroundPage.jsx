@@ -52,8 +52,8 @@ const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name,
 
 }
 
-const onError = () => {
-
+const onError = (rejectedFiles) => {
+    toast.error("Invalid document!")
 }
 
 
@@ -130,7 +130,7 @@ export default function PlaygroundPage()
 
                         <div className="chat-labels-list">
                             {userChatRoomList?.map((chat, i) => {
-                                return <ChatLabel key={i} title={chat.title} onClick={() => handleChatLabelClick(chat.uuid)} />
+                                return <ChatLabel key={i} title={chat.title} onClick={() => handleChatLabelClick(chat.uuid)} active={chat.uuid === currentChatRoomUUID} />
                             })}
                         </div>
 
