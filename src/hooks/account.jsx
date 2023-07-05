@@ -22,7 +22,7 @@ export function useUserInvoices()
 export function useUserChatRoomList()
 {
     const { data, ...rest } = useQuery("user.chat.list", getUserChatRoomList, {
-        staleTime: Infinity
+        //staleTime: Infinity
     })
 
     return { ...rest, userChatRoomList: data?.chats }
@@ -31,7 +31,9 @@ export function useUserChatRoomList()
 
 export default function useChatRoom(uuid)
 {
-    const {data, ...rest} = useQuery(`user.chat.${uuid}`, () => getChatRoom(uuid), { staleTime: Infinity })
+    const {data, ...rest} = useQuery(`user.chat.${uuid}`, () => getChatRoom(uuid), {
+        staleTime: Infinity
+    })
 
     return { ...rest, chat: data?.chat }
 }

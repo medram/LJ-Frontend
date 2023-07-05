@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useReducer, useState } from "react"
+import { useCallback, useContext, useEffect, useReducer, useRef, useState } from "react"
 import { useQuery } from "react-query"
 import { getAvailablePaymentMethods, getDashboardSettings, getPlans, getSettings } from "../api"
 import StoreContext, { useStore } from "../context/StoreContext"
@@ -170,23 +170,16 @@ export function useEventListener(eventName, defaultValue, callback)
 }
 
 
-// export function useTheme() {
-//     const { theme, dispatch } = useContext(StoreContext)
+export function useScrollToRef(defaultValue=null)
+{
+    const ref = useRef(defaultValue)
 
-//     function toggleTheme() {
-//         console.log("Toggle theme")
-//         dispatch({ type: "TOGGLE_THEME" })
-//     }
+    const scrollToRef = useCallback(() => {
+        setTimeout(() => {
+            if (ref.current)
+                ref.current.scrollIntoView({ behavior: 'smooth' })
+        }, 200)
+    }, [])
 
-//     return [theme, toggleTheme]
-// }
-
-// export function useAuth() {
-//     const { isAuthenticated, dispatch } = useContext(StoreContext)
-
-//     function setAuthenticated(value) {
-//         dispatch({ type: "IS_AUTHENTICATED", payload: value })
-//     }
-
-//     return { isAuthenticated, setAuthenticated }
-// }
+    return [ref, scrollToRef]
+}
