@@ -2,20 +2,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SuperButton from "../SuperButton";
 import AIMessage from "./AIMessage";
 import UserMessage from "./UserMessage";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faStop, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import SectionLoading from "../SectionLoading";
 import useChatRoom from "../../hooks/account";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "react-query";
+import { clearChatHistory, sendPrompt } from "../../api/account";
+import PlaceholderMessage from "./PlaceholderMessage";
+import { useScrollToRef } from "../../hooks";
 
 
 export default function ChatSection({ uuid })
 {
     // const { uuid } = useParams()
+    const queryClient = useQueryClient()
     const { isLoading, isError, error, chat } = useChatRoom(uuid)
     const [ chatHistory, setChatHistory ] = useState([])
     const [ prompt, setPrompt ] = useState("")
+    const [ isSending, setSending ] = useState(false)
+    const [isClearingChatHistory, setClearingChatHistory ] = useState(false)
+    const [promptRef, scrollToPrompt] = useScrollToRef()
+
 
     useEffect(() => {
         if (chat?.chat_history)
@@ -35,14 +44,80 @@ export default function ChatSection({ uuid })
                 console.log("error parsing chat history")
             }
         }
+        else
+        {
+            setChatHistory([<AIMessage key={Math.random()} content="Hi, How can I assist you today?" />])
+        }
+
+        scrollToPrompt()
     }, [isLoading, chat])
 
     useEffect(() => {
-        if (chatHistory.length === 0)
-        {
-            setChatHistory([<AIMessage key={Math.random()} content="Hi, how can I help you" />])
-        }
+        scrollToPrompt()
     }, [])
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setSending(true)
+
+        setChatHistory(chatHistory => {
+            return [
+                ...chatHistory,
+                <UserMessage key={Math.random()} content={prompt} />,
+                <PlaceholderMessage key={Math.random()} />
+            ]
+        })
+        setPrompt("") // clear the prompt
+        scrollToPrompt()
+
+        sendPrompt(uuid, prompt).then(data => {
+            if (!data?.errors) {
+                setChatHistory(chatHistory => {
+                    // remove the PlaceholderMessage first, before appending the reply
+                    return [...(chatHistory.slice(0, -1)), <AIMessage key={Math.random()} content={data?.response?.output?.trim()} />]
+                })
+            }
+            else {
+                toast.error(data.message)
+                setChatHistory(chatHistory => {
+                    // remove the PlaceholderMessage first, before appending the reply
+                    return chatHistory.slice(0, -1)
+                })
+            }
+        }).catch(err => {
+            toast.error(err)
+            setChatHistory(chatHistory => {
+                // remove the PlaceholderMessage first, before appending the reply
+                return chatHistory.slice(0, -1)
+            })
+        }).finally(() => {
+            setSending(false)
+            // scroll down
+            queryClient.invalidateQueries(`user.chat.${uuid}`)
+            scrollToPrompt()
+        })
+    }
+
+    const handleClearChatHistory = useCallback(() => {
+        setClearingChatHistory(true)
+
+        clearChatHistory(uuid).then(req => {
+            if (req.status === 204)
+            {
+                toast.success("Cleared successfully.")
+                setChatHistory([])
+            }
+            else
+            {
+                toast.warning("Something went wrong!")
+            }
+        }).catch(err => {
+            toast.error(err)
+        }).finally(() => {
+            setClearingChatHistory(false)
+        })
+    }, [uuid])
 
 
     if (isLoading)
@@ -55,11 +130,6 @@ export default function ChatSection({ uuid })
         toast.error(error)
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log("submitted")
-    }
-
 
     return (
         <>
@@ -68,14 +138,20 @@ export default function ChatSection({ uuid })
                     {chatHistory.map((message, i) => message)}
                 </div>
             </div>
-            <div className="container prompt-input d-flex gap-2 pt-5 pb-5 px-4">
+            <div className="container prompt-input d-flex gap-2 pt-5 pb-5 px-4" ref={promptRef}>
                 <form onSubmit={handleSubmit} className="flex-grow-1">
                     <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} className="form-control form-control-lg" placeholder="Ask anything..." />
                 </form>
 
-                <SuperButton className="btn btn-primary btn-lg" onClick={() => { }}>
-                    <FontAwesomeIcon icon={faPaperPlane} />
+                <SuperButton className="btn btn-primary btn-lg" onClick={handleSubmit}>
+                    {isSending ? (
+                        <FontAwesomeIcon icon={faStop} />
+                    ) : (
+                        <FontAwesomeIcon icon={faPaperPlane} />
+                    )}
                 </SuperButton>
+
+                <SuperButton className="btn btn-secondary" isLoading={isClearingChatHistory} title="Clear Chat History" onClick={handleClearChatHistory}><FontAwesomeIcon icon={faTrashCan} /></SuperButton>
             </div>
         </>
     )
