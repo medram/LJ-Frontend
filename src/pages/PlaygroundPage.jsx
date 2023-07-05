@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { uploadFile } from "../api";
 import { useQueryClient } from "react-query";
 import SpinnerGrow from "../components/SpinnerGrow";
+import { deleteChatRoom } from "../api/account";
 
 
 const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name, createChatRoom, setProcessing }) => {
@@ -70,9 +71,8 @@ export default function PlaygroundPage()
     const { uuid } = useParams()
     const [ currentChatRoomUUID, setCurrentChatRoomUUID ] = useState(uuid)
 
-    const { isLoading, userChatRoomList } = useUserChatRoomList()
+    const { isLoading, isError, error, userChatRoomList } = useUserChatRoomList()
     const [ isProcessing, setProcessing ] = useState(false)
-
 
     const handleChatLabelClick = useCallback((uuid) => {
         setCurrentChatRoomUUID(uuid)
@@ -85,13 +85,40 @@ export default function PlaygroundPage()
         navigate(`/playground/${uuid}`)
     }, [uuid])
 
+    const handleChatRoomDeletion = useCallback((uuid, callback) => {
+
+        deleteChatRoom(uuid).then(req => {
+            if (req.status === 204) {
+                queryClient.invalidateQueries("user.chat.list")
+                toast.success("Deleted successfully.")
+            }
+            else {
+                toast.warning("Something went wrong!")
+            }
+        }).catch(err => {
+            toast.error(err)
+        }).finally(() => {
+            callback()
+        })
+    }, [uuid])
+
     useEffect(() => {
         if ((!uuid || !currentChatRoomUUID) && userChatRoomList !== undefined && Object.keys(userChatRoomList).length) {
             // return <Navigate to={`/playground/${userChatRoomList[0]?.uuid}`} replace={true} />
             navigate(`/playground/${userChatRoomList[0]?.uuid}`)
             setCurrentChatRoomUUID(userChatRoomList[0]?.uuid)
         }
+        else if (userChatRoomList !== undefined && !Object.keys(userChatRoomList).length)
+        {
+            setCurrentChatRoomUUID("")
+            navigate(`/playground`)
+        }
     }, [uuid, userChatRoomList])
+
+    if (isError)
+    {
+        toast.error(error)
+    }
 
     if (!Object.keys(user).length || isLoading)
     {
@@ -130,7 +157,13 @@ export default function PlaygroundPage()
 
                         <div className="chat-labels-list">
                             {userChatRoomList?.map((chat, i) => {
-                                return <ChatLabel key={i} title={chat.title} onClick={() => handleChatLabelClick(chat.uuid)} active={chat.uuid === currentChatRoomUUID} />
+                                return <ChatLabel
+                                    key={i}
+                                    title={chat.title}
+                                    onClick={() => handleChatLabelClick(chat.uuid)}
+                                    onDelete={(callback) => handleChatRoomDeletion(chat.uuid, callback)}
+                                    active={chat.uuid === currentChatRoomUUID}
+                                    />
                             })}
                         </div>
 
