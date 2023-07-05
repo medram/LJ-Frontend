@@ -38,3 +38,24 @@ export async function getChatRoom(uuid)
     return req.data
 }
 
+export async function sendPrompt(uuid, prompt)
+{
+    const req = await axiosApi.post(`/user/chat/${uuid}`, {prompt}, {
+        timeout: 120000 // 2 minutes
+    })
+    return req.data
+}
+
+export async function clearChatHistory(uuid)
+{
+    const req = await axiosApi.post(`/user/chat/${uuid}/clear-history`)
+
+    return req
+}
+
+export async function deleteChatRoom(uuid)
+{
+    const req = await axiosApi.delete(`/user/chat/${uuid}/delete`)
+
+    return req
+}
