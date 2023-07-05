@@ -43,7 +43,7 @@ export default function Dropzone({
             setIsUploading(true)
             onUpload({ ...extraOnUploadProps, files: acceptedFiles, setProgress, setIsSuccessUpload, resetDropzone, name })
         }
-    }), [acceptedFiles.length])
+    }, [acceptedFiles.length]), [acceptedFiles.length])
 
     useEffect(useCallback(() => {
         if (typeof onError === "function" && fileRejections.length)
@@ -51,7 +51,7 @@ export default function Dropzone({
             setIsUploading(false)
             onError(fileRejections)
         }
-    }), [fileRejections.length])
+    }, [fileRejections.length]), [fileRejections.length])
 
 
     const resetDropzone = useCallback(() => {
@@ -59,7 +59,7 @@ export default function Dropzone({
         setIsUploading(false)
         setProgressValue(0)
         setIsSuccessUpload(false)
-    })
+    }, [])
 
     const handleAbort = useCallback((e) => {
         e.preventDefault()

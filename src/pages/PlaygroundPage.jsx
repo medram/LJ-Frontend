@@ -5,19 +5,49 @@ import UserMessage from "../components/playground/UserMessage";
 import AIMessage from "../components/playground/AIMessage";
 import Dropzone from "../components/Dropzone"
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useEventListener } from "../hooks";
 import AvatarPalceholder from "../components/AvatarPalceholder";
 import ChatLabel from "../components/playground/ChatLabel";
 import ChatSection from "../components/playground/ChatSection";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../hooks/auth";
-import SectionLoading from "../components/SectionLoading";
 import FullscreenLoading from "../components/FullscreenLoading";
 import { useUserChatRoomList } from "../hooks/account";
+import { toast } from "react-toastify";
+import { uploadFile } from "../api";
+import { useQueryClient } from "react-query";
 
 
-const onUpload = () => {
+const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name, createChatRoom, setProccessing }) => {
+    uploadFile("user/chat", files[0], {
+        onUploadProgress: (e) => {
+            let perc = e.loaded / e.total * 100
+            setProgress(perc)
+            if (perc >= 100)
+                setProccessing(true)
+        }
+    }).then((res) => {
+        if (res.data && !res.data?.errors) {
+            const { chat_room } = res.data
+            // Create a new chat room
+            createChatRoom(chat_room.uuid, chat_room.title)
+            setIsSuccessUpload(true)
+            // to reset everything in the dropzone
+            setTimeout(() => {
+                resetDropzone()
+            }, 5000)
+        }
+        else {
+            toast.error(res.data?.message)
+            resetDropzone()
+        }
+        setProccessing(false)
+    }).catch(err => {
+        toast.error(err.message)
+        setProccessing(false)
+        resetDropzone()
+    })
 
 }
 
@@ -34,23 +64,32 @@ export default function PlaygroundPage()
 
     const { user } = useUser()
 
+    const queryClient = useQueryClient()
     const navigate = useNavigate()
     const { uuid } = useParams()
     const [ currentChatRoomUUID, setCurrentChatRoomUUID ] = useState(uuid)
 
     const { isLoading, userChatRoomList } = useUserChatRoomList()
+    const [ isProccessing, setProccessing ] = useState(false)
 
-    const handleChatLabelClick = (uuid) => {
+
+    const handleChatLabelClick = useCallback((uuid) => {
         setCurrentChatRoomUUID(uuid)
         navigate(`/playground/${uuid}`)
-    }
+    }, [uuid])
+
+    const createChatRoom = useCallback((uuid, title) => {
+        queryClient.invalidateQueries("user.chat.list")
+        // setCurrentChatRoomUUID(uuid)
+        navigate(`/playground/${uuid}`)
+    }, [uuid])
 
 
-    if (!Object.keys(user).length || isLoading || !Object.keys(userChatRoomList).length)
+    if (!Object.keys(user).length || isLoading)
     {
         return <FullscreenLoading />
     }
-    else if (!uuid)
+    else if ((!uuid || !currentChatRoomUUID) && Object.keys(userChatRoomList).length)
     {
         return <Navigate to={`/playground/${userChatRoomList[0]?.uuid}`} replace={true} />
     }
@@ -61,17 +100,27 @@ export default function PlaygroundPage()
             <main className="playground">
                 <Sidebar toggled={toggled} collapsed={collapsed} breakPoint="md" onBackdropClick={() => setToggled(!toggled)} backgroundColor="" className="">
                     <div className="playground-sidebar">
-                        <Dropzone onUpload={onUpload} onError={onError} name="pdf-file" dropzoneOptions={{
+                        <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
+                        extraOnUploadProps={{
+                            createChatRoom,
+                            setProccessing
+                        }} dropzoneOptions={{
                             accept: { 'application/pdf': ['.pdf'] },
                             maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
                         }} >
-                            {collapsed ? (
-                                <FontAwesomeIcon icon={faPlus} />
-                            ) : (
+                            {isProccessing ? (
                                 <div className="text-center">
-                                    <b><FontAwesomeIcon icon={faPlus} /> New Chat</b>
-                                    <p>Drag & Drop your PDF</p>
+                                    <b>Proccessing...</b>
                                 </div>
+                            ) : (
+                                collapsed ? (
+                                    <FontAwesomeIcon icon={faPlus} />
+                                ) : (
+                                    <div className="text-center">
+                                        <b><FontAwesomeIcon icon={faPlus} /> New Chat</b>
+                                        <p>Drag & Drop your PDF</p>
+                                    </div>
+                                )
                             )}
                         </Dropzone>
 
@@ -117,7 +166,9 @@ export default function PlaygroundPage()
                     )}
 
                     <section className="d-flex flex-column">
-                        <ChatSection uuid={currentChatRoomUUID} key={uuid} />
+                        {currentChatRoomUUID && (
+                            <ChatSection uuid={currentChatRoomUUID} key={uuid} />
+                        )}
                     </section>
                 </section>
             </main>

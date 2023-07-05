@@ -32,7 +32,6 @@ const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name,
     }).then((res) => {
         if (res.data && !res.data?.errors)
         {
-            console.log(res.data)
             formik.setFieldValue(name, res.data?.url)
             toast.info("Ensure to save the settings.")
             setIsSuccessUpload(true)
