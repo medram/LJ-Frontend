@@ -17,15 +17,16 @@ import { useUserChatRoomList } from "../hooks/account";
 import { toast } from "react-toastify";
 import { uploadFile } from "../api";
 import { useQueryClient } from "react-query";
+import SpinnerGrow from "../components/SpinnerGrow";
 
 
-const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name, createChatRoom, setProccessing }) => {
+const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name, createChatRoom, setProcessing }) => {
     uploadFile("user/chat", files[0], {
         onUploadProgress: (e) => {
             let perc = e.loaded / e.total * 100
             setProgress(perc)
             if (perc >= 100)
-                setProccessing(true)
+                setProcessing(true)
         }
     }).then((res) => {
         if (res.data && !res.data?.errors) {
@@ -42,10 +43,10 @@ const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name,
             toast.error(res.data?.message)
             resetDropzone()
         }
-        setProccessing(false)
+        setProcessing(false)
     }).catch(err => {
         toast.error(err.message)
-        setProccessing(false)
+        setProcessing(false)
         resetDropzone()
     })
 
@@ -70,7 +71,7 @@ export default function PlaygroundPage()
     const [ currentChatRoomUUID, setCurrentChatRoomUUID ] = useState(uuid)
 
     const { isLoading, userChatRoomList } = useUserChatRoomList()
-    const [ isProccessing, setProccessing ] = useState(false)
+    const [ isProcessing, setProcessing ] = useState(false)
 
 
     const handleChatLabelClick = useCallback((uuid) => {
@@ -80,18 +81,21 @@ export default function PlaygroundPage()
 
     const createChatRoom = useCallback((uuid, title) => {
         queryClient.invalidateQueries("user.chat.list")
-        // setCurrentChatRoomUUID(uuid)
+        setCurrentChatRoomUUID(uuid)
         navigate(`/playground/${uuid}`)
     }, [uuid])
 
+    useEffect(() => {
+        if ((!uuid || !currentChatRoomUUID) && userChatRoomList !== undefined && Object.keys(userChatRoomList).length) {
+            // return <Navigate to={`/playground/${userChatRoomList[0]?.uuid}`} replace={true} />
+            navigate(`/playground/${userChatRoomList[0]?.uuid}`)
+            setCurrentChatRoomUUID(userChatRoomList[0]?.uuid)
+        }
+    }, [uuid, userChatRoomList])
 
     if (!Object.keys(user).length || isLoading)
     {
         return <FullscreenLoading />
-    }
-    else if ((!uuid || !currentChatRoomUUID) && Object.keys(userChatRoomList).length)
-    {
-        return <Navigate to={`/playground/${userChatRoomList[0]?.uuid}`} replace={true} />
     }
 
 
@@ -103,14 +107,14 @@ export default function PlaygroundPage()
                         <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
                         extraOnUploadProps={{
                             createChatRoom,
-                            setProccessing
+                            setProcessing
                         }} dropzoneOptions={{
                             accept: { 'application/pdf': ['.pdf'] },
                             maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
                         }} >
-                            {isProccessing ? (
+                            {isProcessing ? (
                                 <div className="text-center">
-                                    <b>Proccessing...</b>
+                                    <b><SpinnerGrow size="sm" /> Processing...</b>
                                 </div>
                             ) : (
                                 collapsed ? (
