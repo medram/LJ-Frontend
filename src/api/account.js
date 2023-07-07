@@ -41,7 +41,7 @@ export async function getChatRoom(uuid)
 export async function sendPrompt(uuid, prompt)
 {
     const req = await axiosApi.post(`/user/chat/${uuid}`, {prompt}, {
-        timeout: 120000 // 2 minutes
+        timeout: 300000 // 5 minutes
     })
     return req.data
 }
