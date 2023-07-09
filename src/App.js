@@ -58,8 +58,6 @@ function App() {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/contact" element={<ContactPage />} />
 
-        <Route path="/playground/:uuid?" element={<PlaygroundPage />} />
-
         <Route element={<NoAuthRequired />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -67,6 +65,7 @@ function App() {
         </Route>
 
         <Route element={<UserRequired />}>
+          <Route path="/playground/:uuid?" element={<PlaygroundPage />} />
           <Route path="/checkout/:id" element={<CheckoutPage />} />
           <Route path="/thank-you" element={<ThankYouPage />} />
         </Route>

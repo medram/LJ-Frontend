@@ -36,7 +36,6 @@ export default function AddPlanForm({ close }) {
             status: false,
             pdfs: 0,
             pdf_size: 0,
-            pdf_pages: 0,
             questions: 0,
             features: "",
             paypal_plan_id: "",
@@ -52,7 +51,6 @@ export default function AddPlanForm({ close }) {
             status: Yup.boolean("Status field must be boolean"),
             pdfs: Yup.number("Pdfs field must be a number."),
             pdf_size: Yup.number("Pdf Size field must be a number."),
-            pdf_pages: Yup.number("Pdf Pages field must be a number."),
             questions: Yup.number("Questions field must be a number."),
             features: Yup.string().nullable(),
             paypal_plan_id: Yup.string().nullable(),
@@ -145,11 +143,6 @@ export default function AddPlanForm({ close }) {
             <div className="mb-4">
                 <label htmlFor="pdfs">Max PDFs <small>(0 = unlimited)</small>:</label>
                 <input type="number" className="form-control" placeholder="e.g. 10" id="pdfs" {...formik.getFieldProps("pdfs")} min={0} onChange={(e) => formik.setFieldValue('pdfs', parseInt(e.target.value))} />
-            </div>
-
-            <div className="mb-4">
-                <label htmlFor="pdf_pages">Max PDF pages <small>(0 = unlimited)</small>:</label>
-                <input type="number" className="form-control" placeholder="e.g. 50" id="pdf_pages" {...formik.getFieldProps("pdf_pages")} min={0} onChange={(e) => formik.setFieldValue('pdf_pages', parseInt(e.target.value))} />
             </div>
 
             <div className="mb-4">

@@ -42,7 +42,6 @@ export default function EditPlanForm({ close, planId }) {
             "status": plan.status,
             "pdfs": plan.pdfs,
             "pdf_size": plan.pdf_size,
-            "pdf_pages": plan.pdf_pages,
             "questions": plan.questions,
             "features": plan.features,
             "paypal_plan_id": plan.paypal_plan_id,
@@ -58,7 +57,6 @@ export default function EditPlanForm({ close, planId }) {
             status: Yup.boolean("Status field must be boolean"),
             pdfs: Yup.number("Pdfs field must be a number."),
             pdf_size: Yup.number("Pdf Size field must be a number."),
-            pdf_pages: Yup.number("Pdf Pages field must be a number."),
             questions: Yup.number("Questions field must be a number."),
             features: Yup.string().nullable(),
             paypal_plan_id: Yup.string().nullable(),
@@ -166,11 +164,6 @@ export default function EditPlanForm({ close, planId }) {
             <div className="mb-4">
                 <label htmlFor="pdfs">Max PDFs <small>(0 = unlimited)</small>:</label>
                 <input type="number" className="form-control" placeholder="e.g. 10" id="pdfs" {...formik.getFieldProps("pdfs")} min={0} onChange={(e) => formik.setFieldValue('pdfs', parseInt(e.target.value))} />
-            </div>
-
-            <div className="mb-4">
-                <label htmlFor="pdf_pages">Max PDF pages <small>(0 = unlimited)</small>:</label>
-                <input type="number" className="form-control" placeholder="e.g. 50" id="pdf_pages" {...formik.getFieldProps("pdf_pages")} min={0} onChange={(e) => formik.setFieldValue('pdf_pages', parseInt(e.target.value))} />
             </div>
 
             <div className="mb-4">
