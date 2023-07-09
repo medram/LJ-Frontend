@@ -46,6 +46,13 @@ export async function sendPrompt(uuid, prompt)
     return req.data
 }
 
+export async function stopPrompt(uuid)
+{
+    const req = await axiosApi.post(`/user/chat/${uuid}/stop`)
+
+    return req
+}
+
 export async function clearChatHistory(uuid)
 {
     const req = await axiosApi.post(`/user/chat/${uuid}/clear-history`)
