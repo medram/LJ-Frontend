@@ -188,7 +188,7 @@ export default function PlaygroundPage()
                         <div className="sidebar-bottom-section">
                             {subscription && (
                                 <>
-                                    {(subscription?.questions <= 0 || subscription?.pdfs <= 0) && (
+                                    {(subscription?.questions <= 20 || subscription?.pdfs <= 10) && (
                                         <Link to="/account/settings/subscription" className="btn btn-warning btn-lg btn-block"><FontAwesomeIcon icon={faGem} /> Upgrade</Link>
                                     )}
 
