@@ -5,7 +5,9 @@ import { useUser } from "./auth"
 
 export function useCurrentSubscription()
 {
-    const { data, ...rest } = useQuery("user.subscription", currentSubscription, { staleTime: Infinity })
+    const { data, ...rest } = useQuery("user.subscription", currentSubscription, {
+        // staleTime: Infinity
+    })
 
     return { ...rest, subscription: data?.subscription }
 }

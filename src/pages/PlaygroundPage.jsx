@@ -1,4 +1,4 @@
-import { faBarsStaggered, faPaperPlane, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faGem, faPaperPlane, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SuperButton from "../components/SuperButton";
 import UserMessage from "../components/playground/UserMessage";
@@ -10,10 +10,10 @@ import { useEventListener } from "../hooks";
 import AvatarPalceholder from "../components/AvatarPalceholder";
 import ChatLabel from "../components/playground/ChatLabel";
 import ChatSection from "../components/playground/ChatSection";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../hooks/auth";
 import FullscreenLoading from "../components/FullscreenLoading";
-import { useUserChatRoomList } from "../hooks/account";
+import { useCurrentSubscription, useUserChatRoomList } from "../hooks/account";
 import { toast } from "react-toastify";
 import { uploadFile } from "../api";
 import { useQueryClient } from "react-query";
@@ -21,7 +21,11 @@ import SpinnerGrow from "../components/SpinnerGrow";
 import { deleteChatRoom } from "../api/account";
 
 
-const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name, createChatRoom, setProcessing }) => {
+const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name, createChatRoom, setProcessing, subscription }) => {
+    if (subscription?.pdfs <= 0)
+        resetDropzone()
+        return toast.warning("You have reached the maximum number of document uploads.")
+
     uploadFile("user/chat", files[0], {
         onUploadProgress: (e) => {
             let perc = e.loaded / e.total * 100
@@ -30,7 +34,9 @@ const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name,
                 setProcessing(true)
         }
     }).then((res) => {
-        if (res.data && !res.data?.errors) {
+
+        if (res.data && !res.data?.errors)
+        {
             const { chat_room } = res.data
             // Create a new chat room
             createChatRoom(chat_room.uuid, chat_room.title)
@@ -44,11 +50,19 @@ const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name,
             toast.error(res.data?.message)
             resetDropzone()
         }
-        setProcessing(false)
+
     }).catch(err => {
-        toast.error(err.message)
-        setProcessing(false)
+
+        if (err.response.status === 422) {
+            toast.warning(err.response?.data?.message)
+        }
+        else
+        {
+            toast.error(err.message)
+        }
         resetDropzone()
+    }).finally(() => {
+        setProcessing(false)
     })
 
 }
@@ -65,6 +79,7 @@ export default function PlaygroundPage()
     const [windowInnerWidth, setWindowInnerWidth] = useEventListener('resize', window.innerWidth, () => window.innerWidth)
 
     const { user } = useUser()
+    const { isLoading: isSubscriptionLoading, subscription } = useCurrentSubscription()
 
     const queryClient = useQueryClient()
     const navigate = useNavigate()
@@ -120,7 +135,7 @@ export default function PlaygroundPage()
         toast.error(error)
     }
 
-    if (!Object.keys(user).length || isLoading)
+    if (!Object.keys(user).length || isLoading || isSubscriptionLoading)
     {
         return <FullscreenLoading />
     }
@@ -131,29 +146,32 @@ export default function PlaygroundPage()
             <main className="playground">
                 <Sidebar toggled={toggled} collapsed={collapsed} breakPoint="md" onBackdropClick={() => setToggled(!toggled)} backgroundColor="" className="">
                     <div className="playground-sidebar">
-                        <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
-                        extraOnUploadProps={{
-                            createChatRoom,
-                            setProcessing
-                        }} dropzoneOptions={{
-                            accept: { 'application/pdf': ['.pdf'] },
-                            maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
-                        }} >
-                            {isProcessing ? (
-                                <div className="text-center">
-                                    <b><SpinnerGrow size="sm" /> Processing...</b>
-                                </div>
-                            ) : (
-                                collapsed ? (
-                                    <FontAwesomeIcon icon={faPlus} />
-                                ) : (
+                        {subscription && (
+                            <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
+                            extraOnUploadProps={{
+                                createChatRoom,
+                                setProcessing,
+                                subscription
+                            }} dropzoneOptions={{
+                                accept: { 'application/pdf': ['.pdf'] },
+                                maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
+                            }} >
+                                {isProcessing ? (
                                     <div className="text-center">
-                                        <b><FontAwesomeIcon icon={faPlus} /> New Chat</b>
-                                        <p>Drag & Drop your PDF</p>
+                                        <b><SpinnerGrow size="sm" /> Processing...</b>
                                     </div>
-                                )
-                            )}
-                        </Dropzone>
+                                ) : (
+                                    collapsed ? (
+                                        <FontAwesomeIcon icon={faPlus} />
+                                    ) : (
+                                        <div className="text-center">
+                                            <b><FontAwesomeIcon icon={faPlus} /> New Chat</b>
+                                            <p>Drag & Drop your PDF</p>
+                                        </div>
+                                    )
+                                )}
+                            </Dropzone>
+                        )}
 
                         <div className="chat-labels-list">
                             {userChatRoomList?.map((chat, i) => {
@@ -168,15 +186,22 @@ export default function PlaygroundPage()
                         </div>
 
                         <div className="sidebar-bottom-section">
-                            <div className="quota">
-                                <h3 className="h6">Quota:</h3>
-                                <span>10 PDFs</span><br />
-                                <span>100 pages/pdf (max)</span><br />
-                                <span>Max PDF size: 10MB/pdf</span><br />
-                                <span>30 PDF Questions</span><br />
-                            </div>
+                            {subscription && (
+                                <>
+                                    {(subscription?.questions <= 0 || subscription?.pdfs <= 0) && (
+                                        <Link to="/account/settings/subscription" className="btn btn-warning btn-lg btn-block"><FontAwesomeIcon icon={faGem} /> Upgrade</Link>
+                                    )}
+
+                                    <div className="quota">
+                                        <h3 className="h6">Quota:</h3>
+                                        <span>{subscription?.pdfs} PDFs</span><br />
+                                        <span>Max PDF size: {subscription?.pdf_size}MB/pdf</span><br />
+                                        <span>{subscription?.questions} PDF Questions</span><br />
+                                    </div>
+                                </>
+                            )}
                             {user && (
-                                <div className="profile">
+                                <div className="profile" onClick={() => navigate("/account/settings")}>
                                     <AvatarPalceholder username={user.username} size={45} />
                                     <div>
                                         <b>{user.username}</b><br />
@@ -186,10 +211,9 @@ export default function PlaygroundPage()
                             )}
 
                             <footer>
-                                <a href="/">Home</a>
-                                <a href="/pricing">Pricing</a>
-                                <a href="/contact">Contact us</a>
-                                <a href="/api">API access</a>
+                                <Link to="/">Home</Link>
+                                <Link to="/pricing">Pricing</Link>
+                                <Link to="/contact">Contact us</Link>
                             </footer>
 
                         </div>
@@ -203,8 +227,22 @@ export default function PlaygroundPage()
                     )}
 
                     <section className="d-flex flex-column">
-                        {currentChatRoomUUID && (
-                            <ChatSection uuid={currentChatRoomUUID} key={uuid} />
+                        {subscription ? (
+                            subscription?.questions <= 0 ? (
+                                <div className="d-flex flex-column justify-content-start p-5">
+                                    Your subscription has reached its maximum usage.
+                                    <Link to="/pricing" className="btn btn-warning my-3">Upgrade Now?</Link>
+                                </div>
+                            ) : (
+                                currentChatRoomUUID && (
+                                    <ChatSection uuid={currentChatRoomUUID} key={uuid} />
+                                )
+                            )
+                        ): (
+                            <div className="d-flex flex-column justify-content-start p-5">
+                                You need to have a subscription in order to be able to use the Playground section.
+                                <Link to="/pricing" className="btn btn-warning my-3">Get a subscription now?</Link>
+                            </div>
                         )}
                     </section>
                 </section>
