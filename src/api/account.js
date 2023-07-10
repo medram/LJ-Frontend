@@ -66,3 +66,10 @@ export async function deleteChatRoom(uuid)
 
     return req
 }
+
+
+export async function registerOpenAIKey(openai_key)
+{
+    const req = await axiosApi.post("/user/chat/register-openai-key", {openai_key})
+    return req
+}

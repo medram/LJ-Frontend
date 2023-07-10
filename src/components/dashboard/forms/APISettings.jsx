@@ -2,12 +2,13 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import { toastFormikErrors } from "../../../utils"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons"
+import { faFloppyDisk, faInfoCircle } from "@fortawesome/free-solid-svg-icons"
 import SuperButton from "../../SuperButton"
 import { saveDashboardSettings } from "../../../api/admin"
 import { useQueryClient } from "react-query"
 import { toast } from "react-toastify"
 import PasswordInput from "../../PasswordInput"
+import { registerOpenAIKey } from "../../../api/account"
 
 
 export default function APISettings({ settings })
@@ -27,18 +28,37 @@ export default function APISettings({ settings })
         }),
         onSubmit: (values) => {
             saveDashboardSettings(values).then((data) => {
-                if (data?.errors) {
+                if (data?.errors)
+                {
                     toast.error(data?.message)
                 }
-                else {
-                    queryClient.invalidateQueries("admin.settings")
-                    queryClient.invalidateQueries("settings")
-                    toast.success(data.message)
+                else
+                {
+                    // register OpenAI key
+                    registerOpenAIKey(values.OPENAI_API_KEY).then(req => {
+                        if (!req.data?.errors)
+                            toast.success(req.data?.message)
+                        else
+                            toast.error(req.data?.message)
+                    }).catch(err => {
+                        if (err.response.data?.errors)
+                        {
+                            toast.error(err.response.data?.message)
+                        }
+                        else
+                        {
+                            toast.error(err.message)
+                        }
+                    }).finally(() => {
+                        queryClient.invalidateQueries("admin.settings")
+                        queryClient.invalidateQueries("settings")
+                        formik.setSubmitting(false)
+                    })
                 }
             }).catch(err => {
                 toast.error(err)
             }).finally(() => {
-                formik.setSubmitting(false)
+
             })
         }
     })
@@ -46,10 +66,14 @@ export default function APISettings({ settings })
 
     return (
         <form onSubmit={formik.handleSubmit}>
+            <div className="alert alert-info"><FontAwesomeIcon icon={faInfoCircle} /> <b>Important:</b> For better/fast performance, it's highly recommended to use a paid OpenAI API key.</div>
+
             <div className="mb-4">
                 <label htmlFor="openai_api_key">OpenAI API Key:</label>
                 <PasswordInput placeholder="e.g. sk-xxxxxxxxxxxxxxx" id="openai_api_key" {...formik.getFieldProps("OPENAI_API_KEY")} />
             </div>
+
+            <hr className="my-5 text-muted"/>
 
             <div className="mb-4">
                 <label htmlFor="rapid_api_key">Rapid API Key:</label>
@@ -57,7 +81,7 @@ export default function APISettings({ settings })
             </div>
 
             <div className="mb-4">
-                <label htmlFor="rappid_api_host">Rapid API Host:</label>
+                <label htmlFor="rapid_api_host">Rapid API Host:</label>
                 <input type="text" className="form-control" placeholder="e.g. askpdf1.p.rapidapi.com" id="rapid_api_host" {...formik.getFieldProps("RAPID_API_HOST")} />
             </div>
 
