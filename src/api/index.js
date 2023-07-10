@@ -61,7 +61,6 @@ export async function payNow(data) {
     return req.data
 }
 
-
 export async function contactUs(data)
 {
     const req = await axiosApi.post("/contact", data)
@@ -74,7 +73,6 @@ export async function getpages()
 
     return req.data
 }
-
 
 export async function getPage(slug)
 {

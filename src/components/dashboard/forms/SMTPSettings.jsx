@@ -10,6 +10,9 @@ import { useQueryClient } from "react-query";
 import * as Yup from "yup"
 import Switch from "../../Switch";
 import PasswordInput from "../../PasswordInput";
+import { useCallback, useState } from "react";
+import { Modal } from "react-bootstrap";
+import SendTestEmailModelForm from "./SendTestEmailModelForm";
 
 
 const SMTP_MAIL_ENCRIPTION_OPTIONS = [
@@ -20,6 +23,7 @@ const SMTP_MAIL_ENCRIPTION_OPTIONS = [
 
 export default function SMTPSettings({ settings }) {
     const queryClient = useQueryClient()
+    const [showSendEmailForm, setShowSendEmailForm ] = useState(false)
 
     const formik = useFormik({
         initialValues: {
@@ -59,6 +63,7 @@ export default function SMTPSettings({ settings }) {
             })
         }
     })
+
 
     return (
         <>
@@ -102,11 +107,16 @@ export default function SMTPSettings({ settings }) {
                         <FontAwesomeIcon icon={faFloppyDisk} /> Save
                     </SuperButton>
 
-                    <SuperButton disabled={true} isLoading={false} className="btn btn-primary" onClick={() => { /* TODO: send a test email */ }}>
+                    <SuperButton className="btn btn-primary" onClick={(e) => {
+                            e.preventDefault()
+                            setShowSendEmailForm(true)
+                        }}>
                         <FontAwesomeIcon icon={faPaperPlane} /> Send a test email
                     </SuperButton>
                 </div>
             </form>
+
+            <SendTestEmailModelForm show={showSendEmailForm} onHide={() => setShowSendEmailForm(false)} setShow={setShowSendEmailForm} />
         </>
     )
 }
