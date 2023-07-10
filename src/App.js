@@ -40,6 +40,7 @@ import InvoicesPage from "./pages/account/settings/InvoicesPage";
 import ChangePasswordPage from "./pages/account/settings/ChangePasswordPage";
 import AccountPage from "./pages/account/AccountPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import PagePage from "./pages/PagePage";
 
 
 // Lazy loading
@@ -57,6 +58,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/p/:slug" element={<PagePage />} />
 
         <Route element={<NoAuthRequired />}>
           <Route path="/login" element={<LoginPage />} />

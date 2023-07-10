@@ -1,3 +1,4 @@
+import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 
 
@@ -10,9 +11,7 @@ export default function BasePage({ children, showFooter=true }) {
             { children }
         </main>
         {showFooter && (
-            <footer className="container">
-                {new Date().getUTCFullYear()} &copy; all right reserved.
-            </footer>
+            <Footer />
         )}
     </>
 }

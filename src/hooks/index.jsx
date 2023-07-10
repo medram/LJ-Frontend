@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useReducer, useRef, useState } from "react"
 import { useQuery } from "react-query"
-import { getAvailablePaymentMethods, getDashboardSettings, getPlans, getSettings } from "../api"
+import { getAvailablePaymentMethods, getDashboardSettings, getPage, getPlans, getSettings, getpages } from "../api"
 import StoreContext, { useStore } from "../context/StoreContext"
 import { getDashboardPlans } from "../api/admin"
 
@@ -182,4 +182,20 @@ export function useScrollToRef(defaultValue=null)
     }, [])
 
     return [ref, scrollToRef]
+}
+
+
+export function usePages()
+{
+    const { data, ...rest } = useQuery("pages", getpages, { staleTime: 60000 })
+
+    return { pages: data?.pages, ...rest }
+}
+
+
+export function usePage(slug)
+{
+    const { data, ...rest } = useQuery(`page.${slug}`, () => getPage(slug), { staleTime: 300000 })
+
+    return { page: data?.page, ...rest }
 }

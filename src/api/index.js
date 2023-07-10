@@ -67,3 +67,17 @@ export async function contactUs(data)
     const req = await axiosApi.post("/contact", data)
     return req.data
 }
+
+export async function getpages()
+{
+    const req = await axiosApi.get("/pages")
+
+    return req.data
+}
+
+
+export async function getPage(slug)
+{
+    const req = await axiosApi.get(`/page/${slug}`)
+    return req.data
+}
