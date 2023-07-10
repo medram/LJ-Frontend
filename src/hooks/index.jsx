@@ -195,7 +195,7 @@ export function usePages()
 
 export function usePage(slug)
 {
-    const { data, ...rest } = useQuery(`page.${slug}`, () => getPage(slug), { staleTime: 300000 })
+    const { data, ...rest } = useQuery(`page.${slug}`, () => getPage(slug), { staleTime: 300000, retry: 1 })
 
     return { page: data?.page, ...rest }
 }
