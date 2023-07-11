@@ -22,9 +22,12 @@ import { deleteChatRoom } from "../api/account";
 
 
 const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name, createChatRoom, setProcessing, subscription }) => {
+
     if (subscription?.pdfs <= 0)
+    {
         resetDropzone()
         return toast.warning("You have reached the maximum number of document uploads.")
+    }
 
     uploadFile("user/chat", files[0], {
         onUploadProgress: (e) => {
