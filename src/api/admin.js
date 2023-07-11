@@ -113,3 +113,8 @@ export async function sendTestEmail(email)
     const req = await axiosApi.post(`/admin/send-test-email`, {email})
     return req.data
 }
+
+export async function registerPayPalWebhook() {
+    const req = await axiosApi.post(`/admin/register-paypal-webhook`)
+    return req
+}

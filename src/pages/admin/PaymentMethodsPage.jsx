@@ -8,7 +8,7 @@ import SectionLoading from "../../components/SectionLoading"
 import SuperButton from "../../components/SuperButton"
 import { toastFormikErrors } from "../../utils"
 import { useEffect } from "react"
-import { saveDashboardSettings } from "../../api/admin"
+import { registerPayPalWebhook, saveDashboardSettings } from "../../api/admin"
 import { toast } from "react-toastify"
 import { useQueryClient } from "react-query"
 import PasswordInput from "../../components/PasswordInput"
@@ -65,10 +65,35 @@ export default function PaymentMethodsPage()
                         queryClient.invalidateQueries("settings")
                         toast.success(data.message)
                     }
+
+                    // update PayPal Webhook
+
+                    if (
+                        values.PM_PAYPAL_CLIENT_ID !== settings.PM_PAYPAL_CLIENT_ID
+                        || values.PM_PAYPAL_CLIENT_SECRET !== settings.PM_PAYPAL_CLIENT_SECRET)
+                    {
+                        registerPayPalWebhook().then((req) => {
+                            if (req.status === 201 && !req.data?.errors)
+                            {
+                                toast.success(req.data?.message)
+                            }
+                        }).catch(err => {
+                            if (err.response.status === 400)
+                            {
+                                toast.error(err.response.data?.message)
+                            }
+                        }).finally(() => {
+                            formik.setSubmitting(false)
+                        })
+                    }
+                    else
+                    {
+                        formik.setSubmitting(false)
+                    }
                 }).catch(err => {
                     toast.error(err)
                 }).finally(() => {
-                    formik.setSubmitting(false)
+                    // formik.setSubmitting(false)
                 })
             }
         }
