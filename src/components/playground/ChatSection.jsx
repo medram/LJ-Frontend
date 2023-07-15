@@ -186,7 +186,7 @@ export default function ChatSection({ uuid })
                     <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} className="form-control form-control-lg" placeholder="Ask anything..." />
                 </form>
 
-                <SuperButton className="btn btn-primary btn-lg send" title={isSending ? "Stop" : "Send"} onClick={(e) => {
+                <SuperButton className={["btn btn-lg send", (isSending ? "btn-danger" : "btn-primary")].join(" ")} title={isSending ? "Stop" : "Send"} onClick={(e) => {
                     if (isSending)
                         return handleStop(e)
                     handleSubmit(e)

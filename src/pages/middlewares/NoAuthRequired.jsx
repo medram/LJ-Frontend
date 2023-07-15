@@ -11,7 +11,7 @@ export default function NoAuthRequired()
     if (isAuthenticated && isAdmin)
         return <Navigate to="/admin" replace={true} />
     else if (isAuthenticated)
-        return <Navigate to="/account" replace={true} />
+        return <Navigate to="/playground" replace={true} />
 
     return (
         <Outlet />
