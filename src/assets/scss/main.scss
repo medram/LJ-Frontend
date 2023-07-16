@@ -106,14 +106,14 @@ footer {
 
 .pricing-card.popular {
     border: none;
-    outline: 3px solid $success !important;
+    outline: 3px solid $primary !important;
     transform: scale(1.1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .pricing-card.popular::before {
     content: "Popular";
-    background: $success;
+    background: $primary;
     border-radius: 5px;
     color: #FFF;
     font-size: 0.8rem;
