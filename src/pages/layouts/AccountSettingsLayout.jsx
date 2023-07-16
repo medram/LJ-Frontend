@@ -24,7 +24,7 @@ export default function AccountSettingsLayout() {
                         <Link to="change-password" className="list-group-item list-group-item-action py-3"><FontAwesomeIcon icon={faLock} /> Change Password</Link>
                     </div>
                 </div>
-                <div className="col border rounded p-5 mx-3">
+                <div className="col border rounded p-5 mx-3 overflow-auto">
                     <Outlet />
                 </div>
             </div>

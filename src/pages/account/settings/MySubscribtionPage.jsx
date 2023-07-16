@@ -23,15 +23,27 @@ export default function MySubscriptionPage()
             {subscription ? (
                 <div className="card">
                     <div className="card-body">
-                        <h5 className="card-title">{subscription.plan_name} ({subscription.billing_cycle}) {!!subscription.is_free && <span className="badge text-bg-success">Free</span>}</h5>
+                        <h5 className="card-title d-flex justify-content-between align-items-start">
+                            <span>{subscription.plan_name} ({subscription.billing_cycle})</span>
+                            <div>
+                                {subscription.status === 1?
+                                    <span className="badge rounded-pill bg-success" style={{fontSize: "0.8rem"}}>Active</span>
+                                :
+                                    <span className="badge rounded-pill bg-danger" style={{fontSize: "0.8rem"}}>Expired</span>
+                                }
+
+                                {!!subscription.is_free && <span className="badge text-bg-success mx-2" style={{ fontSize: "0.8rem" }} >Free</span>}
+                            </div>
+                        </h5>
                         <p className="card-text">This subscription will be automatically renewed every {subscription.billing_cycle}.</p>
+
                         <Link to="/pricing" className="btn btn-primary"><FontAwesomeIcon icon={faGem} /> Upgrade</Link>
                     </div>
                 </div>
             ) : (
                 <>
                     <span>No subscription yet</span><br />
-                    <Link to="/pricing" className="btn btn-primary my-1"><FontAwesomeIcon icon={faRankingStar} /> Show Plans</Link>
+                    <Link to="/pricing" className="btn btn-primary my-1"><FontAwesomeIcon icon={faRankingStar} /> Subscription Now</Link>
                 </>
             )}
 
