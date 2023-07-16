@@ -41,6 +41,7 @@ import ChangePasswordPage from "./pages/account/settings/ChangePasswordPage";
 import AccountPage from "./pages/account/AccountPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import PagePage from "./pages/PagePage";
+import LogoutPage from "./pages/LogoutPage";
 
 
 // Lazy loading
@@ -67,6 +68,7 @@ function App() {
         </Route>
 
         <Route element={<UserRequired />}>
+          <Route path="/logout" element={<LogoutPage />} />
           <Route path="/playground/:uuid?" element={<PlaygroundPage />} />
           <Route path="/checkout/:id" element={<CheckoutPage />} />
           <Route path="/thank-you" element={<ThankYouPage />} />
