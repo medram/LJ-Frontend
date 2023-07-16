@@ -2,7 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
 
 // Override default color variables
-$blue: #080b16 !default;
+//$blue: #080b16 !default;
+$blue: #363f5c !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
 $pink: #d63384 !default;
@@ -15,6 +16,8 @@ $cyan: #0dcaf0 !default;
 
 //$body-color: #5a7dc2 !default;
 $body-color: #363f5c !default;
+
+$primary: #363f5c !default;
 
 
 // Override font
@@ -56,12 +59,23 @@ section {
     border-radius: 25px;
 }
 
-/*=================== Footer ====================*/
+.modal.show {
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+/*============= navbar override =============*/
+.navbar-override {
+    background-color: $primary !important;
+}
+
+/*================== Footer =================*/
 footer {
     text-align: center;
     margin: 2em 0;
 }
-/*=================== Not Found Page ====================*/
+
+/*============= Not Found Page ==============*/
 .not-found-page {
     display: flex;
     flex-direction: column;
@@ -92,14 +106,14 @@ footer {
 
 .pricing-card.popular {
     border: none;
-    outline: 3px solid lighten($primary, 30) !important;
+    outline: 3px solid $success !important;
     transform: scale(1.1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .pricing-card.popular::before {
     content: "Popular";
-    background: lighten($primary, 30);
+    background: $success;
     border-radius: 5px;
     color: #FFF;
     font-size: 0.8rem;
@@ -195,6 +209,7 @@ footer {
     min-height: 7rem;
     overflow: hidden;
     z-index: 1;
+    user-select: none;
 }
 
 .dropzone.focused {
@@ -301,6 +316,13 @@ footer {
     margin: 0;
 }
 
+/*======================= Avatar Dropdown =========================*/
+.avatar-dropdown > button {
+    background-color: transparent;
+    color: lighten($primary, 50%);
+    outline: none;
+}
+
 /*======================= Playground =========================*/
 .playground {
     display: flex;
@@ -312,8 +334,8 @@ footer {
     padding-right: 0.5em !important;
     padding-left: 0.5em !important;
     //color: #EEE;
-    color: lighten(#363f5c, 60%);
-    background-color: #363f5c;
+    color: lighten($primary, 60%);
+    background-color: $primary;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -322,7 +344,7 @@ footer {
 }
 
 .playground-sidebar .dropzone {
-    background-color: lighten(#363f5c, 10%);
+    background-color: lighten($primary, 10%);
     color: #EEE;
 }
 
@@ -380,7 +402,7 @@ footer {
 }
 
 .playground-chat-section .chats .container .user-message {
-    background-color: #363f5c;
+    background-color: $primary;
     color: #dadada;
     margin-top: 2em;
     margin-left: auto;
@@ -394,7 +416,7 @@ footer {
 }
 
 .chat-label {
-    background-color: lighten(#363f5c, 9%);
+    background-color: lighten($primary, 9%);
     padding: 0.7em 1em;
     margin-top: 1em;
     border-radius: 10px;
@@ -406,11 +428,11 @@ footer {
 }
 
 .chat-label:hover {
-    background-color: lighten(#363f5c, 11%);
+    background-color: lighten($primary, 11%);
 }
 
 .chat-label.active {
-    background-color: lighten(#363f5c, 15%);
+    background-color: lighten($primary, 15%);
 }
 
 .chat-label.active::before {
@@ -426,7 +448,7 @@ footer {
 }
 
 .chat-label .delete {
-    background-color: lighten(#363f5c, 5%);
+    background-color: lighten($primary, 5%);
     width: 25px;
     height: 25px;
     display: flex;
@@ -440,7 +462,7 @@ footer {
 }
 
 .chat-label .delete:hover {
-    background-color: lighten(#363f5c, 7%);
+    background-color: lighten($primary, 7%);
 }
 
 .toggle-sidebar-button {
@@ -455,7 +477,7 @@ footer {
 .playground-sidebar h4,
 .playground-sidebar h5,
 .playground-sidebar h6 {
-    color: lighten(#363f5c, 60%)
+    color: lighten($primary, 60%)
 }
 
 .playground-sidebar .quota {
@@ -464,7 +486,7 @@ footer {
 
 .playground-sidebar .quota span {
     font-size: 0.8rem;
-    color: lighten(#363f5c, 50%)
+    color: lighten($primary, 50%)
 }
 
 .playground-sidebar .profile {
@@ -493,9 +515,9 @@ footer {
 
 .playground-sidebar footer a {
     display: block;
-    color: lighten(#363f5c, 50%);
+    color: lighten($primary, 50%);
     padding: 0.1em 0.7em;;
 }
 .playground-sidebar footer a:hover {
-    color: lighten(#363f5c, 60%)
+    color: lighten($primary, 60%)
 }

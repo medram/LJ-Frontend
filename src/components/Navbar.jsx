@@ -4,12 +4,15 @@ import { useUser } from "../hooks/auth";
 import Logo from "./Logo";
 import SectionLoading from "./SectionLoading";
 import { memo } from "react";
+import AvatarPalceholder from "./AvatarPalceholder";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightFromBracket, faDashboard, faUser } from "@fortawesome/free-solid-svg-icons";
 
 
 export default memo(function Navbar()
 {
     const { isLoading, settings } = useSettings()
-    const { isAuthenticated, user } = useUser()
+    const { isAuthenticated, user, isAdmin } = useUser()
 
     if (isLoading || !Object.keys(settings).length)
     {
@@ -18,7 +21,7 @@ export default memo(function Navbar()
 
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-override">
             <div className="container">
                 <Logo settings={settings} className="navbar-brand" to="/" />
 
@@ -43,7 +46,21 @@ export default memo(function Navbar()
 
                     <ul className="nav navbar-nav navbar-right">
                         {isAuthenticated? (
-                            <li className="nav-item"><Link to="/admin" className="nav-link" >Account</Link></li>
+                            <>
+                                <div className="btn-group avatar-dropdown">
+                                    <button className="btn text-white dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                        <AvatarPalceholder username={user.username} size={45} /> Hi, {user.username}
+                                    </button>
+                                    <div className="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
+                                        {isAdmin && (
+                                            <Link className="dropdown-item" to="/admin"><FontAwesomeIcon icon={faDashboard} /> Dashboard</Link>
+                                        )}
+                                        <Link to="/account/settings" className="dropdown-item"><FontAwesomeIcon icon={faUser} /> Profile</Link>
+                                        <hr className="dropdown-divider" />
+                                        <Link to="/logout" className="dropdown-item"><FontAwesomeIcon icon={faArrowRightFromBracket} /> Logout</Link>
+                                    </div>
+                                </div>
+                            </>
                         ) : (
                             <>
                                 <li className="nav-item">

@@ -63,7 +63,6 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
             <div className="d-md-none d-flex flex-column align-items-center mb-4">
                 <AvatarPalceholder username={user.username} size={100} /> Hi, {user.username}
             </div>
-            {/* <Link to=""><FontAwesomeIcon icon={faBell} /> <span className="d-md-none">Notifications</span></Link> */}
             <div className="d-md-none">
                 <Link to="/account/settings"><FontAwesomeIcon icon={faUser} /> Profile</Link>
                 <Link to="/logout"><FontAwesomeIcon icon={faArrowRightFromBracket} /> Logout</Link>
