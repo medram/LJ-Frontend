@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import AvatarPalceholder from "../../components/AvatarPalceholder";
 import { useUser } from "../../hooks/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faReceipt, faStar, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faLock, faReceipt, faStar, faUser } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function AccountSettingsLayout() {
@@ -11,6 +11,8 @@ export default function AccountSettingsLayout() {
 
     return (
         <section className="container py-5">
+            <div className="alert alert-info"><FontAwesomeIcon icon={faInfoCircle} /> You can chat with your documents through <Link to="/playground"><b>Playground</b></Link> section.</div>
+
             <div className="row my-5 gap-5">
                 <div className="col-md-3 col-12">
                     <div className="list-group rounded">
