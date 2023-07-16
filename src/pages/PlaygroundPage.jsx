@@ -23,7 +23,12 @@ import { deleteChatRoom } from "../api/account";
 
 const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name, createChatRoom, setProcessing, subscription }) => {
 
-    if (subscription?.pdfs <= 0)
+    if (subscription?.status !== 1)
+    {
+        resetDropzone()
+        return toast.warning("You need a valid subscription to continue.")
+    }
+    else if (subscription?.pdfs <= 0)
     {
         resetDropzone()
         return toast.warning("You have reached the maximum number of document uploads.")
@@ -230,7 +235,7 @@ export default function PlaygroundPage()
                     )}
 
                     <section className="d-flex flex-column">
-                        {subscription ? (
+                        {(subscription && subscription?.status == 1) ? (
                             subscription?.questions <= 0 ? (
                                 <div className="d-flex flex-column justify-content-start p-5">
                                     Your subscription has reached its maximum usage.
