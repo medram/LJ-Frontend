@@ -12,6 +12,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { clearChatHistory, sendPrompt, stopPrompt } from "../../api/account";
 import PlaceholderMessage from "./PlaceholderMessage";
 import { useScrollToRef } from "../../hooks";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 
 export default function ChatSection({ uuid })
@@ -186,19 +187,39 @@ export default function ChatSection({ uuid })
                     <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} className="form-control form-control-lg" placeholder="Ask anything..." />
                 </form>
 
-                <SuperButton className={["btn btn-lg send", (isSending ? "btn-danger" : "btn-primary")].join(" ")} title={isSending ? "Stop" : "Send"} onClick={(e) => {
-                    if (isSending)
-                        return handleStop(e)
-                    handleSubmit(e)
-                }}>
-                    {isSending ? (
-                        <FontAwesomeIcon icon={faStop} />
-                    ) : (
-                        <FontAwesomeIcon icon={faPaperPlane} />
+                <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={(props) => (
+                        <Tooltip id="button-tooltip" {...props}>
+                            {isSending ? "Stop" : "Send"}
+                        </Tooltip>
                     )}
-                </SuperButton>
+                >
+                    <SuperButton className={["btn btn-lg send", (isSending ? "btn-danger" : "btn-primary")].join(" ")} title={isSending ? "Stop" : "Send"} onClick={(e) => {
+                        if (isSending)
+                            return handleStop(e)
+                        handleSubmit(e)
+                    }}>
+                        {isSending ? (
+                            <FontAwesomeIcon icon={faStop} />
+                        ) : (
+                            <FontAwesomeIcon icon={faPaperPlane} />
+                        )}
+                    </SuperButton>
+                </OverlayTrigger>
 
-                <SuperButton className="btn btn-secondary clear-history" isLoading={isClearingChatHistory} title="Clear Chat History" onClick={handleClearChatHistory}><FontAwesomeIcon icon={faTrashCan} /></SuperButton>
+                <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={(props) => (
+                        <Tooltip id="button-tooltip" {...props}>
+                            Clear Chat History
+                        </Tooltip>
+                    )}
+                >
+                    <SuperButton className="btn btn-secondary clear-history" isLoading={isClearingChatHistory} title="Clear Chat History" onClick={handleClearChatHistory}><FontAwesomeIcon icon={faTrashCan} /></SuperButton>
+                </OverlayTrigger>
             </div>
         </>
     )
