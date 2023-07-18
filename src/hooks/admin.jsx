@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getCustomers, getPage, getPages, getSubscriptions } from "../api/admin";
+import { getCustomers, getDashboardAnalytics, getPage, getPages, getSubscriptions } from "../api/admin";
 
 
 export function useCustomers()
@@ -26,4 +26,11 @@ export function useSubscriptions()
 {
     const { data, ...rest } = useQuery(`admin.subscriptions`, getSubscriptions, { staleTime: Infinity })
     return { ...rest, subscriptions: data?.subscriptions }
+}
+
+export function useDashboardAnalytics()
+{
+    const { data, ...rest } = useQuery(`admin.analytics`, getDashboardAnalytics, { staleTime: 60000 })
+
+    return { ...rest, analytics: (data?.analytics ? data.analytics: {}) }
 }

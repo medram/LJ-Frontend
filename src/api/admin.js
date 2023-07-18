@@ -118,3 +118,8 @@ export async function registerPayPalWebhook() {
     const req = await axiosApi.post(`/admin/register-paypal-webhook`)
     return req
 }
+
+export async function getDashboardAnalytics() {
+    const req = await axiosApi.get(`/admin/analytics`)
+    return req.data
+}
