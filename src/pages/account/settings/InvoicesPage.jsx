@@ -23,9 +23,9 @@ export default function InvoicesPage()
                 <thead>
                     <tr>
                         <th>#ID</th>
-                        <th>status</th>
                         <th>amount</th>
                         <th>gateway</th>
+                        <th>status</th>
                         <th>paid at</th>
                         <th>created at</th>
                     </tr>
@@ -35,13 +35,13 @@ export default function InvoicesPage()
                         return (
                             <tr key={i}>
                                 <td>{invoice.invoice_id}</td>
+                                <td>{settings.CURRENCY_SYMBOL}{invoice.amount}</td>
+                                <td>{invoice.payment_gateway}</td>
                                 <td>{invoice.paid_at ? (
                                     <span className="badge text-bg-success">paid</span>
                                 ) : (
                                     <span className="badge text-bg-warning">not paid</span>
                                 )}</td>
-                                <td>{settings.CURRENCY_SYMBOL}{invoice.price}</td>
-                                <td>{invoice.payment_gateway}</td>
                                 <td>{invoice.paid_at ? datetimeFormat(invoice.paid_at) : "-"}</td>
                                 <td>{datetimeFormat(invoice.created_at)}</td>
                             </tr>
