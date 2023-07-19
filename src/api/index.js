@@ -79,3 +79,9 @@ export async function getPage(slug)
     const req = await axiosApi.get(`/page/${slug}`)
     return req.data
 }
+
+export async function getDemoStatus()
+{
+    const req = await axiosApi.get("/demo")
+    return req.data
+}
