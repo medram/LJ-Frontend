@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getCustomers, getDashboardAnalytics, getPage, getPages, getSubscriptions } from "../api/admin";
+import { checkLC, getCustomers, getDashboardAnalytics, getPage, getPages, getSubscriptions } from "../api/admin";
 
 
 export function useCustomers()
@@ -33,4 +33,11 @@ export function useDashboardAnalytics()
     const { data, ...rest } = useQuery(`admin.analytics`, getDashboardAnalytics, { staleTime: 60000 })
 
     return { ...rest, analytics: (data?.analytics ? data.analytics: {}) }
+}
+
+export function useLC()
+{
+    const { data, ...rest } = useQuery(`admin.LC`, checkLC)
+
+    return { ...rest, isActive: ((data?.errors == false && data?.message === "LCD") ? true : false) }
 }

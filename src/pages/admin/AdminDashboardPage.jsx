@@ -12,8 +12,6 @@ export default function AdminDashboardPage()
     const { isLoading: isSettingLoading, settings } = useDashboardSettings()
     const { isLoading: isAnalyticsLoading, analytics } = useDashboardAnalytics()
 
-    console.log("analytics", analytics)
-
     if (isSettingLoading || isAnalyticsLoading || !Object.keys(analytics).length)
     {
         return <SectionLoading center={true} />

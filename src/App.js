@@ -42,6 +42,7 @@ import AccountPage from "./pages/account/AccountPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import PagePage from "./pages/PagePage";
 import LogoutPage from "./pages/LogoutPage";
+import LCPage from "./pages/admin/LCPage";
 
 
 // Lazy loading
@@ -83,6 +84,8 @@ function App() {
             <Route path="change-password" element={<ChangePasswordPage />} />
           </Route>
         </Route>
+
+        <Route path="/admin/license" element={<LCPage />} />
 
         <Route path="/admin" element={<AdminDashboardLayout />}>
           <Route path="" element={<AdminDashboardPage />} />

@@ -123,3 +123,8 @@ export async function getDashboardAnalytics() {
     const req = await axiosApi.get(`/admin/analytics`)
     return req.data
 }
+
+export async function checkLC() {
+    const req = await axiosApi.get(`/lc/check`)
+    return req.data
+}
