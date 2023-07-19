@@ -1,8 +1,8 @@
-import { faFloppyDisk, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faFloppyDisk, faPlus, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import GeneralSettings from "../../components/dashboard/forms/GeneralSettings";
-import { useDashboardSettings } from "../../hooks";
+import { useDashboardSettings, useDemo } from "../../hooks";
 import SectionLoading from "../../components/SectionLoading";
 import SMTPSettings from "../../components/dashboard/forms/SMTPSettings";
 import APISettings from "../../components/dashboard/forms/APISettings";
@@ -10,9 +10,10 @@ import APISettings from "../../components/dashboard/forms/APISettings";
 
 export function SettingsPage()
 {
+    const { isLoading: isDemoLoading, isDemo } = useDemo()
     const { isLoading, isError, error, settings } = useDashboardSettings()
 
-    if (isLoading || !Object.keys(settings).length)
+    if (isLoading || !Object.keys(settings).length || isDemoLoading)
     {
         return <SectionLoading />
     }
@@ -26,10 +27,12 @@ export function SettingsPage()
                     <section className="bg-light rounded p-4">
                         <div className="d-flex align-items-start">
                             <div className="nav flex-column nav-pills me-5" style={{width: 200}} id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
                                 <button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">General</button>
+
                                 <button className="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">SMTP</button>
+
                                 <button className="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">API settings</button>
-                                <button className="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Others</button>
                             </div>
                             <div className="tab-content" id="v-pills-tabContent" style={{width: "100%"}}>
                                 <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabIndex="0">
@@ -40,7 +43,11 @@ export function SettingsPage()
 
                                 <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabIndex="0">
 
-                                    <SMTPSettings settings={settings} />
+                                    {isDemo ? (
+                                        <div className="alert alert-warning"><FontAwesomeIcon icon={faTriangleExclamation} /> This section is disabled on the demo mode due to sensitive data!</div>
+                                    ) : (
+                                        <SMTPSettings settings={settings} />
+                                    )}
 
                                 </div>
 
@@ -50,7 +57,6 @@ export function SettingsPage()
 
                                 </div>
 
-                                <div className="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabIndex="0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate quas asperiores ipsa sequi. Doloribus sapiente porro eligendi cum laboriosam sed..</div>
                             </div>
                         </div>
                     </section>

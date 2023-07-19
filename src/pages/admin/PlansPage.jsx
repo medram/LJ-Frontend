@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import SectionLoading from "../../components/SectionLoading";
 import Swal from "sweetalert2";
 import { deletePlan, getPlans } from "../../api/admin";
-import { useDashboardPlans, useSettings } from "../../hooks";
+import { useDashboardPlans, useDemo, useSettings } from "../../hooks";
 import { useRef, useState } from "react";
 import { useOffCanvas } from "../../hooks/templates";
 import CustomOffCanvas from "../../components/CustomOffCanvas";
@@ -16,8 +16,9 @@ import { datetimeFormat } from "../../utils";
 import ManageTrialForm from "../../components/dashboard/forms/ManageTrialForm";
 
 
-export default function PlansPage() {
-
+export default function PlansPage()
+{
+    const { isDemo } = useDemo()
     const queryClient = useQueryClient()
     const { isLoading, isError, error, plans } = useDashboardPlans()
     const { isOpen, open, close, offCanvasProps } = useOffCanvas()
@@ -44,6 +45,9 @@ export default function PlansPage() {
             showCancelButton: true
         }).then((result) => {
             if (result.isConfirmed) {
+                if (isDemo)
+                    return toast.success("This action isn't allowed on the demo mode!")
+
                 deletePlan(id).then(data => {
                     if (!data?.errors) {
                         queryClient.invalidateQueries("admin.plans")

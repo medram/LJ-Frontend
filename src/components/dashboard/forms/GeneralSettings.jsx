@@ -8,7 +8,7 @@ import axiosApi from "../../../api/axiosApi";
 import { uploadFile } from "../../../api";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { useDashboardSettings, useSettings } from "../../../hooks";
+import { useDashboardSettings, useDemo, useSettings } from "../../../hooks";
 import { useCallback, useEffect, useState } from "react";
 import SectionLoading from "../../SectionLoading";
 import { saveDashboardSettings } from "../../../api/admin";
@@ -53,6 +53,7 @@ const onError = (rejectedFiles) => {
 
 export default function GeneralSettings({ settings })
 {
+    const { isDemo } = useDemo()
     const queryClient = useQueryClient()
 
     const formik = useFormik({
@@ -79,6 +80,8 @@ export default function GeneralSettings({ settings })
             "HEAD_CODE": Yup.string()
         }),
         onSubmit: (values) => {
+            if (isDemo)
+                return toast.success("This action isn't allowed on the demo mode!")
 
             saveDashboardSettings(values).then((data) => {
                 if (data?.errors)

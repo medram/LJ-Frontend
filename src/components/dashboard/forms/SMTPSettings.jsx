@@ -13,6 +13,7 @@ import PasswordInput from "../../PasswordInput";
 import { useCallback, useState } from "react";
 import { Modal } from "react-bootstrap";
 import SendTestEmailModelForm from "./SendTestEmailModelForm";
+import { useDemo } from "../../../hooks";
 
 
 const SMTP_MAIL_ENCRIPTION_OPTIONS = [
@@ -22,6 +23,7 @@ const SMTP_MAIL_ENCRIPTION_OPTIONS = [
 
 
 export default function SMTPSettings({ settings }) {
+    const { isDemo } = useDemo()
     const queryClient = useQueryClient()
     const [showSendEmailForm, setShowSendEmailForm ] = useState(false)
 
@@ -44,7 +46,9 @@ export default function SMTPSettings({ settings }) {
         }),
         enableReinitialize: true,
         onSubmit: (values) => {
-            //console.log(values)
+            if (isDemo)
+                return toast.success("This action isn't allowed on the demo mode!")
+
             saveDashboardSettings(values).then((data) => {
                 if (data?.errors)
                 {

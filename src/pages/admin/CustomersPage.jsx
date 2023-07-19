@@ -9,10 +9,12 @@ import SectionLoading from "../../components/SectionLoading";
 import { useCustomers } from "../../hooks/admin";
 import Swal from "sweetalert2";
 import { datetimeFormat } from "../../utils";
+import { useDemo } from "../../hooks";
 
 
 export default function CustomersPage()
 {
+    const { isDemo } = useDemo()
     const [ search, setSearch ] = useState("")
     const [ customersList, setCustomersList ] = useState([])
     const queryClient = useQueryClient()
@@ -60,6 +62,9 @@ export default function CustomersPage()
         }).then((result) => {
             if (result.isConfirmed)
             {
+                if (isDemo)
+                    return toast.success("This action isn't allowed on the demo mode!")
+
                 deleteCustomer(customer_id).then(data => {
                     if (!data?.errors)
                     {
