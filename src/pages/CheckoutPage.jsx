@@ -1,7 +1,7 @@
 import { useParams, Navigate } from "react-router-dom";
 import BasePage from "./layouts/BasePage";
 import Heading from "../components/Heading";
-import { useAvailablePaymentMethods, usePlan, useSettings } from "../hooks";
+import { useAvailablePaymentMethods, useDemo, usePlan, useSettings } from "../hooks";
 import SectionLoading from "../components/SectionLoading";
 import { Accordion, Card, ListGroup } from "react-bootstrap";
 import PayPalIcon from "../components/icons/PayPalIcon";
@@ -17,6 +17,7 @@ import { payNow } from "../api";
 export default function CheckoutPage()
 {
     const { id } = useParams()
+    const { isDemo } = useDemo()
     const { isLoading, settings } = useSettings()
     const { isLoading: isPlanLoading, plan } = usePlan(id)
     const { isLoading: isPaymentMethodsLoading, paymentMethods } = useAvailablePaymentMethods()
@@ -24,6 +25,9 @@ export default function CheckoutPage()
     const [ isProcessingPayment, setProcessingPayment ] = useState(false)
 
     const handlePayment = () => {
+        if (isDemo)
+            return toast.success("This action isn't allowed on the demo mode!")
+
         setProcessingPayment(true)
         payNow({
             gateway: selectedPaymentMethod,

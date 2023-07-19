@@ -2,7 +2,7 @@ import { faArrowRightFromBracket, faBarsStaggered, faBell, faEllipsisV, faGaugeH
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSettings } from "../../hooks";
+import { useDemo, useSettings } from "../../hooks";
 import { useAuth, useUser } from "../../hooks/auth";
 import Avatar from "../Avatar";
 import FullscreenLoading from "../FullscreenLoading"
@@ -13,6 +13,7 @@ import AvatarPalceholder from "../AvatarPalceholder";
 
 export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
 {
+    const { isDemo } = useDemo()
     const { isLoading, settings } = useSettings()
 
     const { user } = useUser()
@@ -55,7 +56,7 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
     return <>
         <span className="bars" onClick={(e) => onClickBars(e)}><FontAwesomeIcon icon={properIcon} /></span>
         <div className="dashboard-brand">
-            <Logo settings={settings} />
+            <Logo settings={settings} isDemo={isDemo} />
         </div>
         <span className="dots" onClick={() => toggleRightNav(show => !show)}><FontAwesomeIcon icon={rightNavProperIcon} /></span>
 

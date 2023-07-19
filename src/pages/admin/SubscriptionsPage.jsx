@@ -9,7 +9,7 @@ import Swal from "sweetalert2"
 import { useQueryClient } from "react-query"
 import { datetimeFormat } from "../../utils"
 import { Badge, OverlayTrigger, Tooltip } from "react-bootstrap"
-import { useDashboardSettings } from "../../hooks"
+import { useDashboardSettings, useDemo } from "../../hooks"
 import PayPalIcon from "../../components/icons/PayPalIcon"
 import StripIcon from "../../components/icons/StripIcon"
 import { useCallback, useState } from "react"
@@ -17,6 +17,7 @@ import SuperBotton from "../../components/SuperButton"
 
 
 export function SubscriptionsPage() {
+    const { isDemo } = useDemo()
     const queryClient = useQueryClient()
     const { isLoading, isError, error, subscriptions } = useSubscriptions()
     const { settings } = useDashboardSettings()
@@ -34,6 +35,10 @@ export function SubscriptionsPage() {
             showCancelButton: true
         }).then((result) => {
             if (result.isConfirmed) {
+
+                if (isDemo)
+                    return toast.success("This action isn't allowed on the demo mode!")
+
                 setCanceling(true)
                 cancelSubscription(sub_id).then(data => {
                     if (!data?.errors) {

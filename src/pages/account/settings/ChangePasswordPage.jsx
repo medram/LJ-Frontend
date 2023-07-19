@@ -6,11 +6,13 @@ import * as Yup from "yup"
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons"
 import { toast } from "react-toastify"
 import { updateUserPassword } from "../../../api/account"
+import { useDemo } from "../../../hooks"
 
 
 
 export default function ChangePasswordPage()
 {
+    const { isDemo } = useDemo()
     const formik = useFormik({
         initialValues: {
             current_password: "",
@@ -30,6 +32,9 @@ export default function ChangePasswordPage()
         }),
         enableReinitialize: true,
         onSubmit: (values) => {
+            if (isDemo)
+                return toast.success("This action isn't allowed on the demo mode!")
+
             updateUserPassword(values).then((data) => {
                 if (data?.errors) {
                     toast.error(data?.message)

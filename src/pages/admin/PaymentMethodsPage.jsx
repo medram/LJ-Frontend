@@ -3,7 +3,7 @@ import * as Yup from "yup"
 import StripIcon from "../../components/icons/StripIcon"
 import PayPalIcon from "../../components/icons/PayPalIcon"
 import Switch from "../../components/Switch"
-import { useDashboardSettings } from "../../hooks"
+import { useDashboardSettings, useDemo } from "../../hooks"
 import SectionLoading from "../../components/SectionLoading"
 import SuperButton from "../../components/SuperButton"
 import { toastFormikErrors } from "../../utils"
@@ -16,6 +16,7 @@ import PasswordInput from "../../components/PasswordInput"
 
 export default function PaymentMethodsPage()
 {
+    const { isDemo } = useDemo()
     const { isLoading, settings } = useDashboardSettings()
     const queryClient = useQueryClient()
 
@@ -43,6 +44,9 @@ export default function PaymentMethodsPage()
             PM_STRIP_STATUS: Yup.boolean(),
         }),
         onSubmit: (values) => {
+
+            if (isDemo)
+                return toast.success("This action isn't allowed on the demo mode!")
 
             if (values.PM_PAYPAL_STATUS && (!values.PM_PAYPAL_CLIENT_ID.length || !values.PM_PAYPAL_CLIENT_SECRET.length))
             {

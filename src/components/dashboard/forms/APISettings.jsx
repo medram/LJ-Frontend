@@ -9,10 +9,12 @@ import { useQueryClient } from "react-query"
 import { toast } from "react-toastify"
 import PasswordInput from "../../PasswordInput"
 import { registerOpenAIKey } from "../../../api/account"
+import { useDemo } from "../../../hooks"
 
 
 export default function APISettings({ settings })
 {
+    const { isDemo } = useDemo()
     const queryClient = useQueryClient()
 
     const formik = useFormik({
@@ -27,6 +29,9 @@ export default function APISettings({ settings })
             RAPID_API_HOST: Yup.string().required("The Rapid API Host is required")
         }),
         onSubmit: (values) => {
+            if (isDemo)
+                return toast.success("This action isn't allowed on the demo mode!")
+
             saveDashboardSettings(values).then((data) => {
                 if (data?.errors)
                 {

@@ -8,10 +8,12 @@ import { deletePage } from "../../api/admin"
 import Swal from "sweetalert2"
 import { useQueryClient } from "react-query"
 import { datetimeFormat } from "../../utils"
+import { useDemo } from "../../hooks"
 
 
 export function PagesPage()
 {
+    const { isDemo } = useDemo()
     const { isLoading, isError, error, pages } = usePages()
     const queryClient = useQueryClient()
 
@@ -24,6 +26,9 @@ export function PagesPage()
             showCancelButton: true
         }).then((result) => {
             if (result.isConfirmed) {
+                if (isDemo)
+                    return toast.success("This action isn't allowed on the demo mode!")
+
                 deletePage(id).then(data => {
                     if (!data?.errors) {
                         queryClient.invalidateQueries("admin.pages")
