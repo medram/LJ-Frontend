@@ -54,6 +54,8 @@ export default function ChangePasswordPage()
 
     return (
         <div>
+            <h1 className="h3 pb-5">Change Password</h1>
+
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="current_password">Current Password:</label>
