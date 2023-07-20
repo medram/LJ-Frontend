@@ -11,13 +11,17 @@ import { useCallback, useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { clearChatHistory, sendPrompt, stopPrompt } from "../../api/account";
 import PlaceholderMessage from "./PlaceholderMessage";
-import { useScrollToRef } from "../../hooks";
+import { useDemo, useNaiveLocalStorage, useScrollToRef } from "../../hooks";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 
 export default function ChatSection({ uuid })
 {
     // const { uuid } = useParams()
+    const { isDemo } = useDemo()
+    const [getDemoSubscription, setDemoSubscription] = useNaiveLocalStorage("demo_sub")
+    const demoSubscription = getDemoSubscription()
+
     const queryClient = useQueryClient()
     const { isLoading, isError, error, chat } = useChatRoom(uuid)
     const [ chatHistory, setChatHistory ] = useState([])
@@ -65,6 +69,11 @@ export default function ChatSection({ uuid })
             return toast.warning("Please ask something.")
         }
 
+        if (isDemo && demoSubscription?.questions <= 0)
+        {
+            return toast.warning("The demo quota is exceeded, please wait 12 hours 🙏")
+        }
+
         setSending(true)
 
         setChatHistory(chatHistory => {
@@ -90,6 +99,16 @@ export default function ChatSection({ uuid })
                     // remove the PlaceholderMessage first, before appending the reply
                     return [...(chatHistory.slice(0, -1)), <AIMessage key={Math.random()} content={reply} />]
                 })
+
+                // for demo only
+                if (isDemo) {
+                    setDemoSubscription(prev => {
+                        return {
+                            ...prev,
+                            questions: prev.questions - 1
+                        }
+                    })
+                }
             }
             else {
                 toast.error(data.message)

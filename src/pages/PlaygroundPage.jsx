@@ -1,12 +1,9 @@
 import { faBarsStaggered, faGem, faPaperPlane, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SuperButton from "../components/SuperButton";
-import UserMessage from "../components/playground/UserMessage";
-import AIMessage from "../components/playground/AIMessage";
 import Dropzone from "../components/Dropzone"
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { useCallback, useEffect, useState } from "react";
-import { useEventListener } from "../hooks";
+import { useDemo, useEventListener, useLCInfo, useNaiveLocalStorage } from "../hooks";
 import AvatarPalceholder from "../components/AvatarPalceholder";
 import ChatLabel from "../components/playground/ChatLabel";
 import ChatSection from "../components/playground/ChatSection";
@@ -21,7 +18,25 @@ import SpinnerGrow from "../components/SpinnerGrow";
 import { deleteChatRoom } from "../api/account";
 
 
-const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name, createChatRoom, setProcessing, subscription }) => {
+const onUpload = ({
+    files,
+    setProgress,
+    setIsSuccessUpload,
+    resetDropzone,
+    name,
+    createChatRoom,
+    setProcessing,
+    subscription,
+    isDemo,
+    demoSubscription,
+    setDemoSubscription
+ }) => {
+
+    if (isDemo && demoSubscription.pdfs <= 0)
+    {
+        resetDropzone()
+        return toast.warning("The demo quota is exceeded, please wait 12 hours 🙏")
+    }
 
     if (subscription?.status !== 1)
     {
@@ -53,6 +68,17 @@ const onUpload = ({ files, setProgress, setIsSuccessUpload, resetDropzone, name,
             setTimeout(() => {
                 resetDropzone()
             }, 5000)
+
+            // for demo only
+            if (isDemo)
+            {
+                setDemoSubscription(prev => {
+                    return {
+                        ...prev,
+                        pdfs: prev.pdfs - 1
+                    }
+                })
+            }
         }
         else {
             toast.error(res.data?.message)
@@ -82,6 +108,16 @@ const onError = (rejectedFiles) => {
 
 export default function PlaygroundPage()
 {
+    const { isDemo } = useDemo()
+    const [ getDemoSubscription, setDemoSubscription ] = useNaiveLocalStorage("demo_sub", {
+        pdfs: 2,
+        questions: 10,
+        created_at: new Date().getTime()
+    })
+
+    const demoSubscription = getDemoSubscription()
+    const { isExtendedLicense: isEL } = useLCInfo()
+
     const [ toggled, setToggled ] = useState(false)
     const [ collapsed, setCollapsed ] = useState(false)
     const [windowInnerWidth, setWindowInnerWidth] = useEventListener('resize', window.innerWidth, () => window.innerWidth)
@@ -138,6 +174,18 @@ export default function PlaygroundPage()
         }
     }, [uuid, userChatRoomList])
 
+    useEffect(() => {
+        if (new Date().getTime() - demoSubscription.created_at > (12 * 60 * 60 * 1000)) // 12 hours
+        {
+            // reset the demo subscription
+            setDemoSubscription({
+                pdfs: 2,
+                questions: 10,
+                created_at: new Date().getTime()
+            })
+        }
+    }, [])
+
     if (isError)
     {
         toast.error(error)
@@ -159,7 +207,10 @@ export default function PlaygroundPage()
                             extraOnUploadProps={{
                                 createChatRoom,
                                 setProcessing,
-                                subscription
+                                subscription,
+                                isDemo,
+                                demoSubscription,
+                                setDemoSubscription,
                             }} dropzoneOptions={{
                                 accept: { 'application/pdf': ['.pdf'] },
                                 maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
@@ -181,7 +232,7 @@ export default function PlaygroundPage()
                             </Dropzone>
                         )}
 
-                        <div className="chat-labels-list">
+                        <div className="chat-labels-list my-2">
                             {userChatRoomList?.map((chat, i) => {
                                 return <ChatLabel
                                     key={i}
@@ -194,7 +245,24 @@ export default function PlaygroundPage()
                         </div>
 
                         <div className="sidebar-bottom-section">
-                            {subscription && (
+                            {isDemo && (
+                                <>
+                                    {(subscription?.questions <= 20 || subscription?.pdfs <= 10) && (
+                                        <Link to="/account/settings/subscription" className="btn btn-warning btn-lg btn-block"><FontAwesomeIcon icon={faGem} /> Upgrade</Link>
+                                    )}
+
+                                    <div className="quota">
+                                        <small>- Quota limited for demo only.</small><br />
+                                        <small>- Quota reset every 12 hours.</small>
+                                        <h3 className="h6">Quota:</h3>
+                                        <span>{demoSubscription?.pdfs} PDFs</span><br />
+                                        <span>Max PDF size: {subscription?.pdf_size}MB/pdf</span><br />
+                                        <span>{demoSubscription?.questions} PDF Questions</span><br />
+                                    </div>
+                                </>
+                            )}
+
+                            {subscription && isEL && !isDemo && (
                                 <>
                                     {(subscription?.questions <= 20 || subscription?.pdfs <= 10) && (
                                         <Link to="/account/settings/subscription" className="btn btn-warning btn-lg btn-block"><FontAwesomeIcon icon={faGem} /> Upgrade</Link>
@@ -220,7 +288,9 @@ export default function PlaygroundPage()
 
                             <footer>
                                 <Link to="/">Home</Link>
-                                <Link to="/pricing">Pricing</Link>
+                                {isEL && (
+                                    <Link to="/pricing">Pricing</Link>
+                                )}
                                 <Link to="/contact">Contact us</Link>
                             </footer>
 
@@ -235,22 +305,28 @@ export default function PlaygroundPage()
                     )}
 
                     <section className="d-flex flex-column">
-                        {(subscription && subscription?.status == 1) ? (
-                            subscription?.questions <= 0 ? (
-                                <div className="d-flex flex-column justify-content-start p-5">
-                                    Your subscription has reached its maximum usage.
-                                    <Link to="/pricing" className="btn btn-warning my-3">Upgrade Now?</Link>
-                                </div>
-                            ) : (
-                                currentChatRoomUUID && (
-                                    <ChatSection uuid={currentChatRoomUUID} key={uuid} />
+                        {isEL ? (
+                            (subscription && subscription?.status == 1) ? (
+                                subscription?.questions <= 0 ? (
+                                    <div className="d-flex flex-column justify-content-start p-5">
+                                        Your subscription has reached its maximum usage.
+                                        <Link to="/pricing" className="btn btn-warning my-3">Upgrade Now?</Link>
+                                    </div>
+                                ) : (
+                                    currentChatRoomUUID && (
+                                        <ChatSection uuid={currentChatRoomUUID} key={uuid} />
+                                    )
                                 )
+                            ) : (
+                                <div className="d-flex flex-column justify-content-start p-5">
+                                    You need to have a subscription in order to be able to use the Playground section.
+                                    <Link to="/pricing" className="btn btn-warning my-3">Get a subscription now?</Link>
+                                </div>
                             )
-                        ): (
-                            <div className="d-flex flex-column justify-content-start p-5">
-                                You need to have a subscription in order to be able to use the Playground section.
-                                <Link to="/pricing" className="btn btn-warning my-3">Get a subscription now?</Link>
-                            </div>
+                        ) : (
+                            currentChatRoomUUID && (
+                                <ChatSection uuid={currentChatRoomUUID} key={uuid} />
+                            )
                         )}
                     </section>
                 </section>

@@ -354,7 +354,7 @@ footer {
 
 .playground-sidebar .chat-labels-list {
     overflow-y: auto;
-    //flex-grow: 1 !important;
+    max-height: calc(100vh - 492px);
 }
 
 .playground-sidebar .sidebar-bottom-section {
