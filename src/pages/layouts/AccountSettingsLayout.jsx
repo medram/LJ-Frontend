@@ -3,15 +3,18 @@ import AvatarPalceholder from "../../components/AvatarPalceholder";
 import { useUser } from "../../hooks/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faLock, faReceipt, faStar, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useLCInfo } from "../../hooks";
 
 
 export default function AccountSettingsLayout() {
     const { user } = useUser()
-
+    const { isExtendedLicense } = useLCInfo()
 
     return (
         <section className="container py-5">
-            <div className="alert alert-info"><FontAwesomeIcon icon={faInfoCircle} /> You can chat with your documents through <Link to="/playground"><b>Playground</b></Link> section.</div>
+            {isExtendedLicense && (
+                <div className="alert alert-info"><FontAwesomeIcon icon={faInfoCircle} /> You can chat with your documents through <Link to="/playground"><b>Playground</b></Link> section.</div>
+            )}
 
             <div className="row my-5 gap-5">
                 <div className="col-md-3 col-12">
@@ -21,8 +24,15 @@ export default function AccountSettingsLayout() {
                             <b className="my-2">{user.username.slice(0, 1).toUpperCase() + user.username.slice(1)}</b>
                         </div>
                         <Link to="" className="list-group-item list-group-item-action py-3"><FontAwesomeIcon icon={faUser} /> Profile</Link>
-                        <Link to="subscription" className="list-group-item list-group-item-action py-3"><FontAwesomeIcon icon={faStar} /> My Subscription</Link>
-                        <Link to="invoices" className="list-group-item list-group-item-action py-3"><FontAwesomeIcon icon={faReceipt} /> Invoices</Link>
+
+                        {isExtendedLicense && (
+                            <>
+                                <Link to="subscription" className="list-group-item list-group-item-action py-3"><FontAwesomeIcon icon={faStar} /> My Subscription</Link>
+
+                                <Link to="invoices" className="list-group-item list-group-item-action py-3"><FontAwesomeIcon icon={faReceipt} /> Invoices</Link>
+                            </>
+                        )}
+
                         <Link to="change-password" className="list-group-item list-group-item-action py-3"><FontAwesomeIcon icon={faLock} /> Change Password</Link>
                     </div>
                 </div>
