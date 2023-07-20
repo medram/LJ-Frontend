@@ -85,3 +85,9 @@ export async function getDemoStatus()
     const req = await axiosApi.get("/demo")
     return req.data
 }
+
+export async function getLCInfo()
+{
+    const req = await axiosApi.get("/lc/info")
+    return req.data
+}

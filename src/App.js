@@ -43,6 +43,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import PagePage from "./pages/PagePage";
 import LogoutPage from "./pages/LogoutPage";
 import LCPage from "./pages/admin/LCPage";
+import ELRequired from "./pages/middlewares/ELRequired";
 
 
 // Lazy loading
@@ -57,10 +58,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/pricing" element={<PricingPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/p/:slug" element={<PagePage />} />
         <Route path="/logout" element={<LogoutPage />} />
+
+        <Route element={<ELRequired to="/" />}>
+          <Route path="/pricing" element={<PricingPage />} />
+        </Route>
 
         <Route element={<NoAuthRequired />}>
           <Route path="/login" element={<LoginPage />} />
@@ -70,17 +74,25 @@ function App() {
 
         <Route element={<UserRequired />}>
           <Route path="/playground/:uuid?" element={<PlaygroundPage />} />
-          <Route path="/checkout/:id" element={<CheckoutPage />} />
-          <Route path="/thank-you" element={<ThankYouPage />} />
+
+          <Route element={<ELRequired to="/account" />}>
+            <Route path="/checkout/:id" element={<CheckoutPage />} />
+            <Route path="/thank-you" element={<ThankYouPage />} />
+          </Route>
         </Route>
 
         <Route path="/account" element={<AccountLayout />}>
           <Route path="" element={<AccountPage />}></Route>
 
+          <Route element={<ELRequired to="/account" />}>
+            <Route path="settings" element={<AccountSettingsLayout />}>
+              <Route path="subscription" element={<MySubscriptionPage />} />
+              <Route path="invoices" element={<InvoicesPage />} />
+            </Route>
+          </Route>
+
           <Route path="settings" element={<AccountSettingsLayout />}>
             <Route path="" element={<AccountDetailsPage />} />
-            <Route path="subscription" element={<MySubscriptionPage />} />
-            <Route path="invoices" element={<InvoicesPage />} />
             <Route path="change-password" element={<ChangePasswordPage />} />
           </Route>
         </Route>
@@ -93,14 +105,16 @@ function App() {
           <Route path="customers/add" element={<AddCustomerPage />} />
           <Route path="customers/edit/:id" element={<EditCustomerPage />} />
 
-          <Route path="plans" element={<PlansPage />} />
-          <Route path="payment-methods" element={<PaymentMethodsPage />} />
+          <Route element={<ELRequired />} >
+            <Route path="plans" element={<PlansPage />} />
+            <Route path="payment-methods" element={<PaymentMethodsPage />} />
+            <Route path="subscriptions" element={<SubscriptionsPage />} />
+          </Route>
 
           <Route path="pages" element={<PagesPage />} />
           <Route path="pages/add" element={<AddPagePage />} />
           <Route path="pages/edit/:id" element={<EditPagePage />} />
 
-          <Route path="subscriptions" element={<SubscriptionsPage />} />
 
           <Route path="settings" element={<SettingsPage />} />
         </Route>

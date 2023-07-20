@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useReducer, useRef, useState } from "react"
 import { useQuery } from "react-query"
-import { getAvailablePaymentMethods, getDashboardSettings, getDemoStatus, getPage, getPlans, getSettings, getpages } from "../api"
+import { getAvailablePaymentMethods, getDashboardSettings, getDemoStatus, getLCInfo, getPage, getPlans, getSettings, getpages } from "../api"
 import StoreContext, { useStore } from "../context/StoreContext"
 import { getDashboardPlans } from "../api/admin"
 
@@ -204,5 +204,21 @@ export function useDemo(slug) {
     const { data, ...rest } = useQuery("demo", getDemoStatus)
 
     return { ...rest, isDemo: (data?.status ? data.status : false) }
+}
+
+export function useLCInfo() {
+    const { isLoading, data, ...rest } = useQuery("LC", getLCInfo)
+    let isRegularLicense = false
+    let isExtendedLicense = false
+
+    if (!isLoading)
+    {
+        const info = JSON.parse(atob(atob(data?.info ? data?.info : "")))
+
+        isRegularLicense = info?.type == "RL"
+        isExtendedLicense = info?.type == "EL"
+    }
+
+    return { ...rest, isLoading, isRegularLicense, isExtendedLicense }
 }
 

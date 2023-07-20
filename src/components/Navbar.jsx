@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { useSettings } from "../hooks";
+import { useLCInfo, useSettings } from "../hooks";
 import { useUser } from "../hooks/auth";
 import Logo from "./Logo";
 import SectionLoading from "./SectionLoading";
@@ -11,6 +11,7 @@ import { faArrowRightFromBracket, faDashboard, faUser } from "@fortawesome/free-
 
 export default memo(function Navbar()
 {
+    const { isExtendedLicense } = useLCInfo()
     const { isLoading, settings } = useSettings()
     const { isAuthenticated, user, isAdmin } = useUser()
 
@@ -33,9 +34,11 @@ export default memo(function Navbar()
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/">Home</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/pricing">Pricing</NavLink>
-                        </li>
+                        {isExtendedLicense && (
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/pricing">Pricing</NavLink>
+                            </li>
+                        )}
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/playground">Playground</NavLink>
                         </li>
