@@ -43,6 +43,8 @@ export function useNaiveLocalStorage(key, value)
     }, [])
 
     const setter = useCallback((value) => {
+        if (typeof value === "function")
+            return localStorage.setItem(key, JSON.stringify(value(getter())))
         return localStorage.setItem(key, JSON.stringify(value))
     }, [])
 
