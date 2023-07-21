@@ -237,7 +237,7 @@ export default function PlaygroundPage()
                             </Dropzone>
                         )}
 
-                        <div className="chat-labels-list my-2">
+                        <div className="chat-labels-list my-3">
                             {userChatRoomList?.map((chat, i) => {
                                 return <ChatLabel
                                     key={i}

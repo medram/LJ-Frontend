@@ -461,6 +461,10 @@ footer {
     overflow: hidden;
 }
 
+.chat-label:first-child {
+    margin-top: 0;
+}
+
 .chat-label:hover {
     background-color: lighten($primary, 11%);
 }
