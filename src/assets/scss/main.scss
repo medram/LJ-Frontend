@@ -366,7 +366,7 @@ footer {
     display: flex;
     flex-direction: column;
     height: 100%;
-    max-height: 100%;
+    max-height: 100vh;
     //overflow-y: auto;
 }
 
@@ -385,7 +385,6 @@ footer {
 
 .playground-sidebar .chat-labels-list {
     overflow-y: auto;
-    max-height: calc(100vh - 498px);
 }
 
 .playground-sidebar .sidebar-bottom-section {

@@ -29,7 +29,8 @@ const onUpload = ({
     subscription,
     isDemo,
     demoSubscription,
-    setDemoSubscription
+    setDemoSubscription,
+    queryClient
  }) => {
 
     if (isDemo && demoSubscription.pdfs <= 0)
@@ -79,6 +80,9 @@ const onUpload = ({
                     }
                 })
             }
+
+            // invalidate subscription cache
+            queryClient.invalidateQueries("user.subscription")
         }
         else {
             toast.error(res.data?.message)
@@ -211,6 +215,7 @@ export default function PlaygroundPage()
                                 isDemo,
                                 demoSubscription,
                                 setDemoSubscription,
+                                queryClient,
                             }} dropzoneOptions={{
                                 accept: { 'application/pdf': ['.pdf'] },
                                 maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB

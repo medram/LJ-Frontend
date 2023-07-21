@@ -100,6 +100,9 @@ export default function ChatSection({ uuid })
                     return [...(chatHistory.slice(0, -1)), <AIMessage key={Math.random()} content={reply} />]
                 })
 
+                // invalidate subscription cache
+                queryClient.invalidateQueries("user.subscription")
+
                 // for demo only
                 if (isDemo) {
                     setDemoSubscription(prev => {
@@ -133,8 +136,8 @@ export default function ChatSection({ uuid })
             })
         }).finally(() => {
             setSending(false)
-            // scroll down
             queryClient.invalidateQueries(`user.chat.${uuid}`)
+            // scroll down
             scrollToPrompt()
         })
     }
