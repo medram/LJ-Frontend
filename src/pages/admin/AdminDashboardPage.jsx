@@ -55,9 +55,20 @@ export default function AdminDashboardPage()
                 </div>
             </div>
             <div className="col">
-                <div className="infobox bg-success text-light p-3 d-flex">
+                <div className="infobox bg-warning p-3 d-flex">
                     <div className="d-flex justify-content-center align-items-center">
                         <FontAwesomeIcon icon={faGem} size="4x" className="infobox-icon" />
+                    </div>
+                    <div className="p-3 d-flex flex-column flex-grow-1">
+                        <span className="infobox-title h2">{analytics.active_subscriptions_count}</span>
+                        <span className="infobox-desc">Total Active Subscription</span>
+                    </div>
+                </div>
+            </div>
+            <div className="col">
+                <div className="infobox bg-primary text-light p-3 d-flex">
+                    <div className="d-flex justify-content-center align-items-center">
+                        <FontAwesomeIcon icon={faGem} className="infobox-icon" />
                     </div>
                     <div className="p-3 d-flex flex-column flex-grow-1">
                         <span className="infobox-title h2">{analytics.subscriptions_count}</span>
@@ -73,17 +84,6 @@ export default function AdminDashboardPage()
                     <div className="p-3 d-flex flex-column flex-grow-1">
                         <span className="infobox-title h2">{analytics.invoices_count}</span>
                         <span className="infobox-desc">Total Invoices</span>
-                    </div>
-                </div>
-            </div>
-            <div className="col">
-                <div className="infobox bg-info text-light p-3 d-flex">
-                    <div className="d-flex justify-content-center align-items-center">
-                        <FontAwesomeIcon icon={faFile} className="infobox-icon" />
-                    </div>
-                    <div className="p-3 d-flex flex-column flex-grow-1">
-                        <span className="infobox-title h2">20155</span>
-                        <span className="infobox-desc">Uploaded Documents</span>
                     </div>
                 </div>
             </div>
