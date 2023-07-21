@@ -243,9 +243,9 @@ footer {
     // color: lighten($blue, 50%);
     // border-color: lighten($blue, 50%);
     // background-color: lighten($blue, 90%);
-    color: lighten($blue, 20%);
-    border-color: lighten($blue, 20%);
-    background-color: lighten($blue, 80%);
+    color: lighten($primary, 20%);
+    border-color: lighten($primary, 20%);
+    background-color: lighten($primary, 60%);
     cursor: unset;
 }
 
@@ -262,7 +262,7 @@ footer {
 .dropzone .progress {
     position: absolute;
     display: block;
-    background-color: lighten($blue, 70%);
+    background-color: lighten($primary, 50%);
     width: 0%;
     height: 100%;
     border-radius: 0px;
@@ -370,9 +370,17 @@ footer {
     //overflow-y: auto;
 }
 
+.playground-sidebar .dropzone.focused .close {
+    display: none;
+}
+
 .playground-sidebar .dropzone {
     background-color: lighten($primary, 10%);
     color: #EEE;
+}
+
+.playground-sidebar .dropzone .progress {
+    background-color: lighten($primary, 30%) !important;
 }
 
 .playground-sidebar .chat-labels-list {
