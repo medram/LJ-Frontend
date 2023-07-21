@@ -12,6 +12,7 @@ import { registerPayPalWebhook, saveDashboardSettings } from "../../api/admin"
 import { toast } from "react-toastify"
 import { useQueryClient } from "react-query"
 import PasswordInput from "../../components/PasswordInput"
+import BluredOverlay from "../../components/BluredOverlay"
 
 
 export default function PaymentMethodsPage()
@@ -160,31 +161,33 @@ export default function PaymentMethodsPage()
                         </section>
                     </div>
                     <div className="col-md-6">
-                        <section className="bg-light rounded p-4 mb-3">
-                            <div className="d-flex justify-content-between">
-                                <h2 className="h3 mb-4">
-                                    <StripIcon />
-                                </h2>
-                                <span className="d-flex mt-2">
-                                    <Switch onChange={(checked) => formik.setFieldValue("PM_STRIP_STATUS", checked)} name="accept" checked={formik.values.PM_STRIP_STATUS} size="small" className="mx-2 mt-1" />
+                        <BluredOverlay title="⏳ Coming Soon">
+                            <section className="bg-light rounded p-4 mb-3">
+                                <div className="d-flex justify-content-between">
+                                    <h2 className="h3 mb-4">
+                                        <StripIcon />
+                                    </h2>
+                                    <span className="d-flex mt-2">
+                                        <Switch onChange={(checked) => formik.setFieldValue("PM_STRIP_STATUS", checked)} name="accept" checked={formik.values.PM_STRIP_STATUS} size="small" className="mx-2 mt-1" />
 
-                                    <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("PM_STRIP_STATUS", !formik.values.PM_STRIP_STATUS)} >{formik.values.PM_STRIP_STATUS ? "Active" : "Inactive"}</label>
-                                </span>
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="stripe-public-key">Stripe Public Key:</label>
-                                <input type="text" className="form-control" id="stripe-public-key" {...formik.getFieldProps("PM_STRIP_PUBLIC_KEY")} />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="stripe-private-key">Stripe Private Key:</label>
-                                <PasswordInput id="stripe-private-key" {...formik.getFieldProps("PM_STRIP_PRIVATE_KEY")} />
-                            </div>
-                            <div className="d-flex">
-                                <Switch onChange={(checked) => formik.setFieldValue("PM_STRIP_SANDBOX", checked)} name="accept" checked={formik.values.PM_STRIP_SANDBOX} size="small" className="mx-2 mt-1" />
+                                        <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("PM_STRIP_STATUS", !formik.values.PM_STRIP_STATUS)} >{formik.values.PM_STRIP_STATUS ? "Active" : "Inactive"}</label>
+                                    </span>
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="stripe-public-key">Stripe Public Key:</label>
+                                    <input type="text" className="form-control" id="stripe-public-key" {...formik.getFieldProps("PM_STRIP_PUBLIC_KEY")} />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="stripe-private-key">Stripe Private Key:</label>
+                                    <PasswordInput id="stripe-private-key" {...formik.getFieldProps("PM_STRIP_PRIVATE_KEY")} />
+                                </div>
+                                <div className="d-flex">
+                                    <Switch onChange={(checked) => formik.setFieldValue("PM_STRIP_SANDBOX", checked)} name="accept" checked={formik.values.PM_STRIP_SANDBOX} size="small" className="mx-2 mt-1" />
 
-                                <label htmlFor="PM_STRIP_SANDBOX" className="form-label" onClick={() => formik.setFieldValue("PM_STRIP_SANDBOX", !formik.values.PM_STRIP_SANDBOX)} >Sandbox <i><small>(test mode)</small></i></label>
-                            </div>
-                        </section>
+                                    <label htmlFor="PM_STRIP_SANDBOX" className="form-label" onClick={() => formik.setFieldValue("PM_STRIP_SANDBOX", !formik.values.PM_STRIP_SANDBOX)} >Sandbox <i><small>(test mode)</small></i></label>
+                                </div>
+                            </section>
+                        </BluredOverlay>
                     </div>
                 </div>
                 <div className="row d-flex flex-row-reverse gap-3 my-4">

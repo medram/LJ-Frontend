@@ -154,12 +154,12 @@ export default function GeneralSettings({ settings })
                         <Select options={CURRENCY_POSITIONS} isSearchable={false} defaultValue={defaultCurrencyPosition || CURRENCY_POSITIONS[0]} id="currency_symbol_position" onChange={(option) => formik.setFieldValue("CURRENCY_POSITION", option.value)} />
                     </div>
                 </div>
-                <div className="mb-4">
+                {/* <div className="mb-4">
                     <label htmlFor="head_code">Head Code:</label>
                     <textarea rows={7} className="form-control" placeholder="Accept Javascripts code snippets, and will be pleaced beteen <head> tag." id="head_code" {...formik.getFieldProps("HEAD_CODE")} ></textarea>
 
                     <small><i><b>Note:</b> javascript codes allowed.</i></small>
-                </div>
+                </div> */}
 
                 <div className="d-flex flex-row-reverse gap-3 mb-4">
                     <SuperButton type="submit" disabled={formik.isSubmitting} isLoading={formik.isSubmitting} className="btn btn-primary" onClick={() => toastFormikErrors(formik.errors)}>
