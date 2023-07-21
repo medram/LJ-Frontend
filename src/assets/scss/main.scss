@@ -68,6 +68,29 @@ section {
     -webkit-backdrop-filter: blur(3px);
 }
 
+/*=========== Override scroll bar ===========*/
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 100px;
+    background-color: lighten($primary, 50%);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: lighten($primary, 15%);
+    border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: lighten($primary, 7%);
+}
+
 /*============= navbar override =============*/
 .navbar-override {
     background-color: $primary !important;
@@ -187,7 +210,7 @@ footer {
     padding: 1.5rem;
 }
 
-/*======================= fullscreen-loading =========================*/
+/*=================== fullscreen-loading ==================*/
 .fullscreen-loading {
     position: absolute !important;
     width: 100vw;
@@ -354,7 +377,7 @@ footer {
 
 .playground-sidebar .chat-labels-list {
     overflow-y: auto;
-    max-height: calc(100vh - 492px);
+    max-height: calc(100vh - 498px);
 }
 
 .playground-sidebar .sidebar-bottom-section {
