@@ -62,7 +62,7 @@ export default function ChatSection({ uuid })
     }, [])
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = useCallback((e) => {
         e.preventDefault()
         if (!prompt.trim())
         {
@@ -140,9 +140,9 @@ export default function ChatSection({ uuid })
             // scroll down
             scrollToPrompt()
         })
-    }
+    }, [uuid, prompt])
 
-    const handleStop = (e) => {
+    const handleStop = useCallback((e) => {
 
         stopPrompt(uuid).then(req => {
             console.log("prompt stopped")
@@ -163,7 +163,7 @@ export default function ChatSection({ uuid })
             // remove the PlaceholderMessage
             return chatHistory.slice(0, -1)
         })
-    }
+    }, [uuid])
 
     const handleClearChatHistory = useCallback(() => {
         setClearingChatHistory(true)
@@ -207,6 +207,7 @@ export default function ChatSection({ uuid })
             <div className="container prompt-input d-flex gap-2 pt-5 pb-5 px-4" ref={promptRef}>
                 <form onSubmit={handleSubmit} className="flex-grow-1">
                     <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} className="form-control form-control-lg" placeholder="Ask anything..." />
+                    <small className="mx-3">Note: if the chat bot said that he doesn't have access to document or doesn't know where to look up, just tell him "<b><i>from document?</i></b>".</small>
                 </form>
 
                 <OverlayTrigger
