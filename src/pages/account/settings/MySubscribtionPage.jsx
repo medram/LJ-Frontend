@@ -43,7 +43,7 @@ export default function MySubscriptionPage()
             ) : (
                 <>
                     <span>No subscription yet</span><br />
-                    <Link to="/pricing" className="btn btn-primary my-1"><FontAwesomeIcon icon={faRankingStar} /> Subscription Now</Link>
+                    <Link to="/pricing" className="btn btn-primary my-1"><FontAwesomeIcon icon={faRankingStar} /> Subscribe Now</Link>
                 </>
             )}
 

@@ -56,7 +56,7 @@ export function SubscriptionsPage() {
     }, [])
 
 
-    if (isLoading || !Object.keys(subscriptions).length)
+    if (isLoading)
     {
         return <SectionLoading center={true} />
     }

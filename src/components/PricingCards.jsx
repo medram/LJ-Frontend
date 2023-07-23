@@ -33,6 +33,9 @@ export default function PricingCards({ yearly })
 
     return (
         <div className="pricing-section">
+            {!plansToRender?.length && (
+                <span>No available plans found!</span>
+            )}
             {plansToRender?.map((plan, i) => {
                 return (
                     <div className={plan.is_popular ? "pricing-card popular" : "pricing-card"} key={i}>
