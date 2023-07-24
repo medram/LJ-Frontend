@@ -39,15 +39,18 @@ const onUpload = ({
         return toast.warning("The demo quota is exceeded, please wait 12 hours 🙏")
     }
 
-    if (subscription?.status !== 1)
+    if (!isDemo)
     {
-        resetDropzone()
-        return toast.warning("You need a valid subscription to continue.")
-    }
-    else if (subscription?.pdfs <= 0)
-    {
-        resetDropzone()
-        return toast.warning("You have reached the maximum number of document uploads.")
+        if (subscription?.status !== 1)
+        {
+            resetDropzone()
+            return toast.warning("You need a valid subscription to continue.")
+        }
+        else if (subscription?.pdfs <= 0)
+        {
+            resetDropzone()
+            return toast.warning("You have reached the maximum number of document uploads.")
+        }
     }
 
     uploadFile("user/chat", files[0], {
@@ -91,7 +94,7 @@ const onUpload = ({
 
     }).catch(err => {
 
-        if (err.response.status === 422) {
+        if (err.response.status === 422 || err.response.status == 400) {
             toast.warning(err.response?.data?.message)
         }
         else
@@ -206,7 +209,7 @@ export default function PlaygroundPage()
             <main className="playground">
                 <Sidebar toggled={toggled} collapsed={collapsed} breakPoint="md" onBackdropClick={() => setToggled(!toggled)} backgroundColor="" className="">
                     <div className="playground-sidebar">
-                        {subscription && (
+                        {(subscription || demoSubscription) && (
                             <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
                             extraOnUploadProps={{
                                 createChatRoom,
@@ -311,7 +314,7 @@ export default function PlaygroundPage()
 
                     <section className="d-flex flex-column">
                         {isEL ? (
-                            (subscription && subscription?.status == 1) ? (
+                            (subscription && subscription?.status == 1 || isDemo) ? (
                                 subscription?.questions <= 0 ? (
                                     <div className="d-flex flex-column justify-content-start p-5">
                                         Your subscription has reached its maximum usage.

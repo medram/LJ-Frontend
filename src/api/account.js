@@ -73,3 +73,10 @@ export async function registerOpenAIKey(openai_key)
     const req = await axiosApi.post("/user/chat/register-openai-key", {openai_key})
     return req
 }
+
+// Activate free subscription
+export async function subscribeToFreePlan(plan_id)
+{
+    const req = await axiosApi.post("/user/afp", {plan_id})
+    return req
+}

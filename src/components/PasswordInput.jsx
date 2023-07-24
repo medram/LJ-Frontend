@@ -4,12 +4,12 @@ import { memo, useState } from "react";
 import { useDemo } from "../hooks";
 
 
-export default memo(function PasswordInput({ ...restProps })
+export default memo(function PasswordInput({ skipDemoMode = false, ...restProps })
 {
     const [show, setShow] = useState(false)
     const { isDemo } = useDemo()
 
-    const value = isDemo ? (restProps?.value ? "**** Hidden for demo mode ****" : "") : restProps?.value
+    const value = isDemo && !skipDemoMode ? (restProps?.value ? "**** Hidden for demo mode ****" : "") : restProps?.value
 
     return (
         <div className="input-group mb-3">

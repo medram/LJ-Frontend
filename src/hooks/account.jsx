@@ -7,6 +7,7 @@ export function useCurrentSubscription()
 {
     const { data, ...rest } = useQuery("user.subscription", currentSubscription, {
         // staleTime: Infinity
+        retry: 1
     })
 
     return { ...rest, subscription: data?.subscription }

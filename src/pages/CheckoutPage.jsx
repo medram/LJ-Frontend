@@ -1,4 +1,4 @@
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
 import BasePage from "./layouts/BasePage";
 import Heading from "../components/Heading";
 import { useAvailablePaymentMethods, useDemo, usePlan, useSettings } from "../hooks";
@@ -12,11 +12,13 @@ import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import SuperButton from "../components/SuperButton";
 import { toast } from "react-toastify";
 import { payNow } from "../api";
+import { subscribeToFreePlan } from "../api/account";
 
 
 export default function CheckoutPage()
 {
     const { id } = useParams()
+    const navigate = useNavigate()
     const { isDemo } = useDemo()
     const { isLoading, settings } = useSettings()
     const { isLoading: isPlanLoading, plan } = usePlan(id)
@@ -29,21 +31,41 @@ export default function CheckoutPage()
             return toast.success("This action isn't allowed on the demo mode!")
 
         setProcessingPayment(true)
-        payNow({
-            gateway: selectedPaymentMethod,
-            type: "subscription",
-            id: parseInt(id)
-        }).then(data => {
-            if (data?.errors)
-                return toast.info(data.message)
 
-            // Redirect to Paymet gateway.
-            window.location.href = data.gateway_link
-        }).catch (err => {
-            toast.danger(err)
-        }).finally(() => {
-            setProcessingPayment(false)
-        })
+        if (plan.is_free || plan.price == 0)
+        {
+            subscribeToFreePlan(id).then(data => {
+                if (data?.errors)
+                    return toast.error(data.message)
+
+                toast.success("Subscribed Successfully.")
+                return navigate("/account/settings/subscription", { replace: true })
+
+            }).catch(err => {
+                toast.error(err)
+            }).finally(() => {
+                setProcessingPayment(false)
+            })
+        }
+        else
+        {
+            payNow({
+                gateway: selectedPaymentMethod,
+                type: "subscription",
+                id: parseInt(id)
+            }).then(data => {
+                if (data?.errors)
+                    return toast.info(data.message)
+
+                // Redirect to Paymet gateway.
+                window.location.href = data.gateway_link
+            }).catch (err => {
+                toast.error(err)
+            }).finally(() => {
+                setProcessingPayment(false)
+            })
+        }
+
     }
 
 

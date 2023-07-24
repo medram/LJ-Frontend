@@ -69,7 +69,7 @@ export default function RegisterPage() {
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">Password:</label>
 
-                                <PasswordInput id="password" className="form-control form-control-lg" placeholder="+6 character or more" {...formik.getFieldProps("password")} />
+                                <PasswordInput id="password" className="form-control form-control-lg" placeholder="+6 character or more" skipDemoMode {...formik.getFieldProps("password")} />
                             </div>
                             <div className="d-flex mb-3">
                                 <Switch onChange={(checked) => formik.setFieldValue("accept", checked)} name="accept" checked={formik.values.accept} size="small" className="mx-2 mt-1" />
