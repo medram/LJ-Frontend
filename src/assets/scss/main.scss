@@ -103,9 +103,35 @@ section {
 
 /*============= navbar override =============*/
 .navbar-override {
-    background-color: $primary !important;
+    // background-color: $primary !important;
+    background-color: transparent !important;
+
+}
+.navbar-override .navbar-brand {
+    color: $primary;
+    font-weight: bold;
 }
 
+.navbar-override .nav-link {
+    color: $primary;
+    margin-inline: 3px;
+    border-radius: 100px;
+}
+
+.navbar-override .nav-link:hover {
+    color: lighten($primary, 80%);
+    background-color: $primary;
+}
+
+.navbar-override .nav-link.active {
+    background-color: $primary;
+}
+
+.navbar-override .avatar-dropdown > button {
+    color: $primary !important;
+    outline: 0;
+    border: 0;
+}
 /*================== Footer =================*/
 footer {
     text-align: center;
@@ -357,7 +383,8 @@ footer {
 .avatar-dropdown > button {
     background-color: transparent;
     color: lighten($primary, 50%);
-    outline: none;
+    outline: 0;
+    border: 0;
 }
 
 /*======================= Playground =========================*/
@@ -686,5 +713,13 @@ section .section-sub-title {
     .feature {
         width: 100%;
         min-width: 300px;
+    }
+
+}
+
+@media screen and (max-width: 768px)
+{
+    .jumbotron .left-side {
+        align-items: stretch;
     }
 }

@@ -8,7 +8,7 @@ export default function HomePage()
         <BasePage>
             <section className="container-fluid jumbotron">
                 <div className="container py-5">
-                    <div className="row">
+                    <div className="row flex-column-reverse flex-md-row">
                         <div className="col-md-6 col-sm-12  text-center text-md-start left-side">
                             <h1>Chat Directly with Your <span className="text-gradient-primary">Documents</span>, Powered by AI.</h1>
 
