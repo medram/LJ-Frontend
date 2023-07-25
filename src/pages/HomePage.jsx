@@ -1,9 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BasePage from "./layouts/BasePage";
 import { faBook, faBookOpenReader, faCircleQuestion, faClockRotateLeft, faCloudArrowUp, faCommentDots, faGraduationCap, faHourglass2, faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
+import { useSettings } from "../hooks";
 
 export default function HomePage()
 {
+    const { settings } = useSettings()
+
     return (
         <BasePage>
             <section className="container-fluid jumbotron">
@@ -28,7 +31,7 @@ export default function HomePage()
             <section className="container-fluid">
                 <div className="container py-5 text-center">
                     <h2 className="section-title">What does it include?</h2>
-                    <span className="section-sub-title">AskPDF includes the following features</span>
+                    <span className="section-sub-title">{settings?.SITE_NAME} includes the following features</span>
 
                     <div className="row align-items-stretch">
 
@@ -54,7 +57,7 @@ export default function HomePage()
                             <div className="feature">
                                 <div className="feature-header"><FontAwesomeIcon icon={faClockRotateLeft} /> Chat history</div>
                                 <div className="feature-body">
-                                    The AskPDF chat bot remembers the chat history of the conversation.
+                                    The {settings?.SITE_NAME} chat bot remembers the chat history of the conversation.
                                 </div>
                             </div>
                         </div>
@@ -74,7 +77,7 @@ export default function HomePage()
             <section className="container-fluid blue-section">
                 <div className="container py-5 text-center">
                     <h2 className="section-title">Useful to Whom?</h2>
-                    <span className="section-sub-title">AskPDF is a useful tool for everyone that seeks knowledge.</span>
+                    <span className="section-sub-title">{settings?.SITE_NAME} is a useful tool for everyone that seeks knowledge.</span>
 
                     <div className="row align-items-stretch">
 
@@ -98,7 +101,7 @@ export default function HomePage()
                             <div className="feature">
                                 <div className="feature-header"><FontAwesomeIcon icon={faPeopleGroup} /> Lazy People</div>
                                 <div className="feature-body">
-                                    AskPDF is convenient for lazy people that don't want to read a lot of content.
+                                    {settings?.SITE_NAME} is convenient for lazy people that don't want to read a lot of content.
                                 </div>
                             </div>
                         </div>
@@ -106,7 +109,7 @@ export default function HomePage()
                             <div className="feature">
                                 <div className="feature-header"><FontAwesomeIcon icon={faHourglass2} /> Whom don't have time</div>
                                 <div className="feature-body">
-                                    AskPDF is great for people that don't have much time to go through pages of content to look up information.
+                                    {settings?.SITE_NAME} is great for people that don't have much time to go through pages of content to look up information.
                                 </div>
                             </div>
                         </div>
