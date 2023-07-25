@@ -9,16 +9,16 @@ export default function HomePage()
             <section className="container-fluid jumbotron">
                 <div className="container py-5">
                     <div className="row">
-                        <div className="col-md-6 col-sm-12  text-center text-md-start">
+                        <div className="col-md-6 col-sm-12  text-center text-md-start left-side">
                             <h1>Chat Directly with Your <span className="text-gradient-primary">Documents</span>, Powered by AI.</h1>
 
                             <p>Come together with millions of students, researchers, and professionals to rapidly respond to questions and comprehend research with AI.</p>
 
-                            <a href="/playground" className="btn btn-primary btn-lg my-5"><FontAwesomeIcon icon={faCloudArrowUp} /> Try it now</a>
+                            <a href="/playground" className="btn btn-primary btn-lg mt-5"><FontAwesomeIcon icon={faCloudArrowUp} /> Try it now</a>
                         </div>
                         <div className="col-md-6 col-sm-12">
                             <div className="right-side">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores quia commodi id nulla! Ipsa fugit provident unde, cum quidem inventore itaque quo fugiat earum excepturi illo aperiam optio culpa. Nesciunt.
+                                <img src="https://i.imgur.com/4yhmvkY.png" alt="searching within documents image" />
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,6 @@ export default function HomePage()
                             </div>
                         </div>
                         <div className="col">
-
                             <div className="feature">
                                 <div className="feature-header"><FontAwesomeIcon icon={faPeopleGroup} /> Lazy People</div>
                                 <div className="feature-body">
@@ -104,7 +103,6 @@ export default function HomePage()
                             </div>
                         </div>
                         <div className="col">
-
                             <div className="feature">
                                 <div className="feature-header"><FontAwesomeIcon icon={faHourglass2} /> Whom don't have time</div>
                                 <div className="feature-body">
