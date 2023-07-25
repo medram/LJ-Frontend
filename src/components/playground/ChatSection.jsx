@@ -121,7 +121,7 @@ export default function ChatSection({ uuid })
                 })
             }
         }).catch(err => {
-            if (err.response.status === 422)
+            if (err.response?.data?.message)
             {
                 toast.warning(err.response?.data?.message)
             }
