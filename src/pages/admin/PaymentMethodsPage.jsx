@@ -151,7 +151,7 @@ export default function PaymentMethodsPage()
                             <div className="mb-4">
                                 <label htmlFor="client-secret">Client Secret:</label>
 
-                                <PasswordInput id="client-secret" {...formik.getFieldProps("PM_PAYPAL_CLIENT_SECRET")} />
+                                <PasswordInput id="client-secret" placeholder="" {...formik.getFieldProps("PM_PAYPAL_CLIENT_SECRET")} />
                             </div>
                             <div className="d-flex">
                                 <Switch onChange={(checked) => formik.setFieldValue("PM_PAYPAL_SANDBOX", checked)} name="accept" checked={formik.values.PM_PAYPAL_SANDBOX} size="small" className="mx-2 mt-1" />
@@ -179,7 +179,7 @@ export default function PaymentMethodsPage()
                                 </div>
                                 <div className="mb-4">
                                     <label htmlFor="stripe-private-key">Stripe Private Key:</label>
-                                    <PasswordInput id="stripe-private-key" {...formik.getFieldProps("PM_STRIP_PRIVATE_KEY")} />
+                                    <PasswordInput id="stripe-private-key" placeholder="" {...formik.getFieldProps("PM_STRIP_PRIVATE_KEY")} />
                                 </div>
                                 <div className="d-flex">
                                     <Switch onChange={(checked) => formik.setFieldValue("PM_STRIP_SANDBOX", checked)} name="accept" checked={formik.values.PM_STRIP_SANDBOX} size="small" className="mx-2 mt-1" />

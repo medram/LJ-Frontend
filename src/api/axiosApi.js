@@ -2,9 +2,9 @@ import axios from "axios"
 
 const axiosApi = axios.create({
     // for production
-    baseURL: window.location.origin + "/api/v1",
+    // baseURL: window.location.origin + "/api/v1",
     // for developement
-    // baseURL: "http://localhost:7000/api/v1"
+    baseURL: "http://localhost:7000/api/v1"
 })
 
 axiosApi.interceptors.request.use(async (config) => {

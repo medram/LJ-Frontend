@@ -116,6 +116,7 @@ section {
     color: $primary;
     margin-inline: 3px;
     border-radius: 100px;
+    text-align: center;
 }
 
 .navbar-override .nav-link:hover {
@@ -132,6 +133,16 @@ section {
     outline: 0;
     border: 0;
 }
+
+.navbar-override .navbar-toggler {
+    color: $primary;
+}
+
+.navbar-override .navbar-toggler:focus {
+    outline: 0;
+    box-shadow: unset;
+}
+
 /*================== Footer =================*/
 footer {
     text-align: center;

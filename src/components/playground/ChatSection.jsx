@@ -203,10 +203,9 @@ export default function ChatSection({ uuid })
                     {chatHistory.map((message, i) => message)}
                 </div>
             </div>
-            <div className="container prompt-input d-flex gap-2 pt-5 pb-5 px-4" ref={promptRef}>
+            <div className="container prompt-input d-flex gap-2 pt-5 pb-4 px-4" ref={promptRef}>
                 <form onSubmit={handleSubmit} className="flex-grow-1">
                     <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} className="form-control form-control-lg" placeholder="Ask anything..." />
-                    <small className="mx-3">Note: if the chat bot said that he doesn't have access to document or doesn't know where to look up, just tell him "<b><i>from document?</i></b>".</small>
                 </form>
 
                 <OverlayTrigger
@@ -242,6 +241,11 @@ export default function ChatSection({ uuid })
                 >
                     <SuperButton className="btn btn-secondary clear-history" isLoading={isClearingChatHistory} title="Clear Chat History" onClick={handleClearChatHistory}><FontAwesomeIcon icon={faTrashCan} /></SuperButton>
                 </OverlayTrigger>
+            </div>
+            <div className="container px-4 mb-2">
+                <small>
+                    <b>Note:</b> if the chat bot said that he doesn't have access to document or doesn't know where to look up, just tell him "<b><i>from document?</i></b>".
+                </small>
             </div>
         </>
     )

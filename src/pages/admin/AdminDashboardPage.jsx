@@ -93,7 +93,7 @@ export default function AdminDashboardPage()
             <div className="col">
                 <Card className="mb-5">
                     <Card.Header className="card-title">Recent Customers</Card.Header>
-                    <Card.Body>
+                    <Card.Body className="overflow-auto">
                         <table className="table table-striped">
                             <thead>
                                 <tr>
@@ -119,10 +119,10 @@ export default function AdminDashboardPage()
                 </Card>
             </div>
 
-            <div className="col-7">
+            <div className="col-md-7">
                 <Card>
                     <Card.Header className="card-title">Recent Subscriptions</Card.Header>
-                    <Card.Body>
+                    <Card.Body className="overflow-auto">
                         <table className="table table-striped">
                             <thead>
                                 <tr>

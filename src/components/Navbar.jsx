@@ -6,7 +6,7 @@ import SectionLoading from "./SectionLoading";
 import { memo } from "react";
 import AvatarPalceholder from "./AvatarPalceholder";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket, faDashboard, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faBarsStaggered, faDashboard, faUser } from "@fortawesome/free-solid-svg-icons";
 
 
 export default memo(function Navbar()
@@ -27,7 +27,7 @@ export default memo(function Navbar()
                 <Logo settings={settings} className="navbar-brand" to="/" />
 
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                    <FontAwesomeIcon icon={faBarsStaggered} />
                 </button>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
