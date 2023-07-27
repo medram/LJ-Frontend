@@ -1,5 +1,5 @@
 {
-  "name": "lj-frontend",
+  "name": "askPDF-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -33,6 +33,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "sync": "./sync_with_backend.sh",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
