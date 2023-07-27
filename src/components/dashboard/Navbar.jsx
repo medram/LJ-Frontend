@@ -3,9 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDemo, useSettings } from "../../hooks";
-import { useAuth, useUser } from "../../hooks/auth";
-import Avatar from "../Avatar";
-import FullscreenLoading from "../FullscreenLoading"
+import { useUser } from "../../hooks/auth";
 import SectionLoading from "../SectionLoading";
 import Logo from "../Logo";
 import AvatarPalceholder from "../AvatarPalceholder";

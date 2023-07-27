@@ -1,13 +1,13 @@
-import { faBarsStaggered, faGem, faPaperPlane, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faGem, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Dropzone from "../components/Dropzone"
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import { Sidebar } from 'react-pro-sidebar';
 import { useCallback, useEffect, useState } from "react";
 import { useDemo, useEventListener, useLCInfo, useNaiveLocalStorage } from "../hooks";
 import AvatarPalceholder from "../components/AvatarPalceholder";
 import ChatLabel from "../components/playground/ChatLabel";
 import ChatSection from "../components/playground/ChatSection";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../hooks/auth";
 import FullscreenLoading from "../components/FullscreenLoading";
 import { useCurrentSubscription, useUserChatRoomList } from "../hooks/account";

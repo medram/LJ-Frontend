@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import BasePage from "./layouts/BasePage";
 
 
-
 export default function NotFoundPage()
 {
     return (

@@ -1,6 +1,5 @@
 import { useQuery } from "react-query"
 import { currentSubscription, getChatRoom, getUserChatRoomList, getUserInvoices } from "../api/account"
-import { useUser } from "./auth"
 
 
 export function useCurrentSubscription()

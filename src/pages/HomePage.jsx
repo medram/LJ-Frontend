@@ -3,6 +3,7 @@ import BasePage from "./layouts/BasePage";
 import { faBook, faBookOpenReader, faCircleQuestion, faClockRotateLeft, faCloudArrowUp, faCommentDots, faGraduationCap, faHourglass2, faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import { useSettings } from "../hooks";
 
+
 export default function HomePage()
 {
     const { settings } = useSettings()

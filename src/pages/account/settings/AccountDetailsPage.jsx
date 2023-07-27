@@ -6,7 +6,6 @@ import { toastFormikErrors } from "../../../utils";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import SuperButton from "../../../components/SuperButton";
 import { updateAccountDetails } from "../../../api/account";
-import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
 

@@ -1,10 +1,9 @@
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import SuperButton from "../components/SuperButton";
 import Switch from "../components/Switch";
 import * as Yup from "yup"
 import BasePage from "./layouts/BasePage";
-import { useEffect } from "react";
 import { toastFormikErrors } from "../utils";
 import register from "../api/auth";
 import { toast } from "react-toastify";

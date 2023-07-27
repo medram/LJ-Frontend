@@ -1,4 +1,4 @@
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 import { usePlans, useSettings } from "../hooks"
@@ -62,12 +62,12 @@ export default function PricingCards({ yearly })
                                 )
                             ) : (
                                 <Link to={`../checkout/${plan.id}`} className="btn btn-primary btn-lg d-block" >
-                                    {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Order Now"}
+                                        {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Subscribe"}
                                 </Link>
                             )
                         ) : (
                             <Link to="../login?to=/pricing" className="btn btn-primary btn-lg d-block" >
-                                    {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Order Now"}
+                                    {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Subscribe"}
                             </Link>
                         )}
                     </div>

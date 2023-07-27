@@ -16,11 +16,9 @@ import "bootstrap/dist/js/bootstrap"
 
 import PricingPage from "./pages/PricingPage";
 import ContactPage from "./pages/ContactPage";
-//import AdminDashboardLayout from "./pages/layouts/AdminDashboardLayout";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import NoAuthRequired from "./pages/middlewares/NoAuthRequired";
 import CustomersPage from "./pages/admin/CustomersPage";
-import { useSettings } from "./hooks";
 import AddCustomerPage from "./pages/admin/AddCustomerPage";
 import EditCustomerPage from "./pages/admin/EditCustomerPage";
 import PlansPage from "./pages/admin/PlansPage";

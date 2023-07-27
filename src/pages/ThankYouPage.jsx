@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Heading from "../components/Heading";
 import BasePage from "./layouts/BasePage";
 import { faArrowRightLong, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import Confetti from 'react-confetti'

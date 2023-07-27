@@ -1,7 +1,7 @@
-import { useCallback, useContext, useEffect, useReducer, useRef, useState } from "react"
+import { useCallback, useEffect, useReducer, useRef, useState } from "react"
 import { useQuery } from "react-query"
 import { getAvailablePaymentMethods, getDashboardSettings, getDemoStatus, getLCInfo, getPage, getPlans, getSettings, getpages } from "../api"
-import StoreContext, { useStore } from "../context/StoreContext"
+import { useStore } from "../context/StoreContext"
 import { getDashboardPlans } from "../api/admin"
 
 

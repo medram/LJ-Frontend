@@ -11,7 +11,6 @@ import { useQueryClient } from "react-query";
 import Switch from "../../Switch"
 import Select from "react-select";
 import { useSettings } from "../../../hooks";
-import SectionLoading from "../../SectionLoading";
 
 
 const BILLING_CYCLE_OPTIONS = [
