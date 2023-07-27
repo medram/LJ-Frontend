@@ -3,10 +3,13 @@
 BACKEND_FOLDER="../../laravel/example-app/"
 
 echo "Syncing..."
-find ./build -mindepth 1 -maxdepth 1 ! -name "index.html" -exec cp -vr {} "${BACKEND_FOLDER}public/" \;
+find ./build -mindepth 1 -maxdepth 1 ! -name "index.html" -exec cp -r {} "${BACKEND_FOLDER}public/" \;
 
+# Remove previous assets
+echo "Remove old assets..."
+rm -fr ${BACKEND_FOLDER}public/static/*
 
+echo "Copy index.html..."
+cp build/index.html "${BACKEND_FOLDER}resources/views/frontend.blade.php"
 
-cp -v build/index.html "${BACKEND_FOLDER}resources/views/frontend.blade.php"
-
-echo "👍 Completed"
+echo "👍 Completed Successfully."
