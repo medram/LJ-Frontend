@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
 
 // Override default color variables
-//$blue: #080b16 !default;
 $blue: #363f5c !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
@@ -14,7 +13,6 @@ $green: #198754 !default;
 $teal: #20c997 !default;
 $cyan: #0dcaf0 !default;
 
-//$body-color: #5a7dc2 !default;
 $body-color: #363f5c !default;
 
 $primary: #363f5c !default;
@@ -78,7 +76,7 @@ section {
     -webkit-backdrop-filter: blur(3px);
 }
 
-/*=========== Override scroll bar ===========*/
+/*################# Override scroll bar ##################*/
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
@@ -101,9 +99,9 @@ section {
     background: lighten($primary, 7%);
 }
 
-/*============= navbar override =============*/
+/*################### navbar override ###################*/
+
 .navbar-override {
-    // background-color: $primary !important;
     background-color: transparent !important;
 
 }
@@ -143,13 +141,14 @@ section {
     box-shadow: unset;
 }
 
-/*================== Footer =================*/
+/*###################### Footer ########################*/
+
 footer {
     text-align: center;
     margin: 2em 0;
 }
 
-/*============= Not Found Page ==============*/
+/*################### Not Found Page ###################*/
 .not-found-page {
     display: flex;
     flex-direction: column;
@@ -162,7 +161,8 @@ footer {
 }
 
 
-/*=================== Pricing Section ====================*/
+/*################### Pricing Section ###################*/
+
 .pricing-section {
     display: flex;
     justify-content: center;
@@ -231,10 +231,10 @@ footer {
     margin: 0.3em 0;
 }
 
-/*======================= infobox =========================*/
+/*###################### infobox ######################*/
+
 .infobox {
     border-radius: 15px;
-    //min-width: 200px;
 }
 
 .infobox .infobox-icon {
@@ -257,7 +257,8 @@ footer {
     padding: 1.5rem;
 }
 
-/*=================== fullscreen-loading ==================*/
+/*################# fullscreen-loading #################*/
+
 .fullscreen-loading {
     position: absolute !important;
     width: 100vw;
@@ -265,7 +266,7 @@ footer {
     z-index: 100;
 }
 
-/*======================= dropzone =========================*/
+/*###################### dropzone ######################*/
 
 .dropzone {
     position: relative;
@@ -287,9 +288,6 @@ footer {
 }
 
 .dropzone.focused {
-    // color: lighten($blue, 50%);
-    // border-color: lighten($blue, 50%);
-    // background-color: lighten($blue, 90%);
     color: lighten($primary, 20%);
     border-color: lighten($primary, 20%);
     background-color: lighten($primary, 60%);
@@ -340,7 +338,8 @@ footer {
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
-/*======================= spinner-border =========================*/
+/*################### spinner-border ####################*/
+
 .spinner-border {
     border-width: 0.15em;
 }
@@ -356,7 +355,6 @@ footer {
     .pricing-section {
         flex-direction: column;
         width: 100%;
-        //margin: 1em;
         padding: 2em;
     }
 
@@ -365,7 +363,7 @@ footer {
     }
 }
 
-/*======================= payment-method =========================*/
+/*#################### payment-method ###################*/
 
 .payment-method {
     border-radius: 10px;
@@ -390,7 +388,8 @@ footer {
     margin: 0;
 }
 
-/*======================= Avatar Dropdown =========================*/
+/*################### Avatar Dropdown ###################*/
+
 .avatar-dropdown > button {
     background-color: transparent;
     color: lighten($primary, 50%);
@@ -398,7 +397,8 @@ footer {
     border: 0;
 }
 
-/*======================= Playground =========================*/
+/*###################### Playground ######################*/
+
 .playground {
     display: flex;
     height: 100%;      // with navbar: calc(100vh - 79px)
@@ -408,14 +408,12 @@ footer {
     padding: 1em;
     padding-right: 0.5em !important;
     padding-left: 0.5em !important;
-    //color: #EEE;
     color: lighten($primary, 60%);
     background-color: $primary;
     display: flex;
     flex-direction: column;
     height: 100%;
     max-height: 100vh;
-    //overflow-y: auto;
 }
 
 .playground-sidebar .dropzone.focused .close {
@@ -451,17 +449,17 @@ footer {
 }
 
 .playground-chat-section .chats {
-    //overflow-y: auto;
+    // e.g: overflow-y: auto;
 }
 
 .playground-chat-section .prompt-input {
-    //box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2)
+    // e.g: box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2)
 }
+
 .playground-chat-section .prompt-input input {
     border-radius: 100px;
 }
 .playground-chat-section .prompt-input .btn {
-    // width: clamp(90px, 10%, 150px);
     border-radius: 50%;
     width: 48px;
     height: 48px;
@@ -476,7 +474,6 @@ footer {
 }
 
 .playground-chat-section .chats .container .message {
-    //border: 1px solid $primary;
     border-radius: 15px;
     padding: 0.8em 1.2em;
     margin: 1em 0;
@@ -522,7 +519,6 @@ footer {
 }
 
 .chat-label.active::before {
-    // border-left: 5px solid #198754;
     background-color: #198754;
     content: "";
     display: block;
@@ -615,9 +611,6 @@ footer {
     min-height: clamp(500px, 80vh, 800px);
     display: flex;
     align-items: center;
-    // color: #6610f2;
-    // background: whitesmoke;
-    //background: aliceblue;
 }
 
 .jumbotron .left-side {
@@ -661,7 +654,6 @@ section .section-sub-title {
     font-size: 1.1rem;
     display: block;
     color: lighten($primary, 25%);
-    // font-weight: bold;
 }
 
 .blue-section {
@@ -673,10 +665,8 @@ section .section-sub-title {
 .feature {
     text-align: left;
     min-width: 450px;
-    // height: 100%;
     width: 100%;
     padding: 2em;
-    // margin-bottom: 2em;
     margin-top: 2em;
     border: 1px dashed lighten($primary, 50%);
     border-radius: $border-radius * 2;
