@@ -10,10 +10,12 @@ import { useAuth } from "../hooks/auth";
 import { toastFormikErrors } from "../utils";
 import BasePage from "./layouts/BasePage";
 import ForgotPasswordForm from "../components/ForgotPasswordForm";
+import { useDemo } from "../hooks";
 
 
 
 export default function LoginPage() {
+    const { isDemo } = useDemo()
     const { Authenticate } = useAuth()
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
@@ -24,13 +26,14 @@ export default function LoginPage() {
 
     const formik = useFormik({
         initialValues: {
-            email: "",
-            password: ""
+            email: isDemo ? "admin@test.com" : "",
+            password: isDemo ? "123456" : ""
         },
         validationSchema: Yup.object({
             email: Yup.string().email("Invalid email address.").required("Email Required."),
             password: Yup.string().required("Password required.")
         }),
+        enableReinitialize: true,
         onSubmit: (values) => {
             Authenticate(values.email, values.password).then(data => {
                 if (!data.errors)
@@ -55,6 +58,16 @@ export default function LoginPage() {
         <BasePage>
             <section className="container">
                 <div className="row my-5 py-5">
+                    {isDemo && (
+                        <div className="text-center">
+                            <pre>
+                                <b>Demo Admin Credentials:</b><br />
+                                Email: {formik.values.email}<br />
+                                Password: {formik.values.password}
+                            </pre>
+                        </div>
+                    )}
+
                     <div className="col-md-5 m-auto p-5">
                         <h1 className="text-center mb-5">Sign In</h1>
                         <form onSubmit={formik.handleSubmit}>
