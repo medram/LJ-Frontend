@@ -133,10 +133,10 @@ export default function AddPlanForm({ close }) {
                 <input type="text" className="form-control" placeholder="e.g. P-6C235282FB245950NMRTE5II" id="paypal-plan-id" {...formik.getFieldProps("paypal_plan_id")} />
             </div>
 
-            <div className="mb-4">
+            {/* <div className="mb-4">
                 <label htmlFor="stripe-plan-id">Stripe Subscription Plan ID <small><i className="text-danger">(required for Stripe)</i></small>:</label>
                 <input type="text" className="form-control" placeholder="e.g. price_1N9SeE2eZvKYlo2CJwmvOCr6" id="stripe-plan-id" {...formik.getFieldProps("stripe_plan_id")} />
-            </div>
+            </div> */}
 
             <hr />
             <div className="mb-4">
