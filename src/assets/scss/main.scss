@@ -724,3 +724,59 @@ section .section-sub-title {
         align-items: stretch;
     }
 }
+
+/*#################### Cookies Alert ######################*/
+
+.cookie-alert {
+    display: flex !important;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #FFF;
+    color: $secondary;
+    padding: 2rem 2rem;
+    border-radius: 10px;
+    display: none;
+    gap: 2em;
+    max-width: 460px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.cookie-alert .cookie-img {
+    height: 100%;
+}
+
+.cookie-alert .cookie-img img {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    display: block;
+}
+
+.cookie-alert .cookie-buttons {
+    float: right;
+    margin-top: 1em;
+}
+
+@media screen and (max-width: 576px) {
+    .cookie-alert {
+        flex-direction: column;
+        width: 100%;
+        border-radius: 0;
+        bottom: 0;
+        left: 0;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+    .cookie-alert .cookie-buttons {
+        width: 100%;
+    }
+
+    .cookie-alert .cookie-agree-button {
+        display: block;
+        float: none;
+        width: 100%;
+    }
+
+}

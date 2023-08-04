@@ -42,6 +42,7 @@ import PagePage from "./pages/PagePage";
 import LogoutPage from "./pages/LogoutPage";
 import LCPage from "./pages/admin/LCPage";
 import ELRequired from "./pages/middlewares/ELRequired";
+import CookiesAlert from "./components/CookiesAlert";
 
 
 // Lazy loading
@@ -120,6 +121,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
+      <CookiesAlert />
       <ToastContainer position="top-right" hideProgressBar={true} draggable={false} />
     </BrowserRouter>
   );
