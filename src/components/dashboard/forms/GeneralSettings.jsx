@@ -60,6 +60,8 @@ export default function GeneralSettings({ settings })
         initialValues: {
             "SITE_NAME": settings.SITE_NAME,
             "SITE_LOGO": settings.SITE_LOGO,
+            "SITE_KEYWORDS": settings.SITE_KEYWORDS,
+            "SITE_DESC": settings.SITE_DESC,
             "SHOW_LOGO": settings.SHOW_LOGO,
             "SITE_FAVICON": settings.SITE_FAVICON,
             "TIMEZONE": settings.TIMEZONE,
@@ -70,6 +72,8 @@ export default function GeneralSettings({ settings })
         },
         validationSchema: Yup.object({
             "SITE_NAME": Yup.string().required("Site Name is required"),
+            "SITE_KEYWORDS": Yup.string(),
+            "SITE_DESC": Yup.string(),
             "SITE_LOGO": Yup.string(),
             "SHOW_LOGO": Yup.boolean(),
             "SITE_FAVICON": Yup.string(),
@@ -154,12 +158,23 @@ export default function GeneralSettings({ settings })
                         <Select options={CURRENCY_POSITIONS} isSearchable={false} defaultValue={defaultCurrencyPosition || CURRENCY_POSITIONS[0]} id="currency_symbol_position" onChange={(option) => formik.setFieldValue("CURRENCY_POSITION", option.value)} />
                     </div>
                 </div>
-                {/* <div className="mb-4">
-                    <label htmlFor="head_code">Head Code:</label>
-                    <textarea rows={7} className="form-control" placeholder="Accept Javascripts code snippets, and will be pleaced beteen <head> tag." id="head_code" {...formik.getFieldProps("HEAD_CODE")} ></textarea>
 
-                    <small><i><b>Note:</b> javascript codes allowed.</i></small>
-                </div> */}
+                <div className="row">
+                    <div className="mb-4">
+                        <label htmlFor="site_keywords">SEO Keywords:</label>
+                        <input type="text" className="form-control" id="site_keywords"
+                        placeholder="e.g. keyword1, keyword2, keyword3, ...etc"
+                        {...formik.getFieldProps("SITE_KEYWORDS")} />
+
+                        <small><i><b>Note:</b> keywords should be separated by comma "<b>,</b>".</i></small>
+                    </div>
+
+                    <div className="mb-4">
+                        <label htmlFor="site_desc">SEO Description:</label>
+                        <textarea rows={7} className="form-control" id="site_desc" placeholder="A small description for Search Engins." {...formik.getFieldProps("SITE_DESC")} ></textarea>
+                    </div>
+
+                </div>
 
                 <div className="d-flex flex-row-reverse gap-3 mb-4">
                     <SuperButton type="submit" disabled={formik.isSubmitting} isLoading={formik.isSubmitting} className="btn btn-primary" onClick={() => toastFormikErrors(formik.errors)}>
