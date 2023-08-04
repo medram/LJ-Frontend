@@ -263,7 +263,7 @@ footer {
     position: absolute !important;
     width: 100vw;
     height: 100vh;
-    z-index: 100;
+    z-index: 101;
 }
 
 /*###################### dropzone ######################*/
@@ -728,6 +728,7 @@ section .section-sub-title {
 /*#################### Cookies Alert ######################*/
 
 .cookie-alert {
+    z-index: 100;
     display: flex !important;
     position: fixed;
     bottom: 20px;
