@@ -42,7 +42,10 @@ export default function CheckoutPage()
                 return navigate("/account/settings/subscription", { replace: true })
 
             }).catch(err => {
-                toast.error(err)
+                if(err.response?.data?.message)
+                    toast.error(err.response?.data?.message)
+                else
+                    toast.error(err)
             }).finally(() => {
                 setProcessingPayment(false)
             })
@@ -60,7 +63,10 @@ export default function CheckoutPage()
                 // Redirect to Paymet gateway.
                 window.location.href = data.gateway_link
             }).catch (err => {
-                toast.error(err)
+                if (err.response?.data?.message)
+                    toast.error(err.response?.data?.message)
+                else
+                    toast.error(err)
             }).finally(() => {
                 setProcessingPayment(false)
             })

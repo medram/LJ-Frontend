@@ -1,4 +1,4 @@
-import { faCreditCard, faFile, faGaugeHigh, faRankingStar, faRepeat, faSliders, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { faCreditCard, faFile, faGaugeHigh, faGem, faRankingStar, faRepeat, faSliders, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useDashboardSettings, useLCInfo } from "../../hooks";
@@ -21,7 +21,7 @@ export default function Sidebar({ show })
                 {isLC && (
                     <>
                         <Link to="plans"><FontAwesomeIcon icon={faRankingStar} size="lg" /> Plans</Link>
-                        <Link to="subscriptions"><FontAwesomeIcon icon={faRepeat} size="lg" /> Subscriptions</Link>
+                        <Link to="subscriptions"><FontAwesomeIcon icon={faGem} size="lg" /> Subscriptions</Link>
                         <Link to="payment-methods"><FontAwesomeIcon icon={faCreditCard} size="lg" /> Payment Methods</Link>
                     </>
                 )}

@@ -97,7 +97,7 @@ export default function EditCustomerPage()
                             </div>
 
                             <div className="mb-4">
-                                <label htmlFor="password">Password:</label>
+                                <label htmlFor="password">Change Password:</label>
                                 <PasswordInput className="form-control" id="password" {...formik.getFieldProps("password")} />
                             </div>
 
