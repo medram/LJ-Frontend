@@ -29,6 +29,7 @@ export default function ChatSection({ uuid })
     const [isClearingChatHistory, setClearingChatHistory ] = useState(false)
     const [promptRef, scrollToPrompt] = useScrollToRef()
 
+    const DEFAULT_MESSAGE = <AIMessage key={Math.random()} content="Hi, How can I assist you today? 😄 " />
 
     useEffect(() => {
         if (chat?.chat_history)
@@ -43,14 +44,14 @@ export default function ChatSection({ uuid })
                         messages[i] = <UserMessage key={i} content={history.content} />
                 })
 
-                setChatHistory(messages)
+                setChatHistory([DEFAULT_MESSAGE, ...messages])
             } catch (error){
                 console.log("error parsing chat history")
             }
         }
         else
         {
-            setChatHistory([<AIMessage key={Math.random()} content="Hi, How can I assist you today?" />])
+            setChatHistory([DEFAULT_MESSAGE])
         }
 
         scrollToPrompt()
@@ -171,7 +172,8 @@ export default function ChatSection({ uuid })
             if (req.status === 204)
             {
                 toast.success("Cleared successfully.")
-                setChatHistory([])
+                queryClient.invalidateQueries(`user.chat.${uuid}`)
+                setChatHistory([DEFAULT_MESSAGE])
             }
             else
             {

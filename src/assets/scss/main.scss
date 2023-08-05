@@ -494,6 +494,10 @@ footer {
     border-bottom-left-radius: 0;
 }
 
+.playground-chat-section .chats .container .ai-message > p {
+    margin-bottom: 0;
+}
+
 .chat-label {
     background-color: lighten($primary, 9%);
     padding: 0.7em 1em;

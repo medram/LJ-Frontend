@@ -1,4 +1,4 @@
-import { faBarsStaggered, faGem, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faChevronRight, faGem, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Dropzone from "../components/Dropzone"
 import { Sidebar } from 'react-pro-sidebar';
@@ -291,6 +291,7 @@ export default function PlaygroundPage()
                                         <b>{user.username}</b><br />
                                         <span>({user.email})</span>
                                     </div>
+                                    <FontAwesomeIcon icon={faChevronRight} />
                                 </div>
                             )}
 

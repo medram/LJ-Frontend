@@ -1,3 +1,5 @@
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React from "react"
 
 
@@ -10,7 +12,7 @@ export default React.memo(React.forwardRef(function SuperButton(props, ref)
         <button ref={ref} disabled={isLoading} {...rest} >
             {isLoading? (
                 <>
-                    <span className={["spinner-border spinner-border-sm", spinnerClassName].join(" ")}></span> {loadingText}
+                    <FontAwesomeIcon icon={faCircleNotch} spin className={["spinner-border-sm", spinnerClassName].join(" ")} /> {loadingText}
                 </>
             ): (
                <>{children}</>
