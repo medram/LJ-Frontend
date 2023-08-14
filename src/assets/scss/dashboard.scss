@@ -1,27 +1,27 @@
-$primary: #080b16;
+$primary: #363f5c;
 $secondary: #eee;
 
 $btn-border-radius: 15px;
 
 // Navbar
 $dashboard-navbar-height: 80px;
-$dashboard-navbar-bg-color: $primary;
-$dashboard-sidebar-bg-color: $primary;
-$dashboard-sidebar-link-active-bg-color: lighten($dashboard-sidebar-bg-color, 30);
-$dashboard-sidebar-link-active-color: lighten($dashboard-sidebar-bg-color, 80);
+$dashboard-navbar-bg-color: #FFF;
+$dashboard-sidebar-bg-color: #FFF;
+$dashboard-sidebar-link-active-bg-color: $primary;
+$dashboard-sidebar-link-active-color: lighten($primary, 80);
 $dashboard-sidebar-width: 260px;
 
 
 // Brand
-$dashboard-brand-bg-color: $primary;
-$dashboard-brand-color: lighten($primary, 80);
+$dashboard-brand-bg-color: #FFF;
+$dashboard-brand-color: lighten($primary, 0%);
 $dashboard-brand-font-size: 1.5rem;
 
-$font-primary-color: #5a7dc2;
-$dashboard-font-color: lighten($font-primary-color, 25);
+$font-primary-color: lighten($primary, 10%);
+$dashboard-font-color: $font-primary-color;
 
 // font colors
-$font-color: #080b16;
+$font-color: $primary;
 $font-secondary: lighten($font-color, 50);
 
 
@@ -32,7 +32,7 @@ $font-secondary: lighten($font-color, 50);
 }
 
 .dashboard .dashboard-container {
-    background-color: $secondary;
+    background-color: rgba($primary, .05);
     height: 100vh;
     overflow-y: auto;
     margin-left: $dashboard-sidebar-width;
@@ -81,7 +81,7 @@ $font-secondary: lighten($font-color, 50);
     z-index: 3 !important;
     position: fixed;
     top: 0;
-    border-bottom: 1px solid lighten($dashboard-navbar-bg-color, 11);
+    border-bottom: 1px solid lighten($primary, 65%);
 }
 
 .dashboard .dashboard-header .bars {
@@ -149,7 +149,7 @@ $font-secondary: lighten($font-color, 50);
 }
 
 .dashboard .dashboard-sidebar nav a:hover {
-    background-color: lighten($dashboard-sidebar-bg-color, 10);
+    background-color: lighten($primary, 65%);
 }
 
 .dashboard .dashboard-sidebar nav a.active {
@@ -209,8 +209,17 @@ $font-secondary: lighten($font-color, 50);
 }
 
 .dashboard .dashboard-header .dropdown-menu > :hover {
-    background-color: lighten($dashboard-sidebar-bg-color, 10);
+    background-color: lighten($primary, 65%);
     border-radius: 10px;
+}
+
+.btn-check:checked+.btn,
+:not(.btn-check)+.btn:active,
+.btn:first-child:active,
+.btn.active,
+.btn.show {
+    background-color: lighten($primary, 65%);
+    color: $primary;
 }
 
 /*################# Media Screen (768px) #################*/
@@ -248,7 +257,7 @@ $font-secondary: lighten($font-color, 50);
         z-index: 0;
         transition: all 1s;
         overflow: hidden;
-        box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.8);
+        box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
     }
 
     .dashboard .dashboard-header .right-nav.show {

@@ -99,6 +99,14 @@ section {
     background: lighten($primary, 7%);
 }
 
+.input-group-text {
+    border: 0;
+}
+
+.bg-light {
+    background: #FFF !important;
+}
+
 /*################### navbar override ###################*/
 
 .navbar-override {
@@ -392,9 +400,54 @@ footer {
 
 .avatar-dropdown > button {
     background-color: transparent;
-    color: lighten($primary, 50%);
+    color: lighten($primary, 10%);
     outline: 0;
     border: 0;
+}
+
+.avatar-dropdown > button:hover {
+    background-color: transparent;
+    color: $primary;
+}
+
+.dropdown-item {
+    color: lighten($primary, 10%);
+
+}
+
+.dropdown-item:hover {
+    color: $primary;
+}
+
+/*################# Navbar dropdown-menu #################*/
+
+nav .dropdown-menu {
+    background-color: #FFF;
+    width: 200px;
+    padding: 1em;
+    border-radius: 12px;
+}
+
+nav .dropdown-menu>hr {
+    border-color: lighten($primary, 60%);
+}
+
+nav .dropdown-menu>a {
+    padding: 0.5em 0.8em;
+}
+
+nav .dropdown-menu> :hover {
+    background-color: lighten($primary, 65%);
+    border-radius: 10px;
+}
+
+.btn-check:checked+.btn,
+:not(.btn-check)+.btn:active,
+.btn:first-child:active,
+.btn.active,
+.btn.show {
+    background-color: lighten($primary, 65%);
+    color: $primary;
 }
 
 /*###################### Playground ######################*/

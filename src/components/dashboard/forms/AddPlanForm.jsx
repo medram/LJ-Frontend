@@ -57,9 +57,6 @@ export default function AddPlanForm({ close }) {
         }),
         onSubmit: (values) => {
 
-            if (!values.paypal_plan_id && !values.stripe_plan_id)
-                return toast.warning("PayPal or Stripe subscription plan ID required!")
-
             addPlan(values).then((data) => {
                 if (data.errors === false) {
                     formik.resetForm()
@@ -126,19 +123,9 @@ export default function AddPlanForm({ close }) {
 
                 <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("status", !formik.values.status)} >Status</label>
             </div>
-            <hr />
-
-            <div className="mb-4">
-                <label htmlFor="paypal-plan-id">PayPal Subscription Plan ID <small><i className="text-danger">(required for PayPal)</i></small>:</label>
-                <input type="text" className="form-control" placeholder="e.g. P-6C235282FB245950NMRTE5II" id="paypal-plan-id" {...formik.getFieldProps("paypal_plan_id")} />
-            </div>
-
-            {/* <div className="mb-4">
-                <label htmlFor="stripe-plan-id">Stripe Subscription Plan ID <small><i className="text-danger">(required for Stripe)</i></small>:</label>
-                <input type="text" className="form-control" placeholder="e.g. price_1N9SeE2eZvKYlo2CJwmvOCr6" id="stripe-plan-id" {...formik.getFieldProps("stripe_plan_id")} />
-            </div> */}
 
             <hr />
+
             <div className="mb-4">
                 <label htmlFor="pdfs">Max PDFs <small>(0 = unlimited)</small>:</label>
                 <input type="number" className="form-control" placeholder="e.g. 10" id="pdfs" {...formik.getFieldProps("pdfs")} min={0} onChange={(e) => formik.setFieldValue('pdfs', parseInt(e.target.value))} />

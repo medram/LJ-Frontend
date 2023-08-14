@@ -65,8 +65,8 @@ export default function EditPlanForm({ close, planId }) {
         enableReinitialize: true,
         onSubmit: (values) => {
 
-            if (!values.paypal_plan_id && !values.stripe_plan_id)
-                return toast.warning("PayPal or Stripe subscription plan ID required!")
+            if (values.price == 0)
+                return toast.warning("The plan price can't be 0!")
 
             editPlan(plan.id, values).then((data) => {
                 if (data.errors === false) {
@@ -110,50 +110,39 @@ export default function EditPlanForm({ close, planId }) {
             <label htmlFor="price">Price (in {settings?.CURRENCY}):</label>
             <div className="input-group mb-4">
                 <span className="input-group-text">{settings?.CURRENCY_SYMBOL}</span>
-                <input type="number" className="form-control" disabled={formik.values.is_free} placeholder="e.g. 5.99" id="price" {...formik.getFieldProps("price")} onChange={e => {
-                    formik.setFieldValue("price", e.target.value)
-                    if (e.target.value == 0)
-                        formik.setFieldValue("is_free", true)
-                    else
-                        formik.setFieldValue("is_free", false)
-
-                }} min={0} step={0.01} />
+                <input type="number" className="form-control" placeholder="e.g. 5.99" id="price" {...formik.getFieldProps("price")} min={0} step={0.01} />
             </div>
 
             <div className="mb-4">
                 <label htmlFor="billing_cycle">Billing Cycle:</label>
-                <Select options={BILLING_CYCLE_OPTIONS} isSearchable={false} defaultValue={defaultBillingCycle} id="billing_cycle" onChange={(option) => formik.setFieldValue("billing_cycle", option.value)} />
+                <Select options={BILLING_CYCLE_OPTIONS} isSearchable={false} defaultValue={defaultBillingCycle} id="billing_cycle" isDisabled />
             </div>
 
             <div className="d-flex mb-3">
-                <Switch name="is_free" checked={!!formik.values.is_free} size="small" className="mx-2 mt-1" onChange={() => {
-                    formik.setFieldValue("is_free", !formik.values.is_free)
-                    formik.setFieldValue("price", 0)
-                    }} />
+                <Switch name="is_free" checked={!!formik.values.is_free} size="small" className="mx-2 mt-1" disabled />
 
-                <label htmlFor="is_free" className="form-label" onClick={() => {
-                    formik.setFieldValue("is_free", !formik.values.is_free)
-                    formik.setFieldValue("price", 0)
-                    }} >Free plan!</label>
+                <label htmlFor="is_free" className="form-label" >Free plan!</label>
             </div>
 
             <div className="d-flex mb-3">
-                <Switch onChange={(checked) => formik.setFieldValue("is_popular", checked)} name="accept" checked={!!formik.values.is_popular} size="small" className="mx-2 mt-1" />
+                <Switch onChange={(checked) => formik.setFieldValue("is_popular", checked)} name="is-popular" checked={!!formik.values.is_popular} size="small" className="mx-2 mt-1" />
 
                 <label htmlFor="is_popular" className="form-label" onClick={() => formik.setFieldValue("is_popular", !formik.values.is_popular)} >set as popular (show popular mark)!</label>
             </div>
 
             <div className="d-flex mb-3">
-                <Switch onChange={(checked) => formik.setFieldValue("status", checked)} name="accept" checked={!!formik.values.status} size="small" className="mx-2 mt-1" />
+                <Switch onChange={(checked) => formik.setFieldValue("status", checked)} name="status" checked={!!formik.values.status} size="small" className="mx-2 mt-1" />
 
                 <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("status", !formik.values.status)} >Status</label>
             </div>
             <hr />
 
-            <div className="mb-4">
-                <label htmlFor="paypal-plan-id">PayPal Subscription Plan ID <small><i className="text-danger">(required for PayPal)</i></small>:</label>
-                <input type="text" className="form-control" placeholder="e.g. P-6C235282FB245950NMRTE5II" id="paypal-plan-id" {...formik.getFieldProps("paypal_plan_id")} />
-            </div>
+            {!!formik.values.paypal_plan_id && (
+                <div className="mb-4">
+                    <label htmlFor="paypal-plan-id">PayPal Subscription Plan ID:</label>
+                    <input type="text" className="form-control" placeholder="e.g. P-6C235282FB245950NMRTE5II" id="paypal-plan-id" value={formik.values.paypal_plan_id} disabled />
+                </div>
+            )}
 
             {/* <div className="mb-4">
                 <label htmlFor="stripe-plan-id">Stripe Subscription Plan ID <small><i className="text-danger">(required for Stripe)</i></small>:</label>
