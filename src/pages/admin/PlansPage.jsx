@@ -75,7 +75,7 @@ export default function PlansPage()
         <div className="d-flex flex-row-reverse gap-3 mb-4">
             <button className="btn btn-primary" onClick={open}><FontAwesomeIcon icon={faPlus} /> New Plan</button>
 
-            <Link to="../payment-methods" className="btn btn-primary"><FontAwesomeIcon icon={faCreditCard} /> Manage Payment methods</Link>
+            <Link to="../payment-gateways" className="btn btn-primary"><FontAwesomeIcon icon={faCreditCard} /> Manage Payment Gateways</Link>
 
             {/* <button className="btn btn-primary" onClick={trialOpen} ><FontAwesomeIcon icon={faGear} /> Manage Free Trial / demo</button> */}
         </div>
@@ -180,10 +180,6 @@ export default function PlansPage()
         <CustomOffCanvas title="Edit Plan" placement="end" {...editPlanOffCanvasProps}>
             <EditPlanForm close={editClose} planId={planToEdit} />
         </CustomOffCanvas>
-
-        {/* <CustomOffCanvas title="Manage Free Trial / demo" placement="end" {...trialOffCanvasProps}>
-            <ManageTrialForm close={trialClose} />
-        </CustomOffCanvas> */}
 
     </>
 }

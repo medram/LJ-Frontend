@@ -106,7 +106,7 @@ function App() {
 
           <Route element={<ELRequired />} >
             <Route path="plans" element={<PlansPage />} />
-            <Route path="payment-methods" element={<PaymentMethodsPage />} />
+            <Route path="payment-gateways" element={<PaymentMethodsPage />} />
             <Route path="subscriptions" element={<SubscriptionsPage />} />
           </Route>
 

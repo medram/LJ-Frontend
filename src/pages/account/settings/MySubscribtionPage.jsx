@@ -4,6 +4,8 @@ import { useCurrentSubscription } from "../../../hooks/account"
 import { useUser } from "../../../hooks/auth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faGem, faRankingStar } from "@fortawesome/free-solid-svg-icons"
+import TablerIcon from "../../../components/TablerIcon"
+import { IconBolt } from "@tabler/icons-react"
 
 
 export default function MySubscriptionPage()
@@ -37,7 +39,7 @@ export default function MySubscriptionPage()
                         </h5>
                         <p className="card-text">This subscription will be automatically renewed every {subscription.billing_cycle}.</p>
 
-                        <Link to="/pricing" className="btn btn-primary"><FontAwesomeIcon icon={faGem} /> Upgrade</Link>
+                        <Link to="/pricing" className="btn btn-primary"><TablerIcon icon={IconBolt} stroke={1.25} /> Upgrade</Link>
                     </div>
                 </div>
             ) : (
