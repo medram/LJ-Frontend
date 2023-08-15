@@ -224,3 +224,26 @@ export function useLCInfo() {
     return { ...rest, isLoading, isRegularLicense, isExtendedLicense }
 }
 
+
+export function useClickOutside(callback) {
+    const ref = useRef(null)
+
+    useEffect(() => {
+
+        function handleClickOutside(event)
+        {
+            if (ref.current && !ref.current.contains(event.target))
+            {
+                callback(event)
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside)
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside)
+        }
+    }, [callback])
+
+    return ref
+}
