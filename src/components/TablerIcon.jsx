@@ -1,6 +1,7 @@
+import { memo } from "react"
 
 
-export default function TablerIcon({ icon: Icon, ...rest})
+export default memo(function TablerIcon({ icon: Icon, ...rest})
 {
     return <Icon {...{ stroke: 1, ...rest }} />
-}
+})

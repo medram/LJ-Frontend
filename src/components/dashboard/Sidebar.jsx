@@ -4,9 +4,10 @@ import { Link, NavLink } from "react-router-dom";
 import { useDashboardSettings, useLCInfo } from "../../hooks";
 import TablerIcon from "../TablerIcon";
 import { IconAdjustmentsHorizontal, IconCreditCard, IconFiles, IconGauge, IconLayoutDashboard, IconPackages, IconUsers } from "@tabler/icons-react";
+import { memo } from "react";
 
 
-export default function Sidebar({ show })
+export default memo(function Sidebar({ show })
 {
     const { isExtendedLicense: isLC } = useLCInfo()
     const { settings } = useDashboardSettings()
@@ -24,7 +25,7 @@ export default function Sidebar({ show })
                     <>
                         <NavLink to="plans"><TablerIcon icon={IconPackages} stroke={1.25} size={30} /> Plans</NavLink>
                         <NavLink to="subscriptions"><FontAwesomeIcon icon={faGem} size="lg" /> Subscriptions</NavLink>
-                        <NavLink to="payment-methods"><TablerIcon icon={IconCreditCard} stroke={1.25} size={30} /> Payment Methods</NavLink>
+                        <NavLink to="payment-gateways"><TablerIcon icon={IconCreditCard} stroke={1.25} size={30} /> Payment Gateways</NavLink>
                     </>
                 )}
                 <NavLink to="pages"><TablerIcon icon={IconFiles} stroke={1.25} size={30} /> Pages</NavLink>
@@ -33,4 +34,4 @@ export default function Sidebar({ show })
             <div className="text-center py-3">v{settings?.APP_VERSION}</div>
         </aside>
     )
-}
+})

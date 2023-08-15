@@ -6,7 +6,9 @@ import SectionLoading from "./SectionLoading";
 import { memo } from "react";
 import AvatarPalceholder from "./AvatarPalceholder";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket, faBarsStaggered, faDashboard, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
+import TablerIcon from "./TablerIcon";
+import { IconLayoutDashboard, IconLogout, IconUser } from "@tabler/icons-react";
 
 
 export default memo(function Navbar()
@@ -56,11 +58,11 @@ export default memo(function Navbar()
                                     </button>
                                     <div className="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
                                         {isAdmin && (
-                                            <Link className="dropdown-item" to="/admin"><FontAwesomeIcon icon={faDashboard} /> Dashboard</Link>
+                                            <Link className="dropdown-item" to="/admin/"><TablerIcon icon={IconLayoutDashboard} /> Dashboard</Link>
                                         )}
-                                        <Link to="/account/settings" className="dropdown-item"><FontAwesomeIcon icon={faUser} /> Profile</Link>
+                                        <Link to="/account/settings" className="dropdown-item"><TablerIcon icon={IconUser} /> Profile</Link>
                                         <hr className="dropdown-divider" />
-                                        <Link to="/logout" className="dropdown-item"><FontAwesomeIcon icon={faArrowRightFromBracket} /> Logout</Link>
+                                        <Link to="/logout" className="dropdown-item"><TablerIcon icon={IconLogout} /> Logout</Link>
                                     </div>
                                 </div>
                             </>

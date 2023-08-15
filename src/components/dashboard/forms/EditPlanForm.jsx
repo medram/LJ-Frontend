@@ -1,6 +1,3 @@
-
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useFormik } from "formik";
 import * as Yup from "yup"
 import { toastFormikErrors } from "../../../utils";
@@ -12,7 +9,6 @@ import Switch from "../../Switch"
 import Select from "react-select";
 import { useDashboardPlan, useSettings } from "../../../hooks";
 import SectionLoading from "../../SectionLoading";
-import { useCallback, useEffect } from "react";
 
 
 const BILLING_CYCLE_OPTIONS = [

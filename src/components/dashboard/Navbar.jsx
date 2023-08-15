@@ -1,15 +1,17 @@
 import { faArrowRightFromBracket, faBarsStaggered, faBell, faEllipsisV, faGaugeHigh, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDemo, useSettings } from "../../hooks";
 import { useUser } from "../../hooks/auth";
 import SectionLoading from "../SectionLoading";
 import Logo from "../Logo";
 import AvatarPalceholder from "../AvatarPalceholder";
+import TablerIcon from "../TablerIcon";
+import { IconLogout, IconUser } from "@tabler/icons-react";
 
 
-export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
+export default memo(function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
 {
     const { isDemo } = useDemo()
     const { isLoading, settings } = useSettings()
@@ -63,8 +65,8 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
                 <AvatarPalceholder username={user.username} size={100} /> Hi, {user.username}
             </div>
             <div className="d-md-none">
-                <Link to="/account/settings"><FontAwesomeIcon icon={faUser} /> Profile</Link>
-                <Link to="/logout"><FontAwesomeIcon icon={faArrowRightFromBracket} /> Logout</Link>
+                <Link to="/account/settings"><TablerIcon icon={IconUser} /> Profile</Link>
+                <Link to="/logout"><TablerIcon icon={IconLogout} /> Logout</Link>
             </div>
         </nav>
         <div className="btn-group avatar-dropdown">
@@ -72,10 +74,10 @@ export default function Navbar({ sidebarStatus, toggleSidebar, onClickBars })
                 <AvatarPalceholder username={user.username} size={45} /> Hi, {user.username}
             </button>
             <div className="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
-                <Link to="/account/settings" className="dropdown-item"><FontAwesomeIcon icon={faUser} /> Profile</Link>
+                <Link to="/account/settings" className="dropdown-item"><TablerIcon icon={IconUser} /> Profile</Link>
                 <hr className="dropdown-divider" />
-                <Link to="/logout" className="dropdown-item"><FontAwesomeIcon icon={faArrowRightFromBracket} /> Logout</Link>
+                <Link to="/logout" className="dropdown-item"><TablerIcon icon={IconLogout} /> Logout</Link>
             </div>
         </div>
     </>
-}
+})
