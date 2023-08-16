@@ -29,3 +29,8 @@ export function currencyList()
 }
 
 export const CURRENCY_OPTIONS = currencyList().map(code => ({ label: code, value: code }))
+
+export function isEmpty(obj)
+{
+    return Object.keys(obj).length === 0;
+}
