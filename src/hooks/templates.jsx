@@ -52,7 +52,7 @@ export function useModel() {
 
     console.log("useModel render")
 
-    const Model = useCallback(function({ title, children, footer }){
+    const Model = useCallback(function({ title, children, footer, center=true }){
         console.log("Model render")
         return (
             <div
@@ -61,7 +61,7 @@ export function useModel() {
                 id={ID}
                 tabIndex="-1"
             >
-                <div className="modal-dialog" role="document" ref={ref}>
+                <div className={["modal-dialog", center && "modal-dialog-centered" ].join(" ")} role="document" ref={ref}>
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">{title}</h5>

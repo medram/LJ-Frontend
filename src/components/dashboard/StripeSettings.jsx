@@ -10,6 +10,7 @@ import PasswordInput from "../PasswordInput";
 import Switch from "../Switch";
 import { useDemo } from "../../hooks";
 import StripIcon from "../icons/StripIcon";
+import GatewayNotes from "./GatewayNotes";
 
 
 export default memo(function StripeSettings({ settings }) {
@@ -120,6 +121,8 @@ export default memo(function StripeSettings({ settings }) {
 
                     <label htmlFor="PM_STRIP_SANDBOX" className="form-label" onClick={() => formik.setFieldValue("PM_STRIP_SANDBOX", !formik.values.PM_STRIP_SANDBOX)} >Sandbox <i><small>(test mode)</small></i></label>
                 </div>
+
+                <GatewayNotes />
             </Model>
         </div>
     )

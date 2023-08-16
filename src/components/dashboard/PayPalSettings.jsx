@@ -4,11 +4,13 @@ import PasswordInput from "../PasswordInput";
 import Switch from "../Switch";
 import PayPalIcon from "../icons/PayPalIcon";
 import { useFormik } from "formik";
-import { registerPayPalWebhook, saveDashboardSettings } from "../../api/admin";
+import { syncWithPayPal } from "../../api/admin";
 import { toast } from "react-toastify";
 import * as Yup from "yup"
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { useDemo } from "../../hooks";
+import SuperButton from "../SuperButton";
+import GatewayNotes from "./GatewayNotes";
 
 
 export default memo(function PayPalSettings({ settings })
@@ -36,53 +38,25 @@ export default memo(function PayPalSettings({ settings })
             if (isDemo)
                 return toast.success("This action isn't allowed on the demo mode!")
 
-            if (values.PM_PAYPAL_STATUS && (!values.PM_PAYPAL_CLIENT_ID.length || !values.PM_PAYPAL_CLIENT_SECRET.length))
-            {
-                toast.warning("Please fill up PayPal Client ID and Secret fields first before activation!")
+            syncWithPayPal(values).then((req) => {
+                if (req.status === 201 && !req.data?.errors) {
+                    toast.success(req.data?.message)
+                    // clear cache
+                    queryClient.invalidateQueries("admin.settings")
+                    queryClient.invalidateQueries("settings")
+                }
+            }).catch(err => {
+                if (err.response.data?.message) {
+                    toast.error(err.response.data?.message)
+                }
+                else
+                {
+                    toast.error(err.message)
+                }
+            }).finally(() => {
                 formik.setSubmitting(false)
-            }
-            else
-            {
-                saveDashboardSettings(values).then((data) => {
-                    if (data?.errors) {
-                        toast.error(data?.message)
-                    }
-                    else {
-                        queryClient.invalidateQueries("admin.settings")
-                        queryClient.invalidateQueries("settings")
-                        toast.success(data.message)
-                    }
+            })
 
-                    // update PayPal Webhook
-
-                    if (
-                        values.PM_PAYPAL_CLIENT_ID !== settings.PM_PAYPAL_CLIENT_ID
-                        || values.PM_PAYPAL_CLIENT_SECRET !== settings.PM_PAYPAL_CLIENT_SECRET)
-                    {
-                        registerPayPalWebhook().then((req) => {
-                            if (req.status === 201 && !req.data?.errors)
-                            {
-                                toast.success(req.data?.message)
-                            }
-                        }).catch(err => {
-                            if (err.response.status === 400)
-                            {
-                                toast.error(err.response.data?.message)
-                            }
-                        }).finally(() => {
-                            formik.setSubmitting(false)
-                        })
-                    }
-                    else
-                    {
-                        formik.setSubmitting(false)
-                    }
-                }).catch(err => {
-                    toast.error(err)
-                }).finally(() => {
-                    // formik.setSubmitting(false)
-                })
-            }
         }
     })
 
@@ -103,29 +77,35 @@ export default memo(function PayPalSettings({ settings })
             </div>
 
             <Model title="PayPal Gateway Settings" footer={
-                <button className="btn btn-primary w-25">Save</button>
+                <SuperButton className="btn btn-primary w-25" onClick={formik.submitForm} isLoading={formik.isSubmitting}>
+                    Save
+                </SuperButton>
             }>
-                <div className="mb-4">
-                    <label htmlFor="client-id">Client ID:</label>
-                    <input type="text" className="form-control" id="client-id" {...formik.getFieldProps("PM_PAYPAL_CLIENT_ID")} />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="client-secret">Client Secret:</label>
+                <form onSubmit={formik.handleSubmit}>
+                    <div className="mb-4">
+                        <label htmlFor="client-id">Client ID:</label>
+                        <input type="text" className="form-control" id="client-id" {...formik.getFieldProps("PM_PAYPAL_CLIENT_ID")} />
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="client-secret">Client Secret:</label>
 
-                    <PasswordInput id="client-secret" placeholder="" {...formik.getFieldProps("PM_PAYPAL_CLIENT_SECRET")} />
-                </div>
+                        <PasswordInput id="client-secret" placeholder="" {...formik.getFieldProps("PM_PAYPAL_CLIENT_SECRET")} />
+                    </div>
 
-                <div className="d-flex">
-                    <Switch onChange={(checked) => formik.setFieldValue("PM_PAYPAL_STATUS", checked)} name="accept" checked={formik.values.PM_PAYPAL_STATUS} size="small" className="mx-2 mt-1" />
+                    <div className="d-flex">
+                        <Switch onChange={(checked) => formik.setFieldValue("PM_PAYPAL_STATUS", checked)} name="accept" checked={formik.values.PM_PAYPAL_STATUS} size="small" className="mx-2 mt-1" />
 
-                    <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("PM_PAYPAL_STATUS", !formik.values.PM_PAYPAL_STATUS)} >{formik.values.PM_PAYPAL_STATUS ? "Active" : "Inactive"}</label>
-                </div>
+                        <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("PM_PAYPAL_STATUS", !formik.values.PM_PAYPAL_STATUS)} >{formik.values.PM_PAYPAL_STATUS ? "Active" : "Inactive"}</label>
+                    </div>
 
-                <div className="d-flex">
-                    <Switch onChange={(checked) => formik.setFieldValue("PM_PAYPAL_SANDBOX", checked)} name="accept" checked={formik.values.PM_PAYPAL_SANDBOX} size="small" className="mx-2 mt-1" />
+                    <div className="d-flex">
+                        <Switch onChange={(checked) => formik.setFieldValue("PM_PAYPAL_SANDBOX", checked)} name="accept" checked={formik.values.PM_PAYPAL_SANDBOX} size="small" className="mx-2 mt-1" />
 
-                    <label htmlFor="PM_PAYPAL_SANDBOX" className="form-label" onClick={() => formik.setFieldValue("PM_PAYPAL_SANDBOX", !formik.values.PM_PAYPAL_SANDBOX)} >Sandbox <i><small>(test mode)</small></i></label>
-                </div>
+                        <label htmlFor="PM_PAYPAL_SANDBOX" className="form-label" onClick={() => formik.setFieldValue("PM_PAYPAL_SANDBOX", !formik.values.PM_PAYPAL_SANDBOX)} >Sandbox <i><small>(test mode)</small></i></label>
+                    </div>
+                </form>
+
+                <GatewayNotes />
             </Model>
         </div>
     )

@@ -114,17 +114,20 @@ export async function sendTestEmail(email)
     return req.data
 }
 
-export async function registerPayPalWebhook() {
-    const req = await axiosApi.post(`/admin/register-paypal-webhook`)
+export async function syncWithPayPal(data)
+{
+    const req = await axiosApi.post(`/admin/sync/paypal`, data)
     return req
 }
 
-export async function getDashboardAnalytics() {
+export async function getDashboardAnalytics()
+{
     const req = await axiosApi.get(`/admin/analytics`)
     return req.data
 }
 
-export async function checkLC() {
+export async function checkLC()
+{
     const req = await axiosApi.get(`/lc/check`)
     return req.data
 }

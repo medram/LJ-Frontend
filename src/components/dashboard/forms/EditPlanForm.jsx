@@ -106,7 +106,7 @@ export default function EditPlanForm({ close, planId }) {
             <label htmlFor="price">Price (in {settings?.CURRENCY}):</label>
             <div className="input-group mb-4">
                 <span className="input-group-text">{settings?.CURRENCY_SYMBOL}</span>
-                <input type="number" className="form-control" placeholder="e.g. 5.99" id="price" {...formik.getFieldProps("price")} min={0} step={0.01} />
+                <input type="number" className="form-control" placeholder="e.g. 5.99" id="price" {...formik.getFieldProps("price")} min={0} step={0.01} disabled={formik.values.is_free} />
             </div>
 
             <div className="mb-4">
@@ -131,9 +131,10 @@ export default function EditPlanForm({ close, planId }) {
 
                 <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("status", !formik.values.status)} >Status</label>
             </div>
-            <hr />
 
-            {!!formik.values.paypal_plan_id && (
+            {!formik.values.is_free && <hr />}
+
+            {!!formik.values.paypal_plan_id && !formik.values.is_free && (
                 <div className="mb-4">
                     <label htmlFor="paypal-plan-id">PayPal Subscription Plan ID:</label>
                     <input type="text" className="form-control" placeholder="e.g. P-6C235282FB245950NMRTE5II" id="paypal-plan-id" value={formik.values.paypal_plan_id} disabled />
