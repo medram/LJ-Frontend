@@ -43,6 +43,7 @@ import LogoutPage from "./pages/LogoutPage";
 import LCPage from "./pages/admin/LCPage";
 import ELRequired from "./pages/middlewares/ELRequired";
 import CookiesAlert from "./components/CookiesAlert";
+import APIKeysPage from "./pages/admin/APIKeysPage";
 
 
 // Lazy loading
@@ -116,13 +117,14 @@ function App() {
 
 
           <Route path="settings" element={<SettingsPage />} />
+          <Route path="api-keys" element={<APIKeysPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
       <CookiesAlert />
-      <ToastContainer position="top-right" hideProgressBar={true} draggable={false} />
+      <ToastContainer position="top-center" hideProgressBar={true} draggable={false} theme="colored" />
     </BrowserRouter>
   );
 }
