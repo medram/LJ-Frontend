@@ -61,7 +61,7 @@ export default function EditPlanForm({ close, planId }) {
         enableReinitialize: true,
         onSubmit: (values) => {
 
-            if (values.price == 0)
+            if (!values.is_free && values.price == 0)
                 return toast.warning("The plan price can't be 0!")
 
             editPlan(plan.id, values).then((data) => {
