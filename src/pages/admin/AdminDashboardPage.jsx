@@ -179,11 +179,19 @@ export default function AdminDashboardPage()
                                     {analytics.recent_subscriptions.map((subscription, i) => (
                                         <tr key={i}>
                                             <td>{subscription.id}</td>
-                                            <td>{settings.CURRENCY_SYMBOL}{subscription.price}/{subscription.billing_cycle === "monthly" ? "month" : "year"}</td>
+                                            <td>
+                                                {settings.CURRENCY_SYMBOL}{subscription.price}/{subscription.billing_cycle === "monthly" ? "month" : "year"}
+
+                                                {!!subscription.is_free && (
+                                                    <span className="badge text-bg-success m-1">Free</span>
+                                                )}
+                                            </td>
                                             <td>{subscription.payment_gateway === "PAYPAL" ? (
                                                 <span className="badge rounded-pill bg-info">PayPal</span>
                                             ) : (
-                                                <span className="badge rounded-pill bg-primary">Stripe</span>
+                                                subscription.payment_gateway === "STRIPE" ? (
+                                                    <span className="badge rounded-pill bg-primary">Stripe</span>
+                                                ) : "-"
                                             )}</td>
                                             <td>{datetimeFormat(subscription.expiring_at)}</td>
                                             <td>{datetimeFormat(subscription.created_at)}</td>

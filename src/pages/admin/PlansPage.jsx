@@ -39,9 +39,13 @@ export default function PlansPage()
     const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure you want to delete this plan?",
+            html: `<b>Here's what happen when you delete a plan?</b>:<br>
+
+            - Current plan subscriptions will be cancelled (from gateways too).<br>
+            - The gateway plan will be cancelled/deleted.<br>`,
             icon: "warning",
             confirmButtonText: "Yes, delete!",
-            cancelButtonText: "No, cancel!",
+            cancelButtonText: "No, never mind!",
             showCancelButton: true
         }).then((result) => {
             if (result.isConfirmed) {
@@ -83,7 +87,7 @@ export default function PlansPage()
         <div className="row">
             <div className="col-12">
                 <section className="bg-light rounded p-4">
-                    <h2 className="h6 mb-3"><b>Monthly plans:</b></h2>
+                    <h2 className="h6 mb-3"><b className="badge text-bg-secondary">Monthly plans:</b></h2>
                     <table className="table table-responsive">
                         <thead>
                             <tr>
@@ -122,14 +126,8 @@ export default function PlansPage()
                             {!monthlyPlans.length && (<tr><td colSpan={6} className="text-center">N/A</td></tr>)}
                         </tbody>
                     </table>
-                </section>
-            </div>
-        </div>
 
-        <div className="row">
-            <div className="col-12">
-                <section className="bg-light rounded p-4">
-                    <h2 className="h6 mb-3"><b>Yearly plans:</b></h2>
+                    <h2 className="h6 mb-3 mt-5"><b className="badge text-bg-secondary">Yearly plans:</b></h2>
                     <table className="table table-responsive">
                         <thead>
                             <tr>

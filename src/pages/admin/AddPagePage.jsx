@@ -55,7 +55,7 @@ export default function AddPagePage({ onGoBack }) {
             <div className="row">
                 <div className="col-md-8">
                     <GoBackButton />
-                    <section className="rounded text-bg-light p-4">
+                    <section className="bg-light rounded text-bg-light p-4">
                         <form onSubmit={formik.handleSubmit}>
                             <div className="mb-4">
                                 <label htmlFor="title">Title:</label>

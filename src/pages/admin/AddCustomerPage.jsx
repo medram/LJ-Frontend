@@ -53,7 +53,7 @@ export default function AddCustomerPage({ onGoBack }) {
             <div className="row">
                 <div className="col-md-6">
                     <GoBackButton />
-                    <section className="rounded text-bg-light p-4">
+                    <section className="bg-light rounded text-bg-light p-4">
                         <form onSubmit={formik.handleSubmit}>
                             <div className="mb-4">
                                 <label htmlFor="username">Username:</label>

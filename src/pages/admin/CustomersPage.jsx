@@ -1,6 +1,6 @@
 import { faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -10,37 +10,58 @@ import { useCustomers } from "../../hooks/admin";
 import Swal from "sweetalert2";
 import { datetimeFormat } from "../../utils";
 import { useDemo } from "../../hooks";
+import AdvancedDataTable from "../../components/AdvancedDataTable";
 
 
 export default function CustomersPage()
 {
     const { isDemo } = useDemo()
-    const [ search, setSearch ] = useState("")
-    const [ customersList, setCustomersList ] = useState([])
     const queryClient = useQueryClient()
     const { isLoading, isError, error, customers } = useCustomers()
 
-    // Perform search
-    useEffect(() => {
-        if (search.length)
+    const columns = useMemo(() => [
         {
-            console.log('search...')
-            setCustomersList(customers?.filter(customer => {
-                return customer.email.toLowerCase()?.includes(search) || customer.username.toLowerCase()?.includes(search)
-            }))
-        }
-        else {
-            setCustomersList(customers)
-        }
-    }, [search])
+            name: "ID",
+            sortable: true,
+            selector: customer => customer.id
+        },
+        {
+            name: "Username",
+            sortable: true,
+            selector: customer => customer.username
+        },
+        {
+            name: "Email",
+            sortable: true,
+            selector: customer => customer.email
+        },
+        {
+            name: "Status",
+            selector: customer => {
+                return customer.is_active ? (
+                    <span className="badge text-bg-success">Active</span>
+                ) : (
+                    <span className="badge text-bg-warning">Inactive</span>
+                )
+            }
+        },
+        {
+            name: "Joined",
+            sortable: true,
+            selector: customer => datetimeFormat(customer.created_at)
+        },
+        {
+            name: "Actions",
+            selector: customer => (
+                <>
+                    <Link to={`edit/${customer.id}`} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></Link>
 
-    // Sync Customers with CustomersList
-    useEffect(() => {
-        if (customers)
-        {
-            setCustomersList(customers)
-        }
-    }, [customers])
+                    <button onClick={() => handleDelete(customer.id)} className="btn btn-danger btn-sm mx-1 mb-1"><FontAwesomeIcon icon={faTrash} /></button>
+                </>
+            )
+        },
+    ], [])
+
 
     if (isLoading)
     {
@@ -82,49 +103,23 @@ export default function CustomersPage()
 
     return <>
         <h1 className="mb-3">Customers</h1>
-        <div className="d-flex flex-row-reverse gap-3 mb-4">
-            <Link to="add" className="btn btn-primary"><FontAwesomeIcon icon={faPlus} /> Add Customer</Link>
-
-            <div className="col">
-                <input type="text" name="search" className="form-control w-50-md w-100 float-end" placeholder="Search..." onChange={(e) => setSearch(e.target.value?.toLowerCase())} value={search}  />
-            </div>
-        </div>
 
         <div className="row">
             <div className="col-12">
                 <section className="bg-light rounded p-4">
-                    <table className="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th>Joined</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {customersList?.map((customer, i) => {
-                                return <tr key={i}>
-                                    <td>{customer.id}</td>
-                                    <td>{customer.username}</td>
-                                    <td>{customer.email}</td>
-                                    <td>{customer.is_active? (
-                                        <span className="badge text-bg-success">Active</span>
-                                    ): (
-                                            <span className="badge text-bg-warning">Inactive</span>
-                                    )}</td>
-                                    <td>{datetimeFormat(customer.created_at)}</td>
-                                    <td>
-                                        <Link to={`edit/${customer.id}`} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></Link>
 
-                                        <button onClick={() => handleDelete(customer.id)} className="btn btn-danger btn-sm mx-1 mb-1"><FontAwesomeIcon icon={faTrash} /></button>
-                                    </td>
-                                </tr>
-                            })}
-                        </tbody>
-                    </table>
+                    <AdvancedDataTable
+                        columns={columns}
+                        data={customers}
+                        pagination
+                        subHeader
+                        subHeaderComponent={(
+                            <Link to="add" className="btn btn-primary"><FontAwesomeIcon icon={faPlus} /> Add Customer</Link>
+                        )}
+                        searchFunction={(item, searchQuery) => {
+                            return item.email.toLowerCase()?.includes(searchQuery) || item.username.toLowerCase()?.includes(searchQuery)
+                        }}
+                    />
                 </section>
             </div>
         </div>
