@@ -19,6 +19,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-confetti": "^6.1.0",
+    "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-pro-sidebar": "^1.1.0-alpha.1",

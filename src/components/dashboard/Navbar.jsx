@@ -47,11 +47,6 @@ export default memo(function Navbar({ sidebarStatus, toggleSidebar, onClickBars 
         }
     }, [showRightNav])
 
-    if (isLoading)
-    {
-        return <SectionLoading center={true} />
-    }
-
 
     return <>
         <span className="bars" onClick={(e) => onClickBars(e)}><FontAwesomeIcon icon={properIcon} /></span>
