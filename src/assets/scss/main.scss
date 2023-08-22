@@ -15,8 +15,10 @@ $cyan: #0dcaf0 !default;
 
 $body-color: #363f5c !default;
 
-$primary: #363f5c !default;
-
+// $primary: #363f5c !default;
+$blue: #4c5760 !default;
+$primary: #4c5760 !default;
+$body-color: #4c5760 !default;
 
 // Override font
 $font-family-sans-serif: DM Sans, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
@@ -36,6 +38,8 @@ $btn-padding-x: 1.2rem !default;
 $btn-padding-y-lg: 0.7rem !default;
 $btn-padding-x-lg: 1.4rem !default;
 $btn-border-radius-lg: 0.8rem !default;
+
+$shadow-dropdown: 0px 16px 24px 2px rgba(0, 0, 0, 0.07) !default;
 
 // importing Bootstrap
 // @import "bootstrap/scss/bootstrap.scss";
@@ -507,23 +511,35 @@ nav .dropdown-menu> :hover {
 
 .playground-chat-section .prompt-input {
     // e.g: box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2)
+    position: relative;
 }
 
 .playground-chat-section .prompt-input input {
-    border-radius: 100px;
+    border-radius: 5px;
+    width: 100%;
 }
+
 .playground-chat-section .prompt-input .btn {
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-13%);
+    border-radius: 6px;
+    padding: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
 }
 
-.playground-chat-section .chats .container {
+.playground-chat-section .prompt-input .btn:nth-child(3) {
+    right: 70px;
+}
+
+.playground-chat-section .container {
     display: flex;
     flex-direction: column;
+    width: 70%;
 }
 
 .playground-chat-section .chats .container .message {
@@ -552,8 +568,8 @@ nav .dropdown-menu> :hover {
 }
 
 .chat-label {
-    background-color: lighten($primary, 9%);
-    padding: 0.7em 1em;
+    // background-color: lighten($primary, 9%);
+    padding: 0.6em 0.5em;
     margin-top: 1em;
     border-radius: 10px;
     cursor: pointer;
@@ -561,6 +577,8 @@ nav .dropdown-menu> :hover {
     display: flex;
     align-items: center;
     overflow: hidden;
+    text-wrap: nowrap;
+    gap: 3px;
 }
 
 .chat-label:first-child {
@@ -576,7 +594,7 @@ nav .dropdown-menu> :hover {
 }
 
 .chat-label.active::before {
-    background-color: #198754;
+    //background-color: #198754;
     content: "";
     display: block;
     width: 5px;
@@ -587,6 +605,10 @@ nav .dropdown-menu> :hover {
 }
 
 .chat-label .delete {
+    display: none;
+}
+
+.chat-label.active .delete {
     background-color: lighten($primary, 5%);
     width: 25px;
     height: 25px;
@@ -595,9 +617,10 @@ nav .dropdown-menu> :hover {
     align-items: center;
     position: absolute;
     font-size: 12px;
-    top: 5px;
-    right: 4px;
+    top: 50%;
+    right: 6px;
     border-radius: 6px;
+    transform: translateY(-50%);
 }
 
 .chat-label .delete:hover {
@@ -633,13 +656,15 @@ nav .dropdown-menu> :hover {
     padding: 0.6em 0.8em;
     display: flex;
     align-items: center;
+    justify-content: space-around;
     gap: 0.8em;
     margin: 0.6em 1em 0.2em 1em;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 .playground-sidebar .profile:hover {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -773,6 +798,9 @@ section .section-sub-title {
         min-width: 300px;
     }
 
+    .playground-chat-section .container {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 768px)
