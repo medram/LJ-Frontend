@@ -137,26 +137,26 @@ export default function GeneralSettings({ settings })
 
                     <label htmlFor="show-logo" className="form-label" onClick={() => formik.setFieldValue("SHOW_LOGO", !formik.values.SHOW_LOGO)} >show logo instead of site name.</label>
                 </div>
-                <div className="row">
-                    <div className="mb-4 col-md-4 col-sm-12">
+                <div className="row mb-4">
+                    <div className="col-lg-4 col-12">
                         <label htmlFor="timezone">Timezone:</label>
                         <Select options={AVAILABLE_TIMEZONES_OPTIONS} defaultValue={defaultTimezone} id="timezone" onChange={(option) => formik.setFieldValue("TIMEZONE", option.value)} />
                     </div>
                 </div>
-                <div className="row">
-                    <div className="mb-4 col-md-4">
+                <div className="row mb-4">
+                    <div className="mb-6 col-md-6">
                         <label htmlFor="currency">Currency:</label>
 
                         <Select options={CURRENCY_OPTIONS} defaultValue={defaultCurrency} onChange={(option) => formik.setFieldValue("CURRENCY", option.value)} />
                     </div>
-                    <div className="mb-4 col-md-4">
+                    <div className="mb-6 col-md-6">
                         <label htmlFor="currency_symbol">Currency symbol:</label>
                         <input type="text" className="form-control" placeholder="e.g. $" id="currency_symbol" {...formik.getFieldProps("CURRENCY_SYMBOL")} />
                     </div>
-                    <div className="mb-4 col-md-4">
+                    {/* <div className="mb-4 col-md-4">
                         <label htmlFor="currency_symbol_position">Currency symbol position:</label>
                         <Select options={CURRENCY_POSITIONS} isSearchable={false} defaultValue={defaultCurrencyPosition || CURRENCY_POSITIONS[0]} id="currency_symbol_position" onChange={(option) => formik.setFieldValue("CURRENCY_POSITION", option.value)} />
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="row">

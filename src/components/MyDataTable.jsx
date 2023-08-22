@@ -9,13 +9,13 @@ const defaultCustomStyles = {
     rows: {
         style: {
             fontSize: "1rem !important",
-            color: "var(--bs-primary)",
+            color: "var(--bs-body-color)",
         },
     },
     headCells: {
         style: {
             fontSize: "1rem !important",
-            color: "var(--bs-primary)",
+            color: "var(--bs-body-color)",
         },
     },
     cells: {

@@ -12,6 +12,8 @@ import { clearChatHistory, sendPrompt, stopPrompt } from "../../api/account";
 import PlaceholderMessage from "./PlaceholderMessage";
 import { useDemo, useNaiveLocalStorage, useScrollToRef } from "../../hooks";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import TablerIcon from "../TablerIcon";
+import { IconPlayerStop, IconPlayerStopFilled, IconSend, IconTrash } from "@tabler/icons-react";
 
 
 export default function ChatSection({ uuid })
@@ -207,7 +209,7 @@ export default function ChatSection({ uuid })
             </div>
             <div className="container prompt-input d-flex gap-2 pt-5 pb-4 px-4" ref={promptRef}>
                 <form onSubmit={handleSubmit} className="flex-grow-1">
-                    <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} className="form-control form-control-lg" placeholder="Ask anything..." />
+                    <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} className="form-control form-control-lg" placeholder="Ask your document a question?" />
                 </form>
 
                 <OverlayTrigger
@@ -219,15 +221,15 @@ export default function ChatSection({ uuid })
                         </Tooltip>
                     )}
                 >
-                    <SuperButton className={["btn btn-lg send", (isSending ? "btn-danger" : "btn-primary")].join(" ")} title={isSending ? "Stop" : "Send"} onClick={(e) => {
+                    <SuperButton disabled={!prompt && !isSending} className={["btn btn-sm send", (isSending ? "btn-danger" : "btn-primary")].join(" ")} title={isSending ? "Stop" : "Send"} onClick={(e) => {
                         if (isSending)
                             return handleStop(e)
                         handleSubmit(e)
                     }}>
                         {isSending ? (
-                            <FontAwesomeIcon icon={faStop} />
+                            <TablerIcon icon={IconPlayerStopFilled} />
                         ) : (
-                            <FontAwesomeIcon icon={faPaperPlane} />
+                            <TablerIcon icon={IconSend} />
                         )}
                     </SuperButton>
                 </OverlayTrigger>
@@ -241,7 +243,7 @@ export default function ChatSection({ uuid })
                         </Tooltip>
                     )}
                 >
-                    <SuperButton className="btn btn-secondary clear-history" isLoading={isClearingChatHistory} title="Clear Chat History" onClick={handleClearChatHistory}><FontAwesomeIcon icon={faTrashCan} /></SuperButton>
+                    <SuperButton className="btn btn-outline-secondary clear-history" isLoading={isClearingChatHistory} title="Clear Chat History" onClick={handleClearChatHistory}><TablerIcon icon={IconTrash} /></SuperButton>
                 </OverlayTrigger>
             </div>
             <div className="container px-4 mb-2">
