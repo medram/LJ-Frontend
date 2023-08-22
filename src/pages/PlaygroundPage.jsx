@@ -16,6 +16,8 @@ import { uploadFile } from "../api";
 import { useQueryClient } from "react-query";
 import SpinnerGrow from "../components/SpinnerGrow";
 import { deleteChatRoom } from "../api/account";
+import TablerIcon from "../components/TablerIcon";
+import { IconCloudUpload } from "@tabler/icons-react";
 
 
 const onUpload = ({
@@ -157,6 +159,8 @@ export default function PlaygroundPage()
             if (req.status === 204) {
                 queryClient.invalidateQueries("user.chat.list")
                 toast.success("Deleted successfully.")
+                if (userChatRoomList[0]?.uuid)
+                    setCurrentChatRoomUUID(userChatRoomList[0]?.uuid)
             }
             else {
                 toast.warning("Something went wrong!")
@@ -207,9 +211,9 @@ export default function PlaygroundPage()
     return (
         <>
             <main className="playground">
-                <Sidebar toggled={toggled} collapsed={collapsed} breakPoint="md" onBackdropClick={() => setToggled(!toggled)} backgroundColor="" className="">
+                <Sidebar width="290px" toggled={toggled} collapsed={collapsed} breakPoint="md" onBackdropClick={() => setToggled(!toggled)} backgroundColor="" className="">
                     <div className="playground-sidebar">
-                        {(subscription || demoSubscription) && (
+                        {(!!userChatRoomList?.length && (subscription || demoSubscription)) && (
                             <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
                             extraOnUploadProps={{
                                 createChatRoom,
@@ -277,10 +281,10 @@ export default function PlaygroundPage()
                                     )}
 
                                     <div className="quota">
-                                        <h3 className="h6">Quota:</h3>
-                                        <span>{subscription?.pdfs} PDFs</span><br />
-                                        <span>Max PDF size: {subscription?.pdf_size}MB/pdf</span><br />
-                                        <span>{subscription?.questions} PDF Questions</span><br />
+                                        <h3 className="h6">Available Subscription Quota:</h3>
+                                        <span>{subscription?.pdfs} PDFs left.</span><br />
+                                        <span>Max PDF size: {subscription?.pdf_size}MB/pdf.</span><br />
+                                        <span>{subscription?.questions} PDF Questions left.</span><br />
                                     </div>
                                 </>
                             )}
@@ -291,17 +295,11 @@ export default function PlaygroundPage()
                                         <b>{user.username}</b><br />
                                         <span>({user.email})</span>
                                     </div>
-                                    <FontAwesomeIcon icon={faChevronRight} />
+                                    <div className="">
+                                        <FontAwesomeIcon icon={faChevronRight} />
+                                    </div>
                                 </div>
                             )}
-
-                            <footer>
-                                <Link to="/">Home</Link>
-                                {isEL && (
-                                    <Link to="/pricing">Pricing</Link>
-                                )}
-                                <Link to="/contact">Contact us</Link>
-                            </footer>
 
                         </div>
                     </div>
@@ -336,6 +334,43 @@ export default function PlaygroundPage()
                             currentChatRoomUUID && (
                                 <ChatSection uuid={currentChatRoomUUID} key={uuid} />
                             )
+                        )}
+
+                        {!currentChatRoomUUID && (
+                            <div className="d-flex justify-content-center align-items-center h-100" >
+                                <div className="w-50">
+                                    {(subscription || demoSubscription) && (
+                                        <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
+                                            extraOnUploadProps={{
+                                                createChatRoom,
+                                                setProcessing,
+                                                subscription,
+                                                isDemo,
+                                                demoSubscription,
+                                                setDemoSubscription,
+                                                queryClient,
+                                            }} dropzoneOptions={{
+                                                accept: { 'application/pdf': ['.pdf'] },
+                                                maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
+                                            }} >
+                                            {isProcessing ? (
+                                                <div className="text-center">
+                                                    <b><SpinnerGrow size="sm" /> Processing...</b>
+                                                </div>
+                                            ) : (
+                                                collapsed ? (
+                                                    <FontAwesomeIcon icon={faPlus} />
+                                                ) : (
+                                                    <div className="text-center">
+                                                        <b><TablerIcon icon={IconCloudUpload} size={40} /><br /> Upload you PDF</b>
+                                                        <p>(Drag & Drop)</p>
+                                                    </div>
+                                                )
+                                            )}
+                                        </Dropzone>
+                                    )}
+                                </div>
+                            </div>
                         )}
                     </section>
                 </section>

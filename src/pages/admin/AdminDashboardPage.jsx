@@ -5,6 +5,8 @@ import SectionLoading from '../../components/SectionLoading';
 import { Card } from 'react-bootstrap';
 import { useDashboardAnalytics } from '../../hooks/admin';
 import { datetimeFormat } from '../../utils';
+import TablerIcon from '../../components/TablerIcon';
+import { IconEyeDollar } from '@tabler/icons-react';
 
 
 export default function AdminDashboardPage()
@@ -21,6 +23,7 @@ export default function AdminDashboardPage()
 
     return <>
         <h1 className="mb-5">Dashboard</h1>
+
         <div className="row row-cols-1 row-cols-md-2 row-cols-xl-2 row-cols-xxl-3 g-3 mb-3">
             {isEL ? (
                 <>

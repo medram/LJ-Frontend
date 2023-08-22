@@ -33,7 +33,7 @@ export function SettingsPage()
 
                                     <button className="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">SMTP</button>
 
-                                    <button className="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Others</button>
+                                    {/* <button className="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Others</button> */}
                                 </div>
                             </div>
                             <div className="col">
@@ -55,11 +55,11 @@ export function SettingsPage()
 
                                         </div>
 
-                                        <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabIndex="0">
+                                        {/* <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabIndex="0">
 
                                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit deserunt, accusantium assumenda omnis voluptate, in, cumque facere recusandae incidunt perferendis quo nisi cupiditate molestias. Mollitia voluptatem laudantium quos corrupti quibusdam!
 
-                                        </div>
+                                        </div> */}
 
                                     </div>
                                 </div>
