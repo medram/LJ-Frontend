@@ -33,7 +33,9 @@ export default function RegisterPage() {
                 if (data.error === false)
                 {
                     formik.resetForm()
-                    toast.success(data.message)
+                    toast.success(data.message, {
+                        autoClose: 10000
+                    })
                     if (redirectTo)
                         return navigate(`/login?to=${redirectTo}`)
                     else

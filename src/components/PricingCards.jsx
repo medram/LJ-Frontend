@@ -7,6 +7,7 @@ import { useCallback } from "react"
 import { useCurrentSubscription } from "../hooks/account"
 import TablerIcon from "./TablerIcon"
 import { IconCircleCheck } from "@tabler/icons-react"
+import { useLoginRegister } from "@hooks/templates"
 
 
 export default function PricingCards({ yearly })
@@ -17,10 +18,12 @@ export default function PricingCards({ yearly })
     const { isAuthenticated } = useUser()
     const { subscription } = useCurrentSubscription()
 
+    const { isOpen, open, close, LoginRegisterModel } = useLoginRegister()
+
 
     const handlePlanActivation = useCallback(plan_id => {
         console.log("clicked")
-    })
+    }, [])
 
 
     if (isLoading || !Object.keys(settings).length || isPlansLoading) {
@@ -56,9 +59,9 @@ export default function PricingCards({ yearly })
                                         </Link>
                                     )
                                 ) : (
-                                    <Link to="../login?to=/pricing" className="btn btn-primary d-block" >
-                                        {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Subscribe"}
-                                    </Link>
+                                    <button onClick={() => open()} className="btn btn-primary w-100" >
+                                        {plan.is_free || plan.price == 0 ? "Sign Up" : "Subscribe"}
+                                    </button>
                                 )}
                             </div>
                             <ul>
@@ -75,6 +78,10 @@ export default function PricingCards({ yearly })
                 )
             })}
 
+            <LoginRegisterModel
+                title="Please Sign-in to continue"
+                onLogin={() => close()}
+            />
         </div>
     )
 }

@@ -42,8 +42,6 @@ export default memo(function LoginForm({ onLogin, setCurrentForm, onLoginRedirec
 
                     if (redirectTo)
                         return navigate(redirectTo)
-
-                    return navigate("/account")
                 }
                 else
                     toast.error(data.message)

@@ -1,5 +1,6 @@
 import { memo, useCallback, useState } from "react"
 import { useClickOutside } from "."
+import LoginRegisterForms from "@components/forms/LoginRegisterForms"
 
 
 export function useOffCanvas()
@@ -82,4 +83,21 @@ export function useModel() {
     }, [isOpen])
 
     return { isOpen, open, close, toggle, Model: Model }
+}
+
+
+export function useLoginRegister()
+{
+    const { isOpen, open, close, toggle, Model: RegisterModel } = useModel()
+
+
+    const LoginRegisterModel = useCallback(({ title, ...rest }) => {
+        return (
+            <RegisterModel title={title}>
+                <LoginRegisterForms {...rest} />
+            </RegisterModel>
+        )
+    }, [isOpen])
+
+    return { isOpen, open, close, LoginRegisterModel }
 }

@@ -7,7 +7,7 @@ import SpinnerGrow from "@components/SpinnerGrow";
 import TablerIcon from "@components/TablerIcon";
 import { IconCloudUpload } from "@tabler/icons-react";
 import { useState } from "react";
-import { useModel } from "@hooks/templates";
+import { useLoginRegister, useModel } from "@hooks/templates";
 import LoginRegisterForms from "@components/forms/LoginRegisterForms";
 import { useUser } from "@hooks/auth";
 import { useNavigate } from "react-router";
@@ -17,7 +17,8 @@ export default function HomePage()
 {
     const { settings } = useSettings()
     const [isProcessing, setIsProcessing] = useState(false)
-    const { isOpen, open, close, toggle, Model: RegisterModel } = useModel()
+    const { isOpen, open, close, LoginRegisterModel } = useLoginRegister()
+
     const { isAuthenticated } = useUser()
     const navigate = useNavigate()
 
@@ -161,9 +162,10 @@ export default function HomePage()
                 </div>
             </section>
 
-            <RegisterModel title="Please Login to continue">
-                <LoginRegisterForms onLoginRedirectTo="/playground" />
-            </RegisterModel>
+            <LoginRegisterModel
+                title="Please Sign-in to continue"
+                onLoginRedirectTo="/playground"
+            />
         </BasePage>
     )
 }
