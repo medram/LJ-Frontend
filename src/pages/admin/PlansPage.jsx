@@ -1,19 +1,21 @@
-import { faCreditCard, faGear, faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useQuery, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import SectionLoading from "../../components/SectionLoading";
 import Swal from "sweetalert2";
-import { deletePlan, getPlans } from "../../api/admin";
+import { deletePlan } from "../../api/admin";
 import { useDashboardPlans, useDemo, useSettings } from "../../hooks";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useOffCanvas } from "../../hooks/templates";
 import CustomOffCanvas from "../../components/CustomOffCanvas";
 import AddPlanForm from "../../components/dashboard/forms/AddPlanForm";
 import EditPlanForm from "../../components/dashboard/forms/EditPlanForm";
 import { datetimeFormat } from "../../utils";
-import ManageTrialForm from "../../components/dashboard/forms/ManageTrialForm";
+import TablerIcon from "@components/TablerIcon";
+import { IconCreditCard, IconLeaf, IconPlus } from "@tabler/icons-react";
+import EditTrialForm from "@components/dashboard/forms/EditTrialForm";
 
 
 export default function PlansPage()
@@ -77,11 +79,11 @@ export default function PlansPage()
     return <>
         <h1 className="mb-3">Plans</h1>
         <div className="d-flex flex-row-reverse gap-3 mb-4">
-            <button className="btn btn-primary" onClick={open}><FontAwesomeIcon icon={faPlus} /> New Plan</button>
+            <button className="btn btn-primary" onClick={open}><TablerIcon icon={IconPlus} stroke={1.25} /> New Plan</button>
 
-            <Link to="../payment-gateways" className="btn btn-primary"><FontAwesomeIcon icon={faCreditCard} /> Manage Payment Gateways</Link>
+            <Link to="../payment-gateways" className="btn btn-primary"><TablerIcon icon={IconCreditCard} stroke={1.25} /> Manage Payment Gateways</Link>
 
-            {/* <button className="btn btn-primary" onClick={trialOpen} ><FontAwesomeIcon icon={faGear} /> Manage Free Trial / demo</button> */}
+            <button className="btn btn-primary" onClick={() => trialOpen()} ><TablerIcon icon={IconLeaf} /> Manage Free Trial / demo</button>
         </div>
 
         <div className="row">
@@ -179,5 +181,8 @@ export default function PlansPage()
             <EditPlanForm close={editClose} planId={planToEdit} />
         </CustomOffCanvas>
 
+        <CustomOffCanvas title="Manage Free Trial / demo" placement="end" {...trialOffCanvasProps}>
+            <EditTrialForm plans={plans} close={trialClose} />
+        </CustomOffCanvas>
     </>
 }

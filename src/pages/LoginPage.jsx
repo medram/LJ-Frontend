@@ -82,7 +82,7 @@ export default function LoginPage() {
                                 </div>
                                 <input type="password" {...formik.getFieldProps("password")} id="password" className="form-control" />
                             </div>
-                            <SuperButton isLoading={formik.isSubmitting} loadingText="Sign In..." onClick={onClickSignIn} className="btn btn-primary btn-block my-4" type="submit" disabled={!formik.isValid} >Sign In</SuperButton>
+                            <SuperButton isLoading={formik.isSubmitting} onClick={onClickSignIn} className="btn btn-primary btn-block my-4" type="submit" disabled={!formik.isValid} >Sign In</SuperButton>
                         </form>
                         <span>Don't have an account? <Link to="/register">Sign Up</Link></span>
                     </div>

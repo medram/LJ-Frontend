@@ -153,7 +153,7 @@ $font-secondary: lighten($font-color, 50);
 }
 
 .dashboard .dashboard-sidebar nav a:hover {
-    background-color: lighten($primary, 65%);
+    background-color: lighten($primary, 57%);
 }
 
 .dashboard .dashboard-sidebar nav a.active {
@@ -213,7 +213,7 @@ $font-secondary: lighten($font-color, 50);
 }
 
 .dashboard .dashboard-header .dropdown-menu > :hover {
-    background-color: lighten($primary, 65%);
+    background-color: lighten($primary, 57%);
     border-radius: 10px;
 }
 

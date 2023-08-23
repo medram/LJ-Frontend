@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom"
-import { usePlans, useSettings } from "../hooks"
 import SectionLoading from "./SectionLoading"
-import { useUser } from "../hooks/auth"
 import SuperButton from "./SuperButton"
 import { useCallback } from "react"
-import { useCurrentSubscription } from "../hooks/account"
-import TablerIcon from "./TablerIcon"
+import { usePlans, useSettings } from "@hooks"
+import { useUser } from "@hooks/auth"
+import { useCurrentSubscription } from "@hooks/account"
 import { IconCircleCheck } from "@tabler/icons-react"
 import { useLoginRegister } from "@hooks/templates"
+import TablerIcon from "./TablerIcon"
 
 
 export default function PricingCards({ yearly })
