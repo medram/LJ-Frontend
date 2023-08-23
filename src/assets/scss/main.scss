@@ -184,16 +184,22 @@ footer {
 }
 
 .pricing-card {
+    position: relative;
     padding: 1rem;
     min-width: 250px;
     border-radius: 10px;
     border: 1px solid #CCC;
+    transition: all .3s;
+}
+
+.pricing-card:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transform: scale(1.01);
 }
 
 .pricing-card.popular {
     border: none;
     outline: 3px solid $primary !important;
-    transform: scale(1.1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -263,10 +269,6 @@ footer {
 
 .infobox.bg-primary .infobox-icon {
     background-color: rgba(255, 255, 255, 0.1);
-}
-
-.infobox:hover .infobox-icon {
-    padding: 1.5rem;
 }
 
 /*################# fullscreen-loading #################*/

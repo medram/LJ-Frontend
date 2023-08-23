@@ -12,6 +12,7 @@ import "./assets/scss/main.scss"
 
 // loading bootstrap js files.
 import "bootstrap/dist/js/bootstrap"
+// import "@assets/globals.css"
 
 
 import PricingPage from "./pages/PricingPage";
