@@ -73,16 +73,16 @@ export default function LoginPage() {
                         <form onSubmit={formik.handleSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="email" className="form-label">Email:</label>
-                                <input type="text" {...formik.getFieldProps("email")} id="email" className="form-control form-control-lg" />
+                                <input type="text" {...formik.getFieldProps("email")} id="email" className="form-control" />
                             </div>
                             <div className="mb-3">
                                 <div>
                                     <label htmlFor="password" className="form-label">Password:</label>
                                     <Link onClick={() => setShow(prev => !prev)} className="float-end">Forgot password?</Link>
                                 </div>
-                                <input type="password" {...formik.getFieldProps("password")} id="password" className="form-control form-control-lg" />
+                                <input type="password" {...formik.getFieldProps("password")} id="password" className="form-control" />
                             </div>
-                            <SuperButton isLoading={formik.isSubmitting} loadingText="Sign In..." onClick={onClickSignIn} className="btn btn-primary btn-lg btn-block my-4" type="submit" disabled={!formik.isValid} >Sign In</SuperButton>
+                            <SuperButton isLoading={formik.isSubmitting} loadingText="Sign In..." onClick={onClickSignIn} className="btn btn-primary btn-block my-4" type="submit" disabled={!formik.isValid} >Sign In</SuperButton>
                         </form>
                         <span>Don't have an account? <Link to="/register">Sign Up</Link></span>
                     </div>

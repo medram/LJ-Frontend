@@ -59,16 +59,16 @@ export default function RegisterPage() {
                         <form onSubmit={formik.handleSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="username" className="form-label">Username:</label>
-                                <input type="text" id="username" className="form-control form-control-lg" {...formik.getFieldProps("username")} />
+                                <input type="text" id="username" className="form-control" {...formik.getFieldProps("username")} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="email" className="form-label">Email:</label>
-                                <input type="email" id="email" className="form-control form-control-lg" {...formik.getFieldProps("email")} />
+                                <input type="email" id="email" className="form-control" {...formik.getFieldProps("email")} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">Password:</label>
 
-                                <PasswordInput id="password" className="form-control form-control-lg" placeholder="+6 character or more" skipDemoMode {...formik.getFieldProps("password")} />
+                                <PasswordInput id="password" className="form-control" placeholder="+6 character or more" skipDemoMode {...formik.getFieldProps("password")} />
                             </div>
                             <div className="d-flex mb-3">
                                 <Switch onChange={(checked) => formik.setFieldValue("accept", checked)} name="accept" checked={formik.values.accept} size="small" className="mx-2 mt-1" />
@@ -76,9 +76,8 @@ export default function RegisterPage() {
                                 <label htmlFor="accept" className="form-label" onClick={() => formik.setFieldValue("accept", !formik.values.accept)} >I read and accept terms of use & privacy policy of the website.</label>
                             </div>
 
-                            <SuperButton type="submit" isLoading={formik.isSubmitting} disabled={!formik.values.accept || !formik.values.username || !formik.values.email || !formik.values.password || formik.isSubmitting} onClick={() => toastFormikErrors(formik.errors)} className="btn btn-primary btn-lg btn-block my-4">Sign Up</SuperButton>
+                            <SuperButton type="submit" isLoading={formik.isSubmitting} disabled={!formik.values.accept || !formik.values.username || !formik.values.email || !formik.values.password || formik.isSubmitting} onClick={() => toastFormikErrors(formik.errors)} className="btn btn-primary btn-block my-4">Sign Up</SuperButton>
                         </form>
-                        <span>Already Have an account? <Link to="/login">Sign In</Link></span>
                     </div>
                 </div>
             </section>

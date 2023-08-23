@@ -1,28 +1,71 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BasePage from "./layouts/BasePage";
-import { faBook, faBookOpenReader, faCircleQuestion, faClockRotateLeft, faCloudArrowUp, faCommentDots, faGraduationCap, faHourglass2, faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faBookOpenReader, faCircleQuestion, faClockRotateLeft, faCloudArrowUp, faCommentDots, faGraduationCap, faHourglass2, faPeopleGroup, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useSettings } from "../hooks";
+import Dropzone from "@components/Dropzone";
+import SpinnerGrow from "@components/SpinnerGrow";
+import TablerIcon from "@components/TablerIcon";
+import { IconCloudUpload } from "@tabler/icons-react";
+import { useState } from "react";
+import { useModel } from "@hooks/templates";
+import LoginRegisterForms from "@components/forms/LoginRegisterForms";
+import { useUser } from "@hooks/auth";
+import { useNavigate } from "react-router";
 
 
 export default function HomePage()
 {
     const { settings } = useSettings()
+    const [isProcessing, setIsProcessing] = useState(false)
+    const { isOpen, open, close, toggle, Model: RegisterModel } = useModel()
+    const { isAuthenticated } = useUser()
+    const navigate = useNavigate()
+
+    const onUpload = ({ resetDropzone }) => {
+        resetDropzone()
+
+        if (isAuthenticated)
+            return navigate("/playground")
+        else
+            open()
+    }
+
+    const onError = () => {
+
+    }
 
     return (
         <BasePage>
             <section className="container-fluid jumbotron">
                 <div className="container py-5">
-                    <div className="row flex-column-reverse flex-md-row">
-                        <div className="col-md-6 col-sm-12  text-center text-md-start left-side">
-                            <h1>Chat Directly with Your <span className="text-gradient-primary">Documents</span>, Powered by AI.</h1>
+                    <div className="row flex-column align-items-center justify-content-center">
+                        <div className="col-md-7 col-sm-12  text-center mb-5 top-side">
+                            <h1 className="mb-3">Chat Directly with Your <span className="text-gradient-primary">Documents</span>, Powered by AI.</h1>
 
                             <p>Come together with millions of students, researchers, and professionals to rapidly respond to questions and comprehend research with AI.</p>
-
-                            <a href="/playground" className="btn btn-primary btn-lg mt-5"><FontAwesomeIcon icon={faCloudArrowUp} /> Try it now</a>
                         </div>
                         <div className="col-md-6 col-sm-12">
-                            <div className="right-side">
-                                <img src="https://i.imgur.com/4yhmvkY.png" alt="searching within documents image" />
+                            <div className="bottom-side">
+                                <div className="w-100">
+                                    <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
+                                        extraOnUploadProps={{
+
+                                        }} dropzoneOptions={{
+                                            accept: { 'application/pdf': ['.pdf'] },
+                                            maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
+                                        }} >
+                                        {isProcessing ? (
+                                            <div className="text-center">
+                                                <b><SpinnerGrow size="sm" /> Processing...</b>
+                                            </div>
+                                        ) : (
+                                            <div className="text-center">
+                                                <b><TablerIcon icon={IconCloudUpload} size={40} /><br /> Upload you PDF</b>
+                                                <p>(Drag & Drop)</p>
+                                            </div>
+                                        )}
+                                    </Dropzone>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -118,6 +161,9 @@ export default function HomePage()
                 </div>
             </section>
 
+            <RegisterModel title="Please Login to continue">
+                <LoginRegisterForms onLoginRedirectTo="/playground" />
+            </RegisterModel>
         </BasePage>
     )
 }

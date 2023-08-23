@@ -17,7 +17,7 @@ import { useQueryClient } from "react-query";
 import SpinnerGrow from "../components/SpinnerGrow";
 import { deleteChatRoom } from "../api/account";
 import TablerIcon from "../components/TablerIcon";
-import { IconCloudUpload } from "@tabler/icons-react";
+import { IconBolt, IconCloudUpload, IconSparkles } from "@tabler/icons-react";
 
 
 const onUpload = ({
@@ -124,7 +124,7 @@ export default function PlaygroundPage()
         created_at: new Date().getTime()
     })
 
-    const demoSubscription = getDemoSubscription()
+    const demoSubscription = isDemo ? getDemoSubscription() : null;
     const { isExtendedLicense: isEL } = useLCInfo()
 
     const [ toggled, setToggled ] = useState(false)
@@ -186,7 +186,7 @@ export default function PlaygroundPage()
     }, [uuid, userChatRoomList])
 
     useEffect(() => {
-        if (new Date().getTime() - demoSubscription.created_at > (12 * 60 * 60 * 1000)) // 12 hours
+        if (new Date().getTime() - demoSubscription?.created_at > (12 * 60 * 60 * 1000)) // 12 hours
         {
             // reset the demo subscription
             setDemoSubscription({
@@ -260,7 +260,7 @@ export default function PlaygroundPage()
                             {isDemo && (
                                 <>
                                     {(subscription?.questions <= 20 || subscription?.pdfs <= 10) && (
-                                        <Link to="/account/settings/subscription" className="btn btn-warning btn-lg btn-block"><FontAwesomeIcon icon={faGem} /> Upgrade</Link>
+                                        <Link to="/pricing" className="btn btn-warning btn-lg btn-block"><TablerIcon icon={IconBolt} stroke={1.5} size={30} /> Upgrade</Link>
                                     )}
 
                                     <div className="quota">
@@ -277,7 +277,7 @@ export default function PlaygroundPage()
                             {subscription && isEL && !isDemo && (
                                 <>
                                     {(subscription?.questions <= 20 || subscription?.pdfs <= 10) && (
-                                        <Link to="/account/settings/subscription" className="btn btn-warning btn-lg btn-block"><FontAwesomeIcon icon={faGem} /> Upgrade</Link>
+                                        <Link to="/pricing" className="btn btn-warning btn-lg btn-block"><TablerIcon icon={IconBolt} stroke={1.5} size={30} /> Upgrade</Link>
                                     )}
 
                                     <div className="quota">
@@ -325,7 +325,7 @@ export default function PlaygroundPage()
                                     )
                                 )
                             ) : (
-                                <div className="d-flex flex-column justify-content-start p-5">
+                                <div className="d-flex flex-column justify-content-start p-5 mt-3">
                                     You need to have a subscription in order to be able to use the Playground section.
                                     <Link to="/pricing" className="btn btn-warning my-3">Get a subscription now?</Link>
                                 </div>
@@ -340,34 +340,37 @@ export default function PlaygroundPage()
                             <div className="d-flex justify-content-center align-items-center h-100" >
                                 <div className="w-50">
                                     {(subscription || demoSubscription) && (
-                                        <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
-                                            extraOnUploadProps={{
-                                                createChatRoom,
-                                                setProcessing,
-                                                subscription,
-                                                isDemo,
-                                                demoSubscription,
-                                                setDemoSubscription,
-                                                queryClient,
-                                            }} dropzoneOptions={{
-                                                accept: { 'application/pdf': ['.pdf'] },
-                                                maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
-                                            }} >
-                                            {isProcessing ? (
-                                                <div className="text-center">
-                                                    <b><SpinnerGrow size="sm" /> Processing...</b>
-                                                </div>
-                                            ) : (
-                                                collapsed ? (
-                                                    <FontAwesomeIcon icon={faPlus} />
-                                                ) : (
+                                        <div className="text-center">
+                                            <h3>Upload your PDF to chat with.</h3>
+                                            <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
+                                                extraOnUploadProps={{
+                                                    createChatRoom,
+                                                    setProcessing,
+                                                    subscription,
+                                                    isDemo,
+                                                    demoSubscription,
+                                                    setDemoSubscription,
+                                                    queryClient,
+                                                }} dropzoneOptions={{
+                                                    accept: { 'application/pdf': ['.pdf'] },
+                                                    maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
+                                                }} >
+                                                {isProcessing ? (
                                                     <div className="text-center">
-                                                        <b><TablerIcon icon={IconCloudUpload} size={40} /><br /> Upload you PDF</b>
-                                                        <p>(Drag & Drop)</p>
+                                                        <b><SpinnerGrow size="sm" /> Processing...</b>
                                                     </div>
-                                                )
-                                            )}
-                                        </Dropzone>
+                                                ) : (
+                                                    collapsed ? (
+                                                        <FontAwesomeIcon icon={faPlus} />
+                                                    ) : (
+                                                        <div className="text-center">
+                                                            <b><TablerIcon icon={IconCloudUpload} size={40} /><br /> Upload you PDF</b>
+                                                            <p>(Drag & Drop)</p>
+                                                        </div>
+                                                    )
+                                                )}
+                                            </Dropzone>
+                                        </div>
                                     )}
                                 </div>
                             </div>

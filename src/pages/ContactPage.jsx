@@ -51,17 +51,17 @@ export default function ContactPage() {
                         <div className="col-md-5 m-auto p-5">
                             <div className="mb-3">
                                 <label htmlFor="subject" className="form-label">Subject:</label>
-                                <input type="subject" id="subject" className="form-control form-control-lg" {...formik.getFieldProps("subject")} autoComplete="off" />
+                                <input type="subject" id="subject" className="form-control" {...formik.getFieldProps("subject")} autoComplete="off" />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="email" className="form-label">Email:</label>
-                                <input type="text" id="email" className="form-control form-control-lg" {...formik.getFieldProps("email")} />
+                                <input type="text" id="email" className="form-control" {...formik.getFieldProps("email")} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="message" className="form-label">Message:</label>
-                                <textarea id="message" className="form-control form-control-lg" rows={5} {...formik.getFieldProps("message")} />
+                                <textarea id="message" className="form-control" rows={5} {...formik.getFieldProps("message")} />
                             </div>
-                            <SuperButton type="submit" isLoading={formik.isSubmitting} className="btn btn-primary btn-lg btn-block my-4" onClick={() => toastFormikErrors(formik.errors)}><FontAwesomeIcon icon={faPaperPlane} /> Send</SuperButton>
+                            <SuperButton type="submit" isLoading={formik.isSubmitting} className="btn btn-primary btn-block my-4" onClick={() => toastFormikErrors(formik.errors)}><FontAwesomeIcon icon={faPaperPlane} /> Send</SuperButton>
                         </div>
                     </div>
                 </form>
