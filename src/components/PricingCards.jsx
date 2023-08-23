@@ -1,5 +1,3 @@
-import { faCheck } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 import { usePlans, useSettings } from "../hooks"
 import SectionLoading from "./SectionLoading"
@@ -7,6 +5,8 @@ import { useUser } from "../hooks/auth"
 import SuperButton from "./SuperButton"
 import { useCallback } from "react"
 import { useCurrentSubscription } from "../hooks/account"
+import TablerIcon from "./TablerIcon"
+import { IconCircleCheck } from "@tabler/icons-react"
 
 
 export default function PricingCards({ yearly })
@@ -23,8 +23,7 @@ export default function PricingCards({ yearly })
     })
 
 
-    if (isLoading || !Object.keys(settings).length || isPlansLoading)
-    {
+    if (isLoading || !Object.keys(settings).length || isPlansLoading) {
         return <SectionLoading center={true} />
     }
 
@@ -43,33 +42,35 @@ export default function PricingCards({ yearly })
                         <div className="pricing">{settings?.CURRENCY_SYMBOL}{plan.price}<span className="small-text">/{yearly ? "year" : "month"}</span></div>
                         <div className="text-center">{plan.description}</div>
                         <div className="pricing-body">
+                            <div className="mt-2">
+                                {isAuthenticated ? (
+                                    subscription ? (
+                                        subscription?.plan_id == plan.id ? (
+                                            <SuperButton onClick={() => handlePlanActivation(plan.id)} className="btn btn-primary w-100" disabled >Current</SuperButton>
+                                        ) : (
+                                            <Link to={`../checkout/${plan.id}`} className="btn btn-primary d-block" >Upgrade</Link>
+                                        )
+                                    ) : (
+                                        <Link to={`../checkout/${plan.id}`} className="btn btn-primary d-block" >
+                                            {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Subscribe"}
+                                        </Link>
+                                    )
+                                ) : (
+                                    <Link to="../login?to=/pricing" className="btn btn-primary d-block" >
+                                        {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Subscribe"}
+                                    </Link>
+                                )}
+                            </div>
                             <ul>
-                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.pdfs ? plan.pdfs : "Unlimited"}</b> PDFs</li>
-                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> Max PDF size: <b>{plan.pdf_size ? plan.pdf_size + "MB/pdf" : "Unlimited"}</b>
+                                <li><TablerIcon icon={IconCircleCheck} className="text-success" /> <b>{plan.pdfs ? plan.pdfs : "Unlimited"}</b> PDFs</li>
+                                <li><TablerIcon icon={IconCircleCheck} className="text-success" /> Max PDF size: <b>{plan.pdf_size ? plan.pdf_size + "MB/pdf" : "Unlimited"}</b>
                                 </li>
-                                <li><FontAwesomeIcon icon={faCheck} className="text-success" /> <b>{plan.questions ? plan.questions : "Unlimited"}</b> PDF Questions</li>
+                                <li><TablerIcon icon={IconCircleCheck} className="text-success" /> <b>{plan.questions ? plan.questions : "Unlimited"}</b> PDF Questions</li>
                                 {plan.features?.split("\n")?.map((feature, i) => {
-                                    return <li key={i}><FontAwesomeIcon icon={faCheck} /> {feature}</li>
+                                    return <li key={i}><TablerIcon icon={IconCircleCheck} className="text-success" /> {feature}</li>
                                 })}
                             </ul>
                         </div>
-                        {isAuthenticated ? (
-                            subscription ? (
-                                subscription?.plan_id == plan.id ? (
-                                    <SuperButton onClick={() => handlePlanActivation(plan.id)} className="btn btn-primary btn-lg w-100" disabled >Current</SuperButton>
-                                ) : (
-                                    <Link to={`../checkout/${plan.id}`} className="btn btn-primary btn-lg d-block" >Upgrade</Link>
-                                )
-                            ) : (
-                                <Link to={`../checkout/${plan.id}`} className="btn btn-primary btn-lg d-block" >
-                                        {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Subscribe"}
-                                </Link>
-                            )
-                        ) : (
-                            <Link to="../login?to=/pricing" className="btn btn-primary btn-lg d-block" >
-                                    {plan.is_free || plan.price == 0 ? "Subscribe Now" : "Subscribe"}
-                            </Link>
-                        )}
                     </div>
                 )
             })}

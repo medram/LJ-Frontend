@@ -248,7 +248,7 @@ export default function ChatSection({ uuid })
             </div>
             <div className="container px-4 mb-2">
                 <small>
-                    <b>Note:</b> if the chat bot said that he doesn't have access to document or doesn't know where to look up, just tell him "<b><i>from document?</i></b>".
+                    <b>Note:</b> if the chat bot didn't know how to access to document or where to look up, just tell him "<b><i>from document?</i></b>".
                 </small>
             </div>
         </>
