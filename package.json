@@ -33,11 +33,11 @@
     "yup": "^1.0.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "sync": "./sync_with_backend.sh",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +59,8 @@
   },
   "devDependencies": {
     "node-sass": "^7.0.3",
+    "react-app-rewire-alias": "^1.1.7",
+    "react-app-rewired": "^2.2.1",
     "sass-loader": "^13.2.0"
   }
 }
