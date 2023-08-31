@@ -1,8 +1,7 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import SuperButton from "../SuperButton";
 import AIMessage from "./AIMessage";
 import UserMessage from "./UserMessage";
-import { faPaperPlane, faStop, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import SectionLoading from "../SectionLoading";
 import useChatRoom from "../../hooks/account";
 import { toast } from "react-toastify";
@@ -13,12 +12,11 @@ import PlaceholderMessage from "./PlaceholderMessage";
 import { useDemo, useNaiveLocalStorage, useScrollToRef } from "../../hooks";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import TablerIcon from "../TablerIcon";
-import { IconPlayerStop, IconPlayerStopFilled, IconSend, IconTrash } from "@tabler/icons-react";
+import { IconPlayerStopFilled, IconSend, IconTrash } from "@tabler/icons-react";
 
 
 export default function ChatSection({ uuid })
 {
-    // const { uuid } = useParams()
     const { isDemo } = useDemo()
     const [getDemoSubscription, setDemoSubscription] = useNaiveLocalStorage("demo_sub")
     const demoSubscription = getDemoSubscription()
@@ -30,8 +28,6 @@ export default function ChatSection({ uuid })
     const [ isSending, setSending ] = useState(false)
     const [isClearingChatHistory, setClearingChatHistory ] = useState(false)
     const [promptRef, scrollToPrompt] = useScrollToRef()
-
-    const DEFAULT_MESSAGE = <AIMessage key={Math.random()} content="Hi, How can I assist you today? 😄 " />
 
     useEffect(() => {
         if (chat?.chat_history)
@@ -46,14 +42,14 @@ export default function ChatSection({ uuid })
                         messages[i] = <UserMessage key={i} content={history.content} />
                 })
 
-                setChatHistory([DEFAULT_MESSAGE, ...messages])
+                setChatHistory(messages)
             } catch (error){
                 console.log("error parsing chat history")
             }
         }
         else
         {
-            setChatHistory([DEFAULT_MESSAGE])
+            setChatHistory([])
         }
 
         scrollToPrompt()
@@ -175,7 +171,7 @@ export default function ChatSection({ uuid })
             {
                 toast.success("Cleared successfully.")
                 queryClient.invalidateQueries(`user.chat.${uuid}`)
-                setChatHistory([DEFAULT_MESSAGE])
+                setChatHistory([])
             }
             else
             {

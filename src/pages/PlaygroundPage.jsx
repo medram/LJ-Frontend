@@ -192,7 +192,6 @@ export default function PlaygroundPage()
 
     useEffect(() => {
         if ((!uuid || !currentChatRoomUUID) && userChatRoomList !== undefined && Object.keys(userChatRoomList).length) {
-            // return <Navigate to={`/playground/${userChatRoomList[0]?.uuid}`} replace={true} />
             navigate(`/playground/${userChatRoomList[0]?.uuid}`)
             setCurrentChatRoomUUID(userChatRoomList[0]?.uuid)
         }

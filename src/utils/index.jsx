@@ -34,3 +34,8 @@ export function isEmpty(obj)
 {
     return Object.keys(obj).length === 0;
 }
+
+export function getRandomItem(list) {
+    const randomIndex = Math.floor(Math.random() * list.length);
+    return list[randomIndex];
+}
