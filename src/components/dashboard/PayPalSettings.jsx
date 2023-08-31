@@ -73,11 +73,11 @@ export default memo(function PayPalSettings({ settings })
                         <span className="badge text-bg-warning">Inactive</span>
                     )}
                 </span>
-                <button className="btn btn-primary" onClick={open}>Settings</button>
+                <button className="btn btn-primary" onClick={() => open()}>Settings</button>
             </div>
 
             <Model title="PayPal Gateway Settings" footer={
-                <SuperButton className="btn btn-primary w-25" onClick={formik.submitForm} isLoading={formik.isSubmitting}>
+                <SuperButton className="btn btn-primary w-25" onClick={() => formik.submitForm()} isLoading={formik.isSubmitting}>
                     Save
                 </SuperButton>
             }>

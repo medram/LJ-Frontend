@@ -142,6 +142,11 @@ export default function PlaygroundPage()
     const { isLoading, isError, error, userChatRoomList } = useUserChatRoomList()
     const [ isProcessing, setProcessing ] = useState(false)
 
+    useEffect(() => {
+        if (uuid !== currentChatRoomUUID)
+            navigate(`/playground/${currentChatRoomUUID}`)
+    }, [currentChatRoomUUID])
+
     const handleChatLabelClick = useCallback((uuid) => {
         setCurrentChatRoomUUID(uuid)
         navigate(`/playground/${uuid}`)
@@ -154,13 +159,26 @@ export default function PlaygroundPage()
     }, [uuid])
 
     const handleChatRoomDeletion = useCallback((uuid, callback) => {
+        let nextUUID = ""
+        if (userChatRoomList)
+        {
+            for (const chatroom of userChatRoomList)
+            {
+                if (chatroom?.uuid !== uuid)
+                {
+                    nextUUID = chatroom?.uuid
+                    break
+                }
+            }
+        }
 
         deleteChatRoom(uuid).then(req => {
             if (req.status === 204) {
-                queryClient.invalidateQueries("user.chat.list")
                 toast.success("Deleted successfully.")
-                if (userChatRoomList[0]?.uuid)
-                    setCurrentChatRoomUUID(userChatRoomList[0]?.uuid)
+                queryClient.invalidateQueries("user.chat.list").then(() => {
+                    if (nextUUID)
+                        setCurrentChatRoomUUID(nextUUID)
+                })
             }
             else {
                 toast.warning("Something went wrong!")
@@ -170,7 +188,7 @@ export default function PlaygroundPage()
         }).finally(() => {
             callback()
         })
-    }, [uuid])
+    }, [uuid, userChatRoomList])
 
     useEffect(() => {
         if ((!uuid || !currentChatRoomUUID) && userChatRoomList !== undefined && Object.keys(userChatRoomList).length) {
@@ -321,7 +339,7 @@ export default function PlaygroundPage()
                                     </div>
                                 ) : (
                                     currentChatRoomUUID && (
-                                        <ChatSection uuid={currentChatRoomUUID} key={uuid} />
+                                        <ChatSection uuid={currentChatRoomUUID} key={currentChatRoomUUID} />
                                     )
                                 )
                             ) : (
@@ -332,7 +350,7 @@ export default function PlaygroundPage()
                             )
                         ) : (
                             currentChatRoomUUID && (
-                                <ChatSection uuid={currentChatRoomUUID} key={uuid} />
+                                <ChatSection uuid={currentChatRoomUUID} key={currentChatRoomUUID} />
                             )
                         )}
 
