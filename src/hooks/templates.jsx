@@ -27,9 +27,10 @@ export function useModel() {
     const [isOpen, setOpen] = useState(false)
 
     const ref = useClickOutside((e) => {
-        if (isOpen && !(["BUTTON", "svg", "path"]).includes(e.target.nodeName))
+        e.preventDefault()
+
+        if (isOpen && e.target.nodeName === "DIV")
         {
-            console.log('Clicked outside!', isOpen)
             setOpen(false)
         }
     });
@@ -37,24 +38,20 @@ export function useModel() {
     const ID = "#model-" + parseInt(Math.random() * 10000000)
 
     const open = useCallback(() => {
-        console.log("Opened")
         setOpen(true)
     }, []);
 
     const close = useCallback(() => {
-        console.log("Closed")
         setOpen(false)
     }, []);
 
     const toggle = useCallback(() => {
-        console.log("Toggled")
         setOpen(!isOpen)
     }, []);
 
-    console.log("useModel render")
 
     const Model = useCallback(function({ title, children, footer, center=true }){
-        console.log("Model render")
+
         return (
             <div
                 className={isOpen ? "modal show" : "modal"}

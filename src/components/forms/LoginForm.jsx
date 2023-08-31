@@ -8,7 +8,7 @@ import * as Yup from "yup"
 import SuperButton from "@components/SuperButton";
 import { useAuth } from "@hooks/auth";
 import { toastFormikErrors } from "@utils";
-import ForgotPasswordForm from "@components/ForgotPasswordForm";
+import ForgotPasswordForm from "@components/ForgotPasswordModel";
 import { useDemo } from "@hooks";
 
 
@@ -66,7 +66,7 @@ export default memo(function LoginForm({ onLogin, setCurrentForm, onLoginRedirec
                 <div className="mb-3">
                     <div>
                         <label htmlFor="password" className="form-label">Password:</label>
-                        <Link onClick={() => setShow(prev => !prev)} className="float-end">Forgot password?</Link>
+                        <Link onClick={() => setCurrentForm("FORGOT_PASSWORD")} className="float-end">Forgot password?</Link>
                     </div>
                     <input type="password" {...formik.getFieldProps("password")} id="password" className="form-control" />
                 </div>

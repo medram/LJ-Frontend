@@ -9,7 +9,7 @@ import SuperButton from "../components/SuperButton";
 import { useAuth } from "../hooks/auth";
 import { toastFormikErrors } from "../utils";
 import BasePage from "./layouts/BasePage";
-import ForgotPasswordForm from "../components/ForgotPasswordForm";
+import ForgotPasswordModel from "../components/ForgotPasswordModel";
 import { useDemo } from "../hooks";
 
 
@@ -89,7 +89,7 @@ export default function LoginPage() {
                 </div>
             </section>
 
-            <ForgotPasswordForm show={show} onHide={() => setShow(prev => !prev)} setShow={setShow} />
+            <ForgotPasswordModel show={show} onHide={() => setShow(prev => !prev)} setShow={setShow} />
         </BasePage>
     )
 }

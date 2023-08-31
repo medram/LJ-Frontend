@@ -229,12 +229,13 @@ export function useClickOutside(callback) {
     const ref = useRef(null)
 
     useEffect(() => {
-
-        function handleClickOutside(event)
-        {
+        const handleClickOutside = (event) => {
             if (ref.current && !ref.current.contains(event.target))
             {
-                callback(event)
+                if (typeof callback === "function")
+                {
+                    callback(event)
+                }
             }
         }
 

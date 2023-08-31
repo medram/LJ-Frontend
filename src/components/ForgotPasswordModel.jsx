@@ -7,7 +7,7 @@ import { sendPasswordResetEmail } from "../api/auth"
 import { toast } from "react-toastify"
 
 
-export default function ForgotPasswordForm({ show=false, onHide, setShow })
+export default function ForgotPasswordModel({ show=false, onHide, setShow })
 {
     const formik = useFormik({
         initialValues: {
@@ -48,7 +48,7 @@ export default function ForgotPasswordForm({ show=false, onHide, setShow })
                 <form onSubmit={formik.handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Enter your email address:</label>
-                        <input type="text" id="email" className="form-control form-control-lg" {...formik.getFieldProps("email")} />
+                        <input type="text" id="email" className="form-control" {...formik.getFieldProps("email")} />
                     </div>
                 </form>
             </Modal.Body>
