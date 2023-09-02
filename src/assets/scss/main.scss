@@ -805,12 +805,19 @@ section .section-sub-title {
     .playground-chat-section .container {
         width: 100%;
     }
+
 }
 
 @media screen and (max-width: 768px)
 {
     .jumbotron .left-side {
         align-items: stretch;
+    }
+
+    nav .navbar-right .avatar-dropdown {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 

@@ -84,7 +84,7 @@ $font-secondary: lighten($font-color, 50);
     z-index: 3 !important;
     position: fixed;
     top: 0;
-    border-bottom: 1px solid lighten($primary, 65%);
+    border-bottom: 1px solid lighten($primary, 60%);
 }
 
 .dashboard .dashboard-header .bars {

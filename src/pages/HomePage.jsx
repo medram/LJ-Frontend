@@ -8,7 +8,6 @@ import TablerIcon from "@components/TablerIcon";
 import { IconCloudUpload } from "@tabler/icons-react";
 import { useState } from "react";
 import { useLoginRegister, useModel } from "@hooks/templates";
-import LoginRegisterForms from "@components/forms/LoginRegisterForms";
 import { useUser } from "@hooks/auth";
 import { useNavigate } from "react-router";
 
@@ -106,8 +105,8 @@ export default function HomePage()
                                 </div>
                             </div>
                         </div>
-                            <div className="col">
 
+                        <div className="col">
                             <div className="feature">
                                 <div className="feature-header"><FontAwesomeIcon icon={faBook} /> Summarization</div>
                                 <div className="feature-body">

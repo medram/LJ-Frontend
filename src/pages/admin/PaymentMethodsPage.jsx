@@ -1,7 +1,7 @@
-import { useDashboardSettings, useDemo } from "../../hooks"
-import SectionLoading from "../../components/SectionLoading"
-import PayPalSettings from "../../components/dashboard/PayPalSettings"
-import StripeSettings from "../../components/dashboard/StripeSettings"
+import { useDashboardSettings, useDemo } from "@hooks"
+import SectionLoading from "@components/SectionLoading"
+import PayPalSettings from "@components/dashboard/PayPalSettings"
+import StripeSettings from "@components/dashboard/StripeSettings"
 
 
 export default function PaymentMethodsPage()
@@ -22,7 +22,6 @@ export default function PaymentMethodsPage()
             <div className="row">
                 <div className="col-12 col-md-6">
                     <PayPalSettings settings={settings} />
-                    <StripeSettings settings={settings} />
                 </div>
             </div>
 
