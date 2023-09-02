@@ -743,10 +743,30 @@ section .section-sub-title {
 }
 
 .blue-section {
-    background: aliceblue;
+    background: $primary;
+    color: #FFF;
+}
+
+.blue-section .feature {
+    color: #FFF;
+    background-color: darken($primary, 5%);
+    border: none;
+}
+
+.blue-section .feature .feature-header {
+    color: lighten($primary, 50%);
+}
+
+.blue-section .feature .feature-body {
+    color: lighten($primary, 40%);
 }
 
 /*########################## Features ############################*/
+
+.section {
+    padding-top: 4em;
+    padding-bottom: 4em;
+}
 
 .feature {
     text-align: left;
@@ -756,6 +776,7 @@ section .section-sub-title {
     margin-top: 2em;
     border: 1px dashed lighten($primary, 50%);
     border-radius: $border-radius * 2;
+    background-color: #FFF;
 }
 
 .feature .feature-header {
@@ -766,7 +787,7 @@ section .section-sub-title {
 }
 
 .feature .feature-body {
-    color: lighten($primary, 25%);
+    color: lighten($primary, 20%);
 }
 
 /*####################### Blured Overrlay ########################*/

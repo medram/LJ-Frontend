@@ -72,7 +72,7 @@ export default function HomePage()
                 </div>
             </section>
 
-            <section className="container-fluid">
+            <section className="container-fluid section blue-section">
                 <div className="container py-5 text-center">
                     <h2 className="section-title">What does it include?</h2>
                     <span className="section-sub-title">{settings?.SITE_NAME} includes the following features</span>
@@ -118,7 +118,7 @@ export default function HomePage()
                 </div>
             </section>
 
-            <section className="container-fluid blue-section">
+            <section className="container-fluid section">
                 <div className="container py-5 text-center">
                     <h2 className="section-title">Useful to Whom?</h2>
                     <span className="section-sub-title">{settings?.SITE_NAME} is a useful tool for everyone that seeks knowledge.</span>
