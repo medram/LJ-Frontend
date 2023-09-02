@@ -722,6 +722,10 @@ nav .dropdown-menu> :hover {
     font-weight: bolder;
 }
 
+.jumbotron .dropzone {
+    min-height: 12em;
+}
+
 .text-gradient-primary {
     background: linear-gradient(to right, #6366f1, #8B5CF6, #D946EF);
     background-clip: text;
