@@ -54,7 +54,7 @@ export function SubscriptionsPage() {
                 })
             }
         })
-    }, [])
+    }, [isDemo])
 
     const columns = useMemo(() => [
         {
