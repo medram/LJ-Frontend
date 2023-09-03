@@ -8,6 +8,7 @@ import { useCurrentSubscription } from "@hooks/account"
 import { IconCircleCheck } from "@tabler/icons-react"
 import { useLoginRegister } from "@hooks/templates"
 import TablerIcon from "./TablerIcon"
+import { MotionItem, MotionDiv } from "./animations"
 
 
 export default function PricingCards({ yearly })
@@ -34,13 +35,31 @@ export default function PricingCards({ yearly })
 
 
     return (
-        <div className="pricing-section">
+        <MotionDiv className="pricing-section" key={plansToRender}>
+
             {!plansToRender?.length && (
                 <span>No available plans found!</span>
             )}
             {plansToRender?.map((plan, i) => {
                 return (
-                    <div className={plan.is_popular ? "pricing-card popular" : "pricing-card"} key={i}>
+                    <MotionItem className={plan.is_popular ? "pricing-card popular" : "pricing-card"} key={plan.id}
+                    variants={{
+                        hidden: {
+                            opacity: 0,
+                            transform: "translateY(20px) scale(0.8)",
+                        },
+                        show: {
+                            opacity: 1,
+                            transform: "translateY(0) scale(1)",
+                            transition: {
+                                duration: 0.6,
+                                ease: "backOut",
+                            },
+                        },
+
+                    }}
+                    >
+
                         <div className="pricing-title">{plan.name}</div>
                         <div className="pricing">{settings?.CURRENCY_SYMBOL}{plan.price}<span className="small-text">/{yearly ? "year" : "month"}</span></div>
                         <div className="text-center">{plan.description}</div>
@@ -74,7 +93,8 @@ export default function PricingCards({ yearly })
                                 })}
                             </ul>
                         </div>
-                    </div>
+
+                    </MotionItem>
                 )
             })}
 
@@ -82,6 +102,6 @@ export default function PricingCards({ yearly })
                 title="Please Sign-in to continue"
                 onLogin={() => close()}
             />
-        </div>
+        </MotionDiv>
     )
 }

@@ -1,6 +1,8 @@
 import { memo, useCallback, useState } from "react"
 import { useClickOutside } from "."
 import LoginRegisterForms from "@components/forms/LoginRegisterForms"
+import { MotionModel, MotionModelContent } from "@components/animations"
+import { AnimatePresence } from "framer-motion"
 
 
 export function useOffCanvas()
@@ -53,29 +55,35 @@ export function useModel() {
     const Model = useCallback(function({ title, children, footer, center=true }){
 
         return (
-            <div
-                className={isOpen ? "modal show" : "modal"}
-                style={{ display: isOpen ? "block" : "none" }}
-                id={ID}
-                tabIndex="-1"
-            >
-                <div className={["modal-dialog", center && "modal-dialog-centered" ].join(" ")} role="document" ref={ref}>
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">{title}</h5>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                                onClick={close}
-                            ></button>
-                        </div>
-                        <div className="modal-body">{children}</div>
-                        {footer && <div className="modal-footer">{footer}</div>}
+            <AnimatePresence>
+                {isOpen && <MotionModel
+                    className="modal show"
+                    style={{ display: "block" }}
+                    //className={isOpen ? "modal show" : "modal"}
+                    //style={{ display: isOpen ? "block" : "none" }}
+                    id={ID}
+                    tabIndex="-1"
+                >
+                    <div className={["modal-dialog", center && "modal-dialog-centered" ].join(" ")} role="document" ref={ref}>
+
+                        <MotionModelContent className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">{title}</h5>
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    onClick={close}
+                                ></button>
+                            </div>
+                            <div className="modal-body">{children}</div>
+                            {footer && <div className="modal-footer">{footer}</div>}
+                        </MotionModelContent>
+
                     </div>
-                </div>
-            </div>
+                </MotionModel>}
+            </AnimatePresence>
         )
     }, [isOpen])
 
