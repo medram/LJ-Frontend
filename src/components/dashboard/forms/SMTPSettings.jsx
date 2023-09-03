@@ -12,8 +12,10 @@ import Switch from "../../Switch";
 import PasswordInput from "../../PasswordInput";
 import { useCallback, useState } from "react";
 import { Modal } from "react-bootstrap";
-import SendTestEmailModelForm from "./SendTestEmailModelForm";
+import SendTestEmailModelForm from "./SendTestEmailForm";
 import { useDemo } from "../../../hooks";
+import { useModel } from "@hooks/templates";
+import SendTestEmailForm from "./SendTestEmailForm";
 
 
 const SMTP_MAIL_ENCRIPTION_OPTIONS = [
@@ -25,7 +27,7 @@ const SMTP_MAIL_ENCRIPTION_OPTIONS = [
 export default function SMTPSettings({ settings }) {
     const { isDemo } = useDemo()
     const queryClient = useQueryClient()
-    const [showSendEmailForm, setShowSendEmailForm ] = useState(false)
+    const { isOpen: showSendEmailForm, open: openSendEmailForm, close: closeSendEmailForm, Model: SendEmailTestModel  } = useModel()
 
     const formik = useFormik({
         initialValues: {
@@ -113,14 +115,16 @@ export default function SMTPSettings({ settings }) {
 
                     <SuperButton className="btn btn-primary" onClick={(e) => {
                             e.preventDefault()
-                            setShowSendEmailForm(true)
+                            openSendEmailForm()
                         }}>
                         <FontAwesomeIcon icon={faPaperPlane} /> Send a test email
                     </SuperButton>
                 </div>
             </form>
 
-            <SendTestEmailModelForm show={showSendEmailForm} onHide={() => setShowSendEmailForm(false)} setShow={setShowSendEmailForm} />
+            <SendEmailTestModel title="Send a test email">
+                <SendTestEmailForm onSuccess={() => closeSendEmailForm()} />
+            </SendEmailTestModel>
         </>
     )
 }

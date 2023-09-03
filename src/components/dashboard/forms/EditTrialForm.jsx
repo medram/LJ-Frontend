@@ -16,7 +16,7 @@ export default function EditTrialForm({ plans, close })
     const [ isSubmitting, setSubmitting ] = useState(false)
     const queryClient = useQueryClient()
 
-    const TRIAL_PLANS = ([{ label: "none", value: 0 }]).concat(plans.map((plan) => {
+    const TRIAL_PLANS = ([{ label: "none", value: 0 }]).concat((plans.filter((plan) => plan.billing_cycle === "monthly")).map((plan) => {
         if (plan.billing_cycle === "monthly")
             return {
                 label: `${plan.name} (${settings?.CURRENCY_SYMBOL}${plan.price}/month)`,

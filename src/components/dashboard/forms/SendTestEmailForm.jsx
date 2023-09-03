@@ -7,7 +7,7 @@ import { sendTestEmail } from "../../../api/admin"
 import { toastFormikErrors } from "../../../utils"
 
 
-export default function SendTestEmailModelForm({ show, onHide, setShow })
+export default function SendTestEmailForm({ onSuccess })
 {
     const formik = useFormik({
         initialValues: {
@@ -21,7 +21,8 @@ export default function SendTestEmailModelForm({ show, onHide, setShow })
                 if (!data.errors) {
                     toast.success(data.message)
                     formik.resetForm()
-                    setShow(!show)
+                    if (typeof onSuccess === "function")
+                        onSuccess()
                 }
                 else
                     toast.error(data.message)
@@ -39,21 +40,15 @@ export default function SendTestEmailModelForm({ show, onHide, setShow })
     }
 
     return (
-        <Modal show={show} onHide={onHide}>
-            <Modal.Header closeButton>
-                <Modal.Title>Send a Test Email Message</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <form onSubmit={formik.handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Enter your email address:</label>
-                        <input type="text" id="email" className="form-control form-control-lg" {...formik.getFieldProps("email")} />
-                    </div>
-                </form>
-            </Modal.Body>
-            <Modal.Footer>
-                <SuperButton type="submit" className="btn btn-primary" isLoading={formik.isSubmitting} onClick={submitForm}>Send Test Email</SuperButton>
-            </Modal.Footer>
-        </Modal>
+        <>
+            <form onSubmit={formik.handleSubmit}>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Enter your email address:</label>
+                    <input type="text" id="email" className="form-control" {...formik.getFieldProps("email")} />
+                </div>
+
+            </form>
+            <SuperButton type="submit" className="btn btn-primary float-end" isLoading={formik.isSubmitting} onClick={submitForm}>Send Test Email</SuperButton>
+        </>
     )
 }
