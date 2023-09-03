@@ -10,9 +10,6 @@ import { useQueryClient } from "react-query";
 import * as Yup from "yup"
 import Switch from "../../Switch";
 import PasswordInput from "../../PasswordInput";
-import { useCallback, useState } from "react";
-import { Modal } from "react-bootstrap";
-import SendTestEmailModelForm from "./SendTestEmailForm";
 import { useDemo } from "../../../hooks";
 import { useModel } from "@hooks/templates";
 import SendTestEmailForm from "./SendTestEmailForm";

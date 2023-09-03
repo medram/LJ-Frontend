@@ -59,8 +59,6 @@ export function useModel() {
                 {isOpen && <MotionModel
                     className="modal show"
                     style={{ display: "block" }}
-                    //className={isOpen ? "modal show" : "modal"}
-                    //style={{ display: isOpen ? "block" : "none" }}
                     id={ID}
                     tabIndex="-1"
                 >
