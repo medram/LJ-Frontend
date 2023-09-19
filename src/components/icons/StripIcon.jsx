@@ -1,5 +1,6 @@
+import stripeLogo from "@images/payment-gateways-icons/stripe.png"
 
 export default function StripIcon({ ...rest })
 {
-    return <img src="https://i.imgur.com/sfi6psq.png" alt="Strip" height={45} {...rest} />
+    return <img src={stripeLogo} alt="Stripe" height={45} {...rest} />
 }

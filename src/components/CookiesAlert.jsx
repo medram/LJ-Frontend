@@ -1,5 +1,7 @@
 import { useLocalStorage } from "../hooks"
 
+import cookieIcon from "@images/cookie-icon.png"
+
 
 export default function CookiesAlert({
     message =`Cookies help us improve your website experience, By using our website, you agree to our use of cookies.`,
@@ -14,7 +16,7 @@ export default function CookiesAlert({
         <div className="cookie-alert" >
             <div className="cookie-img">
                 <img
-                    src="https://i.imgur.com/xXUc6kM.png"
+                    src={cookieIcon}
                     alt="cookie policy icon"
                 />
             </div>
