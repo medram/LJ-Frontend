@@ -564,7 +564,17 @@ nav .dropdown-menu> :hover {
 .playground-chat-section .chats .container .ai-message {
     background-color: #f0f0f0;
     color: lighten($primary, 10%);
-    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    position: relative;
+}
+
+.playground-chat-section .chats .container .ai-message .avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 1em;
+    position: absolute;
+    top: -0.8em;
+    left: -80px;
 }
 
 .playground-chat-section .chats .container .ai-message > p {

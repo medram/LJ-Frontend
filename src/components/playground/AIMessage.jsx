@@ -1,4 +1,4 @@
-
+import AIAvatar from "@images/playground/AI-avatar3.png"
 
 export default function AIMessage({ content })
 {
@@ -6,6 +6,8 @@ export default function AIMessage({ content })
 
     return (
         <div className="message ai-message">
+            <img src={AIAvatar} className="avatar" />
+
             {parsedContent}
         </div>
     )
