@@ -1,4 +1,4 @@
-import AIAvatar from "@images/playground/AI-avatar3.png"
+import AIAvatar from "@images/playground/AI-avatar.png"
 
 export default function AIMessage({ content })
 {

@@ -1,16 +1,18 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BasePage from "./layouts/BasePage";
-import { faBook, faBookOpenReader, faCircleQuestion, faClockRotateLeft, faCloudArrowUp, faCommentDots, faGraduationCap, faHourglass2, faPeopleGroup, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useSettings } from "../hooks";
 import Dropzone from "@components/Dropzone";
 import SpinnerGrow from "@components/SpinnerGrow";
 import TablerIcon from "@components/TablerIcon";
-import { IconCloudUpload } from "@tabler/icons-react";
+import { IconCloudUpload, IconHourglassHigh, IconSchool, IconUsersGroup, IconZoomQuestion } from "@tabler/icons-react";
 import { useState } from "react";
 import { useLoginRegister, useModel } from "@hooks/templates";
 import { useUser } from "@hooks/auth";
 import { useNavigate } from "react-router";
 import { MotionItem, MotionViewport } from "@components/animations";
+import { IconBrandHipchat } from "@tabler/icons-react";
+import { IconHistory } from "@tabler/icons-react";
+import { IconFileSearch } from "@tabler/icons-react";
+import { IconBook } from "@tabler/icons-react";
 
 
 export default function HomePage()
@@ -91,7 +93,7 @@ export default function HomePage()
                             <div className="col">
                                 <MotionItem>
                                     <div className="feature">
-                                        <div className="feature-header"><FontAwesomeIcon icon={faCommentDots} /> Chat with your Documents</div>
+                                        <div className="feature-header"><TablerIcon icon={IconBrandHipchat} size={40} /> Chat with your Documents</div>
                                         <div className="feature-body">
                                             Upload your document then start interacting with it immediately.
                                         </div>
@@ -101,7 +103,7 @@ export default function HomePage()
                             <div className="col">
                                 <MotionItem>
                                     <div className="feature">
-                                        <div className="feature-header"><FontAwesomeIcon icon={faCircleQuestion} /> Quick starting questions</div>
+                                        <div className="feature-header"><TablerIcon icon={IconZoomQuestion} size={40} /> Quick starting questions</div>
                                         <div className="feature-body">
                                             Upload your document and start asking questions right away.
                                         </div>
@@ -111,7 +113,7 @@ export default function HomePage()
                             <div className="col">
                                 <MotionItem>
                                     <div className="feature">
-                                        <div className="feature-header"><FontAwesomeIcon icon={faClockRotateLeft} /> Chat history</div>
+                                        <div className="feature-header"><TablerIcon icon={IconHistory} size={40} /> Chat history</div>
                                         <div className="feature-body">
                                             The {settings?.SITE_NAME} chat bot remembers the chat history of the conversation.
                                         </div>
@@ -121,9 +123,9 @@ export default function HomePage()
                             <div className="col">
                                 <MotionItem>
                                     <div className="feature">
-                                        <div className="feature-header"><FontAwesomeIcon icon={faBook} /> Summarization</div>
+                                        <div className="feature-header"><TablerIcon icon={IconFileSearch} size={40} /> Summarization</div>
                                         <div className="feature-body">
-                                            summarize your document the quick way.
+                                            summarize your documents the quick way.
                                         </div>
                                     </div>
                                 </MotionItem>
@@ -144,7 +146,7 @@ export default function HomePage()
                             <div className="col">
                                 <MotionItem>
                                     <div className="feature">
-                                        <div className="feature-header"><FontAwesomeIcon icon={faGraduationCap} /> Students</div>
+                                        <div className="feature-header"><TablerIcon icon={IconSchool} size={40} /> Students</div>
                                         <div className="feature-body">
                                             Help students study efficently by looking up information quickly through chating with their documents.
                                         </div>
@@ -154,7 +156,7 @@ export default function HomePage()
                             <div className="col">
                                 <MotionItem>
                                     <div className="feature">
-                                        <div className="feature-header"><FontAwesomeIcon icon={faBookOpenReader} /> Researchers</div>
+                                        <div className="feature-header"><TablerIcon icon={IconBook} size={40} /> Researchers</div>
                                         <div className="feature-body">
                                             Keep researchers up-to-date with the latest studies/papers.
                                         </div>
@@ -164,7 +166,7 @@ export default function HomePage()
                             <div className="col">
                                 <MotionItem>
                                     <div className="feature">
-                                        <div className="feature-header"><FontAwesomeIcon icon={faPeopleGroup} /> Lazy People</div>
+                                        <div className="feature-header"><TablerIcon icon={IconUsersGroup} size={40} /> Lazy People</div>
                                         <div className="feature-body">
                                             {settings?.SITE_NAME} is convenient for lazy people that don't want to read a lot of content.
                                         </div>
@@ -174,7 +176,7 @@ export default function HomePage()
                             <div className="col">
                                 <MotionItem>
                                     <div className="feature">
-                                        <div className="feature-header"><FontAwesomeIcon icon={faHourglass2} /> Whom don't have time</div>
+                                        <div className="feature-header"><TablerIcon icon={IconHourglassHigh} size={40} /> Who don't have time</div>
                                         <div className="feature-body">
                                             {settings?.SITE_NAME} is great for people that don't have much time to go through pages of content to look up information.
                                         </div>
