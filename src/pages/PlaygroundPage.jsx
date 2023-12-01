@@ -18,6 +18,7 @@ import SpinnerGrow from "../components/SpinnerGrow";
 import { deleteChatRoom } from "../api/account";
 import TablerIcon from "../components/TablerIcon";
 import { IconBolt, IconCloudUpload, IconSparkles } from "@tabler/icons-react";
+import { VALID_DOCUMENT_TYPES, getAvailableDocumentTypes, getAvailableDocumentTypesString } from "@utils/index";
 
 
 const onUpload = ({
@@ -241,7 +242,7 @@ export default function PlaygroundPage()
                                 setDemoSubscription,
                                 queryClient,
                             }} dropzoneOptions={{
-                                accept: { 'application/pdf': ['.pdf'] },
+                                accept: getAvailableDocumentTypes(),
                                 maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
                             }} >
                                 {isProcessing ? (
@@ -254,7 +255,10 @@ export default function PlaygroundPage()
                                     ) : (
                                         <div className="text-center">
                                             <b><FontAwesomeIcon icon={faPlus} /> New Chat</b>
-                                            <p>Drag & Drop your PDF</p>
+                                            <p>
+                                                Drag & Drop your Document<br />
+                                                <small>({getAvailableDocumentTypesString()})</small>
+                                            </p>
                                         </div>
                                     )
                                 )}
@@ -358,7 +362,7 @@ export default function PlaygroundPage()
                                 <div className="w-50">
                                     {(subscription || demoSubscription) && (
                                         <div className="text-center">
-                                            <h3>Upload your PDF to chat with.</h3>
+                                            <h3>Upload your Document to chat with.</h3>
                                             <Dropzone onUpload={onUpload} onError={onError} name="pdf-file"
                                                 extraOnUploadProps={{
                                                     createChatRoom,
@@ -369,7 +373,7 @@ export default function PlaygroundPage()
                                                     setDemoSubscription,
                                                     queryClient,
                                                 }} dropzoneOptions={{
-                                                    accept: { 'application/pdf': ['.pdf'] },
+                                                    accept: getAvailableDocumentTypes(),
                                                     maxSize: 50 * 1024 * 1024, // (in bytes) 50 MB
                                                 }} >
                                                 {isProcessing ? (
@@ -381,7 +385,10 @@ export default function PlaygroundPage()
                                                         <FontAwesomeIcon icon={faPlus} />
                                                     ) : (
                                                         <div className="text-center">
-                                                            <b><TablerIcon icon={IconCloudUpload} size={40} /><br /> Upload you PDF</b>
+                                                            <b><TablerIcon icon={IconCloudUpload} size={40} /><br />
+                                                                Upload you Document<br />
+                                                                ({getAvailableDocumentTypesString()})
+                                                            </b>
                                                             <p>(Drag & Drop)</p>
                                                         </div>
                                                     )
