@@ -581,6 +581,13 @@ nav .dropdown-menu> :hover {
     margin-bottom: 0;
 }
 
+.playground-chat-section .chats .container .ai-message pre {
+    background: #3a3a3a;
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    color: beige;
+}
+
 .chat-label {
     // background-color: lighten($primary, 9%);
     padding: 0.6em 0.5em;
