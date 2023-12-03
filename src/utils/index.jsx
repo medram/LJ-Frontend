@@ -5,13 +5,13 @@ import { toast } from "react-toastify";
 export const VALID_DOCUMENT_TYPES = [
     { ext: "pdf",   mimetype: "application/pdf" },
     { ext: "csv",   mimetype: "text/csv" },
-    { ext: "doc",   mimetype: "application/msword" },
+    // { ext: "doc",   mimetype: "application/msword" },
+    // { ext: "xls",   mimetype: "application/vnd.ms-excel" },
+    // { ext: "ppt",   mimetype: "application/vnd.ms-powerpoint" },
     { ext: "docx",  mimetype: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
-    { ext: "xls",   mimetype: "application/vnd.ms-excel" },
     { ext: "xlsx",  mimetype: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
     { ext: "txt",   mimetype: "text/plain" },
     { ext: "json",  mimetype: "application/json" },
-    { ext: "ppt",   mimetype: "application/vnd.ms-powerpoint" },
     { ext: "pptx",  mimetype: "application/vnd.openxmlformats-officedocument.presentationml.presentation" },
     { ext: "epub",  mimetype: "application/epub+zip" },
 ]
