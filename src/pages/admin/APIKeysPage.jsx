@@ -1,10 +1,13 @@
+import SectionLoading from "@components/SectionLoading"
 import APISettings from "../../components/dashboard/forms/APISettings"
 import { useDashboardSettings } from "../../hooks"
 
 export default function APIKeysPage()
 {
-    const { settings } = useDashboardSettings()
+    const { settings, isLoading } = useDashboardSettings()
 
+    if (isLoading)
+        return <SectionLoading center={true} />
 
     return (
         <>
