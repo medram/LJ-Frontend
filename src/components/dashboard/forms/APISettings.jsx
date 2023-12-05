@@ -1,12 +1,13 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import { toastFormikErrors } from "../../../utils"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Select from "react-select"
 import { faFloppyDisk, faInfoCircle } from "@fortawesome/free-solid-svg-icons"
-import SuperButton from "../../SuperButton"
-import { saveDashboardSettings } from "../../../api/admin"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useQueryClient } from "react-query"
 import { toast } from "react-toastify"
+import { AVAILABLE_AI_MODELS, toastFormikErrors } from "../../../utils"
+import SuperButton from "../../SuperButton"
+import { saveDashboardSettings } from "../../../api/admin"
 import PasswordInput from "../../PasswordInput"
 import { registerOpenAIKey } from "../../../api/account"
 import { useDemo } from "../../../hooks"
@@ -20,11 +21,22 @@ export default function APISettings({ settings })
     const formik = useFormik({
         initialValues: {
             OPENAI_API_KEY: settings.OPENAI_API_KEY,
+            CHAT_AGENT_MODEL: settings.CHAT_AGENT_MODEL,
+            CHAT_SUMMARIZATION_MODEL: settings.CHAT_SUMMARIZATION_MODEL,
+            CHAT_AGENT_MODEL_TEMP: settings.CHAT_AGENT_MODEL_TEMP,
+            CHAT_SUMMARIZATION_MODEL_TEMP: settings.CHAT_SUMMARIZATION_MODEL_TEMP,
+
             RAPID_API_KEY: settings.RAPID_API_KEY,
             RAPID_API_HOST: settings.RAPID_API_HOST
         },
+        enableReinitialize: true,
         validationSchema: Yup.object({
             OPENAI_API_KEY: Yup.string().required("The OpenAI API Key is required"),
+            CHAT_AGENT_MODEL: Yup.string().required("The Chat Agent Model is required"),
+            CHAT_SUMMARIZATION_MODEL: Yup.string().required("The Chat Summarization Model is required"),
+            CHAT_AGENT_MODEL_TEMP: Yup.number().required("The Agent Model Temperature is required").min(0).max(1),
+            CHAT_SUMMARIZATION_MODEL_TEMP: Yup.number().required("The Summarization Model Temperature is required").min(0).max(1),
+
             RAPID_API_KEY: Yup.string().required("The Rapid API Key is required"),
             RAPID_API_HOST: Yup.string().required("The Rapid API Host is required")
         }),
@@ -68,6 +80,16 @@ export default function APISettings({ settings })
         }
     })
 
+    const selectedChatAgentModel = {
+        label: settings.CHAT_AGENT_MODEL,
+        value: settings.CHAT_AGENT_MODEL
+    }
+
+    const selectedChatSummarizationModel = {
+        label: settings.CHAT_SUMMARIZATION_MODEL,
+        value: settings.CHAT_SUMMARIZATION_MODEL
+    }
+
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -76,6 +98,30 @@ export default function APISettings({ settings })
             <div className="mb-4">
                 <label htmlFor="openai_api_key">OpenAI API Key:</label>
                 <PasswordInput placeholder="e.g. sk-xxxxxxxxxxxxxxx" id="openai_api_key" {...formik.getFieldProps("OPENAI_API_KEY")} />
+            </div>
+
+            <div className="row mb-3">
+                <div className="mb-6 col-md-6">
+                    <label htmlFor="openai-model">Chat Agent Model:</label>
+
+                    <Select options={AVAILABLE_AI_MODELS} id="openai-model" defaultValue={selectedChatAgentModel} onChange={(option) => formik.setFieldValue("CHAT_AGENT_MODEL", option.value)} />
+                </div>
+                <div className="mb-6 col-md-5">
+                    <label htmlFor="chat_agent_model_temp">Temperature <FontAwesomeIcon icon={faInfoCircle} title="Value between 0 and 1 (0 = precise | 1 = Creative)" /> :</label>
+                    <input type="number" min={0} max={1} step={0.1} className="form-control" id="chat_agent_model_temp" {...formik.getFieldProps("CHAT_AGENT_MODEL_TEMP")} />
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="mb-6 col-md-6">
+                    <label htmlFor="openai-sum-model">Chat Summarization Model:</label>
+
+                    <Select options={AVAILABLE_AI_MODELS} id="openai-sum-model" defaultValue={selectedChatSummarizationModel} onChange={(option) => formik.setFieldValue("CHAT_SUMMARIZATION_MODEL", option.value)} />
+                </div>
+                <div className="mb-6 col-md-5">
+                    <label htmlFor="chat_summarization_model_temp">Temperature <FontAwesomeIcon icon={faInfoCircle} title="Value between 0 and 1 (0 = precise | 1 = Creative)" /> :</label>
+                    <input type="number" min={0} max={1} step={0.1} className="form-control" id="chat_summarization_model_temp" {...formik.getFieldProps("CHAT_SUMMARIZATION_MODEL_TEMP")} />
+                </div>
             </div>
 
             <hr className="my-5 text-muted"/>
@@ -88,6 +134,7 @@ export default function APISettings({ settings })
             <div className="mb-4">
                 <label htmlFor="rapid_api_host">Rapid API Host:</label>
                 <input type="text" className="form-control" placeholder="e.g. askpdf1.p.rapidapi.com" id="rapid_api_host" {...formik.getFieldProps("RAPID_API_HOST")} />
+                <small><a href="https://docs.mr4web.com/chatpdf/how-to-get-rapidapi-keys" target="_blank">How to get my Rapid API key?</a></small>
             </div>
 
             <div className="d-flex flex-row-reverse gap-3 mb-4 mt-5">
