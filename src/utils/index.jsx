@@ -1,8 +1,7 @@
 import * as cc from "currency-codes"
 import { toast } from "react-toastify";
 
-
-export const AVAILABLE_AI_MODELS = [
+export const AVAILABLE_AI_CHAT_MODELS = [
     { label: "gpt-3.5-turbo",           value: "gpt-3.5-turbo" },
     { label: "gpt-3.5-turbo-0301",      value: "gpt-3.5-turbo-0301" },
     { label: "gpt-3.5-turbo-0613",      value: "gpt-3.5-turbo-0613" },
@@ -13,6 +12,16 @@ export const AVAILABLE_AI_MODELS = [
     { label: "gpt-4-0314",              value: "gpt-4-0314" },
     { label: "gpt-4-0613",              value: "gpt-4-0613" },
     { label: "gpt-4-1106-preview",      value: "gpt-4-1106-preview" },
+]
+
+export const AVAILABLE_AI_COMPLETE_MODELS = [
+    { label: "text-davinci-003",        value: "text-davinci-003" },
+    { label: "text-curie-001",          value: "text-curie-001" },
+]
+
+export const AVAILABLE_AI_MODELS = [
+    ...AVAILABLE_AI_COMPLETE_MODELS,
+    ...AVAILABLE_AI_CHAT_MODELS,
 ]
 
 export const VALID_DOCUMENT_TYPES = [

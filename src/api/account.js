@@ -68,9 +68,9 @@ export async function deleteChatRoom(uuid)
 }
 
 
-export async function registerOpenAIKey(openai_key)
+export async function updateAIModelSettings(payload)
 {
-    const req = await axiosApi.post("/user/chat/register-openai-key", {openai_key})
+    const req = await axiosApi.post("/user/chat/ai-model-settings/update", payload)
     return req
 }
 
