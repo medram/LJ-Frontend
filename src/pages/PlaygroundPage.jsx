@@ -120,8 +120,8 @@ export default function PlaygroundPage()
 {
     const { isDemo } = useDemo()
     const [ getDemoSubscription, setDemoSubscription ] = useNaiveLocalStorage("demo_sub", {
-        pdfs: 2,
-        questions: 10,
+        pdfs: 4,
+        questions: 20,
         created_at: new Date().getTime()
     })
 
