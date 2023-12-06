@@ -566,6 +566,7 @@ nav .dropdown-menu> :hover {
     color: lighten($primary, 10%);
     border-top-left-radius: 0;
     position: relative;
+    max-width: 100%;
 }
 
 .playground-chat-section .chats .container .ai-message .avatar {
