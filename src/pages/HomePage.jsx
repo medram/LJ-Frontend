@@ -67,7 +67,8 @@ export default function HomePage()
                                                 </div>
                                             ) : (
                                                 <div className="text-center">
-                                                    <b><TablerIcon icon={IconCloudUpload} size={40} /><br /> Upload you PDF to chat with</b>
+                                                    <b><TablerIcon icon={IconCloudUpload} size={40} /><br /> Upload you Document to chat with.</b><br />
+                                                    <small>(pdf, csv, docx, xlsx, txt, json, pptx, epub)</small>
                                                     <p>(Drag & Drop)</p>
                                                 </div>
                                             )}

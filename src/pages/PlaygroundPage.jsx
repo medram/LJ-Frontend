@@ -18,7 +18,7 @@ import SpinnerGrow from "../components/SpinnerGrow";
 import { deleteChatRoom } from "../api/account";
 import TablerIcon from "../components/TablerIcon";
 import { IconBolt, IconCloudUpload, IconSparkles } from "@tabler/icons-react";
-import { VALID_DOCUMENT_TYPES, getAvailableDocumentTypes, getAvailableDocumentTypesString } from "@utils/index";
+import { DEMO_SUBSCRIPTION, DEMO_SUBSCRIPTION_EXPIRE, getAvailableDocumentTypes, getAvailableDocumentTypesString } from "@utils/index";
 
 
 const onUpload = ({
@@ -119,11 +119,7 @@ const onError = (rejectedFiles) => {
 export default function PlaygroundPage()
 {
     const { isDemo } = useDemo()
-    const [ getDemoSubscription, setDemoSubscription ] = useNaiveLocalStorage("demo_sub", {
-        pdfs: 4,
-        questions: 20,
-        created_at: new Date().getTime()
-    })
+    const [ getDemoSubscription, setDemoSubscription ] = useNaiveLocalStorage("demo_sub", DEMO_SUBSCRIPTION)
 
     const demoSubscription = isDemo ? getDemoSubscription() : null;
     const { isExtendedLicense: isEL } = useLCInfo()
@@ -204,14 +200,10 @@ export default function PlaygroundPage()
     }, [uuid, userChatRoomList])
 
     useEffect(() => {
-        if (new Date().getTime() - demoSubscription?.created_at > (12 * 60 * 60 * 1000)) // 12 hours
+        if (new Date().getTime() - demoSubscription?.created_at > (DEMO_SUBSCRIPTION_EXPIRE * 60 * 60 * 1000)) // 12 hours
         {
             // reset the demo subscription
-            setDemoSubscription({
-                pdfs: 2,
-                questions: 10,
-                created_at: new Date().getTime()
-            })
+            setDemoSubscription(DEMO_SUBSCRIPTION)
         }
     }, [])
 
@@ -288,9 +280,9 @@ export default function PlaygroundPage()
                                         <small>- Quota limited for demo only.</small><br />
                                         <small>- Quota reset every 12 hours.</small>
                                         <h3 className="h6">Quota:</h3>
-                                        <span>{demoSubscription?.pdfs} PDFs</span><br />
-                                        <span>Max PDF size: {subscription?.pdf_size}MB/pdf</span><br />
-                                        <span>{demoSubscription?.questions} PDF Questions</span><br />
+                                        <span><b>{demoSubscription?.pdfs}</b> Documents left</span><br />
+                                        <span><b>{demoSubscription?.questions}</b> Document Questions left</span><br />
+                                        <span>Max Document Size: <b>{subscription?.pdf_size}MB/doc</b></span><br />
                                     </div>
                                 </>
                             )}
@@ -303,9 +295,9 @@ export default function PlaygroundPage()
 
                                     <div className="quota">
                                         <h3 className="h6">Available Subscription Quota:</h3>
-                                        <span>{subscription?.pdfs} PDFs left.</span><br />
-                                        <span>Max PDF size: {subscription?.pdf_size}MB/pdf.</span><br />
-                                        <span>{subscription?.questions} PDF Questions left.</span><br />
+                                        <span><b>{subscription?.pdfs}</b> Documents left.</span><br />
+                                        <span><b>{subscription?.questions}</b> Document Questions left.</span><br />
+                                        <span>Max Document Size: <b>{subscription?.pdf_size}MB/doc.</b></span><br />
                                     </div>
                                 </>
                             )}

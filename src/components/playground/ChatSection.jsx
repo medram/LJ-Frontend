@@ -242,11 +242,6 @@ export default function ChatSection({ uuid })
                     <SuperButton className="btn btn-outline-secondary clear-history" isLoading={isClearingChatHistory} title="Clear Chat History" onClick={handleClearChatHistory}><TablerIcon icon={IconTrash} /></SuperButton>
                 </OverlayTrigger>
             </div>
-            <div className="container px-4 mb-2">
-                <small>
-                    <b>Note:</b> if the chat bot didn't know how to access to document or where to look up, just tell him "<b><i>from document?</i></b>".
-                </small>
-            </div>
         </>
     )
 }
