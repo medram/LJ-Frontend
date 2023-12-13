@@ -35,6 +35,14 @@ export const VALID_DOCUMENT_TYPES = [
     { ext: "epub",  mimetype: "application/epub+zip" },
 ]
 
+export const DEMO_SUBSCRIPTION = {
+    pdfs: 4,
+    questions: 20,
+    created_at: new Date().getTime()
+}
+
+export const DEMO_SUBSCRIPTION_EXPIRE = 12 // in Hours
+
 export function getAvailableDocumentTypes()
 {
     const types = {}
