@@ -51,7 +51,7 @@ export default function EditPlanForm({ close, planId }) {
             is_popular: Yup.boolean("Popular field must be boolean"),
             is_free: Yup.boolean("Free Plan field must be boolean"),
             status: Yup.boolean("Status field must be boolean"),
-            pdfs: Yup.number("Pdfs field must be a number."),
+            pdfs: Yup.number("Documents field must be a number."),
             pdf_size: Yup.number("Pdf Size field must be a number."),
             questions: Yup.number("Questions field must be a number."),
             features: Yup.string().nullable(),
@@ -148,17 +148,17 @@ export default function EditPlanForm({ close, planId }) {
 
             <hr />
             <div className="mb-4">
-                <label htmlFor="pdfs">Max PDFs <small>(0 = unlimited)</small>:</label>
+                <label htmlFor="pdfs">Max Documents <small>(0 = unlimited)</small>:</label>
                 <input type="number" className="form-control" placeholder="e.g. 10" id="pdfs" {...formik.getFieldProps("pdfs")} min={0} onChange={(e) => formik.setFieldValue('pdfs', parseInt(e.target.value))} />
             </div>
 
             <div className="mb-4">
-                <label htmlFor="pdf_size">Max PDF size (in MB) <small>(0 = unlimited)</small>:</label>
+                <label htmlFor="pdf_size">Max Document Size (in MB) <small>(0 = unlimited)</small>:</label>
                 <input type="number" className="form-control" placeholder="e.g. 10" id="pdf_size" {...formik.getFieldProps("pdf_size")} min={0} step={0.1} />
             </div>
 
             <div className="mb-4">
-                <label htmlFor="questions">Max questions <small>(0 = unlimited)</small>:</label>
+                <label htmlFor="questions">Max Questions <small>(0 = unlimited)</small>:</label>
                 <input type="number" className="form-control" placeholder="e.g. 10" id="questions" {...formik.getFieldProps("questions")} min={0} onChange={(e) => formik.setFieldValue('questions', parseInt(e.target.value))} />
             </div>
 
