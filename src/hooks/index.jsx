@@ -39,7 +39,7 @@ export function useNaiveLocalStorage(key, value)
 
         }
 
-        return value
+        return null
     }, [])
 
     const setter = useCallback((value) => {
@@ -48,6 +48,7 @@ export function useNaiveLocalStorage(key, value)
         return localStorage.setItem(key, JSON.stringify(value))
     }, [])
 
+    // Register the default value
     if (getter(key) === null)
         setter(value)
     return [getter, setter]
