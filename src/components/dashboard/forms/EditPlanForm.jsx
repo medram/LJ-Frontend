@@ -1,14 +1,14 @@
 import { useFormik } from "formik";
-import * as Yup from "yup"
-import { toastFormikErrors } from "../../../utils";
-import { addPlan, editPlan } from "../../../api/admin";
-import { toast } from "react-toastify";
-import SuperButton from "../../SuperButton";
 import { useQueryClient } from "react-query";
-import Switch from "../../Switch"
 import Select from "react-select";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import { editPlan } from "../../../api/admin";
 import { useDashboardPlan, useSettings } from "../../../hooks";
+import { toastFormikErrors } from "../../../utils";
 import SectionLoading from "../../SectionLoading";
+import SuperButton from "../../SuperButton";
+import Switch from "../../Switch";
 
 
 const BILLING_CYCLE_OPTIONS = [
@@ -141,10 +141,12 @@ export default function EditPlanForm({ close, planId }) {
                 </div>
             )}
 
-            {/* <div className="mb-4">
-                <label htmlFor="stripe-plan-id">Stripe Subscription Plan ID <small><i className="text-danger">(required for Stripe)</i></small>:</label>
-                <input type="text" className="form-control" placeholder="e.g. price_1N9SeE2eZvKYlo2CJwmvOCr6" id="stripe-plan-id" {...formik.getFieldProps("stripe_plan_id")} />
-            </div> */}
+            {!!formik.values.stripe_plan_id && !formik.values.is_free && (
+                <div className="mb-4">
+                    <label htmlFor="stripe-plan-id">Stripe Subscription Plan ID:</label>
+                    <input type="text" className="form-control" placeholder="e.g. price_1OgY8eCu5wfmOdwtc3h" id="stripe-plan-id" value={formik.values.stripe_plan_id} disabled />
+                </div>
+            )}
 
             <hr />
             <div className="mb-4">
