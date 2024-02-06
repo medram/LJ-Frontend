@@ -120,6 +120,12 @@ export async function syncWithPayPal(data)
     return req
 }
 
+export async function syncWithStripe(data)
+{
+    const req = await axiosApi.post(`/admin/sync/stripe`, data)
+    return req
+}
+
 export async function getDashboardAnalytics()
 {
     const req = await axiosApi.get(`/admin/analytics`)
