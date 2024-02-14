@@ -1,3 +1,5 @@
+import PayPalIcon from "@components/icons/PayPalIcon"
+import StripIcon from "@components/icons/StripIcon"
 import SectionLoading from "../../../components/SectionLoading"
 import { useSettings } from "../../../hooks"
 import { useUserInvoices } from "../../../hooks/account"
@@ -36,7 +38,16 @@ export default function InvoicesPage()
                             <tr key={i}>
                                 <td>{invoice.invoice_id}</td>
                                 <td>{settings.CURRENCY_SYMBOL}{invoice.amount}</td>
-                                <td>{invoice.payment_gateway}</td>
+                                <td>
+                                    <>
+                                        {invoice.payment_gateway === "" && "-"}
+                                        {invoice.payment_gateway === "PAYPAL" ? (
+                                            <PayPalIcon height={25} />
+                                        ) : (invoice.payment_gateway === "STRIPE" &&
+                                            <StripIcon height={20} />
+                                        )}
+                                    </>
+                                </td>
                                 <td>{invoice.paid_at ? (
                                     <span className="badge text-bg-success">paid</span>
                                 ) : (

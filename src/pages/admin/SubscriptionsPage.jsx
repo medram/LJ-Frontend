@@ -1,20 +1,19 @@
-import { toast } from "react-toastify"
-import SectionLoading from "../../components/SectionLoading"
-import { usePages, useSubscriptions } from "../../hooks/admin"
+import { faCircleMinus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleMinus, faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
-import { cancelSubscription, deletePage } from "../../api/admin"
-import Swal from "sweetalert2"
-import { useQueryClient } from "react-query"
-import { datetimeFormat } from "../../utils"
+import { useCallback, useMemo, useState } from "react"
 import { Badge, OverlayTrigger, Tooltip } from "react-bootstrap"
-import { useDashboardSettings, useDemo } from "../../hooks"
+import { useQueryClient } from "react-query"
+import { toast } from "react-toastify"
+import Swal from "sweetalert2"
+import { cancelSubscription } from "../../api/admin"
+import AdvancedDataTable from "../../components/AdvancedDataTable"
+import SectionLoading from "../../components/SectionLoading"
+import SuperBotton from "../../components/SuperButton"
 import PayPalIcon from "../../components/icons/PayPalIcon"
 import StripIcon from "../../components/icons/StripIcon"
-import { useCallback, useMemo, useState } from "react"
-import SuperBotton from "../../components/SuperButton"
-import AdvancedDataTable from "../../components/AdvancedDataTable"
+import { useDashboardSettings, useDemo } from "../../hooks"
+import { useSubscriptions } from "../../hooks/admin"
+import { datetimeFormat } from "../../utils"
 
 
 export function SubscriptionsPage() {
@@ -86,11 +85,14 @@ export function SubscriptionsPage() {
                     {subscription.status === 1 ? (
                         <Badge pill bg="success">Active</Badge>
                     ) : (subscription.status === 0 ? (
-                        <Badge pill bg="warning">Expired</Badge>
-                    ) : (subscription.status === 2 &&
+                        <Badge pill bg="black">Expired</Badge>
+                    ) : (subscription.status === 2 ? (
                         <Badge pill bg="danger">Canceled</Badge>
-                    )
-                    )}
+                    ) : (subscription.status === 3 ? (
+                        <Badge pill bg="warning">Suspended</Badge>
+                    ) : (subscription.status === 4) && (
+                        <Badge pill bg="info">Upgraded</Badge>
+                    ))))}
                 </>
             )
         },

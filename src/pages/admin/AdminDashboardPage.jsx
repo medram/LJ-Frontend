@@ -1,12 +1,12 @@
-import { faComment, faDollarSign, faFile, faFileInvoiceDollar, faGem, faImages, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useDashboardSettings, useDemo, useLCInfo } from '../../hooks';
-import SectionLoading from '../../components/SectionLoading';
+import PayPalIcon from '@components/icons/PayPalIcon';
+import StripIcon from '@components/icons/StripIcon';
+import { faComment, faDollarSign, faFile, faFileInvoiceDollar, faGem, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Card } from 'react-bootstrap';
+import SectionLoading from '../../components/SectionLoading';
+import { useDashboardSettings, useLCInfo } from '../../hooks';
 import { useDashboardAnalytics } from '../../hooks/admin';
 import { datetimeFormat } from '../../utils';
-import TablerIcon from '../../components/TablerIcon';
-import { IconEyeDollar } from '@tabler/icons-react';
 
 
 export default function AdminDashboardPage()
@@ -189,13 +189,16 @@ export default function AdminDashboardPage()
                                                     <span className="badge text-bg-success m-1">Free</span>
                                                 )}
                                             </td>
-                                            <td>{subscription.payment_gateway === "PAYPAL" ? (
-                                                <span className="badge rounded-pill bg-info">PayPal</span>
-                                            ) : (
-                                                subscription.payment_gateway === "STRIPE" ? (
-                                                    <span className="badge rounded-pill bg-primary">Stripe</span>
-                                                ) : "-"
-                                            )}</td>
+                                            <td>
+                                                <>
+                                                    {subscription.payment_gateway === "" && "-"}
+                                                    {subscription.payment_gateway === "PAYPAL" ? (
+                                                        <PayPalIcon height={25} />
+                                                    ) : (subscription.payment_gateway === "STRIPE" &&
+                                                        <StripIcon height={20} />
+                                                    )}
+                                                </>
+                                            </td>
                                             <td>{datetimeFormat(subscription.expiring_at)}</td>
                                             <td>{datetimeFormat(subscription.created_at)}</td>
                                         </tr>
