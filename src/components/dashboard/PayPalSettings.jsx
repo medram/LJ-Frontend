@@ -1,15 +1,15 @@
+import { useFormik } from "formik";
+import { memo } from "react";
 import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import { syncWithPayPal } from "../../api/admin";
+import { useDemo } from "../../hooks";
 import { useModel } from "../../hooks/templates";
 import PasswordInput from "../PasswordInput";
+import SuperButton from "../SuperButton";
 import Switch from "../Switch";
 import PayPalIcon from "../icons/PayPalIcon";
-import { useFormik } from "formik";
-import { syncWithPayPal } from "../../api/admin";
-import { toast } from "react-toastify";
-import * as Yup from "yup"
-import { memo } from "react";
-import { useDemo } from "../../hooks";
-import SuperButton from "../SuperButton";
 import GatewayNotes from "./GatewayNotes";
 
 
@@ -77,8 +77,8 @@ export default memo(function PayPalSettings({ settings })
             </div>
 
             <Model title="PayPal Gateway Settings" footer={
-                <SuperButton className="btn btn-primary w-25" onClick={() => formik.submitForm()} isLoading={formik.isSubmitting}>
-                    Save
+                <SuperButton className="btn btn-primary w-100" onClick={() => formik.submitForm()} isLoading={formik.isSubmitting}>
+                    Save & Sync
                 </SuperButton>
             }>
                 <form onSubmit={formik.handleSubmit}>
