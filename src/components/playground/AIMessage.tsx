@@ -2,7 +2,7 @@ import AIAvatar from "@images/playground/AI-avatar.png"
 import Markdown from 'react-markdown'
 
 
-export default function AIMessage({ content })
+export default function AIMessage({ content }: { content: string })
 {
     // const parsedContent = content.split("\n").map((str, i) => <p key={i}>{str}</p>)
 

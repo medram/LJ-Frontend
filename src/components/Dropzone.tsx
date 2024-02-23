@@ -1,6 +1,28 @@
-import { useCallback, useEffect, useState } from "react"
-import { useDropzone } from "react-dropzone"
+import { MouseEventHandler, ReactNode, useCallback, useEffect, useState } from "react"
+import { FileRejection, useDropzone } from "react-dropzone"
 
+
+export type onUploadProps = {
+    files?: File[]
+    setProgress: (progress: number) => void
+    setIsSuccessUpload: React.Dispatch<React.SetStateAction<boolean>>
+    resetDropzone: () => void
+    name?: string,
+    [extraOnUploadProps: string]: unknown
+}
+
+type DropzoneProps = {
+    children: ReactNode,
+    onUpload: (options: onUploadProps) => void,
+    onError: (rejectedFiles: FileRejection[]) => void,
+    uploadMessage?: string,
+    completedUploadMessage?: string,
+    showProgressBar?: boolean,
+    showProgress?: boolean,
+    name?: string,
+    extraOnUploadProps: object,
+    dropzoneOptions: object
+}
 
 export default function Dropzone({
     children,
@@ -10,10 +32,10 @@ export default function Dropzone({
     completedUploadMessage="Uploaded Successfully.",
     showProgressBar=true,
     showProgress=true,
-    name=null,
+    name="",
     extraOnUploadProps={},
     dropzoneOptions={}
-})
+}: DropzoneProps)
 {
     const [isUploading, setIsUploading] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
@@ -29,7 +51,7 @@ export default function Dropzone({
         ...dropzoneOptions
     })
 
-    const setProgress = useCallback((value) => {
+    const setProgress = useCallback((value: number) => {
         value = value > 100 ? 100 : (value < 0 ? 0 : value)
         //if (isUploading)
         setProgressValue(value)
@@ -61,10 +83,9 @@ export default function Dropzone({
         setIsSuccessUpload(false)
     }, [])
 
-    const handleAbort = useCallback((e) => {
-        e.preventDefault()
+    const handleAbort = useCallback((e: MouseEventHandler<HTMLParagraphElement>) => {
         resetDropzone()
-    })
+    }, [])
 
     useEffect(() => {
         if (isCompleted)
@@ -88,12 +109,14 @@ export default function Dropzone({
                         {showProgressBar && <div className="progress" style={{ width: `${progress}%`}}></div>}
                     </div>
                 ) : (
-                    <div {...getRootProps()} className={(isFocused || isDragAccept || isDragActive || isUploading) ? "dropzone focused" : "dropzone"}>
+                    <div {...getRootProps({
+                        className: (isFocused || isDragAccept || isDragActive || isUploading) ? "dropzone focused" : "dropzone"
+                    })} >
+                            <input {...getInputProps()} />
                             {children ? children : (
                                 <>
                                     <p>Drag & Drop image (png, jpg, jpeg)</p>
                                     <p>Max size {formatBytes(maxSize)}</p>
-                                    <input {...getInputProps()} />
                                 </>
                             )}
                     </div>
@@ -104,7 +127,7 @@ export default function Dropzone({
 }
 
 
-function formatBytes(bytes, decimals = 1) {
+function formatBytes(bytes: number, decimals = 1) {
     if (bytes === 0) return '0 Bytes';
 
     const k = 1024;

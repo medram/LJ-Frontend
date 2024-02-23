@@ -1,20 +1,16 @@
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import Select from "react-select"
-import { AVAILABLE_TIMEZONES_OPTIONS, CURRENCY_OPTIONS, toastFormikErrors } from "../../../utils";
-import Dropzone from "../../Dropzone"
-import axiosApi from "../../../api/axiosApi";
-import { uploadFile } from "../../../api";
-import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { useDashboardSettings, useDemo, useSettings } from "../../../hooks";
-import { useCallback, useEffect, useState } from "react";
-import SectionLoading from "../../SectionLoading";
-import { saveDashboardSettings } from "../../../api/admin";
-import SuperButton from "../../SuperButton";
 import { useQueryClient } from "react-query";
-import * as Yup from "yup"
+import Select from "react-select";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import { uploadFile } from "../../../api";
+import { saveDashboardSettings } from "../../../api/admin";
+import { useDemo } from "../../../hooks";
+import { AVAILABLE_TIMEZONES_OPTIONS, CURRENCY_OPTIONS, toastFormikErrors } from "../../../utils";
+import Dropzone from "../../Dropzone";
+import SuperButton from "../../SuperButton";
 import Switch from "../../Switch";
 
 
@@ -172,6 +168,11 @@ export default function GeneralSettings({ settings })
                     <div className="mb-4">
                         <label htmlFor="site_desc">SEO Description:</label>
                         <textarea rows={7} className="form-control" id="site_desc" placeholder="A small description for Search Engins." {...formik.getFieldProps("SITE_DESC")} ></textarea>
+                    </div>
+
+                    <div className="mb-4">
+                        <label htmlFor="head_code">Head Code:</label>
+                        <textarea rows={7} className="form-control" id="head_code" placeholder="Any code added here will be injected between <head> tags (e.g. Javascript code)" {...formik.getFieldProps("HEAD_CODE")} ></textarea>
                     </div>
 
                 </div>

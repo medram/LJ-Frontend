@@ -1,10 +1,10 @@
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback } from "react";
+import { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-export default function GoBackButton({ onClick })
+export default function GoBackButton({ onClick }: { onClick?: MouseEventHandler })
 {
     const navigate = useNavigate()
 

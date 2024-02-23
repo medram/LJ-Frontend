@@ -1,5 +1,5 @@
-import { Editor } from "@tinymce/tinymce-react"
-import { memo, useCallback, useRef, useState } from "react";
+import { Editor } from "@tinymce/tinymce-react";
+import { memo, useCallback, useRef } from "react";
 
 const TINY_API_KEY = "ajele2r9opr9w00237cezbg50x5f0de6y3unf8pltinypbgd"
 
@@ -10,14 +10,19 @@ const defaultInitProps = {
     content_style: 'body { font-family: DM Sans, Helvetica, Arial, sans-serif; font-size:14px }'
 }
 
-export default memo(function TextEditor({ initProps={}, ...rest })
+type TextEditorProps = {
+    initProps?: object,
+    [key: string]: unknown
+}
+
+export default memo(function TextEditor({ initProps={}, ...rest }: TextEditorProps)
 {
     const editorRef = useRef(null);
     const currentInitProps = { ...defaultInitProps, ...initProps }
 
-    const handleOnInit = useCallback((evt, editor) => {
+    const handleOnInit = useCallback((evt: any, editor: any) => {
         editorRef.current = editor
-    })
+    }, [])
 
     return (
         <>

@@ -1,4 +1,4 @@
-import * as cc from "currency-codes"
+import * as cc from "currency-codes";
 import { toast } from "react-toastify";
 
 export const AVAILABLE_AI_CHAT_MODELS = [
@@ -91,7 +91,7 @@ export function isEmpty(obj)
     return Object.keys(obj).length === 0;
 }
 
-export function getRandomItem(list) {
+export function getRandomItem(list: any[]) {
     const randomIndex = Math.floor(Math.random() * list.length);
     return list[randomIndex];
 }

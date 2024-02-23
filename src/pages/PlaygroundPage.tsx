@@ -1,24 +1,25 @@
-import { faBarsStaggered, faChevronRight, faGem, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Dropzone from "../components/Dropzone"
-import { Sidebar } from 'react-pro-sidebar';
+import { IconBolt, IconCloudUpload } from "@tabler/icons-react";
+import { DEMO_SUBSCRIPTION, DEMO_SUBSCRIPTION_EXPIRE, getAvailableDocumentTypes, getAvailableDocumentTypesString } from "@utils/index";
 import { useCallback, useEffect, useState } from "react";
-import { useDemo, useEventListener, useLCInfo, useNaiveLocalStorage } from "../hooks";
-import AvatarPalceholder from "../components/AvatarPalceholder";
-import ChatLabel from "../components/playground/ChatLabel";
-import ChatSection from "../components/playground/ChatSection";
+import { FileRejection } from "react-dropzone";
+import { Sidebar } from 'react-pro-sidebar';
+import { useQueryClient } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useUser } from "../hooks/auth";
-import FullscreenLoading from "../components/FullscreenLoading";
-import { useCurrentSubscription, useUserChatRoomList } from "../hooks/account";
 import { toast } from "react-toastify";
 import { uploadFile } from "../api";
-import { useQueryClient } from "react-query";
-import SpinnerGrow from "../components/SpinnerGrow";
 import { deleteChatRoom } from "../api/account";
+import AvatarPalceholder from "../components/AvatarPalceholder";
+import Dropzone, { onUploadProps } from "../components/Dropzone";
+import FullscreenLoading from "../components/FullscreenLoading";
+import SpinnerGrow from "../components/SpinnerGrow";
 import TablerIcon from "../components/TablerIcon";
-import { IconBolt, IconCloudUpload, IconSparkles } from "@tabler/icons-react";
-import { DEMO_SUBSCRIPTION, DEMO_SUBSCRIPTION_EXPIRE, getAvailableDocumentTypes, getAvailableDocumentTypesString } from "@utils/index";
+import ChatLabel from "../components/playground/ChatLabel";
+import ChatSection from "../components/playground/ChatSection";
+import { useDemo, useEventListener, useLCInfo, useNaiveLocalStorage } from "../hooks";
+import { useCurrentSubscription, useUserChatRoomList } from "../hooks/account";
+import { useUser } from "../hooks/auth";
 
 
 const onUpload = ({
@@ -34,7 +35,7 @@ const onUpload = ({
     demoSubscription,
     setDemoSubscription,
     queryClient
- }) => {
+ }: onUploadProps) => {
 
     if (isDemo && demoSubscription.pdfs <= 0)
     {
@@ -111,7 +112,7 @@ const onUpload = ({
 
 }
 
-const onError = (rejectedFiles) => {
+const onError = (rejectedFiles: FileRejection[]) => {
     toast.error("Invalid document!")
 }
 
@@ -144,18 +145,18 @@ export default function PlaygroundPage()
             navigate(`/playground/${currentChatRoomUUID}`)
     }, [currentChatRoomUUID])
 
-    const handleChatLabelClick = useCallback((uuid) => {
+    const handleChatLabelClick = useCallback((uuid: string) => {
         setCurrentChatRoomUUID(uuid)
         navigate(`/playground/${uuid}`)
     }, [uuid])
 
-    const createChatRoom = useCallback((uuid, title) => {
+    const createChatRoom = useCallback((uuid: string, title: string) => {
         queryClient.invalidateQueries("user.chat.list")
         setCurrentChatRoomUUID(uuid)
         navigate(`/playground/${uuid}`)
     }, [uuid])
 
-    const handleChatRoomDeletion = useCallback((uuid, callback) => {
+    const handleChatRoomDeletion = useCallback((uuid: string, callback: () => unknown) => {
         let nextUUID = ""
         if (userChatRoomList)
         {
@@ -200,16 +201,19 @@ export default function PlaygroundPage()
     }, [uuid, userChatRoomList])
 
     useEffect(() => {
-        if (new Date().getTime() - demoSubscription?.created_at > (DEMO_SUBSCRIPTION_EXPIRE * 60 * 60 * 1000)) // 12 hours
+        if (demoSubscription)
         {
-            // reset the demo subscription
-            setDemoSubscription(DEMO_SUBSCRIPTION)
+            if (new Date().getTime() - demoSubscription?.created_at > (DEMO_SUBSCRIPTION_EXPIRE * 60 * 60 * 1000)) // 12 hours
+            {
+                // reset the demo subscription
+                setDemoSubscription(DEMO_SUBSCRIPTION)
+            }
         }
     }, [])
 
     if (isError)
     {
-        toast.error(error)
+        toast.error(error as string)
     }
 
     if (!Object.keys(user).length || isLoading || isSubscriptionLoading)
@@ -263,7 +267,7 @@ export default function PlaygroundPage()
                                     key={i}
                                     title={chat.title}
                                     onClick={() => handleChatLabelClick(chat.uuid)}
-                                    onDelete={(callback) => handleChatRoomDeletion(chat.uuid, callback)}
+                                    onDelete={(callback: () => void) => handleChatRoomDeletion(chat.uuid, callback)}
                                     active={chat.uuid === currentChatRoomUUID}
                                     />
                             })}

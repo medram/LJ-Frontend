@@ -1,7 +1,7 @@
 import axiosApi from "./axiosApi";
 
 
-export async function auth(email, password)
+export async function auth(email: string, password: string)
 {
     const req = await axiosApi.post("/auth", {
         email,
@@ -16,7 +16,7 @@ export async function logout()
     return req.data
 }
 
-export default function register(user)
+export default function register(user: unknown)
 {
     return axiosApi.post("/auth/register", user)
 }
@@ -27,13 +27,13 @@ export async function currentUser()
     return req.data
 }
 
-export async function sendPasswordResetEmail(email)
+export async function sendPasswordResetEmail(email: string)
 {
     const req = await axiosApi.post("/auth/forget-password", { email })
     return req.data
 }
 
-export async function sendResetPassword(payload)
+export async function sendResetPassword(payload: any)
 {
     const req = await axiosApi.post("/auth/reset-password", payload)
     return req.data

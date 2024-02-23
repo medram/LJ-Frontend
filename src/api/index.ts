@@ -1,3 +1,4 @@
+import { AxiosProgressEvent } from "axios";
 import axiosApi from "./axiosApi";
 
 
@@ -14,7 +15,9 @@ export async function getDashboardSettings()
     return req.data
 }
 
-export function uploadFile(uri, file, { onUploadProgress })
+export function uploadFile(uri: string, file: File, { onUploadProgress }: {
+    onUploadProgress: ((progressEvent: AxiosProgressEvent) => void) | undefined
+})
 {
     const formData = new FormData()
 
@@ -29,10 +32,12 @@ export function uploadFile(uri, file, { onUploadProgress })
 }
 
 
-export function uploadFiles(uri, files, { onUploadProgress }) {
+export function uploadFiles(uri: string, files: any, { onUploadProgress }: {
+    onUploadProgress: ((progressEvent: AxiosProgressEvent) => void) | undefined
+}) {
     const formData = new FormData()
 
-    files.map(file => {
+    files.map((file: any) => {
         formData.append('file[]', file)
     })
 
@@ -56,12 +61,12 @@ export async function getAvailablePaymentMethods()
     return req.data
 }
 
-export async function payNow(data) {
+export async function payNow(data: any) {
     const req = await axiosApi.post("/checkout", data)
     return req.data
 }
 
-export async function contactUs(data)
+export async function contactUs(data: any)
 {
     const req = await axiosApi.post("/contact", data)
     return req.data
@@ -74,7 +79,7 @@ export async function getpages()
     return req.data
 }
 
-export async function getPage(slug)
+export async function getPage(slug: string)
 {
     const req = await axiosApi.get(`/page/${slug}`)
     return req.data

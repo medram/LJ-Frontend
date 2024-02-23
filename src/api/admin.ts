@@ -9,25 +9,25 @@ export async function getCustomers()
     return req.data
 }
 
-export async function AddCustomer(values)
+export async function AddCustomer(values: any)
 {
     const req = await axiosApi.post("/admin/customers/add", values)
     return req.data
 }
 
-export async function deleteCustomer(id)
+export async function deleteCustomer(id: number)
 {
     const req = await axiosApi.post("/admin/customers/delete", { id })
     return req.data
 }
 
-export async function customerDetails(id)
+export async function customerDetails(id: number)
 {
     const req = await axiosApi.get(`/admin/customers/details/${id}`)
     return req.data?.customer
 }
 
-export async function updateCustomer(id, customer)
+export async function updateCustomer(id: number, customer: any)
 {
     const req = await axiosApi.post(`/admin/customers/edit/${id}`, customer)
     return req.data
@@ -49,7 +49,8 @@ export async function getPages()
     return req.data
 }
 
-export async function getPage(id) {
+export async function getPage(id: number)
+{
     const req = await axiosApi.get("/admin/pages/details/" + id)
     return req.data
 }
@@ -60,38 +61,43 @@ export async function getDashboardPlans()
     return req.data
 }
 
-export async function addPage(values) {
+export async function addPage(values: any)
+{
     const req = await axiosApi.post("/admin/pages/add", values)
     return req.data
 }
 
-export async function editPage(id, values) {
+export async function editPage(id: number, values: any)
+{
     const req = await axiosApi.post("/admin/pages/edit/" + id, values)
     return req.data
 }
 
-export async function deletePage(id) {
+export async function deletePage(id: number)
+{
     const req = await axiosApi.post("/admin/pages/delete", {id})
     return req.data
 }
 
-export async function saveDashboardSettings(settings)
+export async function saveDashboardSettings(settings: any)
 {
     const req = await axiosApi.post('/admin/settings', settings)
     return req.data
 }
 
-export async function addPlan(values) {
+export async function addPlan(values: any) {
     const req = await axiosApi.post("/admin/plans/add", values)
     return req.data
 }
 
-export async function editPlan(id, values) {
+export async function editPlan(id: number, values: any)
+{
     const req = await axiosApi.post("/admin/plans/edit/" + id, values)
     return req.data
 }
 
-export async function deletePlan(id) {
+export async function deletePlan(id: number)
+{
     const req = await axiosApi.post("/admin/plans/delete", {id})
     return req.data
 }
@@ -102,25 +108,25 @@ export async function getSubscriptions()
     return req.data
 }
 
-export async function cancelSubscription(sub_id)
+export async function cancelSubscription(sub_id: any)
 {
     const req = await axiosApi.post(`/admin/subscriptions/${sub_id}/cancel`)
     return req.data
 }
 
-export async function sendTestEmail(email)
+export async function sendTestEmail(email: string)
 {
     const req = await axiosApi.post(`/admin/send-test-email`, {email})
     return req.data
 }
 
-export async function syncWithPayPal(data)
+export async function syncWithPayPal(data: any)
 {
     const req = await axiosApi.post(`/admin/sync/paypal`, data)
     return req
 }
 
-export async function syncWithStripe(data)
+export async function syncWithStripe(data: any)
 {
     const req = await axiosApi.post(`/admin/sync/stripe`, data)
     return req

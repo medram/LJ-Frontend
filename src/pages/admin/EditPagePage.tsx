@@ -1,22 +1,25 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { editPage } from "@api/admin";
+import GoBackButton from "@components/GoBackButton";
+import SectionLoading from "@components/SectionLoading";
+import SuperButton from "@components/SuperButton";
+import Switch from "@components/Switch";
+import TextEditor from "@components/TextEditor";
+import { usePage } from "@hooks/admin";
+import { toastFormikErrors } from "@utils/index";
 import { useFormik } from "formik";
-import * as Yup from "yup"
-import { toastFormikErrors } from "../../utils";
-import { addPage } from "../../api/admin";
-import { toast } from "react-toastify";
-import GoBackButton from "../../components/GoBackButton";
-import SuperButton from "../../components/SuperButton";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useQueryClient } from "react-query";
-import Switch from "../../components/Switch"
-import TextEditor from "../../components/TextEditor";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
 
 
-export default function AddPagePage({ onGoBack }) {
+export default function EditPagePage() {
     const navigate = useNavigate()
     const queryClient = useQueryClient()
+    const { id } = useParams()
 
+    const { isLoading, isError, error, page } = usePage(id)
 
     const formik = useFormik({
         initialValues: {
@@ -31,12 +34,13 @@ export default function AddPagePage({ onGoBack }) {
             content: Yup.string(),
             status: Yup.boolean()
         }),
-        onSubmit: (values) => {
-            addPage(values).then((data) => {
+        onSubmit: (values,) => {
+            editPage(page.id, values).then((data) => {
                 if (data.errors === false) {
                     formik.resetForm()
                     toast.success(data.message)
                     queryClient.invalidateQueries('admin.pages')
+                    queryClient.invalidateQueries(`admin.page.${id}`)
                     return navigate(-1)
                 }
                 return toast.error(data.message)
@@ -48,12 +52,28 @@ export default function AddPagePage({ onGoBack }) {
         }
     })
 
+    useEffect(() => {
+        if (!isLoading && page) {
+            formik.setValues({
+                title: page.title,
+                slug: page.slug,
+                content: page.content,
+                status: !!page.status
+            })
+        }
+    }, [page])
+
+    if (isLoading)
+    {
+        return <SectionLoading center={true} />
+    }
+
 
     return (
         <>
-            <h1 className="mb-3">Add Page</h1>
+            <h1 className="mb-3">Edit Page</h1>
             <div className="row">
-                <div className="col-md-8">
+                <div className="col-8">
                     <GoBackButton />
                     <section className="bg-light rounded text-bg-light p-4">
                         <form onSubmit={formik.handleSubmit}>
@@ -69,16 +89,16 @@ export default function AddPagePage({ onGoBack }) {
 
                             <div className="mb-4">
                                 <label htmlFor="content">Content:</label>
-                                <TextEditor onEditorChange={(content) => formik.setFieldValue("content", content)} />
+                                <TextEditor onEditorChange={(content: string) => formik.setFieldValue("content", content)} initialValue={formik.values.content} />
                             </div>
 
                             <div className="d-flex mb-3">
-                                <Switch onChange={(checked) => formik.setFieldValue("status", checked)} name="accept" checked={formik.values.status} size="small" className="mx-2 mt-1" />
+                                <Switch onChange={(checked: boolean) => formik.setFieldValue("status", checked)} name="accept" checked={formik.values.status} size="small" className="mx-2 mt-1" />
 
                                 <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("status", !formik.values.status)} >Published</label>
                             </div>
 
-                            <SuperButton isLoading={formik.isSubmitting} type="submit" className="btn btn-primary" onClick={() => toastFormikErrors(formik.errors)}><FontAwesomeIcon icon={faPlus} /> Add</SuperButton>
+                            <SuperButton isLoading={formik.isSubmitting} type="submit" className="btn btn-primary" onClick={() => toastFormikErrors(formik.errors)}>Update</SuperButton>
                         </form>
                     </section>
                 </div>

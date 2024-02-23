@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react"
 import { useQuery } from "react-query"
 import { getAvailablePaymentMethods, getDashboardSettings, getDemoStatus, getLCInfo, getPage, getPlans, getSettings, getpages } from "../api"
-import { useStore } from "../context/StoreContext"
 import { getDashboardPlans } from "../api/admin"
+import { useStore } from "../context/StoreContext"
 
 
-export function useLocalStorage(key, value = null ) {
-    const [persistedValue, setPersistedValue] = useState(() => {
+export function useLocalStorage<T>(key: string, value: T) {
+    const [persistedValue, setPersistedValue] = useState<T>(() => {
         try {
             let storedValue = localStorage.getItem(key)
             if (storedValue != null)
-                return JSON.parse(storedValue)
+                return JSON.parse(storedValue) as T
         } catch (error) {
 
         }
@@ -19,43 +19,42 @@ export function useLocalStorage(key, value = null ) {
     })
 
     // Sync values to localStorage
-    const setPersistedValueDecorator = (value) => {
+    const setPersistedValueDecorator = (value: T) => {
         localStorage.setItem(key, JSON.stringify(value))
         return setPersistedValue(value)
     }
 
-    return [persistedValue, setPersistedValueDecorator]
+    return [persistedValue, setPersistedValueDecorator] as const
 }
 
 
-export function useNaiveLocalStorage(key, value)
+export function useNaiveLocalStorage<T>(key: string, value: T)
 {
     const getter = useCallback(() => {
+        let storedValue = localStorage.getItem(key)
+
         try {
-            let storedValue = localStorage.getItem(key)
             if (storedValue != null)
-                return JSON.parse(storedValue)
+                return JSON.parse(storedValue) as T
         } catch (error) {
 
         }
 
-        return null
+        return value
     }, [])
 
-    const setter = useCallback((value) => {
-        if (typeof value === "function")
-            return localStorage.setItem(key, JSON.stringify(value(getter())))
+    const setter = useCallback((value: ((val: T) => T) | T) => {
         return localStorage.setItem(key, JSON.stringify(value))
     }, [])
 
     // Register the default value
-    if (getter(key) === null)
+    if (getter() === null)
         setter(value)
-    return [getter, setter]
+    return [getter, setter] as const
 }
 
 
-export function useLocalStore(key, defaultValue)
+export function useLocalStore<T>(key: string, defaultValue: T)
 {
     let { [key]: currentValue, dispatch } = useStore()
 
@@ -64,11 +63,11 @@ export function useLocalStore(key, defaultValue)
         currentValue = defaultValue
     }
 
-    const dispatchDecorator = (newValue) => {
+    const dispatchDecorator = (newValue: T) => {
         return dispatch({ type: "OVERRIDE_STORE", payload: { [key]: newValue} })
     }
 
-    return [currentValue, dispatchDecorator]
+    return [currentValue, dispatchDecorator] as const
 }
 
 
@@ -196,14 +195,14 @@ export function usePages()
 }
 
 
-export function usePage(slug)
+export function usePage(slug: string)
 {
     const { data, ...rest } = useQuery(`page.${slug}`, () => getPage(slug), { staleTime: 300000, retry: 1 })
 
     return { page: data?.page, ...rest }
 }
 
-export function useDemo(slug) {
+export function useDemo() {
     const { data, ...rest } = useQuery("demo", getDemoStatus)
 
     return { ...rest, isDemo: (data?.status ? data.status : false) }

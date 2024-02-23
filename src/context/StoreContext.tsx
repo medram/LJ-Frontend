@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react"
+import { ReactNode, createContext, useContext } from "react"
 import { usePersistedReducer } from "../hooks"
 import reducer from "./reducer"
 
@@ -10,7 +10,7 @@ const initialValues = {
 const StoreContext = createContext(initialValues)
 
 
-export function StoreProvider({ children }) {
+export function StoreProvider({ children }: { children: ReactNode }) {
     const [stats, dispatch] = usePersistedReducer(reducer, initialValues)
 
     return (

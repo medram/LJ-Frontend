@@ -1,15 +1,16 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 
-import App from './App';
+import { QueryClient, QueryClientProvider } from "react-query";
 import { StoreProvider } from './context/StoreContext';
-import { QueryClient, QueryClientProvider } from "react-query"
-import FullscreenLoading from './components/FullscreenLoading';
+
+import FullscreenLoading from '@components/FullscreenLoading';
+import App from './App';
+
 
 const client = new QueryClient()
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Suspense fallback={<FullscreenLoading />}>

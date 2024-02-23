@@ -1,19 +1,19 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useFormik } from "formik";
-import * as Yup from "yup"
-import { toastFormikErrors } from "../../utils";
-import { AddCustomer } from "../../api/admin";
-import { toast } from "react-toastify";
-import GoBackButton from "../../components/GoBackButton";
-import SuperButton from "../../components/SuperButton";
-import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
-import Switch from "../../components/Switch"
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import { AddCustomer } from "../../api/admin";
+import GoBackButton from "../../components/GoBackButton";
 import PasswordInput from "../../components/PasswordInput";
+import SuperButton from "../../components/SuperButton";
+import Switch from "../../components/Switch";
+import { toastFormikErrors } from "../../utils";
 
 
-export default function AddCustomerPage({ onGoBack }) {
+export default function AddCustomerPage() {
     const navigate = useNavigate()
     const queryClient = useQueryClient()
 

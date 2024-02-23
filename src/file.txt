@@ -1,0 +1,9 @@
+./src/pages/LoginPage.jsx
+./src/pages/LogoutPage.jsx
+./src/pages/middlewares/ELRequired.jsx
+./src/pages/middlewares/NoAuthRequired.jsx
+./src/pages/middlewares/UserRequired.jsx
+./src/pages/NotFoundPage.jsx
+./src/pages/PagePage.jsx
+./src/pages/PlaygroundPage.jsx
+
