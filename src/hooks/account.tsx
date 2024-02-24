@@ -1,3 +1,4 @@
+import { SubscriptionType } from "@/utils/types"
 import { useQuery } from "react-query"
 import { currentSubscription, getChatRoom, getUserChatRoomList, getUserInvoices } from "../api/account"
 
@@ -9,7 +10,9 @@ export function useCurrentSubscription()
         retry: 1
     })
 
-    return { ...rest, subscription: data?.subscription }
+    const subscription: SubscriptionType = data?.subscription
+
+    return { ...rest, subscription }
 }
 
 
@@ -31,7 +34,7 @@ export function useUserChatRoomList()
 }
 
 
-export default function useChatRoom(uuid)
+export default function useChatRoom(uuid: string)
 {
     const {data, ...rest} = useQuery(`user.chat.${uuid}`, () => getChatRoom(uuid), {
         staleTime: Infinity

@@ -1,7 +1,17 @@
+import { GeneralSettingsType, PageType, PlanType, SecretSettingsType } from "@/utils/types"
+import { getDashboardPlans } from "@api/admin"
+import {
+    getAvailablePaymentMethods,
+    getDashboardSettings,
+    getDemoStatus,
+    getLCInfo,
+    getPage,
+    getPlans,
+    getSettings,
+    getpages
+} from "@api/index"
 import { useCallback, useEffect, useReducer, useRef, useState } from "react"
 import { useQuery } from "react-query"
-import { getAvailablePaymentMethods, getDashboardSettings, getDemoStatus, getLCInfo, getPage, getPlans, getSettings, getpages } from "../api"
-import { getDashboardPlans } from "../api/admin"
 import { useStore } from "../context/StoreContext"
 
 
@@ -67,16 +77,16 @@ export function useLocalStore<T>(key: string, defaultValue: T)
         return dispatch({ type: "OVERRIDE_STORE", payload: { [key]: newValue} })
     }
 
-    return [currentValue, dispatchDecorator] as const
+    return [currentValue as T, dispatchDecorator] as const
 }
 
 
-function SyncFromLocalStorage(key, initialValues) {
+function SyncFromLocalStorage(key: string, initialValues: object) {
     try {
         let stored = localStorage.getItem(key)
         if (stored !== null) {
-            stored = JSON.parse(stored)
-            return { ...initialValues, ...stored }
+            let parsed: object = JSON.parse(stored)
+            return { ...initialValues, ...parsed }
         }
     } catch (error) {
 
@@ -84,42 +94,46 @@ function SyncFromLocalStorage(key, initialValues) {
     return initialValues
 }
 
-export function usePersistedReducer(reducer, initialValues) {
+export function usePersistedReducer(reducer: any, initialValues: object) {
     const [stats, dispatch] = useReducer(reducer, SyncFromLocalStorage("storedStats", initialValues))
-    const [ , SyncToLocalStorage] = useLocalStorage("storedStats", stats)
+    const [ , SyncToLocalStorage] = useLocalStorage("storedStats", stats as object)
 
     useEffect(() => {
-        SyncToLocalStorage(stats)
+        SyncToLocalStorage(stats as object)
     }, [stats])
 
-    return [stats, dispatch]
+    return [stats, dispatch] as const
 }
 
 export function useSettings()
 {
     const { data, ...rest } = useQuery("settings", getSettings, { staleTime: Infinity })
+    const settings: GeneralSettingsType = data?.settings || {}
 
-    return { ...rest, settings: data?.settings || {} }
+    return { ...rest, settings }
 }
 
 //############################### DASHBOARD HOOKS ######################################
 
 export function useDashboardSettings() {
     const { data, ...rest } = useQuery("admin.settings", getDashboardSettings, { staleTime: Infinity })
+    const settings: SecretSettingsType = data?.settings || {}
 
-    return { ...rest, settings: data?.settings || {} }
+    return { ...rest, settings }
 }
 
 export function useDashboardPlans()
 {
     const { data, ...rest } = useQuery("admin.plans", getDashboardPlans, { staleTime: Infinity })
-    return { ...rest, plans: data?.plans }
+    const plans: PlanType[] = data?.plans
+
+    return { ...rest, plans }
 }
 
-export function useDashboardPlan(planId)
+export function useDashboardPlan(planId: number)
 {
     const { data, ...rest } = useQuery("admin.plans", getDashboardPlans, { staleTime: Infinity })
-    const [ plan ] = data?.plans.filter(plan => plan.id === planId)
+    const plan: PlanType | null = data?.plans.find((plan: PlanType) => plan.id === planId) || null
 
     return { ...rest, plan }
 }
@@ -129,17 +143,17 @@ export function useDashboardPlan(planId)
 export function usePlans()
 {
     const { data, ...rest } = useQuery("plans", getPlans, { staleTime: 1000 * 60 }) // 1 minute
-    const plans = data?.plans
-    const monthlyPlans = plans?.filter(plan => plan.billing_cycle === "monthly")
-    const yearlyPlans = plans?.filter(plan => plan.billing_cycle === "yearly")
+    const plans: PlanType[] = data?.plans
+    const monthlyPlans: PlanType[] = plans?.filter((plan: PlanType) => "billing_cycle" in plan && plan.billing_cycle === "monthly")
+    const yearlyPlans: PlanType[] = plans?.filter((plan: PlanType) => "billing_cycle" in plan && plan.billing_cycle === "yearly")
 
     return { ...rest, plans, monthlyPlans, yearlyPlans }
 }
 
-export function usePlan(id) {
+export function usePlan(id: number) {
     const { plans, ...rest } = usePlans()
-
-    return { ...rest, plan: plans?.filter(plan => plan.id == id).pop() }
+    const plan: PlanType | null = plans?.find((plan: PlanType) => plan.id == id) || null
+    return { ...rest, plan }
 }
 
 export function useAvailablePaymentMethods()
@@ -150,12 +164,11 @@ export function useAvailablePaymentMethods()
 }
 
 
-export function useEventListener(eventName, defaultValue, callback)
+export function useEventListener<T>(eventName: string, defaultValue: T, callback: Function)
 {
     const [ value, setValue ] = useState(defaultValue)
 
-
-    const handleCallback = useCallback((e) => {
+    const handleCallback = useCallback((e: any) => {
         if (typeof callback === "function")
             setValue(callback({ e, prevValue: value }))
     }, [])
@@ -168,44 +181,46 @@ export function useEventListener(eventName, defaultValue, callback)
         }
     }, [])
 
-    return [value, setValue]
+    return [value, setValue] as const
 }
 
 
-export function useScrollToRef(defaultValue=null)
+export function useScrollToRef<T>(defaultValue: T | null = null)
 {
     const ref = useRef(defaultValue)
 
     const scrollToRef = useCallback(() => {
         setTimeout(() => {
-            if (ref.current)
+            if (ref.current != null)
                 ref.current.scrollIntoView({ behavior: 'smooth' })
         }, 200)
     }, [])
 
-    return [ref, scrollToRef]
+    return [ref, scrollToRef] as const
 }
 
 
 export function usePages()
 {
     const { data, ...rest } = useQuery("pages", getpages, { staleTime: 60000 })
+    const pages: PageType[] = data?.pages
 
-    return { pages: data?.pages, ...rest }
+    return { pages, ...rest }
 }
 
 
 export function usePage(slug: string)
 {
     const { data, ...rest } = useQuery(`page.${slug}`, () => getPage(slug), { staleTime: 300000, retry: 1 })
-
-    return { page: data?.page, ...rest }
+    const page: PageType = data?.page
+    return { page, ...rest }
 }
 
 export function useDemo() {
     const { data, ...rest } = useQuery("demo", getDemoStatus)
+    const isDemo: boolean = (data?.status ? data.status : false)
 
-    return { ...rest, isDemo: (data?.status ? data.status : false) }
+    return { ...rest, isDemo }
 }
 
 export function useLCInfo() {
@@ -225,11 +240,11 @@ export function useLCInfo() {
 }
 
 
-export function useClickOutside(callback) {
+export function useClickOutside(callback: Function) {
     const ref = useRef(null)
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event: any) => {
             if (ref.current && !ref.current.contains(event.target))
             {
                 if (typeof callback === "function")

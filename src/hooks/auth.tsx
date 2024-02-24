@@ -1,36 +1,37 @@
+import { UserType } from "@/utils/types"
+import { auth, logout } from "@api/auth"
+import { useLocalStore, useNaiveLocalStorage } from "@hooks/index"
 import { useCallback, useEffect } from "react"
-import { useLocalStore, useNaiveLocalStorage } from "."
-import { auth, logout } from "../api/auth"
 
 
 export function useAuth() {
-    const [user, setUser] = useLocalStore("user", {})
+    const [user, setUser] = useLocalStore<UserType>("user", {} as UserType)
     const [getToken, setToken] = useNaiveLocalStorage("tk", "")
     const token = getToken()
 
     useEffect(useCallback(() => {
         if (token == "" && user?.id !== undefined)
         {
-            setUser({})
+            setUser({} as UserType)
         }
     }, []))
 
-    const Authenticate = useCallback(async (email, password) => {
+    const Authenticate = useCallback(async (email: string, password: string) => {
         let data = await auth(email, password)
 
         if (!data?.errors) {
-            setUser(data.user)
-            setToken(data.token)
+            setUser(data.user as UserType)
+            setToken(data.token as string)
         }
 
-        return data
+        return data.user as UserType
     }, [])
 
     const Logout = useCallback(async () => {
         // to inform the database
         let data = await logout()
 
-        setUser({})
+        setUser({} as UserType)
         setToken("")
     }, [])
 
@@ -39,8 +40,13 @@ export function useAuth() {
 
 export function useUser()
 {
-    const { isAuthenticated, user, setUser } = useAuth()
+    const { user, setUser } = useAuth()
 
-    return { isAuthenticated: user?.id ? true : false, isAdmin: user?.role == 1, user, setUser }
+    return {
+        isAuthenticated: ("id" in user && user?.id) ? true : false,
+        isAdmin: "role" in user && user?.role == 1,
+        user,
+        setUser
+    }
 }
 

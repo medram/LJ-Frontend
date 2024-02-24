@@ -1,8 +1,8 @@
-import { memo, useCallback, useState } from "react"
-import { useClickOutside } from "."
-import LoginRegisterForms from "@components/forms/LoginRegisterForms"
 import { MotionModel, MotionModelContent } from "@components/animations"
+import LoginRegisterForms from "@components/forms/LoginRegisterForms"
 import { AnimatePresence } from "framer-motion"
+import { ReactNode, useCallback, useState } from "react"
+import { useClickOutside } from "."
 
 
 export function useOffCanvas()
@@ -24,11 +24,17 @@ export function useOffCanvas()
     return { isOpen, setOpen, open, close, toggle, offCanvasProps: {isOpen, setOpen} }
 }
 
+type ModelProps = {
+    title: string,
+    children: ReactNode,
+    footer?: ReactNode,
+    center?: boolean
+}
 
 export function useModel() {
     const [isOpen, setOpen] = useState(false)
 
-    const ref = useClickOutside((e) => {
+    const ref = useClickOutside((e: any) => {
         e.preventDefault()
 
         if (isOpen && e.target.nodeName === "DIV")
@@ -37,7 +43,7 @@ export function useModel() {
         }
     });
 
-    const ID = "#model-" + parseInt(Math.random() * 10000000)
+    const ID = `#model-${Math.random() * 10000000}`
 
     const open = useCallback(() => {
         setOpen(true)
@@ -52,7 +58,7 @@ export function useModel() {
     }, []);
 
 
-    const Model = useCallback(function({ title, children, footer, center=true }){
+    const Model = useCallback(function({ title, children, footer, center=true }: ModelProps){
 
         return (
             <AnimatePresence>
@@ -94,7 +100,7 @@ export function useLoginRegister()
     const { isOpen, open, close, toggle, Model: RegisterModel } = useModel()
 
 
-    const LoginRegisterModel = useCallback(({ title, ...rest }) => {
+    const LoginRegisterModel = useCallback(({ title, ...rest }: {title: string, [rest: string]: unknown}) => {
         return (
             <RegisterModel title={title}>
                 <LoginRegisterForms {...rest} />
