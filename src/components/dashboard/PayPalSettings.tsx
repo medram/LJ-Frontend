@@ -1,19 +1,24 @@
+import { SecretSettingsType } from "@/utils/types";
+import { syncWithPayPal } from "@api/admin";
+import PasswordInput from "@components/PasswordInput";
+import SuperButton from "@components/SuperButton";
+import Switch from "@components/Switch";
+import PayPalIcon from "@components/icons/PayPalIcon";
+import { useDemo } from "@hooks/index";
+import { useModel } from "@hooks/templates";
 import { useFormik } from "formik";
 import { memo } from "react";
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
-import { syncWithPayPal } from "../../api/admin";
-import { useDemo } from "../../hooks";
-import { useModel } from "../../hooks/templates";
-import PasswordInput from "../PasswordInput";
-import SuperButton from "../SuperButton";
-import Switch from "../Switch";
-import PayPalIcon from "../icons/PayPalIcon";
 import GatewayNotes from "./GatewayNotes";
 
 
-export default memo(function PayPalSettings({ settings })
+type PayPalSettingsProps = {
+    settings: SecretSettingsType
+}
+
+export default memo(function PayPalSettings({ settings }: PayPalSettingsProps)
 {
     const { isDemo } = useDemo()
     const queryClient = useQueryClient()
@@ -93,13 +98,13 @@ export default memo(function PayPalSettings({ settings })
                     </div>
 
                     <div className="d-flex">
-                        <Switch onChange={(checked) => formik.setFieldValue("PM_PAYPAL_STATUS", checked)} name="accept" checked={formik.values.PM_PAYPAL_STATUS} size="small" className="mx-2 mt-1" />
+                        <Switch onChange={(checked: boolean) => formik.setFieldValue("PM_PAYPAL_STATUS", checked)} name="accept" checked={formik.values.PM_PAYPAL_STATUS} size="small" className="mx-2 mt-1" />
 
                         <label htmlFor="status" className="form-label" onClick={() => formik.setFieldValue("PM_PAYPAL_STATUS", !formik.values.PM_PAYPAL_STATUS)} >{formik.values.PM_PAYPAL_STATUS ? "Active" : "Inactive"}</label>
                     </div>
 
                     <div className="d-flex">
-                        <Switch onChange={(checked) => formik.setFieldValue("PM_PAYPAL_SANDBOX", checked)} name="accept" checked={formik.values.PM_PAYPAL_SANDBOX} size="small" className="mx-2 mt-1" />
+                        <Switch onChange={(checked: boolean) => formik.setFieldValue("PM_PAYPAL_SANDBOX", checked)} name="accept" checked={formik.values.PM_PAYPAL_SANDBOX} size="small" className="mx-2 mt-1" />
 
                         <label htmlFor="PM_PAYPAL_SANDBOX" className="form-label" onClick={() => formik.setFieldValue("PM_PAYPAL_SANDBOX", !formik.values.PM_PAYPAL_SANDBOX)} >Sandbox <i><small>(test mode)</small></i></label>
                     </div>

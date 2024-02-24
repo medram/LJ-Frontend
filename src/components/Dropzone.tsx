@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode, useCallback, useEffect, useState } from "react"
+import { ReactNode, useCallback, useEffect, useState } from "react"
 import { FileRejection, useDropzone } from "react-dropzone"
 
 
@@ -83,7 +83,7 @@ export default function Dropzone({
         setIsSuccessUpload(false)
     }, [])
 
-    const handleAbort = useCallback((e: MouseEventHandler<HTMLParagraphElement>) => {
+    const handleAbort = useCallback((e: any) => {
         resetDropzone()
     }, [])
 

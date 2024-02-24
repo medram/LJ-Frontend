@@ -1,16 +1,23 @@
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import MyDataTable from "./MyDataTable";
-import { useCallback, useEffect, useState } from "react";
 
+type AdvancedDataTableProps = {
+    data: any[],
+    subHeaderComponent: ReactNode,
+    enableSearch?: boolean,
+    searchFunction: Function,
+    [rest: string]: unknown
+}
 
 export default function AdvancedDataTable({
     data = [],
     enableSearch = true,
     subHeaderComponent,
-    searchFunction = (item) => true,
-    ...rest})
+    searchFunction = (item: any) => true,
+    ...rest}: AdvancedDataTableProps)
 {
     const [searchQuery, setSearchQuery] = useState("")
-    const [dataList, setDataList] = useState([])
+    const [dataList, setDataList] = useState<any>([])
 
     // Perform searchQuery
     useEffect(useCallback(() => {

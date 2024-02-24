@@ -1,4 +1,4 @@
-import { useLocalStorage } from "../hooks"
+import { useLocalStorage } from "@hooks/index"
 
 import cookieIcon from "@images/cookie-icon.png"
 

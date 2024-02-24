@@ -1,13 +1,17 @@
-import { faCreditCard, faFile, faGaugeHigh, faGem, faRankingStar, faRepeat, faSliders, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import TablerIcon from "@components/TablerIcon";
+import { faGem } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, NavLink } from "react-router-dom";
-import { useDashboardSettings, useLCInfo } from "../../hooks";
-import TablerIcon from "../TablerIcon";
-import { IconAdjustmentsHorizontal, IconCreditCard, IconFiles, IconGauge, IconKey, IconLayoutDashboard, IconPackages, IconUsers } from "@tabler/icons-react";
+import { useDashboardSettings, useLCInfo } from "@hooks/index";
+import { IconAdjustmentsHorizontal, IconCreditCard, IconFiles, IconKey, IconLayoutDashboard, IconPackages, IconUsers } from "@tabler/icons-react";
 import { memo } from "react";
+import { NavLink } from "react-router-dom";
 
 
-export default memo(function Sidebar({ show })
+type SidebarProps = {
+    show?: boolean
+}
+
+export default memo(function Sidebar({ show }: SidebarProps)
 {
     const { isExtendedLicense: isLC } = useLCInfo()
     const { settings } = useDashboardSettings()

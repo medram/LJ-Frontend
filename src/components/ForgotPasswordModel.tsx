@@ -1,13 +1,19 @@
-import { Modal } from "react-bootstrap"
-import SuperButton from "./SuperButton"
+import { sendPasswordResetEmail } from "@api/auth"
+import { toastFormikErrors } from "@utils/index"
 import { useFormik } from "formik"
-import * as Yup from "yup"
-import { toastFormikErrors } from "../utils"
-import { sendPasswordResetEmail } from "../api/auth"
+import { Modal } from "react-bootstrap"
 import { toast } from "react-toastify"
+import * as Yup from "yup"
+import SuperButton from "./SuperButton"
 
 
-export default function ForgotPasswordModel({ show=false, onHide, setShow })
+type ForgotPasswordModelProps = {
+    show: boolean,
+    onHide: () => void,
+    setShow: (status: boolean) => void
+}
+
+export default function ForgotPasswordModel({ show=false, onHide, setShow }: ForgotPasswordModelProps)
 {
     const formik = useFormik({
         initialValues: {

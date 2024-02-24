@@ -1,14 +1,13 @@
-import { faArrowRightFromBracket, faBarsStaggered, faBell, faEllipsisV, faGaugeHigh, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
+import AvatarPalceholder from "@components/AvatarPalceholder";
+import Logo from "@components/Logo";
+import TablerIcon from "@components/TablerIcon";
+import { faBarsStaggered, faEllipsisV, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useUser } from "@hooks/auth";
+import { useDemo, useSettings } from "@hooks/index";
+import { IconLogout, IconUser } from "@tabler/icons-react";
 import { memo, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDemo, useSettings } from "../../hooks";
-import { useUser } from "../../hooks/auth";
-import SectionLoading from "../SectionLoading";
-import Logo from "../Logo";
-import AvatarPalceholder from "../AvatarPalceholder";
-import TablerIcon from "../TablerIcon";
-import { IconLogout, IconUser } from "@tabler/icons-react";
 
 
 export default memo(function Navbar({ sidebarStatus, toggleSidebar, onClickBars })

@@ -1,6 +1,12 @@
+import { ReactNode } from "react"
 
+type BluredOverlayProps = {
+    title: string,
+    blur: number,
+    children: ReactNode
+}
 
-export default function BluredOverlay({ title="", blur=3, children })
+export default function BluredOverlay({ title="", blur=3, children }: BluredOverlayProps)
 {
     return (
         <div className="blured-overlay">

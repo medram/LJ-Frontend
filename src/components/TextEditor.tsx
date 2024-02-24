@@ -1,7 +1,7 @@
 import { Editor } from "@tinymce/tinymce-react";
 import { memo, useCallback, useRef } from "react";
 
-const TINY_API_KEY = "ajele2r9opr9w00237cezbg50x5f0de6y3unf8pltinypbgd"
+const TINY_API_KEY = "ajele2r9opr9w00237cezbg50x5f0de6y3unf8pltinypbgd" as const
 
 const defaultInitProps = {
     height: 500,

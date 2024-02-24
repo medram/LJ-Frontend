@@ -11,8 +11,9 @@ export default function Footer()
         <footer className="container">
             {new Date().getUTCFullYear()} &copy; all right reserved.
             <div className="d-flex justify-content-center gap-3">
-                {pages?.map((page, i) => {
-                    return <Link to={`/p/${page.slug}`} key={i} >{page.title}</Link>
+                {pages?.map((page: object, i: number) => {
+                    if ("slug" in page && "title" in page && typeof page.title === "string")
+                        return <Link to={`/p/${page.slug}`} key={i} >{page.title}</Link>
                 })}
             </div>
         </footer>

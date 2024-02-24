@@ -1,7 +1,15 @@
 
-export default function SectionLoading(props)
+type SectionLoadingProps = {
+    title?: string,
+    spinnerClassName?: string,
+    className?: string,
+    center?: boolean,
+    [rest: string]: unknown
+}
+
+
+export default function SectionLoading({ title, spinnerClassName, className, center=false, ...rest }: SectionLoadingProps)
 {
-    let { title, spinnerClassName, className, center=false, ...rest } = props
 
     return (
         <div className={["d-flex justify-content-center align-items-center p-5", className, center && "w-100"].join(" ")} {...rest}>

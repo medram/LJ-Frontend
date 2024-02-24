@@ -1,8 +1,8 @@
-import DataTable from "react-data-table-component";
-import TablerIcon from "./TablerIcon";
 import { IconChevronDown } from "@tabler/icons-react";
+import DataTable from "react-data-table-component";
 import Checkbox from "./Checkbox";
 import SectionLoading from "./SectionLoading";
+import TablerIcon from "./TablerIcon";
 
 
 const defaultCustomStyles = {
@@ -23,7 +23,7 @@ const defaultCustomStyles = {
 
         },
     },
-};
+} as const;
 
 export default function MyDataTable({ customStyles={}, ...rest})
 {

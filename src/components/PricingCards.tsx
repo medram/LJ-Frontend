@@ -1,17 +1,18 @@
-import { Link } from "react-router-dom"
-import SectionLoading from "./SectionLoading"
-import SuperButton from "./SuperButton"
-import { useCallback } from "react"
-import { usePlans, useSettings } from "@hooks"
-import { useUser } from "@hooks/auth"
+import { PlanType } from "@/utils/types"
+import SectionLoading from "@components/SectionLoading"
+import SuperButton from "@components/SuperButton"
+import TablerIcon from "@components/TablerIcon"
+import { MotionDiv, MotionItem } from "@components/animations"
 import { useCurrentSubscription } from "@hooks/account"
-import { IconCircleCheck } from "@tabler/icons-react"
+import { useUser } from "@hooks/auth"
+import { usePlans, useSettings } from "@hooks/index"
 import { useLoginRegister } from "@hooks/templates"
-import TablerIcon from "./TablerIcon"
-import { MotionItem, MotionDiv } from "./animations"
+import { IconCircleCheck } from "@tabler/icons-react"
+import { useCallback } from "react"
+import { Link } from "react-router-dom"
 
 
-export default function PricingCards({ yearly })
+export default function PricingCards({ yearly }: { yearly: boolean })
 {
     const { isLoading, settings } = useSettings()
     const { isLoading: isPlansLoading, plans, monthlyPlans, yearlyPlans } = usePlans()
@@ -22,7 +23,7 @@ export default function PricingCards({ yearly })
     const { isOpen, open, close, LoginRegisterModel } = useLoginRegister()
 
 
-    const handlePlanActivation = useCallback(plan_id => {
+    const handlePlanActivation = useCallback((plan_id: number) => {
         console.log("clicked")
     }, [])
 
@@ -31,7 +32,7 @@ export default function PricingCards({ yearly })
         return <SectionLoading center={true} />
     }
 
-    const plansToRender = yearly ? yearlyPlans : monthlyPlans
+    const plansToRender: PlanType[] = yearly ? yearlyPlans : monthlyPlans
 
 
     return (

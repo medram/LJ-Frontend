@@ -4,17 +4,22 @@ import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
+import { SecretSettingsType } from "@/utils/types";
 import { syncWithStripe } from "@api/admin";
+import PasswordInput from "@components/PasswordInput";
 import SuperButton from "@components/SuperButton";
-import { useDemo } from "../../hooks";
-import { useModel } from "../../hooks/templates";
-import PasswordInput from "../PasswordInput";
-import Switch from "../Switch";
-import StripIcon from "../icons/StripIcon";
+import Switch from "@components/Switch";
+import StripIcon from "@components/icons/StripIcon";
+import { useDemo } from "@hooks/index";
+import { useModel } from "@hooks/templates";
 import GatewayNotes from "./GatewayNotes";
 
 
-export default memo(function StripeSettings({ settings }) {
+type StripeSettingsProps = {
+    settings: SecretSettingsType
+}
+
+export default memo(function StripeSettings({ settings }: StripeSettingsProps) {
     const { isDemo } = useDemo()
     const queryClient = useQueryClient()
     const { isOpen, open, close, Model } = useModel()
