@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
-import "../../assets/scss/dashboard.scss"
-import Navbar from "../../components/dashboard/Navbar";
-import Sidebar from "../../components/dashboard/Sidebar";
+import "@assets/scss/dashboard.scss";
+import Navbar from "@components/dashboard/Navbar";
+import Sidebar from "@components/dashboard/Sidebar";
 
 
 export default function DashboardLayout() {

@@ -1,8 +1,13 @@
-import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
+import Footer from "@components/Footer";
+import Navbar from "@components/Navbar";
+import { ReactNode } from "react";
 
+type BasePageProps = {
+    children?: ReactNode,
+    showFooter?: boolean
+}
 
-export default function BasePage({ children, showFooter=true }) {
+export default function BasePage({ children, showFooter=true }: BasePageProps) {
     return <>
         <header>
             <Navbar />
