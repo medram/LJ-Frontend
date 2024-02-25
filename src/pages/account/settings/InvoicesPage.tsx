@@ -15,7 +15,6 @@ export default function InvoicesPage()
         return <SectionLoading center={true} />
     }
 
-
     return (
         <div>
             <h1 className="h3 pb-5">Invoices</h1>

@@ -875,6 +875,7 @@ section .section-sub-title {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .fallback-section {
@@ -887,6 +888,7 @@ section .section-sub-title {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 /*#################### Cookies Alert ######################*/

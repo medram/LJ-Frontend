@@ -6,8 +6,9 @@ export default function Fallback({ error }: FallbackProps)
 	const { resetBoundary } = useErrorBoundary()
 
 	return <div className="fallback">
-		Something went wrong!<br/>
-		Error: {error.message}<br/>
-		refresh?
+		Something went wrong!<br />
+		Error: {error.message}<br />
+		GLOBAL
+		<button className="btn btn-primary" onClick={resetBoundary}>refresh?</button>
 	</div>
 }

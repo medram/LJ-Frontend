@@ -5,7 +5,9 @@ import SectionFallback from "./errors/SectionFallback";
 
 export default function SectionErrorBoundary({ children }: { children: ReactNode })
 {
-	return <ErrorBoundary FallbackComponent={SectionFallback}>
-		{children}
-	</ErrorBoundary>
+	return (
+		<ErrorBoundary FallbackComponent={SectionFallback}>
+			{children}
+		</ErrorBoundary>
+	)
 }

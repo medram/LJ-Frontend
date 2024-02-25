@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import SectionErrorBoundary from "@/components/SectionErrorBoundary";
 import "@assets/scss/dashboard.scss";
@@ -9,23 +9,22 @@ import Sidebar from "@components/dashboard/Sidebar";
 
 export default function DashboardLayout() {
     const [showSidebar, toggleSidebar] = useState(false);
+    const location = useLocation()
 
     return (
-        <SectionErrorBoundary>
-            <div className="dashboard">
-                <header className="dashboard-header">
-                    <Navbar sidebarStatus={showSidebar} toggleSidebar={toggleSidebar} onClickBars={() => toggleSidebar(show => !show)} />
-                </header>
-                <Sidebar show={showSidebar} />
-                <main className="dashboard-container">
+        <div className="dashboard">
+            <header className="dashboard-header">
+                <Navbar sidebarStatus={showSidebar} toggleSidebar={toggleSidebar} onClickBars={() => toggleSidebar(show => !show)} />
+            </header>
+            <Sidebar show={showSidebar} />
+            <main className="dashboard-container">
+                <SectionErrorBoundary key={location.pathname}>
                     <div className="dashboard-content">
-                        <SectionErrorBoundary>
-                            {<Outlet />}
-                        </SectionErrorBoundary>
+                        {<Outlet />}
                     </div>
-                    <footer>&copy; All rights reserved.</footer>
-                </main>
-            </div>
-        </SectionErrorBoundary>
+                </SectionErrorBoundary>
+                <footer>&copy; All rights reserved.</footer>
+            </main>
+        </div>
     )
 }
