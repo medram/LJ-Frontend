@@ -10,7 +10,6 @@ export default function InvoicesPage()
     const { isLoading, invoices } = useUserInvoices()
     const { settings } = useSettings()
 
-
     if (isLoading)
     {
         return <SectionLoading center={true} />

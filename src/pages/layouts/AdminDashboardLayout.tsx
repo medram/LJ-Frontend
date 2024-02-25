@@ -4,10 +4,10 @@ import { useUser } from "../../hooks/auth";
 import DashboardLayout from "./DashboardLayout";
 
 // Loading Dashboard css
-import "../../assets/scss/dashboard.scss"
-import { useLC } from "../../hooks/admin";
-import { useLCInfo } from "../../hooks";
-import FullscreenLoading from "../../components/FullscreenLoading";
+import "@assets/scss/dashboard.scss";
+import FullscreenLoading from "@components/FullscreenLoading";
+import { useLC } from "@hooks/admin";
+import { useLCInfo } from "@hooks/index";
 
 
 export default function AdminDashboardLayout()

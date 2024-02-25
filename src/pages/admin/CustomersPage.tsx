@@ -1,16 +1,17 @@
+import { CustomerType } from "@/utils/types";
+import { deleteCustomer } from "@api/admin";
+import AdvancedDataTable from "@components/AdvancedDataTable";
+import SectionLoading from "@components/SectionLoading";
 import { faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMemo, useState } from "react";
+import { useCustomers } from "@hooks/admin";
+import { useDemo } from "@hooks/index";
+import { datetimeFormat } from "@utils/index";
+import { useMemo } from "react";
 import { useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { deleteCustomer } from "../../api/admin";
-import SectionLoading from "../../components/SectionLoading";
-import { useCustomers } from "../../hooks/admin";
 import Swal from "sweetalert2";
-import { datetimeFormat } from "../../utils";
-import { useDemo } from "../../hooks";
-import AdvancedDataTable from "../../components/AdvancedDataTable";
 
 
 export default function CustomersPage()
@@ -23,7 +24,7 @@ export default function CustomersPage()
         {
             name: "ID",
             sortable: true,
-            selector: customer => customer.id
+            selector: (customer: CustomerType) => customer.id
         },
         {
             name: "Username",
@@ -33,11 +34,11 @@ export default function CustomersPage()
         {
             name: "Email",
             sortable: true,
-            selector: customer => customer.email
+            selector: (customer: CustomerType) => customer.email
         },
         {
             name: "Status",
-            selector: customer => {
+            selector: (customer: CustomerType) => {
                 return customer.is_active ? (
                     <span className="badge text-bg-success">Active</span>
                 ) : (
@@ -48,11 +49,11 @@ export default function CustomersPage()
         {
             name: "Joined",
             sortable: true,
-            selector: customer => datetimeFormat(customer.created_at)
+            selector: (customer: CustomerType) => datetimeFormat(customer.created_at)
         },
         {
             name: "Actions",
-            selector: customer => (
+            selector: (customer: CustomerType) => (
                 <>
                     <Link to={`edit/${customer.id}`} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></Link>
 

@@ -20,7 +20,6 @@ export default function AdminDashboardPage()
         return <SectionLoading center={true} />
     }
 
-
     return <>
         <h1 className="mb-5">Dashboard</h1>
 

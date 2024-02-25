@@ -1,12 +1,12 @@
-import { Link, Outlet } from "react-router-dom";
-import AvatarPalceholder from "../../components/AvatarPalceholder";
-import { useUser } from "../../hooks/auth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SectionErrorBoundary from "@/components/SectionErrorBoundary";
+import AvatarPalceholder from "@components/AvatarPalceholder";
+import TablerIcon from "@components/TablerIcon";
 import { faGem } from "@fortawesome/free-solid-svg-icons";
-import { useLCInfo } from "../../hooks";
-import TablerIcon from "../../components/TablerIcon";
-import { IconInfoCircleFilled, IconLock, IconUser } from "@tabler/icons-react";
-import { IconFileDollar } from "@tabler/icons-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useUser } from "@hooks/auth";
+import { useLCInfo } from "@hooks/index";
+import { IconFileDollar, IconInfoCircleFilled, IconLock, IconUser } from "@tabler/icons-react";
+import { Link, Outlet } from "react-router-dom";
 
 
 export default function AccountSettingsLayout() {
@@ -40,7 +40,9 @@ export default function AccountSettingsLayout() {
                     </div>
                 </div>
                 <div className="col border rounded p-5 mx-3 overflow-auto">
-                    <Outlet />
+                    <SectionErrorBoundary>
+                        <Outlet />
+                    </SectionErrorBoundary>
                 </div>
             </div>
         </section>

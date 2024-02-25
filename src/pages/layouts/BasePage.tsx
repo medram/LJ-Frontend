@@ -1,3 +1,4 @@
+import SectionErrorBoundary from "@/components/SectionErrorBoundary";
 import Footer from "@components/Footer";
 import Navbar from "@components/Navbar";
 import { ReactNode } from "react";
@@ -8,15 +9,17 @@ type BasePageProps = {
 }
 
 export default function BasePage({ children, showFooter=true }: BasePageProps) {
-    return <>
+    return <SectionErrorBoundary>
         <header>
             <Navbar />
         </header>
         <main>
-            { children }
+            <SectionErrorBoundary>
+                { children }
+            </SectionErrorBoundary>
         </main>
         {showFooter && (
             <Footer />
         )}
-    </>
+    </SectionErrorBoundary>
 }

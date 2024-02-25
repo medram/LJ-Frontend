@@ -1,13 +1,13 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Heading from "../components/Heading";
-import BasePage from "./layouts/BasePage";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useFormik } from "formik";
-import * as Yup from "yup"
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import { contactUs } from "../api";
+import Heading from "../components/Heading";
 import SuperButton from "../components/SuperButton";
 import { toastFormikErrors } from "../utils";
-import { contactUs } from "../api";
-import { toast } from "react-toastify";
+import BasePage from "./layouts/BasePage";
 
 
 export default function ContactPage() {

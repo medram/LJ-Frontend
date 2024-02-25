@@ -1,6 +1,6 @@
+import { useUser } from "@hooks/auth";
 import { Navigate, Outlet } from "react-router-dom";
 import BasePage from "./BasePage";
-import { useUser } from "../../hooks/auth";
 
 
 export default function AccountLayout()
@@ -9,7 +9,6 @@ export default function AccountLayout()
 
     if (!isAuthenticated)
         return <Navigate to="/login" replace={true} />
-
 
     return (
         <BasePage>

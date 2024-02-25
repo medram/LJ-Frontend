@@ -1,18 +1,14 @@
-import BasePage from "./layouts/BasePage";
-import { useSettings } from "../hooks";
 import Dropzone from "@components/Dropzone";
 import SpinnerGrow from "@components/SpinnerGrow";
 import TablerIcon from "@components/TablerIcon";
-import { IconCloudUpload, IconHourglassHigh, IconSchool, IconUsersGroup, IconZoomQuestion } from "@tabler/icons-react";
-import { useState } from "react";
-import { useLoginRegister, useModel } from "@hooks/templates";
-import { useUser } from "@hooks/auth";
-import { useNavigate } from "react-router";
 import { MotionItem, MotionViewport } from "@components/animations";
-import { IconBrandHipchat } from "@tabler/icons-react";
-import { IconHistory } from "@tabler/icons-react";
-import { IconFileSearch } from "@tabler/icons-react";
-import { IconBook } from "@tabler/icons-react";
+import { useUser } from "@hooks/auth";
+import { useLoginRegister } from "@hooks/templates";
+import { IconBook, IconBrandHipchat, IconCloudUpload, IconFileSearch, IconHistory, IconHourglassHigh, IconSchool, IconUsersGroup, IconZoomQuestion } from "@tabler/icons-react";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useSettings } from "../hooks";
+import BasePage from "./layouts/BasePage";
 
 
 export default function HomePage()
@@ -24,7 +20,7 @@ export default function HomePage()
     const { isAuthenticated } = useUser()
     const navigate = useNavigate()
 
-    const onUpload = ({ resetDropzone }) => {
+    const onUpload = ({ resetDropzone }: {resetDropzone: () => void}) => {
         resetDropzone()
 
         if (isAuthenticated)
