@@ -6,7 +6,7 @@ import { checkLC, getCustomers, getDashboardAnalytics, getPage, getPages, getSub
 export function useCustomers()
 {
     const {data, ...rest } = useQuery("admin.customers", getCustomers, {staleTime: Infinity})
-    const customers: CustomerType = data?.customers
+    const customers: CustomerType[] = data?.customers
     return { customers, ...rest}
 }
 
