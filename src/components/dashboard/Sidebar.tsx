@@ -23,7 +23,7 @@ export default memo(function Sidebar({ show }: SidebarProps)
     return (
         <aside className={`${classes} d-flex flex-column justify-content-between`}>
             <nav>
-                <NavLink to="/admin/">
+                <NavLink to="" end>
                     <TablerIcon icon={IconLayoutDashboard} stroke={1.25} size={30} /> Dashboard
                 </NavLink>
                 <NavLink to="customers">

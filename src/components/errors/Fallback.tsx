@@ -8,7 +8,6 @@ export default function Fallback({ error }: FallbackProps)
 	return <div className="fallback">
 		Something went wrong!<br />
 		Error: {error.message}<br />
-		GLOBAL
 		<button className="btn btn-primary" onClick={resetBoundary}>refresh?</button>
 	</div>
 }

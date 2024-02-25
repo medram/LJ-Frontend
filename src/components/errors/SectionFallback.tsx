@@ -8,7 +8,6 @@ export default function SectionFallback({ error }: FallbackProps)
 	return <div className="fallback-section">
 		Something went wrong!<br />
 		Error: {error.message}<br />
-		SECTION
 		<button className="btn btn-primary" onClick={resetBoundary}>refresh?</button>
 	</div>
 }
