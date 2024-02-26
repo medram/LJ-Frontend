@@ -1,16 +1,17 @@
-import { SubscriptionType } from "@/utils/types"
+import { ChatRoomType, SubscriptionType } from "@/utils/types"
 import { useQuery } from "react-query"
 import { currentSubscription, getChatRoom, getUserChatRoomList, getUserInvoices } from "../api/account"
 
 
-export function useCurrentSubscription()
+export function useCurrentSubscription({ suspense=true }: { suspense?: boolean })
 {
     const { data, ...rest } = useQuery("user.subscription", currentSubscription, {
         // staleTime: Infinity
-        retry: 1
+        retry: 1,
+        suspense
     })
 
-    const subscription: SubscriptionType = data?.subscription
+    const subscription: SubscriptionType | null = data?.subscription || null
 
     return { ...rest, subscription }
 }
@@ -18,7 +19,7 @@ export function useCurrentSubscription()
 
 export function useUserInvoices()
 {
-    const { data, ...rest } = useQuery("user.invoices", getUserInvoices, { staleTime: Infinity })
+    const { data, ...rest } = useQuery("user.invoices", getUserInvoices, { staleTime: Infinity, suspense: true })
 
     return { ...rest, invoices: data?.invoices }
 }
@@ -27,10 +28,13 @@ export function useUserInvoices()
 export function useUserChatRoomList()
 {
     const { data, ...rest } = useQuery("user.chat.list", getUserChatRoomList, {
-        //staleTime: Infinity
+        //staleTime: Infinity,
+        suspense: true
     })
 
-    return { ...rest, userChatRoomList: data?.chats }
+    const userChatRoomList: ChatRoomType[] = data?.chats || []
+
+    return { ...rest, userChatRoomList }
 }
 
 

@@ -1,5 +1,4 @@
 import { PlanType } from "@/utils/types"
-import SectionLoading from "@components/SectionLoading"
 import SuperButton from "@components/SuperButton"
 import TablerIcon from "@components/TablerIcon"
 import { MotionDiv, MotionItem } from "@components/animations"
@@ -14,26 +13,18 @@ import { Link } from "react-router-dom"
 
 export default function PricingCards({ yearly }: { yearly: boolean })
 {
-    const { isLoading, settings } = useSettings()
-    const { isLoading: isPlansLoading, plans, monthlyPlans, yearlyPlans } = usePlans()
-
+    const { settings } = useSettings()
     const { isAuthenticated } = useUser()
-    const { subscription } = useCurrentSubscription()
+    const { monthlyPlans, yearlyPlans } = usePlans()
+    const { subscription } = useCurrentSubscription({ suspense: false })
 
     const { isOpen, open, close, LoginRegisterModel } = useLoginRegister()
-
 
     const handlePlanActivation = useCallback((plan_id: number) => {
         console.log("clicked")
     }, [])
 
-
-    if (isLoading || !Object.keys(settings).length || isPlansLoading) {
-        return <SectionLoading center={true} />
-    }
-
     const plansToRender: PlanType[] = yearly ? yearlyPlans : monthlyPlans
-
 
     return (
         <MotionDiv className="pricing-section" key={plansToRender}>

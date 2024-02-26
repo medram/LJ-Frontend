@@ -107,7 +107,7 @@ export function usePersistedReducer(reducer: any, initialValues: object) {
 
 export function useSettings()
 {
-    const { data, ...rest } = useQuery("settings", getSettings, { staleTime: Infinity })
+    const { data, ...rest } = useQuery("settings", getSettings, { staleTime: Infinity, suspense: true })
     const settings: GeneralSettingsType = data?.settings || {}
 
     return { ...rest, settings }
@@ -116,7 +116,10 @@ export function useSettings()
 //############################### DASHBOARD HOOKS ######################################
 
 export function useDashboardSettings() {
-    const { data, ...rest } = useQuery("admin.settings", getDashboardSettings, { staleTime: Infinity })
+    const { data, ...rest } = useQuery("admin.settings", getDashboardSettings, {
+        staleTime: Infinity,
+        suspense: true
+    })
     const settings: SecretSettingsType = data?.settings || {}
 
     return { ...rest, settings }
@@ -124,7 +127,7 @@ export function useDashboardSettings() {
 
 export function useDashboardPlans()
 {
-    const { data, ...rest } = useQuery("admin.plans", getDashboardPlans, { staleTime: Infinity })
+    const { data, ...rest } = useQuery("admin.plans", getDashboardPlans, { staleTime: Infinity, suspense: true })
     const plans: PlanType[] = data?.plans
 
     return { ...rest, plans }
@@ -142,7 +145,7 @@ export function useDashboardPlan(planId: number)
 
 export function usePlans()
 {
-    const { data, ...rest } = useQuery("plans", getPlans, { staleTime: 1000 * 60 }) // 1 minute
+    const { data, ...rest } = useQuery("plans", getPlans, { staleTime: 1000 * 60, suspense: true }) // 1 minute
     const plans: PlanType[] = data?.plans
     const monthlyPlans: PlanType[] = plans?.filter((plan: PlanType) => "billing_cycle" in plan && plan.billing_cycle === "monthly")
     const yearlyPlans: PlanType[] = plans?.filter((plan: PlanType) => "billing_cycle" in plan && plan.billing_cycle === "yearly")
@@ -211,20 +214,25 @@ export function usePages()
 
 export function usePage(slug: string)
 {
-    const { data, ...rest } = useQuery(`page.${slug}`, () => getPage(slug), { staleTime: 300000, retry: 1 })
+    const { data, ...rest } = useQuery(`page.${slug}`, () => getPage(slug), {
+        staleTime: 300000,
+        retry: 1,
+        suspense: true
+    })
+
     const page: PageType = data?.page
     return { page, ...rest }
 }
 
 export function useDemo() {
-    const { data, ...rest } = useQuery("demo", getDemoStatus)
+    const { data, ...rest } = useQuery("demo", getDemoStatus, { suspense: true })
     const isDemo: boolean = (data?.status ? data.status : false)
 
     return { ...rest, isDemo }
 }
 
 export function useLCInfo() {
-    const { isLoading, data, ...rest } = useQuery("LC", getLCInfo)
+    const { isLoading, data, ...rest } = useQuery("LC", getLCInfo, { suspense: true })
     let isRegularLicense = false
     let isExtendedLicense = false
 

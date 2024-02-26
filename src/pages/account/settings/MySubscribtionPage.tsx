@@ -1,22 +1,14 @@
-import { Link } from "react-router-dom"
-import SectionLoading from "../../../components/SectionLoading"
-import { useCurrentSubscription } from "../../../hooks/account"
-import { useUser } from "../../../hooks/auth"
+import TablerIcon from "@components/TablerIcon"
+import { faRankingStar } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faGem, faRankingStar } from "@fortawesome/free-solid-svg-icons"
-import TablerIcon from "../../../components/TablerIcon"
+import { useCurrentSubscription } from "@hooks/account"
 import { IconBolt } from "@tabler/icons-react"
+import { Link } from "react-router-dom"
 
 
 export default function MySubscriptionPage()
 {
-    const { user } = useUser()
-    const { isLoading, subscription } = useCurrentSubscription()
-
-    if (isLoading)
-    {
-        return <SectionLoading center={true} />
-    }
+    const { subscription } = useCurrentSubscription({ suspense: true })
 
     return (
         <div>

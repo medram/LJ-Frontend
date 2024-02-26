@@ -1,5 +1,16 @@
+import { deleteChatRoom } from "@api/account";
+import { uploadFile } from "@api/index";
+import AvatarPalceholder from "@components/AvatarPalceholder";
+import Dropzone, { onUploadProps } from "@components/Dropzone";
+import SpinnerGrow from "@components/SpinnerGrow";
+import TablerIcon from "@components/TablerIcon";
+import ChatLabel from "@components/playground/ChatLabel";
+import ChatSection from "@components/playground/ChatSection";
 import { faBarsStaggered, faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useCurrentSubscription, useUserChatRoomList } from "@hooks/account";
+import { useUser } from "@hooks/auth";
+import { useDemo, useEventListener, useLCInfo, useNaiveLocalStorage } from "@hooks/index";
 import { IconBolt, IconCloudUpload } from "@tabler/icons-react";
 import { DEMO_SUBSCRIPTION, DEMO_SUBSCRIPTION_EXPIRE, getAvailableDocumentTypes, getAvailableDocumentTypesString } from "@utils/index";
 import { useCallback, useEffect, useState } from "react";
@@ -8,18 +19,6 @@ import { Sidebar } from 'react-pro-sidebar';
 import { useQueryClient } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { uploadFile } from "../api";
-import { deleteChatRoom } from "../api/account";
-import AvatarPalceholder from "../components/AvatarPalceholder";
-import Dropzone, { onUploadProps } from "../components/Dropzone";
-import FullscreenLoading from "../components/FullscreenLoading";
-import SpinnerGrow from "../components/SpinnerGrow";
-import TablerIcon from "../components/TablerIcon";
-import ChatLabel from "../components/playground/ChatLabel";
-import ChatSection from "../components/playground/ChatSection";
-import { useDemo, useEventListener, useLCInfo, useNaiveLocalStorage } from "../hooks";
-import { useCurrentSubscription, useUserChatRoomList } from "../hooks/account";
-import { useUser } from "../hooks/auth";
 
 
 const onUpload = ({
@@ -120,6 +119,7 @@ const onError = (rejectedFiles: FileRejection[]) => {
 export default function PlaygroundPage()
 {
     const { isDemo } = useDemo()
+    const { user } = useUser()
     const [ getDemoSubscription, setDemoSubscription ] = useNaiveLocalStorage("demo_sub", DEMO_SUBSCRIPTION)
 
     const demoSubscription = isDemo ? getDemoSubscription() : null;
@@ -129,15 +129,14 @@ export default function PlaygroundPage()
     const [ collapsed, setCollapsed ] = useState(false)
     const [windowInnerWidth, setWindowInnerWidth] = useEventListener('resize', window.innerWidth, () => window.innerWidth)
 
-    const { user } = useUser()
-    const { isLoading: isSubscriptionLoading, subscription } = useCurrentSubscription()
+    const { subscription } = useCurrentSubscription({ suspense: true })
 
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     const { uuid } = useParams()
     const [ currentChatRoomUUID, setCurrentChatRoomUUID ] = useState(uuid)
 
-    const { isLoading, isError, error, userChatRoomList } = useUserChatRoomList()
+    const { isError, error, userChatRoomList } = useUserChatRoomList()
     const [ isProcessing, setProcessing ] = useState(false)
 
     useEffect(() => {
@@ -216,11 +215,6 @@ export default function PlaygroundPage()
         toast.error(error as string)
     }
 
-    if (!Object.keys(user).length || isLoading || isSubscriptionLoading)
-    {
-        return <FullscreenLoading />
-    }
-
 
     return (
         <>
@@ -276,7 +270,7 @@ export default function PlaygroundPage()
                         <div className="sidebar-bottom-section">
                             {isDemo && (
                                 <>
-                                    {(subscription?.questions <= 20 || subscription?.pdfs <= 10) && (
+                                    {(subscription && (subscription?.questions <= 20 || subscription?.pdfs <= 10)) && (
                                         <Link to="/pricing" className="btn btn-warning btn-lg btn-block"><TablerIcon icon={IconBolt} stroke={1.5} size={30} /> Upgrade</Link>
                                     )}
 
@@ -330,7 +324,7 @@ export default function PlaygroundPage()
 
                     <section className="d-flex flex-column">
                         {isEL ? (
-                            (subscription && subscription?.status == 1 || isDemo) ? (
+                            (subscription && (subscription?.status == 1 || isDemo)) ? (
                                 subscription?.questions <= 0 ? (
                                     <div className="d-flex flex-column justify-content-start p-5">
                                         Your subscription has reached its maximum usage.

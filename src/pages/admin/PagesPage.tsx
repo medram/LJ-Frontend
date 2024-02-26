@@ -1,25 +1,25 @@
-import { toast } from "react-toastify"
-import SectionLoading from "../../components/SectionLoading"
-import { usePages } from "../../hooks/admin"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { PageType } from "@/utils/types"
 import { faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
-import { deletePage } from "../../api/admin"
-import Swal from "sweetalert2"
-import { useQueryClient } from "react-query"
-import { datetimeFormat } from "../../utils"
-import { useDemo } from "../../hooks"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useMemo } from "react"
+import { useQueryClient } from "react-query"
+import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
+import Swal from "sweetalert2"
+import { deletePage } from "../../api/admin"
 import AdvancedDataTable from "../../components/AdvancedDataTable"
+import { useDemo } from "../../hooks"
+import { usePages } from "../../hooks/admin"
+import { datetimeFormat } from "../../utils"
 
 
 export function PagesPage()
 {
     const { isDemo } = useDemo()
-    const { isLoading, isError, error, pages } = usePages()
+    const { isError, error, pages } = usePages()
     const queryClient = useQueryClient()
 
-    const handleDelete = (id) => {
+    const handleDelete = (id: number) => {
         Swal.fire({
             title: "Are you sure you want to delete this page?",
             icon: "warning",
@@ -48,17 +48,17 @@ export function PagesPage()
         {
             name: "Title",
             sortable: true,
-            selector: page => page.title
+            selector: (page: PageType) => page.title
         },
         {
             name: "Slug",
             sortable: true,
-            sortFunction: (page1, page2) => page1.slug > page2.slug,
-            selector: page => <code>{page.slug}</code>
+            sortFunction: (page1: PageType, page2: PageType) => page1.slug > page2.slug,
+            selector: (page: PageType) => <code>{page.slug}</code>
         },
         {
             name: "Published",
-            selector: page => (
+            selector: (page: PageType) => (
                 page.status ? (
                     <span className="badge text-bg-success">Yes</span>
                 ) : (
@@ -69,11 +69,11 @@ export function PagesPage()
         {
             name: "Created",
             sortable: true,
-            selector: page => datetimeFormat(page.created_at)
+            selector: (page: PageType) => datetimeFormat(page.created_at)
         },
         {
             name: "Actions",
-            selector: page => (
+            selector: (page: PageType) => (
                 <>
                     <Link to={`edit/${page.id}`} className="btn btn-primary btn-sm  mx-1 mb-1"><FontAwesomeIcon icon={faPen} /></Link>
 
@@ -82,10 +82,6 @@ export function PagesPage()
             )
         },
     ], [])
-
-    if (isLoading) {
-        return <SectionLoading />
-    }
 
     if (isError) {
         return toast.error(error.message)
@@ -105,7 +101,7 @@ export function PagesPage()
                             subHeaderComponent={(
                                 <Link to="add" className="btn btn-primary"><FontAwesomeIcon icon={faPlus} /> Add Page</Link>
                             )}
-                            searchFunction={(page, searchQuery) => [page.title.toLowerCase(), page.slug.toLowerCase()].includes(searchQuery)}
+                            searchFunction={(page: PageType, searchQuery: any) => [page.title.toLowerCase(), page.slug.toLowerCase()].includes(searchQuery)}
                         />
                     </section>
                 </div>

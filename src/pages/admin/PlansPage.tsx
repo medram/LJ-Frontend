@@ -1,38 +1,32 @@
+import TablerIcon from "@components/TablerIcon";
+import EditTrialForm from "@components/dashboard/forms/EditTrialForm";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconCreditCard, IconLeaf, IconPlus } from "@tabler/icons-react";
+import { useState } from "react";
 import { useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import SectionLoading from "../../components/SectionLoading";
 import Swal from "sweetalert2";
 import { deletePlan } from "../../api/admin";
-import { useDashboardPlans, useDemo, useSettings } from "../../hooks";
-import { useState } from "react";
-import { useOffCanvas } from "../../hooks/templates";
 import CustomOffCanvas from "../../components/CustomOffCanvas";
 import AddPlanForm from "../../components/dashboard/forms/AddPlanForm";
 import EditPlanForm from "../../components/dashboard/forms/EditPlanForm";
+import { useDashboardPlans, useDemo, useSettings } from "../../hooks";
+import { useOffCanvas } from "../../hooks/templates";
 import { datetimeFormat } from "../../utils";
-import TablerIcon from "@components/TablerIcon";
-import { IconCreditCard, IconLeaf, IconPlus } from "@tabler/icons-react";
-import EditTrialForm from "@components/dashboard/forms/EditTrialForm";
 
 
 export default function PlansPage()
 {
     const { isDemo } = useDemo()
     const queryClient = useQueryClient()
-    const { isLoading, isError, error, plans } = useDashboardPlans()
+    const { isError, error, plans } = useDashboardPlans()
     const { isOpen, open, close, offCanvasProps } = useOffCanvas()
     const { isOpen: isEditOpen, open: editOpen, close: editClose, offCanvasProps: editPlanOffCanvasProps } = useOffCanvas()
     const { isOpen: isTrialOpen, open: trialOpen, close: trialClose, offCanvasProps: trialOffCanvasProps } = useOffCanvas()
-    const { isLoading: settingsIsLoading, settings } = useSettings()
+    const { settings } = useSettings()
     const [ planToEdit, setPlanToEdit ] = useState(0)
-
-
-    if (isLoading || settingsIsLoading) {
-        return <SectionLoading />
-    }
 
     if (isError) {
         return toast.error(error.message)
@@ -78,7 +72,7 @@ export default function PlansPage()
 
     return <>
         <h1 className="mb-3">Plans</h1>
-        <div className="d-flex flex-row-reverse gap-3 mb-4">
+        <div className="d-flex flex-column flex-md-row-reverse gap-3 mb-4">
             <button className="btn btn-primary" onClick={open}><TablerIcon icon={IconPlus} stroke={1.25} /> New Plan</button>
 
             <Link to="../payment-gateways" className="btn btn-primary"><TablerIcon icon={IconCreditCard} stroke={1.25} /> Manage Payment Gateways</Link>

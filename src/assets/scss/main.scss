@@ -891,6 +891,15 @@ section .section-sub-title {
     flex-direction: column;
 }
 
+.section-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+}
+
 /*#################### Cookies Alert ######################*/
 
 .cookie-alert {

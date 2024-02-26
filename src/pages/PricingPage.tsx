@@ -1,7 +1,6 @@
+import Heading from "@components/Heading";
+import PricingCards from "@components/PricingCards";
 import { useState } from "react";
-import Heading from "../components/Heading";
-import PricingCards from "../components/PricingCards";
-import Switch from "../components/Switch";
 import BasePage from "./layouts/BasePage";
 
 

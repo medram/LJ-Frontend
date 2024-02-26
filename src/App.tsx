@@ -44,6 +44,7 @@ import ELRequired from "@pages/middlewares/ELRequired";
 import NoAuthRequired from "@pages/middlewares/NoAuthRequired";
 import UserRequired from "@pages/middlewares/UserRequired";
 import CookiesAlert from "./components/CookiesAlert";
+import BasePage from "./pages/layouts/BasePage";
 
 
 // Lazy loading
@@ -59,7 +60,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/p/:slug" element={<PagePage />} />
+        <Route path="/p/:slug" element={<BasePage><PagePage /></BasePage>} />
         <Route path="/logout" element={<LogoutPage />} />
 
         <Route element={<ELRequired to="/" />}>

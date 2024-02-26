@@ -3,7 +3,6 @@ import StripIcon from '@components/icons/StripIcon';
 import { faComment, faDollarSign, faFile, faFileInvoiceDollar, faGem, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Card } from 'react-bootstrap';
-import SectionLoading from '../../components/SectionLoading';
 import { useDashboardSettings, useLCInfo } from '../../hooks';
 import { useDashboardAnalytics } from '../../hooks/admin';
 import { datetimeFormat } from '../../utils';
@@ -12,13 +11,8 @@ import { datetimeFormat } from '../../utils';
 export default function AdminDashboardPage()
 {
     const { isExtendedLicense: isEL } = useLCInfo()
-    const { isLoading: isSettingLoading, settings } = useDashboardSettings()
-    const { isLoading: isAnalyticsLoading, analytics } = useDashboardAnalytics()
-
-    if (isSettingLoading || isAnalyticsLoading || !Object.keys(analytics).length)
-    {
-        return <SectionLoading center={true} />
-    }
+    const { settings } = useDashboardSettings()
+    const { analytics } = useDashboardAnalytics()
 
     return <>
         <h1 className="mb-5">Dashboard</h1>

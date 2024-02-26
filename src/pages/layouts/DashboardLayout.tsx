@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import SectionErrorBoundary from "@/components/SectionErrorBoundary";
+import SectionSuspense from "@/components/SectionSuspense";
 import "@assets/scss/dashboard.scss";
 import Navbar from "@components/dashboard/Navbar";
 import Sidebar from "@components/dashboard/Sidebar";
@@ -19,9 +20,11 @@ export default function DashboardLayout() {
             <Sidebar show={showSidebar} />
             <main className="dashboard-container">
                 <SectionErrorBoundary key={location.pathname}>
-                    <div className="dashboard-content">
-                        {<Outlet />}
-                    </div>
+                    <SectionSuspense>
+                        <div className="dashboard-content">
+                            {<Outlet />}
+                        </div>
+                    </SectionSuspense>
                 </SectionErrorBoundary>
                 <footer>&copy; All rights reserved.</footer>
             </main>

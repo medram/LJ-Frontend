@@ -1,4 +1,5 @@
 import SectionErrorBoundary from "@/components/SectionErrorBoundary";
+import SectionSuspense from "@/components/SectionSuspense";
 import AvatarPalceholder from "@components/AvatarPalceholder";
 import TablerIcon from "@components/TablerIcon";
 import { faGem } from "@fortawesome/free-solid-svg-icons";
@@ -6,12 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useUser } from "@hooks/auth";
 import { useLCInfo } from "@hooks/index";
 import { IconFileDollar, IconInfoCircleFilled, IconLock, IconUser } from "@tabler/icons-react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 
 export default function AccountSettingsLayout() {
     const { user } = useUser()
     const { isExtendedLicense } = useLCInfo()
+    const location = useLocation()
 
     return (
         <section className="container py-5">
@@ -40,8 +42,10 @@ export default function AccountSettingsLayout() {
                     </div>
                 </div>
                 <div className="col border rounded p-5 mx-3 overflow-auto">
-                    <SectionErrorBoundary>
-                        <Outlet />
+                    <SectionErrorBoundary key={location.pathname}>
+                        <SectionSuspense>
+                            <Outlet />
+                        </SectionSuspense>
                     </SectionErrorBoundary>
                 </div>
             </div>

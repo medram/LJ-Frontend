@@ -1,27 +1,20 @@
+import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconLayoutDashboard, IconLogout, IconUser } from "@tabler/icons-react";
+import { memo } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useLCInfo, useSettings } from "../hooks";
 import { useUser } from "../hooks/auth";
-import Logo from "./Logo";
-import SectionLoading from "./SectionLoading";
-import { memo } from "react";
 import AvatarPalceholder from "./AvatarPalceholder";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
+import Logo from "./Logo";
 import TablerIcon from "./TablerIcon";
-import { IconLayoutDashboard, IconLogout, IconUser } from "@tabler/icons-react";
 
 
 export default memo(function Navbar()
 {
     const { isExtendedLicense } = useLCInfo()
-    const { isLoading, settings } = useSettings()
+    const { settings } = useSettings()
     const { isAuthenticated, user, isAdmin } = useUser()
-
-    if (isLoading || !Object.keys(settings).length)
-    {
-        return <SectionLoading center={true} />
-    }
-
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-override">

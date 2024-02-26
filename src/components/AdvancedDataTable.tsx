@@ -3,7 +3,7 @@ import MyDataTable from "./MyDataTable";
 
 type AdvancedDataTableProps = {
     data: any[],
-    subHeaderComponent: ReactNode,
+    subHeaderComponent?: ReactNode,
     enableSearch?: boolean,
     searchFunction: Function,
     [rest: string]: unknown

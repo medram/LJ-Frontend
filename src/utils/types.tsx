@@ -134,3 +134,15 @@ export type PageType = {
 	created_at: string,
 	updated_at: string
 }
+
+export type ChatRoomType = {
+	id: number,
+	user_id: number,
+	uuid: string,
+	title: string,
+	path: string,
+	created_at: string,
+	updated_at: string,
+	chat_history: string,
+	[rest: string]: unknown
+}

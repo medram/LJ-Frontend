@@ -1,19 +1,18 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useLCInfo } from "../../hooks";
-import FullscreenLoading from "../../components/FullscreenLoading";
 
+type ELRequiredProps = {
+    to?: string,
+    replace?: boolean
+}
 
-export default function ELRequired({ to="/admin" })
+export default function ELRequired({ to="/admin", replace=false }: ELRequiredProps)
 {
-    const { isLoading, isExtendedLicense } = useLCInfo()
+    const { isExtendedLicense } = useLCInfo()
 
-    if (isLoading)
+    if (!isExtendedLicense)
     {
-        return <FullscreenLoading />
-    }
-    else if (!isLoading && !isExtendedLicense)
-    {
-        return <Navigate to={to} replace={true} />
+        return <Navigate to={to} replace={replace} />
     }
 
     return <Outlet />

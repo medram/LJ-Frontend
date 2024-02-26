@@ -1,22 +1,14 @@
-import { faFloppyDisk, faPlus, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import GeneralSettings from "@components/dashboard/forms/GeneralSettings";
+import SMTPSettings from "@components/dashboard/forms/SMTPSettings";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import GeneralSettings from "../../components/dashboard/forms/GeneralSettings";
-import { useDashboardSettings, useDemo } from "../../hooks";
-import SectionLoading from "../../components/SectionLoading";
-import SMTPSettings from "../../components/dashboard/forms/SMTPSettings";
-import APISettings from "../../components/dashboard/forms/APISettings";
+import { useDashboardSettings, useDemo } from "@hooks/index";
 
 
 export function SettingsPage()
 {
-    const { isLoading: isDemoLoading, isDemo } = useDemo()
-    const { isLoading, isError, error, settings } = useDashboardSettings()
-
-    if (isLoading || !Object.keys(settings).length || isDemoLoading)
-    {
-        return <SectionLoading />
-    }
+    const { isDemo } = useDemo()
+    const { settings } = useDashboardSettings()
 
     return (
         <>

@@ -1,7 +1,6 @@
 import { CustomerType } from "@/utils/types";
 import { deleteCustomer } from "@api/admin";
 import AdvancedDataTable from "@components/AdvancedDataTable";
-import SectionLoading from "@components/SectionLoading";
 import { faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCustomers } from "@hooks/admin";
@@ -18,7 +17,7 @@ export default function CustomersPage()
 {
     const { isDemo } = useDemo()
     const queryClient = useQueryClient()
-    const { isLoading, isError, error, customers } = useCustomers()
+    const { isError, error, customers } = useCustomers()
 
     const columns = useMemo(() => [
         {
@@ -63,11 +62,6 @@ export default function CustomersPage()
         },
     ], [])
 
-
-    if (isLoading)
-    {
-        return <SectionLoading />
-    }
 
     if (isError)
     {

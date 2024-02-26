@@ -1,30 +1,30 @@
+import { SubscriptionType } from "@/utils/types"
+import { cancelSubscription } from "@api/admin"
+import AdvancedDataTable from "@components/AdvancedDataTable"
+import SuperBotton from "@components/SuperButton"
+import PayPalIcon from "@components/icons/PayPalIcon"
+import StripIcon from "@components/icons/StripIcon"
 import { faCircleMinus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useSubscriptions } from "@hooks/admin"
+import { useDashboardSettings, useDemo } from "@hooks/index"
+import { datetimeFormat } from "@utils/index"
 import { useCallback, useMemo, useState } from "react"
 import { Badge, OverlayTrigger, Tooltip } from "react-bootstrap"
 import { useQueryClient } from "react-query"
 import { toast } from "react-toastify"
 import Swal from "sweetalert2"
-import { cancelSubscription } from "../../api/admin"
-import AdvancedDataTable from "../../components/AdvancedDataTable"
-import SectionLoading from "../../components/SectionLoading"
-import SuperBotton from "../../components/SuperButton"
-import PayPalIcon from "../../components/icons/PayPalIcon"
-import StripIcon from "../../components/icons/StripIcon"
-import { useDashboardSettings, useDemo } from "../../hooks"
-import { useSubscriptions } from "../../hooks/admin"
-import { datetimeFormat } from "../../utils"
 
 
 export function SubscriptionsPage() {
     const { isDemo } = useDemo()
     const queryClient = useQueryClient()
-    const { isLoading, isError, error, subscriptions } = useSubscriptions()
+    const { subscriptions } = useSubscriptions()
     const { settings } = useDashboardSettings()
     const [isCanceling, setCanceling] = useState(false)
 
 
-    const handleCancelSubscription = useCallback((sub_id) => {
+    const handleCancelSubscription = useCallback((sub_id: any) => {
         Swal.fire({
             title: "Subscription Cancellation Confirmation",
             html: `Are you sure you want to cancel this subscription?<br>
@@ -58,11 +58,11 @@ export function SubscriptionsPage() {
     const columns = useMemo(() => [
         {
             name: "ID",
-            selector: subscription => subscription.gateway_subscription_id ? subscription.gateway_subscription_id : subscription.sub_id
+            selector: (subscription: SubscriptionType) => subscription.gateway_subscription_id ? subscription.gateway_subscription_id : subscription.sub_id
         },
         {
             name: "User",
-            selector: subscription => (
+            selector: (subscription: SubscriptionType) => (
                     <>
                         <b>{subscription.user_username}</b><br />
                         { subscription.user_email }
@@ -71,7 +71,7 @@ export function SubscriptionsPage() {
         },
         {
             name: "Plan",
-            selector: subscription => (
+            selector: (subscription: SubscriptionType) => (
                 <>
                     <b>{subscription.plan_name}</b><br />
                     <span className="text-muted">{settings.CURRENCY_SYMBOL}{subscription.price}</span>
@@ -80,7 +80,7 @@ export function SubscriptionsPage() {
         },
         {
             name: "Subscription Status",
-            selector: subscription => (
+            selector: (subscription: SubscriptionType) => (
                 <>
                     {subscription.status === 1 ? (
                         <Badge pill bg="success">Active</Badge>
@@ -98,7 +98,7 @@ export function SubscriptionsPage() {
         },
         {
             name: "Billing Cycle",
-            selector: subscription => (
+            selector: (subscription: SubscriptionType) => (
                 <>
                     {subscription.billing_cycle === "monthly" ? (
                         <Badge pill bg="primary">Monthly</Badge>
@@ -110,7 +110,7 @@ export function SubscriptionsPage() {
         },
         {
             name: "Gateway",
-            selector: subscription => (
+            selector: (subscription: SubscriptionType) => (
                 <>
                     {subscription.payment_gateway === "" && "-"}
                     {subscription.payment_gateway === "PAYPAL" ? (
@@ -123,15 +123,15 @@ export function SubscriptionsPage() {
         },
         {
             name: "Subscribed at",
-            selector: subscription => datetimeFormat(subscription.created_at)
+            selector: (subscription: SubscriptionType) => datetimeFormat(subscription.created_at)
         },
         {
             name: "Expiring at",
-            selector: subscription => datetimeFormat(subscription.expiring_at)
+            selector: (subscription: SubscriptionType) => datetimeFormat(subscription.expiring_at)
         },
         {
             name: "Actions",
-            selector: subscription => (
+            selector: (subscription: SubscriptionType) => (
                 <>
                     {subscription.status === 1 ? (
                         <OverlayTrigger
@@ -151,11 +151,6 @@ export function SubscriptionsPage() {
         },
     ], [])
 
-    if (isLoading)
-    {
-        return <SectionLoading center={true} />
-    }
-
     return (
         <>
             <h1 className="mb-3">Subscriptions</h1>
@@ -166,7 +161,7 @@ export function SubscriptionsPage() {
                         <AdvancedDataTable
                             columns={columns}
                             data={subscriptions}
-                            searchFunction={(subscription, searchQuery) => {
+                            searchFunction={(subscription: SubscriptionType, searchQuery: any) => {
                                 return [subscription.gateway_subscription_id, subscription.sub_id, subscription.user_email, subscription.user_username].includes(searchQuery)
                             }}
                         />

@@ -1,4 +1,5 @@
 import SectionErrorBoundary from "@/components/SectionErrorBoundary";
+import SectionSuspense from "@/components/SectionSuspense";
 import Footer from "@components/Footer";
 import Navbar from "@components/Navbar";
 import { ReactNode } from "react";
@@ -17,9 +18,11 @@ export default function BasePage({ children, showFooter=true }: BasePageProps) {
             <header>
                 <Navbar />
             </header>
-            <main>
+            <main style={{minHeight: "76dvh"}}>
                 <SectionErrorBoundary key={location.pathname}>
-                    { children }
+                    <SectionSuspense>
+                        { children }
+                    </SectionSuspense>
                 </SectionErrorBoundary>
             </main>
             {showFooter && (

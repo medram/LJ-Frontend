@@ -1,19 +1,11 @@
-import SectionLoading from "@components/SectionLoading"
 import PayPalSettings from "@components/dashboard/PayPalSettings"
 import StripeSettings from "@components/dashboard/StripeSettings"
-import { useDashboardSettings, useDemo } from "@hooks"
+import { useDashboardSettings } from "@hooks"
 
 
 export default function PaymentMethodsPage()
 {
-    const { isDemo } = useDemo()
-    const { isLoading, settings } = useDashboardSettings()
-
-
-    if (isLoading || !Object.keys(settings).length)
-    {
-        return <SectionLoading center={true} />
-    }
+    const { settings } = useDashboardSettings()
 
     return (
         <>

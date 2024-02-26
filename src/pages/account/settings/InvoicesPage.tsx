@@ -1,19 +1,13 @@
 import PayPalIcon from "@components/icons/PayPalIcon"
 import StripIcon from "@components/icons/StripIcon"
-import SectionLoading from "../../../components/SectionLoading"
 import { useSettings } from "../../../hooks"
 import { useUserInvoices } from "../../../hooks/account"
 import { datetimeFormat } from "../../../utils"
 
 export default function InvoicesPage()
 {
-    const { isLoading, invoices } = useUserInvoices()
+    const { invoices } = useUserInvoices()
     const { settings } = useSettings()
-
-    if (isLoading)
-    {
-        return <SectionLoading center={true} />
-    }
 
     return (
         <div>
