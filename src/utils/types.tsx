@@ -1,3 +1,6 @@
+import AIMessage from "@/components/playground/AIMessage"
+import UserMessage from "@/components/playground/UserMessage"
+import { ReactElement } from "react"
 
 export type GeneralSettingsType = {
 	SITE_NAME: string,
@@ -140,9 +143,18 @@ export type ChatRoomType = {
 	user_id: number,
 	uuid: string,
 	title: string,
-	path: string,
+	path: string | null,
 	created_at: string,
 	updated_at: string,
-	chat_history: string,
-	[rest: string]: unknown
+	chat_history: ChatMessageType[], // has to be parset to ChatMessageType[]
+	[rest: string]: any
 }
+
+export type ChatMessageType = {
+	type: "human" | "ai",
+	content: string
+}
+
+// This type needs to be fixed/improved to accept only AIMessage or UserMessage
+export type ChatMessage = ReactElement<any, typeof AIMessage> | ReactElement<any, typeof UserMessage>
+
