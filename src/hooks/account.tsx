@@ -41,8 +41,22 @@ export function useUserChatRoomList()
 export default function useChatRoom(uuid: string)
 {
     const {data, ...rest} = useQuery(`user.chat.${uuid}`, () => getChatRoom(uuid), {
-        staleTime: Infinity
+        staleTime: Infinity,
+        suspense: true
     })
 
-    return { ...rest, chat: data?.chat }
+    const _chat = data?.chat
+
+    if (_chat && typeof _chat.chat_history === "string")
+    {
+        try {
+            _chat.chat_history = _chat.chat_history ? JSON.parse(_chat.chat_history) : []
+        } catch (err){
+            console.log("Error JSON Parsing", err)
+        }
+    }
+
+    const chat: ChatRoomType | null = _chat || null
+
+    return { ...rest, chat }
 }
