@@ -1,3 +1,5 @@
+import SectionErrorBoundary from "@/components/SectionErrorBoundary";
+import SectionSuspense from "@/components/SectionSuspense";
 import { deleteChatRoom } from "@api/account";
 import { uploadFile } from "@api/index";
 import AvatarPalceholder from "@components/AvatarPalceholder";
@@ -134,14 +136,14 @@ export default function PlaygroundPage()
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     const { uuid } = useParams()
-    const [ currentChatRoomUUID, setCurrentChatRoomUUID ] = useState(uuid)
+    const [ currentChatRoomUUID, setCurrentChatRoomUUID ] = useState<string | null>(uuid ? uuid : null)
 
     const { isError, error, userChatRoomList } = useUserChatRoomList()
     const [ isProcessing, setProcessing ] = useState(false)
 
     useEffect(() => {
-        if (uuid !== currentChatRoomUUID)
-            navigate(`/playground/${currentChatRoomUUID}`)
+        if (uuid && uuid !== currentChatRoomUUID)
+            setCurrentChatRoomUUID(uuid)
     }, [currentChatRoomUUID])
 
     const handleChatLabelClick = useCallback((uuid: string) => {
@@ -156,7 +158,7 @@ export default function PlaygroundPage()
     }, [uuid])
 
     const handleChatRoomDeletion = useCallback((uuid: string, callback: () => unknown) => {
-        let nextUUID = ""
+        let nextUUID: string = ""
         if (userChatRoomList)
         {
             for (const chatroom of userChatRoomList)
@@ -174,7 +176,10 @@ export default function PlaygroundPage()
                 toast.success("Deleted successfully.")
                 queryClient.invalidateQueries("user.chat.list").then(() => {
                     if (nextUUID)
+                    {
                         setCurrentChatRoomUUID(nextUUID)
+                        navigate(`/playground/${nextUUID}`)
+                    }
                 })
             }
             else {
@@ -188,13 +193,13 @@ export default function PlaygroundPage()
     }, [uuid, userChatRoomList])
 
     useEffect(() => {
-        if ((!uuid || !currentChatRoomUUID) && userChatRoomList !== undefined && Object.keys(userChatRoomList).length) {
-            navigate(`/playground/${userChatRoomList[0]?.uuid}`)
+        if ((!uuid || !currentChatRoomUUID) && userChatRoomList.length) {
             setCurrentChatRoomUUID(userChatRoomList[0]?.uuid)
+            navigate(`/playground/${userChatRoomList[0]?.uuid}`)
         }
-        else if (userChatRoomList !== undefined && !Object.keys(userChatRoomList).length)
+        else if (userChatRoomList.length === 0)
         {
-            setCurrentChatRoomUUID("")
+            setCurrentChatRoomUUID(null)
             navigate(`/playground`)
         }
     }, [uuid, userChatRoomList])
@@ -332,7 +337,11 @@ export default function PlaygroundPage()
                                     </div>
                                 ) : (
                                     currentChatRoomUUID && (
-                                        <ChatSection uuid={currentChatRoomUUID} key={currentChatRoomUUID} />
+                                        <SectionErrorBoundary key={currentChatRoomUUID}>
+                                            <SectionSuspense>
+                                                <ChatSection uuid={currentChatRoomUUID} key={currentChatRoomUUID} />
+                                            </SectionSuspense>
+                                        </SectionErrorBoundary>
                                     )
                                 )
                             ) : (
@@ -343,7 +352,11 @@ export default function PlaygroundPage()
                             )
                         ) : (
                             currentChatRoomUUID && (
-                                <ChatSection uuid={currentChatRoomUUID} key={currentChatRoomUUID} />
+                                <SectionErrorBoundary key={currentChatRoomUUID}>
+                                    <SectionSuspense>
+                                        <ChatSection uuid={currentChatRoomUUID} key={currentChatRoomUUID} />
+                                    </SectionSuspense>
+                                </SectionErrorBoundary>
                             )
                         )}
 
