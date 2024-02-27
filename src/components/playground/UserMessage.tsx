@@ -1,6 +1,6 @@
 
 
-export default function UserMessage({ content })
+export default function UserMessage({ content }: { content: string })
 {
     return (
         <div className="message user-message">

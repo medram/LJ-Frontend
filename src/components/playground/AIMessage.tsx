@@ -4,8 +4,7 @@ import Markdown from 'react-markdown'
 
 export default function AIMessage({ content }: { content: string })
 {
-    // const parsedContent = content.split("\n").map((str, i) => <p key={i}>{str}</p>)
-
+    console.log("AI: ", content)
     return (
         <div className="message ai-message">
             <img src={AIAvatar} className="avatar" />

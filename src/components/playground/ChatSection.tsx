@@ -1,51 +1,49 @@
 
-import SuperButton from "../SuperButton";
-import AIMessage from "./AIMessage";
-import UserMessage from "./UserMessage";
-import SectionLoading from "../SectionLoading";
-import useChatRoom from "../../hooks/account";
-import { toast } from "react-toastify";
-import { useCallback, useEffect, useState } from "react";
-import { useQueryClient } from "react-query";
-import { clearChatHistory, sendPrompt, stopPrompt } from "../../api/account";
-import PlaceholderMessage from "./PlaceholderMessage";
-import { useDemo, useNaiveLocalStorage, useScrollToRef } from "../../hooks";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import TablerIcon from "../TablerIcon";
+import { DEMO_SUBSCRIPTION } from "@/utils";
+import { ChatMessage, ChatMessageType } from "@/utils/types";
+import { clearChatHistory, sendPrompt, stopPrompt } from "@api/account";
+import SuperButton from "@components/SuperButton";
+import TablerIcon from "@components/TablerIcon";
+import useChatRoom from "@hooks/account";
+import { useDemo, useNaiveLocalStorage, useScrollToRef } from "@hooks/index";
 import { IconPlayerStopFilled, IconSend, IconTrash } from "@tabler/icons-react";
+import { useCallback, useEffect, useState } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import AIMessage from "./AIMessage";
+import PlaceholderMessage from "./PlaceholderMessage";
+import UserMessage from "./UserMessage";
 
 
-export default function ChatSection({ uuid })
+export default function ChatSection({ uuid }: { uuid: string })
 {
     const { isDemo } = useDemo()
-    const [getDemoSubscription, setDemoSubscription] = useNaiveLocalStorage("demo_sub")
+    const [getDemoSubscription, setDemoSubscription] = useNaiveLocalStorage("demo_sub", DEMO_SUBSCRIPTION)
     const demoSubscription = getDemoSubscription()
 
     const queryClient = useQueryClient()
-    const { isLoading, isError, error, chat } = useChatRoom(uuid)
-    const [ chatHistory, setChatHistory ] = useState([])
+    const { isError, error, chat } = useChatRoom(uuid)
+    const [ chatHistory, setChatHistory ] = useState<ChatMessage[]>([])
     const [ prompt, setPrompt ] = useState("")
     const [ isSending, setSending ] = useState(false)
     const [isClearingChatHistory, setClearingChatHistory ] = useState(false)
     const [promptRef, scrollToPrompt] = useScrollToRef()
 
-    useEffect(() => {
-        if (chat?.chat_history)
-        {
-            try
-            {
-                let messages = []
-                JSON.parse(chat?.chat_history).map((history, i) => {
-                    if (history.type === "ai")
-                        messages[i] = <AIMessage key={i} content={history.content} />
-                    else
-                        messages[i] = <UserMessage key={i} content={history.content} />
-                })
+    console.log(chat)
 
-                setChatHistory(messages)
-            } catch (error){
-                console.log("error parsing chat history")
-            }
+    useEffect(() => {
+        if (chat)
+        {
+            let messages: ChatMessage[] = []
+            chat.chat_history.map((message: ChatMessageType, i: number) => {
+                if (message.type === "ai")
+                    messages.push(<AIMessage key={i} content={message.content} />)
+                else
+                    messages.push(<UserMessage key={i} content={message.content} />)
+            })
+
+            setChatHistory(messages)
         }
         else
         {
@@ -53,7 +51,7 @@ export default function ChatSection({ uuid })
         }
 
         scrollToPrompt()
-    }, [isLoading, chat])
+    }, [chat])
 
     useEffect(() => {
         scrollToPrompt()
@@ -86,7 +84,9 @@ export default function ChatSection({ uuid })
 
         sendPrompt(uuid, prompt).then(data => {
             if (!data?.errors) {
-                const reply = data?.response?.output?.trim()
+                const reply: string = data?.response?.output?.trim() as string
+
+                console.log("Reply:", reply)
 
                 if (!reply)
                 {
@@ -184,15 +184,9 @@ export default function ChatSection({ uuid })
         })
     }, [uuid])
 
-
-    if (isLoading)
-    {
-        return <SectionLoading center={true} />
-    }
-
     if (isError)
     {
-        toast.error(error)
+        toast.error(error as string)
     }
 
 
