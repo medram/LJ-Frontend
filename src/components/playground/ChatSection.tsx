@@ -30,8 +30,6 @@ export default function ChatSection({ uuid }: { uuid: string })
     const [isClearingChatHistory, setClearingChatHistory ] = useState(false)
     const [promptRef, scrollToPrompt] = useScrollToRef()
 
-    console.log(chat)
-
     useEffect(() => {
         if (chat)
         {
@@ -85,8 +83,6 @@ export default function ChatSection({ uuid }: { uuid: string })
         sendPrompt(uuid, prompt).then(data => {
             if (!data?.errors) {
                 const reply: string = data?.response?.output?.trim() as string
-
-                console.log("Reply:", reply)
 
                 if (!reply)
                 {
