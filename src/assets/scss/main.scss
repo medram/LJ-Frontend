@@ -561,21 +561,27 @@ nav .dropdown-menu> :hover {
     border-end-end-radius: 0;
 }
 
+.playground-chat-section .chats .container .message-container {
+    display: flex;
+}
+
+.playground-chat-section .chats .container .message-container .avatar {
+    flex-shrink: 1;
+    width: 50px;
+    height: 50px;
+    border-radius: 1em;
+    position: sticky;
+    top: -0.8em;
+    left: -55px;
+}
+
 .playground-chat-section .chats .container .ai-message {
     background-color: #f0f0f0;
     color: lighten($primary, 10%);
     border-top-left-radius: 0;
     position: relative;
     max-width: 100%;
-}
-
-.playground-chat-section .chats .container .ai-message .avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 1em;
-    position: absolute;
-    top: -0.8em;
-    left: -80px;
+    margin-left: 10px;
 }
 
 .playground-chat-section .chats .container .ai-message > p {
@@ -653,6 +659,8 @@ nav .dropdown-menu> :hover {
     position: absolute;
     top: 20px;
     left: 25px;
+    border: 1px solid var(--bs-primary);
+    z-index: 5;
 }
 
 .playground-sidebar h1,

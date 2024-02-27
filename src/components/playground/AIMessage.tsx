@@ -6,10 +6,11 @@ export default function AIMessage({ content }: { content: string })
 {
     console.log("AI: ", content)
     return (
-        <div className="message ai-message">
+        <div className="message-container">
             <img src={AIAvatar} className="avatar" />
-
-            <Markdown>{content}</Markdown>
+            <div className="message ai-message">
+                <Markdown>{content}</Markdown>
+            </div>
         </div>
     )
 }
