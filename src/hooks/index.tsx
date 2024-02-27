@@ -190,7 +190,7 @@ export function useEventListener<T>(eventName: string, defaultValue: T, callback
 
 export function useScrollToRef<T>(defaultValue: T | null = null)
 {
-    const ref = useRef(defaultValue)
+    const ref = useRef<T>(defaultValue)
 
     const scrollToRef = useCallback(() => {
         setTimeout(() => {

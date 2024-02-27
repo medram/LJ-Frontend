@@ -28,7 +28,7 @@ export default function ChatSection({ uuid }: { uuid: string })
     const [ prompt, setPrompt ] = useState("")
     const [ isSending, setSending ] = useState(false)
     const [isClearingChatHistory, setClearingChatHistory ] = useState(false)
-    const [promptRef, scrollToPrompt] = useScrollToRef()
+    const [promptRef, scrollToPrompt] = useScrollToRef<HTMLDivElement>()
 
     useEffect(() => {
         if (chat)
@@ -56,7 +56,7 @@ export default function ChatSection({ uuid }: { uuid: string })
     }, [])
 
 
-    const handleSubmit = useCallback((e) => {
+    const handleSubmit = useCallback((e: any) => {
         e.preventDefault()
         if (!prompt.trim())
         {
@@ -136,7 +136,7 @@ export default function ChatSection({ uuid }: { uuid: string })
         })
     }, [uuid, prompt])
 
-    const handleStop = useCallback((e) => {
+    const handleStop = useCallback((e: any) => {
 
         stopPrompt(uuid).then(req => {
             console.log("prompt stopped")
@@ -207,7 +207,7 @@ export default function ChatSection({ uuid }: { uuid: string })
                         </Tooltip>
                     )}
                 >
-                    <SuperButton disabled={!prompt && !isSending} className={["btn btn-sm send", (isSending ? "btn-danger" : "btn-primary")].join(" ")} title={isSending ? "Stop" : "Send"} onClick={(e) => {
+                    <SuperButton disabled={!prompt && !isSending} className={["btn btn-sm send", (isSending ? "btn-danger" : "btn-primary")].join(" ")} title={isSending ? "Stop" : "Send"} onClick={(e: any) => {
                         if (isSending)
                             return handleStop(e)
                         handleSubmit(e)
