@@ -34,6 +34,7 @@ export type GeneralSettingsType = {
 }
 
 export type SecretSettingsType = GeneralSettingsType & {
+	SMTP_FROM: string,
 	SMTP_HOST: string,
 	SMTP_PORT: number,
 	SMTP_USER: string,
