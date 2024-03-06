@@ -1,15 +1,15 @@
 import AIAvatar from "@images/playground/AI-avatar.png"
-import Markdown from 'react-markdown'
-
+import ReactMarkdown from 'react-markdown'
+import gfm from "remark-breaks"
+import remarkGfm from 'remark-gfm'
 
 export default function AIMessage({ content }: { content: string })
 {
-    console.log("AI: ", content)
     return (
         <div className="message-container">
             <img src={AIAvatar} className="avatar" />
             <div className="message ai-message">
-                <Markdown>{content}</Markdown>
+                <ReactMarkdown remarkPlugins={[gfm, remarkGfm]}>{content}</ReactMarkdown>
             </div>
         </div>
     )

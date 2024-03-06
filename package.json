@@ -33,12 +33,14 @@
     "react-simple-animate": "^3.5.2",
     "react-switch": "^7.0.0",
     "react-toastify": "^9.1.1",
+    "remark-breaks": "^4.0.0",
+    "remark-gfm": "^4.0.0",
     "sweetalert2": "^11.7.3",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.2"
   },
   "scripts": {
-    "start": "vite",
+    "start": "vite --host 0.0.0.0",
     "build": "tsc && vite build",
     "serve": "vite preview",
     "sync": "./scripts/sync_with_backend.sh"

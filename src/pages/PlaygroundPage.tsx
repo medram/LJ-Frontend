@@ -148,6 +148,7 @@ export default function PlaygroundPage()
 
     const handleChatLabelClick = useCallback((uuid: string) => {
         setCurrentChatRoomUUID(uuid)
+        setToggled(false)
         navigate(`/playground/${uuid}`)
     }, [uuid])
 
@@ -324,7 +325,7 @@ export default function PlaygroundPage()
 
                 <section className="playground-chat-section">
                     {windowInnerWidth <= 768 && (
-                        <button type="button" onClick={() => setToggled(toggled => !toggled)} className="btn btn-light toggle-sidebar-button text-primary"><FontAwesomeIcon icon={faBarsStaggered} /></button>
+                        <button type="button" onClick={() => setToggled(toggled => !toggled)} className="btn btn-light toggle-sidebar-button text-primary"><FontAwesomeIcon icon={faBarsStaggered} /> Chats</button>
                     )}
 
                     <section className="d-flex flex-column">

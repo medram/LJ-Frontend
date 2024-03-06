@@ -2,27 +2,21 @@ import * as cc from "currency-codes";
 import { toast } from "react-toastify";
 
 export const AVAILABLE_AI_CHAT_MODELS = [
+    { label: "gpt-3.5-turbo-16k",       value: "gpt-3.5-turbo-16k" },
     { label: "gpt-3.5-turbo",           value: "gpt-3.5-turbo" },
+    { label: "gpt-3.5-turbo-16k-0613",  value: "gpt-3.5-turbo-16k-0613" },
     { label: "gpt-3.5-turbo-0301",      value: "gpt-3.5-turbo-0301" },
     { label: "gpt-3.5-turbo-0613",      value: "gpt-3.5-turbo-0613" },
     { label: "gpt-3.5-turbo-1106",      value: "gpt-3.5-turbo-1106" },
-    { label: "gpt-3.5-turbo-16k",       value: "gpt-3.5-turbo-16k" },
-    { label: "gpt-3.5-turbo-16k-0613",  value: "gpt-3.5-turbo-16k-0613" },
     { label: "gpt-4",                   value: "gpt-4" },
     { label: "gpt-4-0314",              value: "gpt-4-0314" },
     { label: "gpt-4-0613",              value: "gpt-4-0613" },
     { label: "gpt-4-1106-preview",      value: "gpt-4-1106-preview" },
-]
-
-export const AVAILABLE_AI_COMPLETE_MODELS = [
-    { label: "text-davinci-003",        value: "text-davinci-003" },
-    { label: "text-curie-001",          value: "text-curie-001" },
-]
+] as const
 
 export const AVAILABLE_AI_MODELS = [
-    ...AVAILABLE_AI_COMPLETE_MODELS,
     ...AVAILABLE_AI_CHAT_MODELS,
-]
+] as const
 
 export const VALID_DOCUMENT_TYPES = [
     { ext: "pdf",   mimetype: "application/pdf" },
@@ -33,7 +27,7 @@ export const VALID_DOCUMENT_TYPES = [
     { ext: "json",  mimetype: "application/json" },
     { ext: "pptx",  mimetype: "application/vnd.openxmlformats-officedocument.presentationml.presentation" },
     { ext: "epub",  mimetype: "application/epub+zip" },
-]
+] as const
 
 export const DEMO_SUBSCRIPTION = {
     pdfs: 4,
@@ -58,7 +52,7 @@ export function getAvailableDocumentTypesString()
     return VALID_DOCUMENT_TYPES.map(type => type.ext).join(", ")
 }
 
-export function toastFormikErrors(errors)
+export function toastFormikErrors(errors: any[])
 {
     if (Object.keys(errors).length)
     {
@@ -74,7 +68,7 @@ export function getAvailableTimezones()
 export const AVAILABLE_TIMEZONES_OPTIONS = getAvailableTimezones().map(timezone => ({label: timezone, value: timezone}))
 
 
-export function datetimeFormat(datetime)
+export function datetimeFormat(datetime: string)
 {
     return new Date(datetime).toLocaleString()
 }
@@ -86,7 +80,7 @@ export function currencyList()
 
 export const CURRENCY_OPTIONS = currencyList().map(code => ({ label: code, value: code }))
 
-export function isEmpty(obj)
+export function isEmpty(obj: object)
 {
     return Object.keys(obj).length === 0;
 }
