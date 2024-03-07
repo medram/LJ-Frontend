@@ -2,6 +2,16 @@ import AIMessage from "@/components/playground/AIMessage"
 import UserMessage from "@/components/playground/UserMessage"
 import { ReactElement } from "react"
 
+export type PluginType = {
+	name: string,
+	desc: string,
+	beta: boolean
+}
+
+export type SelectedPluginType = {
+	name: string,
+}
+
 export type GeneralSettingsType = {
 	SITE_NAME: string,
 	TIMEZONE: string,
@@ -29,6 +39,10 @@ export type GeneralSettingsType = {
 	CHAT_TOOLS_MODEL: string,
 	CHAT_AGENT_MODEL_TEMP: string,
 	CHAT_TOOLS_MODEL_TEMP: string,
+	CHAT_PLANNER_AGENT_MODEL: string,
+	CHAT_PLANNER_AGENT_MODEL_TEMP: number,
+	CHAT_AVAILABLE_PLUGINS: PluginType[],
+	SELECTED_PLUGINS: SelectedPluginType[],
 	TRIAL_DAYS: number,
 	APP_VERSION: string,
 }

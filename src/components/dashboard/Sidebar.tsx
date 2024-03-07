@@ -2,7 +2,7 @@ import TablerIcon from "@components/TablerIcon";
 import { faGem } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDashboardSettings, useLCInfo } from "@hooks/index";
-import { IconAdjustmentsHorizontal, IconCreditCard, IconFiles, IconKey, IconLayoutDashboard, IconPackages, IconUsers } from "@tabler/icons-react";
+import { IconAdjustmentsHorizontal, IconCpu, IconCreditCard, IconFiles, IconKey, IconLayoutDashboard, IconPackages, IconUsers } from "@tabler/icons-react";
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -38,6 +38,9 @@ export default memo(function Sidebar({ show }: SidebarProps)
                 )}
                 <NavLink to="pages">
                     <TablerIcon icon={IconFiles} stroke={1.25} size={30} /> Pages
+                </NavLink>
+                <NavLink to="ai-settings">
+                    <TablerIcon icon={IconCpu} stroke={1.25} size={30} /> AI Settings
                 </NavLink>
                 <NavLink to="api-keys">
                     <TablerIcon icon={IconKey} stroke={1.25} size={30} /> API keys

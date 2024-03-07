@@ -23,7 +23,7 @@ export default function PagePage()
     return (
         <>
             <Heading title={page.title} subTitle={`Home > ${page.title}`}></Heading>
-            <article className="container my-5 px-5" style={{ minHeight: "300px" }} dangerouslySetInnerHTML={{ __html: page.content }}>
+            <article className="container my-5 px-5" style={{ minHeight: "300px", minWidth: "50%" }} dangerouslySetInnerHTML={{ __html: page.content }}>
 
             </article>
         </>

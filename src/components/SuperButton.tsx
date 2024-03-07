@@ -2,18 +2,17 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { ForwardedRef, ReactNode } from "react"
 
-type SuperButtonProps = {
+
+export default React.memo(React.forwardRef(function SuperButton({ref, ...props}: {
     isLoading: boolean,
     loadingText: string,
     children: ReactNode,
     spinnerClassName: string,
-    ref: ForwardedRef<HTMLButtonElement>
+    ref?: ForwardedRef<HTMLButtonElement>,
     [key: string]: unknown
-}
-
-export default React.memo(React.forwardRef(function SuperButton(props: SuperButtonProps)
+})
 {
-    let { isLoading = false, loadingText, children, spinnerClassName = "", ref, ...rest } = props
+    let { isLoading = false, loadingText, children, spinnerClassName = "", ...rest } = props
 
     return (
         <button ref={ref} disabled={isLoading} {...rest} >

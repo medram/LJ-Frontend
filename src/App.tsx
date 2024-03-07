@@ -26,6 +26,7 @@ import AccountDetailsPage from "@pages/account/settings/AccountDetailsPage";
 import ChangePasswordPage from "@pages/account/settings/ChangePasswordPage";
 import InvoicesPage from "@pages/account/settings/InvoicesPage";
 import MySubscriptionPage from "@pages/account/settings/MySubscribtionPage";
+import AISettingsPage from "@pages/admin/AISettingsPage";
 import APIKeysPage from "@pages/admin/APIKeysPage";
 import AddCustomerPage from "@pages/admin/AddCustomerPage";
 import AddPagePage from "@pages/admin/AddPagePage";
@@ -118,6 +119,7 @@ function App() {
           <Route path="pages/edit/:id" element={<EditPagePage />} />
 
 
+          <Route path="ai-settings" element={<AISettingsPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="api-keys" element={<APIKeysPage />} />
         </Route>

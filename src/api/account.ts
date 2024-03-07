@@ -68,9 +68,9 @@ export async function deleteChatRoom(uuid: string)
 }
 
 
-export async function updateAIModelSettings(payload: any)
+export async function updateAIModelSettings()
 {
-    const req = await axiosApi.post("/user/chat/ai-model-settings/update", payload)
+    const req = await axiosApi.post("/user/chat/ai-model-settings/update", [])
     return req
 }
 

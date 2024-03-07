@@ -14,6 +14,8 @@ export default memo(function Switch(props: SwitchProps)
 
     if (size === "small")
         newRest = { ...rest, height: 18, width: 32 }
+    else
+        newRest = { ...rest, height: 18, width: 32, size }
 
     return (
         <ReactSwitch {...newRest} />

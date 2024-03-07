@@ -226,6 +226,32 @@ $font-secondary: lighten($font-color, 50);
     color: $primary;
 }
 
+/*################# Plugins #################*/
+.dashboard .plugin-list {
+    .plugin {
+        display: flex;
+        align-items: center;
+        background-color: lighten($primary, 60%);
+        padding: 1em 2em;
+        margin-bottom: 1em;
+        border-radius: 0.7em;
+
+        .title {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        > div:first-child {
+            flex-grow: 1;
+        }
+
+        &:hover {
+            background-color: lighten($primary, 55%);
+        }
+    }
+}
+
+
 /*################# Media Screen (768px) #################*/
 
 @media screen and (max-width: 768px)

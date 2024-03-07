@@ -120,6 +120,15 @@ export function useDashboardSettings() {
         staleTime: Infinity,
         suspense: true
     })
+
+    // Parse available plugins as pluginType[]
+    if (data?.settings && data?.settings?.CHAT_AVAILABLE_PLUGINS && typeof data?.settings?.CHAT_AVAILABLE_PLUGINS === "string")
+        data.settings.CHAT_AVAILABLE_PLUGINS = JSON.parse(data?.settings?.CHAT_AVAILABLE_PLUGINS)
+
+    if (data?.settings && data?.settings?.SELECTED_PLUGINS && typeof data?.settings?.SELECTED_PLUGINS === "string")
+        data.settings.SELECTED_PLUGINS = JSON.parse(data?.settings?.SELECTED_PLUGINS)
+
+
     const settings: SecretSettingsType = data?.settings || {}
 
     return { ...rest, settings }
