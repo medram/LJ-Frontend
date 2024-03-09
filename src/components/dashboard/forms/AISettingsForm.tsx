@@ -19,6 +19,7 @@ export default function AISettingsForm({ settings }: { settings: SecretSettingsT
 {
     const { isDemo } = useDemo()
     const queryClient = useQueryClient()
+    const always_active_plugins: string[] = ["DocumentPlugin", "DocumentSummarizationPlugin"]
 
     const getInitialValues = useMemo(() => {
         let initialValues: {[key: string]: unknown} = {
@@ -36,12 +37,11 @@ export default function AISettingsForm({ settings }: { settings: SecretSettingsT
         let selectedPluginNames: string[] = settings.SELECTED_PLUGINS.map((p: SelectedPluginType) => p.name)
 
         settings.CHAT_AVAILABLE_PLUGINS.map((plugin: PluginType) => {
-            initialValues[`CHAT_PLUGIN_${plugin.name}`] = selectedPluginNames.includes(plugin.name)
+            initialValues[`CHAT_PLUGIN_${plugin.name}`] = always_active_plugins.includes(plugin.name) || selectedPluginNames.includes(plugin.name)
         })
 
         return initialValues
     }, [settings])
-
 
     const getValidatorsSchema = useMemo(() => {
         const validators: Yup.ObjectShape = {
@@ -120,6 +120,7 @@ export default function AISettingsForm({ settings }: { settings: SecretSettingsT
         }
     })
 
+
     const selectedChatAgentModel = {
         label: settings.CHAT_AGENT_MODEL,
         value: settings.CHAT_AGENT_MODEL
@@ -189,18 +190,25 @@ export default function AISettingsForm({ settings }: { settings: SecretSettingsT
                                 <div className="plugin" key={i}>
                                     <div>
                                         <span className="title">{plugin.name} {plugin.beta && (
-                                            <span className="badge text-bg-info text-white"><small>BETA</small></span>
+                                            <span className="badge text-bg-info text-white">beta</span>
                                         )}</span>
                                         <div>{plugin.desc}</div>
                                     </div>
                                     <div>
-                                        <Switch
-                                            onChange={(checked: boolean) => formik.setFieldValue(`CHAT_PLUGIN_${plugin.name}`, !!checked)}
-                                            name={`CHAT_PLUGIN_${plugin.name}`}
-                                            checked={formik.values[`CHAT_PLUGIN_${plugin.name}`]}
-                                            size={30}
-                                            className="mx-2 mt-1"
-                                        />
+                                        {!always_active_plugins.includes(plugin.name)? (
+                                            <Switch
+                                                onChange={(checked: boolean) => {
+                                                    formik.setFieldValue(`CHAT_PLUGIN_${plugin.name}`, always_active_plugins.includes(plugin.name) ? true : !!checked)
+                                                }}
+                                                name={`CHAT_PLUGIN_${plugin.name}`}
+                                                checked={formik.values[`CHAT_PLUGIN_${plugin.name}`]}
+                                                size={30}
+                                                className="mx-2 mt-1"
+                                                disabled={always_active_plugins.includes(plugin.name)}
+                                            />
+                                        ) : (
+                                            <span className="badge text-bg-success">Always ON</span>
+                                        ) }
                                     </div>
                                 </div>
                             )

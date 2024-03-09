@@ -263,9 +263,11 @@ export default function PlaygroundPage()
 
                         <div className="chat-labels-list my-3">
                             {userChatRoomList?.map((chat, i) => {
+                                let title = chat.title.length <=25 ? chat.title.substring(0, 25) : `${chat.title.substring(0, 25)}...`
+
                                 return <ChatLabel
                                     key={i}
-                                    title={chat.title}
+                                    title={title}
                                     onClick={() => handleChatLabelClick(chat.uuid)}
                                     onDelete={(callback: () => void) => handleChatRoomDeletion(chat.uuid, callback)}
                                     active={chat.uuid === currentChatRoomUUID}
