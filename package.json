@@ -3,6 +3,12 @@
   "version": "0.7.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "start": "vite --host 0.0.0.0",
+    "build": "tsc && vite build",
+    "serve": "vite preview",
+    "sync": "./scripts/sync_with_backend.sh"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
@@ -36,15 +42,10 @@
     "react-toastify": "^9.1.1",
     "remark-breaks": "^4.0.0",
     "remark-gfm": "^4.0.0",
+    "styled-components": "^6.1.13",
     "sweetalert2": "^11.7.3",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.2"
-  },
-  "scripts": {
-    "start": "vite --host 0.0.0.0",
-    "build": "tsc && vite build",
-    "serve": "vite preview",
-    "sync": "./scripts/sync_with_backend.sh"
   },
   "eslintConfig": {
     "extends": [
@@ -68,7 +69,6 @@
     "@rollup/plugin-alias": "^5.1.0",
     "@types/react-copy-to-clipboard": "^5.0.7",
     "@vitejs/plugin-react-swc": "^3.6.0",
-    "node-sass": "^7.0.3",
     "react-app-rewire-alias": "^1.1.7",
     "react-app-rewired": "^2.2.1",
     "sass": "^1.71.1",
