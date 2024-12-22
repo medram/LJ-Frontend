@@ -1,14 +1,10 @@
-import { Navigate, Outlet } from "react-router-dom"
-import { useUser } from "../../hooks/auth"
-
+import { Navigate, Outlet } from "react-router-dom";
+import { useUser } from "../../hooks/auth";
 
 export default function UserRequired() {
-    const { isAuthenticated, isAdmin } = useUser()
+  const { isAuthenticated, isAdmin } = useUser();
 
-    if (!isAuthenticated)
-        return <Navigate to="/login" replace={true} />
+  if (!isAuthenticated) return <Navigate to="/login" replace={true} />;
 
-    return (
-        <Outlet />
-    )
+  return <Outlet />;
 }

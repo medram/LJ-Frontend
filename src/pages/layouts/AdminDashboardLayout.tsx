@@ -8,25 +8,21 @@ import SectionErrorBoundary from "@/components/SectionErrorBoundary";
 import "@assets/scss/dashboard.scss";
 import { useLC } from "@hooks/admin";
 
+export default function AdminDashboardLayout() {
+  const location = useLocation();
+  const { isActive } = useLC();
+  const { isAuthenticated, isAdmin } = useUser();
 
-export default function AdminDashboardLayout()
-{
-    const location = useLocation()
-    const { isActive } = useLC()
-    const { isAuthenticated, isAdmin } = useUser()
+  if (!isActive) return <Navigate to="/admin/license" />;
 
-    if (!isActive)
-        return <Navigate to="/admin/license" />
+  if (!isAuthenticated || !isAdmin)
+    return <Navigate to="/login" replace={true} />;
 
-    if (!isAuthenticated || !isAdmin)
-        return <Navigate to="/login" replace={true} />
-
-
-    return (
-        <SectionErrorBoundary key={location.pathname}>
-            <DashboardLayout>
-                <Outlet />
-            </DashboardLayout>
-        </SectionErrorBoundary>
-    )
+  return (
+    <SectionErrorBoundary key={location.pathname}>
+      <DashboardLayout>
+        <Outlet />
+      </DashboardLayout>
+    </SectionErrorBoundary>
+  );
 }

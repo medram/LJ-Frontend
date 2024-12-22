@@ -6,28 +6,27 @@ import { ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 
 type BasePageProps = {
-    children?: ReactNode,
-    showFooter?: boolean
-}
+  children?: ReactNode;
+  showFooter?: boolean;
+};
 
-export default function BasePage({ children, showFooter=true }: BasePageProps) {
-    const location = useLocation()
+export default function BasePage({
+  children,
+  showFooter = true,
+}: BasePageProps) {
+  const location = useLocation();
 
-    return (
+  return (
+    <SectionErrorBoundary key={location.pathname}>
+      <header>
+        <Navbar />
+      </header>
+      <main style={{ minHeight: "76dvh" }}>
         <SectionErrorBoundary key={location.pathname}>
-            <header>
-                <Navbar />
-            </header>
-            <main style={{minHeight: "76dvh"}}>
-                <SectionErrorBoundary key={location.pathname}>
-                    <SectionSuspense>
-                        { children }
-                    </SectionSuspense>
-                </SectionErrorBoundary>
-            </main>
-            {showFooter && (
-                <Footer />
-            )}
+          <SectionSuspense>{children}</SectionSuspense>
         </SectionErrorBoundary>
-    )
+      </main>
+      {showFooter && <Footer />}
+    </SectionErrorBoundary>
+  );
 }

@@ -8,15 +8,14 @@ $btn-border-radius: 15px;
 
 // Navbar
 $dashboard-navbar-height: 80px;
-$dashboard-navbar-bg-color: #FFF;
-$dashboard-sidebar-bg-color: #FFF;
+$dashboard-navbar-bg-color: #fff;
+$dashboard-sidebar-bg-color: #fff;
 $dashboard-sidebar-link-active-bg-color: $primary;
 $dashboard-sidebar-link-active-color: lighten($primary, 80);
 $dashboard-sidebar-width: 260px;
 
-
 // Brand
-$dashboard-brand-bg-color: #FFF;
+$dashboard-brand-bg-color: #fff;
 $dashboard-brand-color: lighten($primary, 0%);
 $dashboard-brand-font-size: 1.5rem;
 
@@ -27,296 +26,293 @@ $dashboard-font-color: $font-primary-color;
 $font-color: $primary;
 $font-secondary: lighten($font-color, 50);
 
-
 .dashboard {
-    width: 100%;
-    height: 100vh;
-    position: relative;
+  width: 100%;
+  height: 100vh;
+  position: relative;
 }
 
 .dashboard .dashboard-container {
-    background-color: rgba($primary, .05);
-    height: 100vh;
-    overflow-y: auto;
-    margin-left: $dashboard-sidebar-width;
-    padding-top: $dashboard-navbar-height;
-    transition: margin-left .5s;
+  background-color: rgba($primary, 0.05);
+  height: 100vh;
+  overflow-y: auto;
+  margin-left: $dashboard-sidebar-width;
+  padding-top: $dashboard-navbar-height;
+  transition: margin-left 0.5s;
 }
 
 .dashboard .dashboard-content {
-    padding: 2em;
-    min-height: 85%;
+  padding: 2em;
+  min-height: 85%;
 }
 
 /*################# Dashboard Brand #################*/
 
 .dashboard .dashboard-brand {
-    background-color: $dashboard-brand-bg-color;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: $dashboard-sidebar-width - 16*2;
-    height: $dashboard-navbar-height - 1;
-    cursor: pointer;
+  background-color: $dashboard-brand-bg-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: $dashboard-sidebar-width - 16 * 2;
+  height: $dashboard-navbar-height - 1;
+  cursor: pointer;
 }
 
 .dashboard .dashboard-brand a {
-    color: $dashboard-brand-color;
-    font-size: $dashboard-brand-font-size;
-    text-decoration: none;
+  color: $dashboard-brand-color;
+  font-size: $dashboard-brand-font-size;
+  text-decoration: none;
 }
 
 .dashboard .dashboard-brand a:hover {
-    color: lighten($dashboard-brand-color, 15)
+  color: lighten($dashboard-brand-color, 15);
 }
 
 /*################# Dashboard header #################*/
 
 .dashboard .dashboard-header {
-    color: $dashboard-font-color;
-    background-color: $dashboard-navbar-bg-color;
-    height: $dashboard-navbar-height;
-    width: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    padding: 1em;
-    z-index: 3 !important;
-    position: fixed;
-    top: 0;
-    border-bottom: 1px solid lighten($primary, 60%);
+  color: $dashboard-font-color;
+  background-color: $dashboard-navbar-bg-color;
+  height: $dashboard-navbar-height;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 1em;
+  z-index: 3 !important;
+  position: fixed;
+  top: 0;
+  border-bottom: 1px solid lighten($primary, 60%);
 }
 
 .dashboard .dashboard-header .bars {
-    display: none;
-    cursor: pointer;
-    left: 2em;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
+  display: none;
+  cursor: pointer;
+  left: 2em;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
 }
 
 .dashboard .dashboard-header .bars:hover {
-    background-color: lighten($dashboard-sidebar-bg-color, 10);
+  background-color: lighten($dashboard-sidebar-bg-color, 10);
 }
 
 .dashboard .dashboard-header .dots {
-    display: none;
-    cursor: pointer;
-    right: 2em;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
+  display: none;
+  cursor: pointer;
+  right: 2em;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
 }
 
 .dashboard .dashboard-header .dots:hover {
-    background-color: lighten($dashboard-sidebar-bg-color, 10);
+  background-color: lighten($dashboard-sidebar-bg-color, 10);
 }
 
 /*################# Dashboard Sidebar #################*/
 
 .dashboard .dashboard-sidebar {
-    color: $dashboard-font-color;
-    background-color: $dashboard-sidebar-bg-color;
-    width: $dashboard-sidebar-width;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    transition: all .5s;
-    z-index: 2;
-    border-right: 1px solid lighten($primary, 65%);
+  color: $dashboard-font-color;
+  background-color: $dashboard-sidebar-bg-color;
+  width: $dashboard-sidebar-width;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all 0.5s;
+  z-index: 2;
+  border-right: 1px solid lighten($primary, 65%);
 }
 
 .dashboard .dashboard-sidebar nav {
-    margin: 1em 0;
-    display: flex;
-    flex-direction: column;
-    margin-top: $dashboard-navbar-height + 20px;
+  margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: $dashboard-navbar-height + 20px;
 }
 
 .dashboard .dashboard-sidebar nav a {
-    display: block;
-    color: $dashboard-font-color;
-    text-decoration: none;
-    padding: 0.8em 1.2em 0.7em 1.2em;
-    margin: 2px 1em;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s;
+  display: block;
+  color: $dashboard-font-color;
+  text-decoration: none;
+  padding: 0.8em 1.2em 0.7em 1.2em;
+  margin: 2px 1em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
 .dashboard .dashboard-sidebar nav a:hover {
-    background-color: lighten($primary, 57%);
+  background-color: lighten($primary, 57%);
 }
 
 .dashboard .dashboard-sidebar nav a.active {
-    color: $dashboard-sidebar-link-active-color;
-    background-color: $dashboard-sidebar-link-active-bg-color;
+  color: $dashboard-sidebar-link-active-color;
+  background-color: $dashboard-sidebar-link-active-bg-color;
 }
 
 .dashboard .dashboard-sidebar nav a svg {
-    margin-right: 3px;
+  margin-right: 3px;
 }
 
 /*############### Dashboard Header navbar ###############*/
 .dashboard .dashboard-header nav {
-    margin: 1em 0;
-    display: flex;
-    flex-direction: row;
+  margin: 1em 0;
+  display: flex;
+  flex-direction: row;
 }
 
 .dashboard .dashboard-header nav a {
-    display: block;
-    color: $dashboard-font-color;
-    text-decoration: none;
-    padding: 0.5em 0.8em;
-    margin: 0.3em;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s;
+  display: block;
+  color: $dashboard-font-color;
+  text-decoration: none;
+  padding: 0.5em 0.8em;
+  margin: 0.3em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
 .dashboard .dashboard-header nav a:hover {
-    background-color: lighten($dashboard-sidebar-bg-color, 10);
+  background-color: lighten($dashboard-sidebar-bg-color, 10);
 }
 
 .dashboard .dashboard-header nav a.active {
-    background-color: lighten($dashboard-sidebar-bg-color, 10);
+  background-color: lighten($dashboard-sidebar-bg-color, 10);
 }
 
 .dashboard .dashboard-header .right-nav {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 /*################# Navbar dropdown-menu #################*/
 
 .dashboard .dashboard-header .dropdown-menu {
-    background-color: $dashboard-navbar-bg-color;
-    width: 200px;
-    padding: 1em;
-    border-radius: 12px;
+  background-color: $dashboard-navbar-bg-color;
+  width: 200px;
+  padding: 1em;
+  border-radius: 12px;
 }
 
 .dashboard .dashboard-header .dropdown-menu > hr {
-    border-color: lighten($dashboard-navbar-bg-color, 20);
+  border-color: lighten($dashboard-navbar-bg-color, 20);
 }
 
 .dashboard .dashboard-header .dropdown-menu > a {
-    padding: 0.5em 0.8em;
+  padding: 0.5em 0.8em;
 }
 
 .dashboard .dashboard-header .dropdown-menu > :hover {
-    background-color: lighten($primary, 60%);
-    border-radius: 10px;
+  background-color: lighten($primary, 60%);
+  border-radius: 10px;
 }
 
-.btn-check:checked+.btn,
-:not(.btn-check)+.btn:active,
+.btn-check:checked + .btn,
+:not(.btn-check) + .btn:active,
 .btn:first-child:active,
 .btn.active,
 .btn.show {
-    background-color: lighten($primary, 65%);
-    color: $primary;
+  background-color: lighten($primary, 65%);
+  color: $primary;
 }
 
 /*################# Plugins #################*/
 .dashboard .plugin-list {
-    .plugin {
-        display: flex;
-        align-items: center;
-        background-color: lighten($primary, 60%);
-        padding: 1em 2em;
-        margin-bottom: 1em;
-        border-radius: 0.7em;
+  .plugin {
+    display: flex;
+    align-items: center;
+    background-color: lighten($primary, 60%);
+    padding: 1em 2em;
+    margin-bottom: 1em;
+    border-radius: 0.7em;
 
-        .title {
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        > div:first-child {
-            flex-grow: 1;
-        }
-
-        &:hover {
-            background-color: lighten($primary, 55%);
-        }
+    .title {
+      font-weight: bold;
+      font-size: 1rem;
     }
-}
 
+    > div:first-child {
+      flex-grow: 1;
+    }
+
+    &:hover {
+      background-color: lighten($primary, 55%);
+    }
+  }
+}
 
 /*################# Media Screen (768px) #################*/
 
-@media screen and (max-width: 768px)
-{
-    .dashboard .dashboard-brand {
-        margin: 0 auto;
-    }
+@media screen and (max-width: 768px) {
+  .dashboard .dashboard-brand {
+    margin: 0 auto;
+  }
 
-    .dashboard .dashboard-header .bars {
-        display: flex;
-    }
+  .dashboard .dashboard-header .bars {
+    display: flex;
+  }
 
-    .dashboard .dashboard-header .dots {
-        display: flex;
-    }
+  .dashboard .dashboard-header .dots {
+    display: flex;
+  }
 
-    .dashboard .dashboard-header .avatar-dropdown {
-        position: absolute;
-        right: 2em;
-        display: none;
-    }
+  .dashboard .dashboard-header .avatar-dropdown {
+    position: absolute;
+    right: 2em;
+    display: none;
+  }
 
-    .dashboard .dashboard-header .right-nav {
-        position: absolute;
-        top: $dashboard-navbar-height;
-        left: 0;
-        margin: 0;
-        padding: 0.7em;
-        flex-direction: column;
-        width: 100%;
-        display: none;
-        background-color: lighten($dashboard-navbar-bg-color, 5);
-        z-index: 0;
-        transition: all 1s;
-        overflow: hidden;
-        box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
-    }
+  .dashboard .dashboard-header .right-nav {
+    position: absolute;
+    top: $dashboard-navbar-height;
+    left: 0;
+    margin: 0;
+    padding: 0.7em;
+    flex-direction: column;
+    width: 100%;
+    display: none;
+    background-color: lighten($dashboard-navbar-bg-color, 5);
+    z-index: 0;
+    transition: all 1s;
+    overflow: hidden;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+  }
 
-    .dashboard .dashboard-header .right-nav.show {
-        display: block;
-    }
+  .dashboard .dashboard-header .right-nav.show {
+    display: block;
+  }
 
-    .dashboard .dashboard-header .right-nav a {
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        gap: 5px;
-        padding: .7em 1em .6em 1em;
-    }
+  .dashboard .dashboard-header .right-nav a {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 5px;
+    padding: 0.7em 1em 0.6em 1em;
+  }
 
-    .dashboard .dashboard-container {
-        margin-left: 0;
-    }
+  .dashboard .dashboard-container {
+    margin-left: 0;
+  }
 
-    .dashboard .dashboard-sidebar {
-        transform: translateX(-$dashboard-sidebar-width);
-    }
+  .dashboard .dashboard-sidebar {
+    transform: translateX(-$dashboard-sidebar-width);
+  }
 
-    .dashboard .dashboard-sidebar.show {
-        transform: translateX(0px);
-        z-index: 2;
-        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
-    }
+  .dashboard .dashboard-sidebar.show {
+    transform: translateX(0px);
+    z-index: 2;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
+  }
 }
 
 .avatar {
-    border-radius: 50%;
+  border-radius: 50%;
 }

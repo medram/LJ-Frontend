@@ -77,7 +77,7 @@ export function getAvailableTimezones() {
 }
 
 export const AVAILABLE_TIMEZONES_OPTIONS = getAvailableTimezones().map(
-  (timezone) => ({ label: timezone, value: timezone })
+  (timezone) => ({ label: timezone, value: timezone }),
 );
 
 export function datetimeFormat(datetime: string) {

@@ -4,11 +4,10 @@ import { ToastContainer } from "react-toastify";
 
 // loading CSS style
 import "@assets/scss/main.scss";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 // loading bootstrap js files.
 import "bootstrap/dist/js/bootstrap";
-
 
 import CheckoutPage from "@pages/CheckoutPage";
 import ContactPage from "@pages/ContactPage";
@@ -47,21 +46,27 @@ import UserRequired from "@pages/middlewares/UserRequired";
 import CookiesAlert from "./components/CookiesAlert";
 import BasePage from "./pages/layouts/BasePage";
 
-
 // Lazy loading
-const AdminDashboardLayout = lazy(() => import("@pages/layouts/AdminDashboardLayout"))
-const AccountLayout = lazy(() => import("@pages/layouts/AccountLayout"))
-const PlaygroundPage = lazy(() => import("@pages/PlaygroundPage"))
-
+const AdminDashboardLayout = lazy(
+  () => import("@pages/layouts/AdminDashboardLayout"),
+);
+const AccountLayout = lazy(() => import("@pages/layouts/AccountLayout"));
+const PlaygroundPage = lazy(() => import("@pages/PlaygroundPage"));
 
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/p/:slug" element={<BasePage><PagePage /></BasePage>} />
+        <Route
+          path="/p/:slug"
+          element={
+            <BasePage>
+              <PagePage />
+            </BasePage>
+          }
+        />
         <Route path="/logout" element={<LogoutPage />} />
 
         <Route element={<ELRequired to="/" />}>
@@ -102,13 +107,12 @@ function App() {
         <Route path="/admin/license" element={<LCPage />} />
 
         <Route path="/admin" element={<AdminDashboardLayout />}>
-
           <Route path="" element={<AdminDashboardPage />} />
           <Route path="customers" element={<CustomersPage />} />
           <Route path="customers/add" element={<AddCustomerPage />} />
           <Route path="customers/edit/:id" element={<EditCustomerPage />} />
 
-          <Route element={<ELRequired />} >
+          <Route element={<ELRequired />}>
             <Route path="plans" element={<PlansPage />} />
             <Route path="payment-gateways" element={<PaymentMethodsPage />} />
             <Route path="subscriptions" element={<SubscriptionsPage />} />
@@ -117,7 +121,6 @@ function App() {
           <Route path="pages" element={<PagesPage />} />
           <Route path="pages/add" element={<AddPagePage />} />
           <Route path="pages/edit/:id" element={<EditPagePage />} />
-
 
           <Route path="ai-settings" element={<AISettingsPage />} />
           <Route path="settings" element={<SettingsPage />} />
@@ -128,7 +131,12 @@ function App() {
       </Routes>
 
       <CookiesAlert />
-      <ToastContainer position="top-center" hideProgressBar={true} draggable={false} theme="colored" />
+      <ToastContainer
+        position="top-center"
+        hideProgressBar={true}
+        draggable={false}
+        theme="colored"
+      />
     </BrowserRouter>
   );
 }

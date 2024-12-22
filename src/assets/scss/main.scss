@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
 
 // Override default color variables
 $blue: #363f5c !default;
@@ -21,13 +20,26 @@ $primary: #4c5760 !default;
 $body-color: #4c5760 !default;
 
 // Override font
-$font-family-sans-serif: DM Sans, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
-
+$font-family-sans-serif:
+  DM Sans,
+  system-ui,
+  -apple-system,
+  "Segoe UI",
+  Roboto,
+  "Helvetica Neue",
+  "Noto Sans",
+  "Liberation Sans",
+  Arial,
+  sans-serif,
+  "Apple Color Emoji",
+  "Segoe UI Emoji",
+  "Segoe UI Symbol",
+  "Noto Color Emoji" !default;
 
 // Override Navbar
 $navbar-brand-font-size: 2rem !default;
 $navbar-nav-link-padding-x: 0.9rem !default;
-$navbar-brand-padding-y: .45rem !default;
+$navbar-brand-padding-y: 0.45rem !default;
 $border-radius: 0.6rem !default;
 
 // Override Buttons
@@ -45,668 +57,665 @@ $shadow-dropdown: 0px 16px 24px 2px rgba(0, 0, 0, 0.07) !default;
 // @import "bootstrap/scss/bootstrap.scss";
 @import "bootstrap/scss/bootstrap";
 
-
 body {
-    position: relative;
+  position: relative;
 }
 
 .btn-block {
-    display: block;
-    width: 100%;
+  display: block;
+  width: 100%;
 }
 
 section {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 
 .rounded {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .rounded-2x {
-    border-radius: 15px;
+  border-radius: 15px;
 }
 
 .rounded-3x {
-    border-radius: 20px;
+  border-radius: 20px;
 }
 
 .rounded-4x {
-    border-radius: 25px;
+  border-radius: 25px;
 }
 
 .modal.show {
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 /*################# Override scroll bar ##################*/
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    border-radius: 100px;
-    background-color: lighten($primary, 50%);
+  border-radius: 100px;
+  background-color: lighten($primary, 50%);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: lighten($primary, 15%);
-    border-radius: 100px;
+  background: lighten($primary, 15%);
+  border-radius: 100px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: lighten($primary, 7%);
+  background: lighten($primary, 7%);
 }
 
 .input-group-text {
-    border: 0;
+  border: 0;
 }
 
 .bg-light {
-    background: #FFF !important;
+  background: #fff !important;
 }
 
 /*################### navbar override ###################*/
 
 .navbar-override {
-    background-color: transparent !important;
-
+  background-color: transparent !important;
 }
 .navbar-override .navbar-brand {
-    color: $primary;
-    font-weight: bold;
+  color: $primary;
+  font-weight: bold;
 }
 
 .navbar-override .nav-link {
-    color: $primary;
-    margin-inline: 3px;
-    border-radius: 100px;
-    text-align: center;
+  color: $primary;
+  margin-inline: 3px;
+  border-radius: 100px;
+  text-align: center;
 }
 
 .navbar-override .nav-link:hover {
-    color: lighten($primary, 80%);
-    background-color: $primary;
+  color: lighten($primary, 80%);
+  background-color: $primary;
 }
 
 .navbar-override .nav-link.active {
-    background-color: $primary;
+  background-color: $primary;
 }
 
 .navbar-override .avatar-dropdown > button {
-    color: $primary !important;
-    outline: 0;
-    border: 0;
+  color: $primary !important;
+  outline: 0;
+  border: 0;
 }
 
 .navbar-override .navbar-toggler {
-    color: $primary;
+  color: $primary;
 }
 
 .navbar-override .navbar-toggler:focus {
-    outline: 0;
-    box-shadow: unset;
+  outline: 0;
+  box-shadow: unset;
 }
 
 /*###################### Footer ########################*/
 
 footer {
-    text-align: center;
-    margin: 2em 0;
+  text-align: center;
+  margin: 2em 0;
 }
 
 /*################### Not Found Page ###################*/
 .not-found-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
 }
 .not-found-page h1 {
-    font-size: 4rem;
+  font-size: 4rem;
 }
-
 
 /*################### Pricing Section ###################*/
 
 .pricing-section {
-    display: flex;
-    justify-content: center;
-    gap: 2em;
-    width: 100%;
-    padding: 5em;
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  width: 100%;
+  padding: 5em;
 }
 
 .pricing-card {
-    position: relative;
-    padding: 1rem;
-    min-width: 250px;
-    border-radius: 10px;
-    border: 1px solid #CCC;
-    transition: all .3s;
+  position: relative;
+  padding: 1rem;
+  min-width: 250px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: all 0.3s;
 }
 
 .pricing-card:hover {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    transform: scale(1.02) !important;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02) !important;
 }
 
 .pricing-card.popular {
-    border: none;
-    outline: 3px solid $primary !important;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border: none;
+  outline: 3px solid $primary !important;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .pricing-card.popular::before {
-    content: "Popular";
-    background: $primary;
-    border-radius: 5px;
-    color: #FFF;
-    font-size: 0.8rem;
-    padding: 2px 10px;
-    position: absolute;
-    top: -13px;
-    left: 50%;
-    transform: translateX(-50%);
+  content: "Popular";
+  background: $primary;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 2px 10px;
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .pricing-card .pricing-title {
-    display: block;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 0.5em;
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.5em;
 }
 
 .pricing-card .pricing {
-    font-size: 2rem;
-    text-align: center;
-    margin: 0.5em 0;
+  font-size: 2rem;
+  text-align: center;
+  margin: 0.5em 0;
 }
 
 .pricing-card .pricing .small-text {
-    font-size: 0.5em !important;
-    color: $text-muted;
+  font-size: 0.5em !important;
+  color: $text-muted;
 }
 
 .pricing-card .pricing-body {
-    text-align: left;
+  text-align: left;
 }
 
 .pricing-card .pricing-body ul {
-    list-style: none;
-    margin: 0;
-    padding: 1em;
+  list-style: none;
+  margin: 0;
+  padding: 1em;
 }
 
 .pricing-card .pricing-body ul li {
-    margin: 0.3em 0;
+  margin: 0.3em 0;
 }
 
 /*###################### infobox ######################*/
 
 .infobox {
-    border-radius: 15px;
+  border-radius: 15px;
 }
 
 .infobox .infobox-icon {
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 1.3rem;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    transition: padding .3s;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 1.3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  transition: padding 0.3s;
 }
 
 .infobox.bg-primary .infobox-icon {
-    background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
-
 
 /*################# fullscreen-loading #################*/
 
 .fullscreen-loading {
-    position: absolute !important;
-    width: 100vw;
-    height: 100vh;
-    z-index: 101;
+  position: absolute !important;
+  width: 100vw;
+  height: 100vh;
+  z-index: 101;
 }
 
 /*###################### dropzone ######################*/
 
 .dropzone {
-    position: relative;
-    color: #666;
-    background-color: #EEE;
-    border-radius: 10px;
-    border: 2px dashed #ccc;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    outline: none;
-    min-height: 7rem;
-    overflow: hidden;
-    z-index: 1;
-    user-select: none;
+  position: relative;
+  color: #666;
+  background-color: #eee;
+  border-radius: 10px;
+  border: 2px dashed #ccc;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  min-height: 7rem;
+  overflow: hidden;
+  z-index: 1;
+  user-select: none;
 }
 
 .dropzone.focused {
-    color: lighten($primary, 20%);
-    border-color: lighten($primary, 20%);
-    background-color: lighten($primary, 60%);
-    cursor: unset;
+  color: lighten($primary, 20%);
+  border-color: lighten($primary, 20%);
+  background-color: lighten($primary, 60%);
+  cursor: unset;
 }
 
 .dropzone p {
-    margin: 0;
+  margin: 0;
 }
 
 .dropzone.completed {
-    color: $green;
-    border-color: $green;
-    background-color: lighten($green, 50%);
+  color: $green;
+  border-color: $green;
+  background-color: lighten($green, 50%);
 }
 
 .dropzone .progress {
-    position: absolute;
-    display: block;
-    background-color: lighten($primary, 50%);
-    width: 0%;
-    height: 100%;
-    border-radius: 0px;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    z-index: -1;
+  position: absolute;
+  display: block;
+  background-color: lighten($primary, 50%);
+  width: 0%;
+  height: 100%;
+  border-radius: 0px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
 }
 
 .dropzone.focused .close {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #EEE;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.8rem;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    z-index: 2;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 2;
 }
 
 .dropzone.focused .close:hover {
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
 /*################### spinner-border ####################*/
 
 .spinner-border {
-    border-width: 0.15em;
+  border-width: 0.15em;
 }
 
 .spinner-border-sm {
-    border-width: 0.09em;
-    --bs-spinner-width: 1.3rem;
-    --bs-spinner-height: 1.3rem;
+  border-width: 0.09em;
+  --bs-spinner-width: 1.3rem;
+  --bs-spinner-height: 1.3rem;
 }
 
-@media screen and (max-width: 768px)
-{
-    .pricing-section {
-        flex-direction: column;
-        width: 100%;
-        padding: 2em;
-    }
+@media screen and (max-width: 768px) {
+  .pricing-section {
+    flex-direction: column;
+    width: 100%;
+    padding: 2em;
+  }
 
-    .pricing-section .pricing-card {
-        margin-bottom: 1em;
-    }
+  .pricing-section .pricing-card {
+    margin-bottom: 1em;
+  }
 }
 
 /*#################### payment-method ###################*/
 
 .payment-method {
-    border-radius: 10px;
-    border: 1px solid #EEE;
-    padding: 1em;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  padding: 1em;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .payment-method:hover {
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .payment-method.active {
-    outline: 2px solid lighten($blue, 20%);
-    background-color: lighten($blue, 88%);
+  outline: 2px solid lighten($blue, 20%);
+  background-color: lighten($blue, 88%);
 }
 
-.payment-method > input[type=radio] {
-    margin: 0;
+.payment-method > input[type="radio"] {
+  margin: 0;
 }
 
 /*################### Avatar Dropdown ###################*/
 
 .avatar-dropdown > button {
-    background-color: transparent;
-    color: lighten($primary, 10%);
-    outline: 0;
-    border: 0;
+  background-color: transparent;
+  color: lighten($primary, 10%);
+  outline: 0;
+  border: 0;
 }
 
 .avatar-dropdown > button:hover {
-    background-color: transparent;
-    color: $primary;
+  background-color: transparent;
+  color: $primary;
 }
 
 .dropdown-item {
-    color: lighten($primary, 10%);
-
+  color: lighten($primary, 10%);
 }
 
 .dropdown-item:hover {
-    color: $primary;
+  color: $primary;
 }
 
 /*################# Navbar dropdown-menu #################*/
 
 nav .dropdown-menu {
-    background-color: #FFF;
-    width: 200px;
-    padding: 1em;
-    border-radius: 12px;
+  background-color: #fff;
+  width: 200px;
+  padding: 1em;
+  border-radius: 12px;
 }
 
-nav .dropdown-menu>hr {
-    border-color: lighten($primary, 60%);
+nav .dropdown-menu > hr {
+  border-color: lighten($primary, 60%);
 }
 
-nav .dropdown-menu>a {
-    padding: 0.5em 0.8em;
+nav .dropdown-menu > a {
+  padding: 0.5em 0.8em;
 }
 
-nav .dropdown-menu> :hover {
-    background-color: lighten($primary, 60%);
-    border-radius: 10px;
+nav .dropdown-menu > :hover {
+  background-color: lighten($primary, 60%);
+  border-radius: 10px;
 }
 
-.btn-check:checked+.btn,
-:not(.btn-check)+.btn:active,
+.btn-check:checked + .btn,
+:not(.btn-check) + .btn:active,
 .btn:first-child:active,
 .btn.active,
 .btn.show {
-    background-color: lighten($primary, 65%);
-    color: $primary;
+  background-color: lighten($primary, 65%);
+  color: $primary;
 }
 
 /*###################### Playground ######################*/
 
 .playground {
-    display: flex;
-    height: 100%;      // with navbar: calc(100vh - 79px)
+  display: flex;
+  height: 100%; // with navbar: calc(100vh - 79px)
 }
 
 .playground-sidebar {
-    padding: 1em;
-    padding-right: 0.5em !important;
-    padding-left: 0.5em !important;
-    color: lighten($primary, 60%);
-    background-color: $primary;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    max-height: 100vh;
+  padding: 1em;
+  padding-right: 0.5em !important;
+  padding-left: 0.5em !important;
+  color: lighten($primary, 60%);
+  background-color: $primary;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100vh;
 }
 
 .playground-sidebar .dropzone.focused .close {
-    display: none;
+  display: none;
 }
 
 .playground-sidebar .dropzone {
-    background-color: lighten($primary, 10%);
-    color: #EEE;
+  background-color: lighten($primary, 10%);
+  color: #eee;
 }
 
 .playground-sidebar .dropzone .progress {
-    background-color: lighten($primary, 30%) !important;
+  background-color: lighten($primary, 30%) !important;
 }
 
 .playground-sidebar .chat-labels-list {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 .playground-sidebar .sidebar-bottom-section {
-    margin-top: auto;
+  margin-top: auto;
 }
 
 .playground-chat-section {
-    position: relative;
-    flex-grow: 1;
-    height: 100vh;
-    padding: 0;
-    background-color: #f0f0f0;
+  position: relative;
+  flex-grow: 1;
+  height: 100vh;
+  padding: 0;
+  background-color: #f0f0f0;
 }
 
 .playground-chat-section section {
-    height: 100%;
+  height: 100%;
 }
 
 .playground-chat-section .chats {
-    // e.g: overflow-y: auto;
+  // e.g: overflow-y: auto;
 }
 
 .playground-chat-section .prompt-input {
-    // e.g: box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2)
-    position: relative;
+  // e.g: box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2)
+  position: relative;
 }
 
 .playground-chat-section .prompt-input input {
-    font-size: 1rem;
-    border-radius: 0.7em;
-    width: 100%;
+  font-size: 1rem;
+  border-radius: 0.7em;
+  width: 100%;
 }
 
 .playground-chat-section .prompt-input .btn {
-    position: absolute;
-    right: 30px;
-    top: 50%;
-    transform: translateY(-13%);
-    border-radius: 6px;
-    padding: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-13%);
+  border-radius: 6px;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
 }
 
 .playground-chat-section .prompt-input .btn:nth-child(3) {
-    right: 70px;
+  right: 70px;
 }
 
 .playground-chat-section .container {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
 }
 
 .playground-chat-section .chats .container .message {
-    border-radius: 15px;
-    padding: 0.8em 1.2em;
-    margin: 1em 0;
-    width: fit-content;
+  border-radius: 15px;
+  padding: 0.8em 1.2em;
+  margin: 1em 0;
+  width: fit-content;
 }
 
 .playground-chat-section .chats .container .user-message {
-    background-color: $primary;
-    color: #dadada;
-    margin-top: 2em;
-    margin-left: auto;
-    border-end-end-radius: 0;
+  background-color: $primary;
+  color: #dadada;
+  margin-top: 2em;
+  margin-left: auto;
+  border-end-end-radius: 0;
 }
 
 .playground-chat-section .chats .container .message-container {
-    display: flex;
+  display: flex;
 }
 
 .playground-chat-section .chats .container .message-container .avatar {
-    flex-shrink: 1;
-    width: 50px;
-    height: 50px;
-    border-radius: 1em;
-    position: sticky;
-    top: 4px;
-    left: -55px;
+  flex-shrink: 1;
+  width: 50px;
+  height: 50px;
+  border-radius: 1em;
+  position: sticky;
+  top: 4px;
+  left: -55px;
 }
 
 .playground-chat-section .chats .container .ai-message {
-    background-color: #FFF;
-    color: lighten($primary, 10%);
-    border-top-left-radius: 0;
-    position: relative;
-    max-width: 100%;
-    margin-left: 10px;
-    border: 1px solid #DDD;
+  background-color: #fff;
+  color: lighten($primary, 10%);
+  border-top-left-radius: 0;
+  position: relative;
+  max-width: 100%;
+  margin-left: 10px;
+  border: 1px solid #ddd;
 
-    .copy-button {
-        position: absolute;
-        top: 2px;
-        right: 2px;
-        border-radius: 6px;
-        padding: 0px 2px;
-        cursor: pointer;
-        transition: all .3s;
+  .copy-button {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    border-radius: 6px;
+    padding: 0px 2px;
+    cursor: pointer;
+    transition: all 0.3s;
 
-        &:hover {
-            background-color: lighten($primary, 50%);
-        }
+    &:hover {
+      background-color: lighten($primary, 50%);
     }
+  }
 }
-
 
 .playground-chat-section .chats .container .ai-message > p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 .playground-chat-section .chats .container .ai-message {
-    table {
-        background-color: #FFF;
-        margin: 1em 0;
+  table {
+    background-color: #fff;
+    margin: 1em 0;
 
-        thead {
-            th, td {
-              background-color: lighten($primary, 50%);
-              color: $primary;
-            }
-        }
-
-        th, td {
-            border: 1px solid lighten($primary, 40%);
-            border-collapse: collapse;
-            padding: 0.3em 0.6em;
-        }
+    thead {
+      th,
+      td {
+        background-color: lighten($primary, 50%);
+        color: $primary;
+      }
     }
 
-    img {
-        margin-top: 1em;
-        margin-bottom: 1em;
-        border-radius: 1em;
-        max-width: 100%;
+    th,
+    td {
+      border: 1px solid lighten($primary, 40%);
+      border-collapse: collapse;
+      padding: 0.3em 0.6em;
     }
+  }
 
-    pre {
-        background: #3a3a3a;
-        padding: 0.8rem 1rem;
-        border-radius: 0.5rem;
-        color: beige;
-    }
+  img {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border-radius: 1em;
+    max-width: 100%;
+  }
 
-    h1, h2, h3, h4 {
-        font-size: 1.2rem;
-    }
+  pre {
+    background: #3a3a3a;
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    color: beige;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-size: 1.2rem;
+  }
 }
 
-
 .chat-label {
-    padding: 0.6em 0.5em;
-    margin-top: 3px;
-    border-radius: 10px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    text-wrap: nowrap;
-    transition: all .2s;
+  padding: 0.6em 0.5em;
+  margin-top: 3px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-wrap: nowrap;
+  transition: all 0.2s;
 }
 
 .chat-label:first-child {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .chat-label:hover {
-    background-color: lighten($primary, 11%);
+  background-color: lighten($primary, 11%);
 }
 
 .chat-label.active {
-    background-color: lighten($primary, 15%);
+  background-color: lighten($primary, 15%);
 }
 
 .chat-label.active::before {
-    //background-color: #198754;
-    content: "";
-    display: block;
-    width: 5px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+  //background-color: #198754;
+  content: "";
+  display: block;
+  width: 5px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .chat-label .delete {
-    display: none;
+  display: none;
 }
 
 .chat-label.active .delete {
-    background-color: lighten($primary, 5%);
-    width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    font-size: 12px;
-    top: 50%;
-    right: 6px;
-    border-radius: 6px;
-    transform: translateY(-50%);
+  background-color: lighten($primary, 5%);
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  font-size: 12px;
+  top: 50%;
+  right: 6px;
+  border-radius: 6px;
+  transform: translateY(-50%);
 }
 
 .chat-label .delete:hover {
-    background-color: lighten($primary, 7%);
+  background-color: lighten($primary, 7%);
 }
 
 .toggle-sidebar-button {
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    border: 1px solid var(--bs-primary);
-    z-index: 5;
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  border: 1px solid var(--bs-primary);
+  z-index: 5;
 }
 
 .playground-sidebar h1,
@@ -715,323 +724,319 @@ nav .dropdown-menu> :hover {
 .playground-sidebar h4,
 .playground-sidebar h5,
 .playground-sidebar h6 {
-    color: lighten($primary, 60%)
+  color: lighten($primary, 60%);
 }
 
 .playground-sidebar .quota {
-    padding: 1em;
+  padding: 1em;
 }
 
 .playground-sidebar .quota span {
-    font-size: 0.8rem;
-    color: lighten($primary, 50%)
+  font-size: 0.8rem;
+  color: lighten($primary, 50%);
 }
 
 .playground-sidebar .profile {
-    font-size: 0.8rem;
-    padding: 0.6em 0.8em;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    gap: 0.8em;
-    margin: 0.6em 1em 0.2em 1em;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+  font-size: 0.8rem;
+  padding: 0.6em 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 0.8em;
+  margin: 0.6em 1em 0.2em 1em;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 .playground-sidebar .profile:hover {
-    background: rgba(0, 0, 0, 0.2);
-    cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .playground-sidebar footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0;
-    margin: 20px 0 0 0;
-    font-size: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  margin: 20px 0 0 0;
+  font-size: 0.8rem;
 }
 
 .playground-sidebar footer a {
-    display: block;
-    color: lighten($primary, 50%);
-    padding: 0.1em 0.7em;;
+  display: block;
+  color: lighten($primary, 50%);
+  padding: 0.1em 0.7em;
 }
 
 .playground-sidebar footer a:hover {
-    color: lighten($primary, 60%)
+  color: lighten($primary, 60%);
 }
 
 /*########################## jumbotron ###########################*/
 
 .jumbotron {
-    min-height: clamp(500px, 80vh, 800px);
-    display: flex;
-    align-items: center;
+  min-height: clamp(500px, 80vh, 800px);
+  display: flex;
+  align-items: center;
 }
 
 .jumbotron .left-side {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .jumbotron .right-side {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .jumbotron .right-side img {
-    max-width: 80%;
+  max-width: 80%;
 }
 
 .jumbotron h1 {
-    font-size: clamp(2.5rem, 4vw, 3.5rem);
-    font-weight: bolder;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: bolder;
 }
 
 .jumbotron .dropzone {
-    min-height: 12em;
+  min-height: 12em;
 }
 
 .text-gradient-primary {
-    background: linear-gradient(to right, #6366f1, #8B5CF6, #D946EF);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: rgba(0, 0, 0, 0);
+  background: linear-gradient(to right, #6366f1, #8b5cf6, #d946ef);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
 }
 
 /*########################## Section ############################*/
 
 section .section-title {
-    font-size: 3rem;
-    font-weight: bolder;
+  font-size: 3rem;
+  font-weight: bolder;
 }
 
 section .section-sub-title {
-    font-size: 1.1rem;
-    display: block;
-    color: lighten($primary, 25%);
+  font-size: 1.1rem;
+  display: block;
+  color: lighten($primary, 25%);
 }
 
 .blue-section {
-    background: $primary;
-    color: #FFF;
+  background: $primary;
+  color: #fff;
 }
 
 .blue-section .feature {
-    color: #FFF;
-    background-color: darken($primary, 5%);
-    border: none;
+  color: #fff;
+  background-color: darken($primary, 5%);
+  border: none;
 }
 
 .blue-section .feature .feature-header {
-    color: lighten($primary, 50%);
+  color: lighten($primary, 50%);
 }
 
 .blue-section .feature .feature-body {
-    color: lighten($primary, 40%);
+  color: lighten($primary, 40%);
 }
 
 /*########################## Features ############################*/
 
 .section {
-    padding-top: 4em;
-    padding-bottom: 4em;
+  padding-top: 4em;
+  padding-bottom: 4em;
 }
 
 .feature {
-    text-align: left;
-    min-width: 450px;
-    width: 100%;
-    padding: 2em;
-    margin-top: 2em;
-    border: 1px dashed lighten($primary, 50%);
-    border-radius: $border-radius * 2;
-    background-color: #FFF;
+  text-align: left;
+  min-width: 450px;
+  width: 100%;
+  padding: 2em;
+  margin-top: 2em;
+  border: 1px dashed lighten($primary, 50%);
+  border-radius: $border-radius * 2;
+  background-color: #fff;
 }
 
 .feature .feature-header {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: lighten($primary, 10%);
-    margin-bottom: 1em;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: lighten($primary, 10%);
+  margin-bottom: 1em;
 }
 
 .feature .feature-body {
-    color: lighten($primary, 20%);
+  color: lighten($primary, 20%);
 }
 
 /*####################### Blured Overrlay ########################*/
 
 .blured-overlay {
-    position: relative;
+  position: relative;
 }
 
 .blured-overlay .overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
 }
 
 .blured-overlay .title {
-    font-weight: bold;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 11;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
 }
 
 /*###################### Media Breakpoints ########################*/
 
-@media screen and (max-width: 576px)
-{
-    .feature {
-        width: 100%;
-        min-width: 300px;
-    }
+@media screen and (max-width: 576px) {
+  .feature {
+    width: 100%;
+    min-width: 300px;
+  }
 
-    .playground-chat-section .container {
-        width: 100%;
-    }
-
+  .playground-chat-section .container {
+    width: 100%;
+  }
 }
 
-@media screen and (max-width: 768px)
-{
-    .jumbotron .left-side {
-        align-items: stretch;
+@media screen and (max-width: 768px) {
+  .jumbotron .left-side {
+    align-items: stretch;
+  }
+
+  nav .navbar-right .avatar-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .playground-chat-section .chats .container {
+    .prompt-input input {
+      font-size: 1.2rem;
     }
 
-    nav .navbar-right .avatar-dropdown {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    .message-container {
+      flex-direction: column;
+
+      .avatar {
+        position: unset;
+      }
     }
-    .playground-chat-section .chats .container {
-        .prompt-input input {
-            font-size: 1.2rem;
+    .ai-message {
+      margin-left: 0;
+      margin-right: 0;
+
+      table {
+        th,
+        td {
+          font-size: 0.85rem;
+          padding: 0.2em 0.3em;
         }
-
-        .message-container {
-            flex-direction: column;
-
-            .avatar {
-                position: unset;
-            }
-        }
-        .ai-message {
-            margin-left: 0;
-            margin-right: 0;
-
-            table {
-                th, td {
-                    font-size: 0.85rem;
-                    padding: 0.2em 0.3em;
-                }
-            }
-        }
-
+      }
     }
+  }
 }
 
 /*############### FallBack errors/sections ################*/
 
 .fallback {
-    font-size: 2rem;
-    background-color: #ffe1db;
-    width: 100%;
-    height: 100dvh;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  font-size: 2rem;
+  background-color: #ffe1db;
+  width: 100%;
+  height: 100dvh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .fallback-section {
-    color: #a3250c;
-    background-color: #ffe1db;
-    padding: 1rem;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  color: #a3250c;
+  background-color: #ffe1db;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .section-loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
 }
 
 /*#################### Cookies Alert ######################*/
 
 .cookie-alert {
-    z-index: 100;
-    display: flex !important;
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #FFF;
-    color: $secondary;
-    padding: 2rem 2rem;
-    border-radius: 10px;
-    display: none;
-    gap: 2em;
-    max-width: 460px;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex !important;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #fff;
+  color: $secondary;
+  padding: 2rem 2rem;
+  border-radius: 10px;
+  display: none;
+  gap: 2em;
+  max-width: 460px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 .cookie-alert .cookie-img {
-    height: 100%;
+  height: 100%;
 }
 
 .cookie-alert .cookie-img img {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto;
-    display: block;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  display: block;
 }
 
 .cookie-alert .cookie-buttons {
-    float: right;
-    margin-top: 1em;
+  float: right;
+  margin-top: 1em;
 }
 
 @media screen and (max-width: 576px) {
-    .cookie-alert {
-        flex-direction: column;
-        width: 100%;
-        border-radius: 0;
-        bottom: 0;
-        left: 0;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-    }
+  .cookie-alert {
+    flex-direction: column;
+    width: 100%;
+    border-radius: 0;
+    bottom: 0;
+    left: 0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
 
-    .cookie-alert .cookie-buttons {
-        width: 100%;
-    }
+  .cookie-alert .cookie-buttons {
+    width: 100%;
+  }
 
-    .cookie-alert .cookie-agree-button {
-        display: block;
-        float: none;
-        width: 100%;
-    }
-
+  .cookie-alert .cookie-agree-button {
+    display: block;
+    float: none;
+    width: 100%;
+  }
 }
