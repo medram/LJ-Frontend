@@ -37,12 +37,10 @@ export default function LoginPage() {
     onSubmit: (values) => {
       Authenticate(values.email, values.password)
         .then((data) => {
-          console.log("data", data);
-          toast.success(data.message as string);
+          toast.success("Logged in successfully.");
           if (redirectTo) return navigate(redirectTo);
         })
         .catch((error) => {
-          console.log("error", error);
           toast.error(error);
         })
         .finally(() => {

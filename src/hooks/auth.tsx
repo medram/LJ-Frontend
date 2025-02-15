@@ -17,13 +17,13 @@ export function useAuth() {
   );
 
   const Authenticate = useCallback((email: string, password: string) => {
-    return new Promise((resolve, reject) => {
+    return new Promise<UserType>((resolve, reject) => {
       auth(email, password)
         .then((data) => {
           if (!data.errors) {
             setUser(data.user);
             setToken(data.token);
-            resolve(data);
+            resolve(data.user);
           } else {
             reject(data.message);
           }
