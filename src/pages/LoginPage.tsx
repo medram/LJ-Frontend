@@ -35,19 +35,30 @@ export default function LoginPage() {
     }),
     enableReinitialize: true,
     onSubmit: (values) => {
-      Authenticate(values.email, values.password).then((data) => {
-        if (!data.errors) {
-          toast.success(data.message);
+      Authenticate(values.email, values.password)
+        .then((data) => {
+          console.log("data", data);
+          toast.success(data.message as string);
           if (redirectTo) return navigate(redirectTo);
-        } else toast.error(data.message);
-
-        formik.setSubmitting(false);
-      });
+        })
+        .catch((error) => {
+          console.log("error", error);
+          toast.error(error);
+        })
+        .finally(() => {
+          formik.setSubmitting(false);
+        });
     },
   });
 
   const onClickSignIn = useCallback(() => {
-    toastFormikErrors(formik.errors);
+    if (Array.isArray(formik.errors)) {
+      formik.errors.forEach((error) => toast.error(error));
+    } else {
+      Object.values(formik.errors).forEach((error) =>
+        toast.error(error as string)
+      );
+    }
   }, []);
 
   return (

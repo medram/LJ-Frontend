@@ -13,18 +13,25 @@ export function useAuth() {
       if (token == "" && user?.id !== undefined) {
         setUser({} as UserType);
       }
-    }, []),
+    }, [])
   );
 
-  const Authenticate = useCallback(async (email: string, password: string) => {
-    let data = await auth(email, password);
-
-    if (!data?.errors) {
-      setUser(data.user as UserType);
-      setToken(data.token as string);
-    }
-
-    return data.user as UserType;
+  const Authenticate = useCallback((email: string, password: string) => {
+    return new Promise((resolve, reject) => {
+      auth(email, password)
+        .then((data) => {
+          if (!data.errors) {
+            setUser(data.user);
+            setToken(data.token);
+            resolve(data);
+          } else {
+            reject(data.message);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   }, []);
 
   const Logout = useCallback(async () => {
