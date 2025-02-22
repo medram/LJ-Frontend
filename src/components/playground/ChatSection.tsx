@@ -6,7 +6,7 @@ import TablerIcon from "@components/TablerIcon";
 import useChatRoom from "@hooks/account";
 import { useDemo, useNaiveLocalStorage, useScrollToRef } from "@hooks/index";
 import { IconPlayerStopFilled, IconSend, IconTrash } from "@tabler/icons-react";
-import { useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
@@ -14,11 +14,15 @@ import AIMessage from "./AIMessage";
 import PlaceholderMessage from "./PlaceholderMessage";
 import UserMessage from "./UserMessage";
 
-export default function ChatSection({ uuid }: { uuid: string }) {
+interface ChatSectionProps {
+  uuid: string;
+}
+
+export default function ChatSection({ uuid }: ChatSectionProps) {
   const { isDemo } = useDemo();
   const [getDemoSubscription, setDemoSubscription] = useNaiveLocalStorage(
     "demo_sub",
-    DEMO_SUBSCRIPTION,
+    DEMO_SUBSCRIPTION
   );
   const demoSubscription = getDemoSubscription();
 
@@ -28,7 +32,15 @@ export default function ChatSection({ uuid }: { uuid: string }) {
   const [prompt, setPrompt] = useState("");
   const [isSending, setSending] = useState(false);
   const [isClearingChatHistory, setClearingChatHistory] = useState(false);
-  const [promptRef, scrollToPrompt] = useScrollToRef<HTMLDivElement>();
+  const [promptContainerRef, scrollToPrompt] = useScrollToRef<HTMLDivElement>();
+  const [messagesContainerRef, scrollToBottom] =
+    useScrollToRef<HTMLDivElement>();
+
+  const inputRef = useCallback((node: HTMLInputElement | null) => {
+    if (node) {
+      node.focus();
+    }
+  }, []);
 
   useEffect(() => {
     if (chat) {
@@ -43,16 +55,15 @@ export default function ChatSection({ uuid }: { uuid: string }) {
     } else {
       setChatHistory([]);
     }
-
-    scrollToPrompt();
   }, [chat]);
 
+  // Scroll when chat history changes
   useEffect(() => {
-    scrollToPrompt();
-  }, []);
+    scrollToBottom();
+  }, [chatHistory]);
 
   const handleSubmit = useCallback(
-    (e: any) => {
+    (e: FormEvent) => {
       e.preventDefault();
       if (!prompt.trim()) {
         return toast.warning("Please ask something.");
@@ -60,7 +71,7 @@ export default function ChatSection({ uuid }: { uuid: string }) {
 
       if (isDemo && demoSubscription?.questions <= 0) {
         return toast.warning(
-          "The demo quota is exceeded, please wait 12 hours 🙏",
+          "The demo quota is exceeded, please wait 12 hours 🙏"
         );
       }
 
@@ -74,7 +85,7 @@ export default function ChatSection({ uuid }: { uuid: string }) {
         ];
       });
       setPrompt(""); // clear the prompt
-      scrollToPrompt();
+      scrollToBottom();
 
       sendPrompt(uuid, prompt)
         .then((data) => {
@@ -83,7 +94,7 @@ export default function ChatSection({ uuid }: { uuid: string }) {
 
             if (!reply) {
               toast.error(
-                "OpenAI servers are overloaded, please try again or later",
+                "OpenAI servers are overloaded, please try again or later"
               );
             }
 
@@ -131,10 +142,10 @@ export default function ChatSection({ uuid }: { uuid: string }) {
           setSending(false);
           queryClient.invalidateQueries(`user.chat.${uuid}`);
           // scroll down
-          scrollToPrompt();
+          scrollToBottom();
         });
     },
-    [uuid, prompt],
+    [uuid, prompt]
   );
 
   const handleStop = useCallback(
@@ -158,7 +169,7 @@ export default function ChatSection({ uuid }: { uuid: string }) {
         return chatHistory.slice(0, -1);
       });
     },
-    [uuid],
+    [uuid]
   );
 
   const handleClearChatHistory = useCallback(() => {
@@ -188,72 +199,84 @@ export default function ChatSection({ uuid }: { uuid: string }) {
 
   return (
     <>
-      <div className="chats flex-grow-1 d-flex align-items-end">
-        <div className="container px-4">
-          {chatHistory.map((message, i) => message)}
+      <div className="chat-section">
+        <div className="chat-messages">
+          <div className="messages-container">
+            {chatHistory.map((message, i) => message)}
+            <span ref={messagesContainerRef}></span>
+          </div>
         </div>
-      </div>
-      <div
-        className="container prompt-input d-flex gap-2 pt-5 pb-4 px-4"
-        ref={promptRef}
-      >
-        <form onSubmit={handleSubmit} className="flex-grow-1">
-          <input
-            type="text"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            className="form-control form-control-lg"
-            placeholder="Ask your document a question?"
-          />
-        </form>
+        <div className="chat-input" ref={promptContainerRef}>
+          <div className="input-container">
+            <form onSubmit={handleSubmit} className="message-form">
+              <input
+                type="text"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="Ask your document a question..."
+                disabled={isSending}
+                ref={inputRef}
+                className="message-input"
+              />
+              <div className="input-buttons">
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={(props) => (
+                    <Tooltip id="send-button-tooltip" {...props}>
+                      {isSending ? "Stop" : "Send"}
+                    </Tooltip>
+                  )}
+                >
+                  <div className="button-wrapper">
+                    <SuperButton
+                      disabled={
+                        (!prompt && !isSending) || isClearingChatHistory
+                      }
+                      className={`btn send ${isSending ? "btn-danger" : ""}`}
+                      onClick={(e: React.MouseEvent) => {
+                        if (isSending) return handleStop(e);
+                        handleSubmit(e as unknown as FormEvent);
+                      }}
+                      isLoading={false}
+                      loadingText=""
+                      spinnerClassName=""
+                    >
+                      {isSending ? (
+                        <TablerIcon icon={IconPlayerStopFilled} stroke={1.5} />
+                      ) : (
+                        <TablerIcon icon={IconSend} stroke={1.5} />
+                      )}
+                    </SuperButton>
+                  </div>
+                </OverlayTrigger>
 
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 250, hide: 400 }}
-          overlay={(props) => (
-            <Tooltip id="button-tooltip" {...props}>
-              {isSending ? "Stop" : "Send"}
-            </Tooltip>
-          )}
-        >
-          <SuperButton
-            disabled={!prompt && !isSending}
-            className={[
-              "btn btn-sm send",
-              isSending ? "btn-danger" : "btn-primary",
-            ].join(" ")}
-            title={isSending ? "Stop" : "Send"}
-            onClick={(e: any) => {
-              if (isSending) return handleStop(e);
-              handleSubmit(e);
-            }}
-          >
-            {isSending ? (
-              <TablerIcon icon={IconPlayerStopFilled} />
-            ) : (
-              <TablerIcon icon={IconSend} />
-            )}
-          </SuperButton>
-        </OverlayTrigger>
-
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 250, hide: 400 }}
-          overlay={(props) => (
-            <Tooltip id="button-tooltip" {...props}>
-              Clear Chat History
-            </Tooltip>
-          )}
-        >
-          <SuperButton
-            className="btn btn-outline-secondary clear-history"
-            isLoading={isClearingChatHistory}
-            title="Clear Chat History"
-            onClick={handleClearChatHistory}
-          >
-            <TablerIcon icon={IconTrash} />
-          </SuperButton>
-        </OverlayTrigger>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={(props) => (
+                    <Tooltip id="clear-history-tooltip" {...props}>
+                      Clear Chat History
+                    </Tooltip>
+                  )}
+                >
+                  <div className="button-wrapper">
+                    <SuperButton
+                      className="btn clear-history"
+                      disabled={isSending || chatHistory.length === 0}
+                      isLoading={isClearingChatHistory}
+                      onClick={handleClearChatHistory}
+                      loadingText="Clearing..."
+                      spinnerClassName=""
+                    >
+                      <TablerIcon icon={IconTrash} stroke={1.5} />
+                    </SuperButton>
+                  </div>
+                </OverlayTrigger>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </>
   );

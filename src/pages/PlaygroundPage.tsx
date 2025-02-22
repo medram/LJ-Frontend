@@ -32,24 +32,50 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { FileRejection } from "react-dropzone";
 import { Sidebar } from "react-pro-sidebar";
-import { useQueryClient } from "react-query";
+import { QueryClient, useQueryClient } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const onUpload = ({
-  files,
-  setProgress,
-  setIsSuccessUpload,
-  resetDropzone,
-  name,
-  createChatRoom,
-  setProcessing,
-  subscription,
-  isDemo,
-  demoSubscription,
-  setDemoSubscription,
-  queryClient,
-}: onUploadProps) => {
+interface DemoSubscription {
+  pdfs: number;
+  questions: number;
+  created_at: number;
+}
+
+interface Subscription {
+  status: number;
+  pdfs: number;
+  pdf_size: number;
+  questions: number;
+}
+
+interface ExtraUploadProps {
+  createChatRoom: (uuid: string, title: string) => void;
+  setProcessing: (value: boolean) => void;
+  subscription: Subscription;
+  isDemo: boolean;
+  demoSubscription: DemoSubscription;
+  setDemoSubscription: (
+    updater: (prev: DemoSubscription) => DemoSubscription
+  ) => void;
+  queryClient: QueryClient;
+}
+
+const onUpload = (props: onUploadProps<ExtraUploadProps>) => {
+  const {
+    files,
+    setProgress,
+    setIsSuccessUpload,
+    resetDropzone,
+    createChatRoom,
+    setProcessing,
+    subscription,
+    isDemo,
+    demoSubscription,
+    setDemoSubscription,
+    queryClient,
+  } = props;
+
   if (isDemo && demoSubscription.pdfs <= 0) {
     resetDropzone();
     return toast.warning("The demo quota is exceeded, please wait 12 hours 🙏");
@@ -62,14 +88,17 @@ const onUpload = ({
     } else if (subscription?.pdfs <= 0) {
       resetDropzone();
       return toast.warning(
-        "You have reached the maximum number of document uploads.",
+        "You have reached the maximum number of document uploads."
       );
     }
   }
 
+  if (!files || !files.length) return;
+
   uploadFile("user/chat", files[0], {
     onUploadProgress: (e) => {
-      let perc = (e.loaded / e.total) * 100;
+      const total = e.total || 0;
+      let perc = (e.loaded / total) * 100;
       setProgress(perc);
       if (perc >= 100) setProcessing(true);
     },
@@ -87,7 +116,7 @@ const onUpload = ({
 
         // for demo only
         if (isDemo) {
-          setDemoSubscription((prev) => {
+          setDemoSubscription((prev: DemoSubscription) => {
             return {
               ...prev,
               pdfs: prev.pdfs - 1,
@@ -115,17 +144,15 @@ const onUpload = ({
     });
 };
 
-const onError = (rejectedFiles: FileRejection[]) => {
+const onError = (rejectedFiles: readonly FileRejection[]) => {
   toast.error("Invalid document!");
 };
 
 export default function PlaygroundPage() {
   const { isDemo } = useDemo();
   const { user } = useUser();
-  const [getDemoSubscription, setDemoSubscription] = useNaiveLocalStorage(
-    "demo_sub",
-    DEMO_SUBSCRIPTION,
-  );
+  const [getDemoSubscription, setDemoSubscription] =
+    useNaiveLocalStorage<DemoSubscription>("demo_sub", DEMO_SUBSCRIPTION);
 
   const demoSubscription = isDemo ? getDemoSubscription() : null;
   const { isExtendedLicense: isEL } = useLCInfo();
@@ -135,7 +162,7 @@ export default function PlaygroundPage() {
   const [windowInnerWidth, setWindowInnerWidth] = useEventListener(
     "resize",
     window.innerWidth,
-    () => window.innerWidth,
+    () => window.innerWidth
   );
 
   const { subscription } = useCurrentSubscription({ suspense: true });
@@ -144,7 +171,7 @@ export default function PlaygroundPage() {
   const navigate = useNavigate();
   const { uuid } = useParams();
   const [currentChatRoomUUID, setCurrentChatRoomUUID] = useState<string | null>(
-    uuid ? uuid : null,
+    uuid ?? null
   );
 
   const { isError, error, userChatRoomList } = useUserChatRoomList();
@@ -152,7 +179,7 @@ export default function PlaygroundPage() {
 
   useEffect(() => {
     if (uuid && uuid !== currentChatRoomUUID) setCurrentChatRoomUUID(uuid);
-  }, [currentChatRoomUUID]);
+  }, [currentChatRoomUUID, uuid]);
 
   const handleChatLabelClick = useCallback(
     (uuid: string) => {
@@ -160,7 +187,7 @@ export default function PlaygroundPage() {
       setToggled(false);
       navigate(`/playground/${uuid}`);
     },
-    [uuid],
+    [navigate]
   );
 
   const createChatRoom = useCallback(
@@ -169,11 +196,11 @@ export default function PlaygroundPage() {
       setCurrentChatRoomUUID(uuid);
       navigate(`/playground/${uuid}`);
     },
-    [uuid],
+    [navigate, queryClient]
   );
 
   const handleChatRoomDeletion = useCallback(
-    (uuid: string, callback: () => unknown) => {
+    (uuid: string, callback: () => void) => {
       let nextUUID: string = "";
       if (userChatRoomList) {
         for (const chatroom of userChatRoomList) {
@@ -205,7 +232,7 @@ export default function PlaygroundPage() {
           callback();
         });
     },
-    [uuid, userChatRoomList],
+    [navigate, queryClient, userChatRoomList]
   );
 
   useEffect(() => {
@@ -214,9 +241,9 @@ export default function PlaygroundPage() {
       navigate(`/playground/${userChatRoomList[0]?.uuid}`);
     } else if (userChatRoomList.length === 0) {
       setCurrentChatRoomUUID(null);
-      navigate(`/playground`);
+      navigate("/playground");
     }
-  }, [uuid, userChatRoomList]);
+  }, [uuid, userChatRoomList, navigate]);
 
   useEffect(() => {
     if (demoSubscription) {
@@ -229,7 +256,7 @@ export default function PlaygroundPage() {
         setDemoSubscription(DEMO_SUBSCRIPTION);
       }
     }
-  }, []);
+  }, [demoSubscription, setDemoSubscription]);
 
   if (isError) {
     toast.error(error as string);
@@ -244,8 +271,8 @@ export default function PlaygroundPage() {
           collapsed={collapsed}
           breakPoint="md"
           onBackdropClick={() => setToggled(!toggled)}
-          backgroundColor=""
-          className=""
+          backgroundColor="transparent"
+          className="playground-sidebar-wrapper"
         >
           <div className="playground-sidebar">
             {!!userChatRoomList?.length &&
@@ -257,9 +284,9 @@ export default function PlaygroundPage() {
                   extraOnUploadProps={{
                     createChatRoom,
                     setProcessing,
-                    subscription,
+                    subscription: subscription as Subscription,
                     isDemo,
-                    demoSubscription,
+                    demoSubscription: demoSubscription as DemoSubscription,
                     setDemoSubscription,
                     queryClient,
                   }}
@@ -293,7 +320,7 @@ export default function PlaygroundPage() {
 
             <div className="chat-labels-list my-3">
               {userChatRoomList?.map((chat, i) => {
-                let title =
+                const title =
                   chat.title.length <= 25
                     ? chat.title.substring(0, 25)
                     : `${chat.title.substring(0, 25)}...`;
@@ -412,12 +439,14 @@ export default function PlaygroundPage() {
 
           <section className="d-flex flex-column">
             {isEL ? (
-              subscription && (subscription?.status == 1 || isDemo) ? (
+              subscription && (subscription?.status === 1 || isDemo) ? (
                 subscription?.questions <= 0 ? (
-                  <div className="d-flex flex-column justify-content-start p-5">
-                    Your subscription has reached its maximum usage.
-                    <Link to="/pricing" className="btn btn-warning my-3">
-                      Upgrade Now?
+                  <div className="empty-state upgrade-required">
+                    <h3>Subscription Limit Reached</h3>
+                    <p>Your subscription has reached its maximum usage.</p>
+                    <Link to="/pricing" className="btn btn-warning">
+                      <TablerIcon icon={IconBolt} stroke={1.5} size={20} />
+                      Upgrade Now
                     </Link>
                   </div>
                 ) : (
@@ -433,11 +462,15 @@ export default function PlaygroundPage() {
                   )
                 )
               ) : (
-                <div className="d-flex flex-column justify-content-start p-5 mt-3">
-                  You need to have a subscription in order to be able to use the
-                  Playground section.
-                  <Link to="/pricing" className="btn btn-warning my-3">
-                    Get a subscription now?
+                <div className="empty-state subscription-required">
+                  <h3>Subscription Required</h3>
+                  <p>
+                    You need an active subscription to use the Playground
+                    section.
+                  </p>
+                  <Link to="/pricing" className="btn btn-warning">
+                    <TablerIcon icon={IconBolt} stroke={1.5} size={20} />
+                    Get a Subscription
                   </Link>
                 </div>
               )
@@ -455,11 +488,15 @@ export default function PlaygroundPage() {
             )}
 
             {!currentChatRoomUUID && (
-              <div className="d-flex justify-content-center align-items-center h-100">
-                <div className="w-50">
+              <div className="empty-state">
+                <div className="upload-container">
                   {(subscription || demoSubscription) && (
-                    <div className="text-center">
-                      <h3>Upload your Document to chat with.</h3>
+                    <div className="upload-section">
+                      <h3>Start by uploading a document</h3>
+                      <p className="text-muted mb-4">
+                        Upload a document to begin chatting with your AI
+                        assistant
+                      </p>
                       <Dropzone
                         onUpload={onUpload}
                         onError={onError}
@@ -467,9 +504,10 @@ export default function PlaygroundPage() {
                         extraOnUploadProps={{
                           createChatRoom,
                           setProcessing,
-                          subscription,
+                          subscription: subscription as Subscription,
                           isDemo,
-                          demoSubscription,
+                          demoSubscription:
+                            demoSubscription as DemoSubscription,
                           setDemoSubscription,
                           queryClient,
                         }}
@@ -487,14 +525,21 @@ export default function PlaygroundPage() {
                         ) : collapsed ? (
                           <FontAwesomeIcon icon={faPlus} />
                         ) : (
-                          <div className="text-center">
-                            <b>
-                              <TablerIcon icon={IconCloudUpload} size={40} />
+                          <div className="text-center upload-content">
+                            <TablerIcon
+                              icon={IconCloudUpload}
+                              size={48}
+                              className="mb-3"
+                            />
+                            <h4>Upload your document</h4>
+                            <p className="text-muted">
+                              Drag and drop your file here or click to browse
                               <br />
-                              Upload you Document
-                              <br />({getAvailableDocumentTypesString()})
-                            </b>
-                            <p>(Drag & Drop)</p>
+                              <small>
+                                Supported formats:{" "}
+                                {getAvailableDocumentTypesString()}
+                              </small>
+                            </p>
                           </div>
                         )}
                       </Dropzone>

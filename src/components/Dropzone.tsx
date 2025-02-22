@@ -1,29 +1,28 @@
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 
-export type onUploadProps = {
-  files?: File[];
+export type onUploadProps<T> = {
+  files: readonly File[];
   setProgress: (progress: number) => void;
   setIsSuccessUpload: React.Dispatch<React.SetStateAction<boolean>>;
   resetDropzone: () => void;
-  name?: string;
-  [extraOnUploadProps: string]: unknown;
-};
+  name: string;
+} & T;
 
-type DropzoneProps = {
+type DropzoneProps<T> = {
   children: ReactNode;
-  onUpload: (options: onUploadProps) => void;
-  onError: (rejectedFiles: FileRejection[]) => void;
+  onUpload: (options: onUploadProps<T>) => void;
+  onError: (rejectedFiles: readonly FileRejection[]) => void;
   uploadMessage?: string;
   completedUploadMessage?: string;
   showProgressBar?: boolean;
   showProgress?: boolean;
   name?: string;
-  extraOnUploadProps: object;
+  extraOnUploadProps: T;
   dropzoneOptions: object;
 };
 
-export default function Dropzone({
+export default function Dropzone<T>({
   children,
   onUpload,
   onError,
@@ -32,9 +31,9 @@ export default function Dropzone({
   showProgressBar = true,
   showProgress = true,
   name = "",
-  extraOnUploadProps = {},
+  extraOnUploadProps,
   dropzoneOptions = {},
-}: DropzoneProps) {
+}: DropzoneProps<T>) {
   const [isUploading, setIsUploading] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const [progress, setProgressValue] = useState(0); // in %
@@ -64,7 +63,7 @@ export default function Dropzone({
       setProgressValue(value);
       if (value >= 100) setIsCompleted(true);
     },
-    [isUploading],
+    [isUploading]
   );
 
   useEffect(
@@ -72,16 +71,16 @@ export default function Dropzone({
       if (typeof onUpload === "function" && acceptedFiles.length) {
         setIsUploading(true);
         onUpload({
-          ...extraOnUploadProps,
           files: acceptedFiles,
           setProgress,
           setIsSuccessUpload,
           resetDropzone,
           name,
+          ...extraOnUploadProps,
         });
       }
     }, [acceptedFiles.length]),
-    [acceptedFiles.length],
+    [acceptedFiles.length]
   );
 
   useEffect(
@@ -91,7 +90,7 @@ export default function Dropzone({
         onError(fileRejections);
       }
     }, [fileRejections.length]),
-    [fileRejections.length],
+    [fileRejections.length]
   );
 
   const resetDropzone = useCallback(() => {
