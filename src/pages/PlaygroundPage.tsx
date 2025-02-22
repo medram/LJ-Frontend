@@ -356,22 +356,18 @@ export default function PlaygroundPage() {
 
                   <div className="quota">
                     <small>- Quota limited for demo only.</small>
-                    <br />
                     <small>- Quota reset every 12 hours.</small>
                     <h3 className="h6">Quota:</h3>
                     <span>
                       <b>{demoSubscription?.pdfs}</b> Documents left
                     </span>
-                    <br />
                     <span>
                       <b>{demoSubscription?.questions}</b> Document Questions
                       left
                     </span>
-                    <br />
                     <span>
                       Max Document Size: <b>{subscription?.pdf_size}MB/doc</b>
                     </span>
-                    <br />
                   </div>
                 </>
               )}
@@ -394,15 +390,12 @@ export default function PlaygroundPage() {
                     <span>
                       <b>{subscription?.pdfs}</b> Documents left.
                     </span>
-                    <br />
                     <span>
                       <b>{subscription?.questions}</b> Document Questions left.
                     </span>
-                    <br />
                     <span>
                       Max Document Size: <b>{subscription?.pdf_size}MB/doc.</b>
                     </span>
-                    <br />
                   </div>
                 </>
               )}
@@ -414,7 +407,6 @@ export default function PlaygroundPage() {
                   <AvatarPalceholder username={user.username} size={45} />
                   <div>
                     <b>{user.username}</b>
-                    <br />
                     <span>({user.email})</span>
                   </div>
                   <div className="">
@@ -437,7 +429,7 @@ export default function PlaygroundPage() {
             </button>
           )}
 
-          <section className="d-flex flex-column">
+          <section className="d-flex flex-column flex-grow-1">
             {isEL ? (
               subscription && (subscription?.status === 1 || isDemo) ? (
                 subscription?.questions <= 0 ? (
