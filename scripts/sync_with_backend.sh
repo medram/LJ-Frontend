@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BACKEND_FOLDER="../../laravel/example-app/"
+BACKEND_FOLDER="../LJ-Backend/"
 
 
 # Remove previous assets
