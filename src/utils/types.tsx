@@ -59,6 +59,7 @@ export type SecretSettingsType = GeneralSettingsType & {
   PM_PAYPAL_CLIENT_SECRET: string;
   RAPID_API_KEY: string;
   RAPID_API_HOST: string;
+  GOOGLEAI_API_KEY: string;
   OPENAI_API_KEY: string;
   PM_PAYPAL_WEBHOOK_ID: string;
   PM_STRIP_PUBLIC_KEY: string;

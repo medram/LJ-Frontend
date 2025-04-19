@@ -2,25 +2,35 @@ import * as cc from "currency-codes";
 import { toast } from "react-toastify";
 
 export const AVAILABLE_AI_CHAT_MODELS = [
+  // OpenAI Models
   { label: "gpt-4o", value: "gpt-4o" },
   { label: "gpt-4o-mini", value: "gpt-4o-mini" },
-  { label: "gpt-4o-2024-05-13", value: "gpt-4o-2024-05-13" },
-  { label: "gpt-4o-2024-08-06", value: "gpt-4o-2024-08-06" },
-  { label: "gpt-4o-2024-11-20", value: "gpt-4o-2024-11-20" },
   { label: "gpt-4", value: "gpt-4" },
   { label: "gpt-4-turbo", value: "gpt-4-turbo" },
-  { label: "gpt-4-0314", value: "gpt-4-0314" },
-  { label: "gpt-4-0613", value: "gpt-4-0613" },
-  { label: "gpt-4-1106-preview", value: "gpt-4-1106-preview" },
-  { label: "gpt-3.5-turbo-16k", value: "gpt-3.5-turbo-16k" },
   { label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
-  { label: "gpt-3.5-turbo-16k-0613", value: "gpt-3.5-turbo-16k-0613" },
-  { label: "gpt-3.5-turbo-0301", value: "gpt-3.5-turbo-0301" },
-  { label: "gpt-3.5-turbo-0613", value: "gpt-3.5-turbo-0613" },
-  { label: "gpt-3.5-turbo-1106", value: "gpt-3.5-turbo-1106" },
+  // Google AI Models
+  { label: "gemini-2.0-flash", value: "gemini-2.0-flash" },
+  {
+    label: "gemini-2.0-flash-lite-preview-02-05",
+    value: "gemini-2.0-flash-lite-preview-02-05",
+  },
+  { label: "gemini-1.5-flash", value: "gemini-1.5-flash" },
+  { label: "gemini-1.5-flash-8b", value: "gemini-1.5-flash-8b" },
+  { label: "gemini-1.5-pro", value: "gemini-1.5-pro" },
 ] as const;
 
 export const AVAILABLE_AI_MODELS = [...AVAILABLE_AI_CHAT_MODELS] as const;
+
+export const GOOGLE_AI_MODELS = [
+  { label: "gemini-2.0-flash", value: "gemini-2.0-flash" },
+  {
+    label: "gemini-2.0-flash-lite-preview-02-05",
+    value: "gemini-2.0-flash-lite-preview-02-05",
+  },
+  { label: "gemini-1.5-flash", value: "gemini-1.5-flash" },
+  { label: "gemini-1.5-flash-8b", value: "gemini-1.5-flash-8b" },
+  { label: "gemini-1.5-pro", value: "gemini-1.5-pro" },
+] as const;
 
 export const VALID_DOCUMENT_TYPES = [
   { ext: "pdf", mimetype: "application/pdf" },
@@ -77,7 +87,7 @@ export function getAvailableTimezones() {
 }
 
 export const AVAILABLE_TIMEZONES_OPTIONS = getAvailableTimezones().map(
-  (timezone) => ({ label: timezone, value: timezone }),
+  (timezone) => ({ label: timezone, value: timezone })
 );
 
 export function datetimeFormat(datetime: string) {
