@@ -1,3 +1,4 @@
+import { TextEditor2 } from "@/components/TextEditor2";
 import { editPage } from "@api/admin";
 import GoBackButton from "@components/GoBackButton";
 import SectionLoading from "@components/SectionLoading";
@@ -101,10 +102,16 @@ export default function EditPagePage() {
 
               <div className="mb-4">
                 <label htmlFor="content">Content:</label>
-                <TextEditor
+                {/* <TextEditor
                   onEditorChange={(content: string) =>
                     formik.setFieldValue("content", content)
                   }
+                  initialValue={formik.values.content}
+                /> */}
+                <TextEditor2
+                  onEditorChange={(content: string) => {
+                    formik.setFieldValue("content", content);
+                  }}
                   initialValue={formik.values.content}
                 />
               </div>
