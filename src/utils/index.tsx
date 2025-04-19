@@ -2,12 +2,6 @@ import * as cc from "currency-codes";
 import { toast } from "react-toastify";
 
 export const AVAILABLE_AI_CHAT_MODELS = [
-  // OpenAI Models
-  { label: "gpt-4o", value: "gpt-4o" },
-  { label: "gpt-4o-mini", value: "gpt-4o-mini" },
-  { label: "gpt-4", value: "gpt-4" },
-  { label: "gpt-4-turbo", value: "gpt-4-turbo" },
-  { label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
   // Google AI Models
   { label: "gemini-2.0-flash", value: "gemini-2.0-flash" },
   {
@@ -17,6 +11,12 @@ export const AVAILABLE_AI_CHAT_MODELS = [
   { label: "gemini-1.5-flash", value: "gemini-1.5-flash" },
   { label: "gemini-1.5-flash-8b", value: "gemini-1.5-flash-8b" },
   { label: "gemini-1.5-pro", value: "gemini-1.5-pro" },
+  // OpenAI Models
+  { label: "gpt-4o", value: "gpt-4o" },
+  { label: "gpt-4o-mini", value: "gpt-4o-mini" },
+  { label: "gpt-4", value: "gpt-4" },
+  { label: "gpt-4-turbo", value: "gpt-4-turbo" },
+  { label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
 ] as const;
 
 export const AVAILABLE_AI_MODELS = [...AVAILABLE_AI_CHAT_MODELS] as const;
