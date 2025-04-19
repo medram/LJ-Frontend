@@ -14,6 +14,7 @@ export const AVAILABLE_AI_CHAT_MODELS = [
   // OpenAI Models
   { label: "gpt-4o", value: "gpt-4o" },
   { label: "gpt-4o-mini", value: "gpt-4o-mini" },
+  { label: "gpt-4.1", value: "gpt-4.1" },
   { label: "gpt-4", value: "gpt-4" },
   { label: "gpt-4-turbo", value: "gpt-4-turbo" },
   { label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
