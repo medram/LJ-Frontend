@@ -1,7 +1,12 @@
 #!/bin/bash
 
-BACKEND_FOLDER="../../laravel/example-app/"
+BACKEND_FOLDER="../LJ-Backend/"
 
+# Check if the backend folder exists
+if [ ! -d "$BACKEND_FOLDER" ]; then
+  echo "Backend folder does not exist. Please check the path."
+  exit 1
+fi
 
 # Remove previous assets
 echo "Remove old assets..."
