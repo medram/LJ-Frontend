@@ -22,16 +22,27 @@ export default function APISettings({
 
   const formik = useFormik({
     initialValues: {
+      GOOGLEAI_API_KEY: settings.GOOGLEAI_API_KEY,
       OPENAI_API_KEY: settings.OPENAI_API_KEY,
       RAPID_API_KEY: settings.RAPID_API_KEY,
       RAPID_API_HOST: settings.RAPID_API_HOST,
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
-      OPENAI_API_KEY: Yup.string().required("The OpenAI API Key is required"),
+      GOOGLEAI_API_KEY: Yup.string(),
+      OPENAI_API_KEY: Yup.string(),
       RAPID_API_KEY: Yup.string().required("The Rapid API Key is required"),
       RAPID_API_HOST: Yup.string().required("The Rapid API Host is required"),
-    }),
+    }).test(
+      "api-key-required",
+      "Either Google/Gemini or OpenAI API Key is required",
+      function (values) {
+        return (
+          (values.GOOGLEAI_API_KEY && values.GOOGLEAI_API_KEY.length > 0) ||
+          (values.OPENAI_API_KEY && values.OPENAI_API_KEY.length > 0)
+        );
+      }
+    ),
     onSubmit: (values) => {
       if (isDemo)
         return toast.success("This action isn't allowed on the demo mode!");
@@ -71,10 +82,28 @@ export default function APISettings({
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="alert alert-info">
-        <FontAwesomeIcon icon={faInfoCircle} /> <b>Important:</b> For
-        better/fast performance, it's highly recommended to use a paid OpenAI
-        API key.
+        <FontAwesomeIcon icon={faInfoCircle} /> <b>Important:</b> For better,
+        fast and stable performance, it's highly recommended to use a paid API
+        keys of OpenAI and Google/Gemini.
       </div>
+      <hr className="my-5 text-muted" />
+      <div className="mb-4">
+        <label htmlFor="googleai_api_key">Google/Gemini API Key:</label>
+        <PasswordInput
+          placeholder="e.g. xxxxxxxxxxxxxxx"
+          id="googleai_api_key"
+          {...formik.getFieldProps("GOOGLEAI_API_KEY")}
+        />
+        <p className="text-muted">
+          <small>
+            <a href="https://aistudio.google.com/apikey" target="_blank">
+              How to get my Google API key?
+            </a>
+          </small>
+        </p>
+      </div>
+
+      <hr className="my-5 text-muted" />
 
       <div className="mb-4">
         <label htmlFor="openai_api_key">OpenAI API Key:</label>
@@ -83,6 +112,13 @@ export default function APISettings({
           id="openai_api_key"
           {...formik.getFieldProps("OPENAI_API_KEY")}
         />
+        <p className="text-muted">
+          <small>
+            <a href="https://platform.openai.com/settings" target="_blank">
+              How to get my OpenAI API key?
+            </a>
+          </small>
+        </p>
       </div>
 
       <hr className="my-5 text-muted" />

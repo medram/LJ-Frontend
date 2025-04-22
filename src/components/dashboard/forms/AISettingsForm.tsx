@@ -48,7 +48,7 @@ export default function AISettingsForm({
 
     // Add plugin values
     let selectedPluginNames: string[] = settings.SELECTED_PLUGINS.map(
-      (p: SelectedPluginType) => p.name,
+      (p: SelectedPluginType) => p.name
     );
 
     settings.CHAT_AVAILABLE_PLUGINS.map((plugin: PluginType) => {
@@ -63,7 +63,7 @@ export default function AISettingsForm({
   const getValidatorsSchema = useMemo(() => {
     const validators: Yup.ObjectShape = {
       CHAT_AGENT_MODEL: Yup.string().required(
-        "The Chat Agent Model is required",
+        "The Chat Agent Model is required"
       ),
       CHAT_AGENT_MODEL_TEMP: Yup.number()
         .required("The Agent Model Temperature is required")
@@ -71,7 +71,7 @@ export default function AISettingsForm({
         .max(2),
 
       CHAT_TOOLS_MODEL: Yup.string().required(
-        "The Chat Plugins Model is required",
+        "The Chat Plugins Model is required"
       ),
       CHAT_TOOLS_MODEL_TEMP: Yup.number()
         .required("The Plugins Model Temperature is required")
@@ -79,7 +79,7 @@ export default function AISettingsForm({
         .max(2),
 
       CHAT_PLANNER_AGENT_MODEL: Yup.string().required(
-        "The Chat Planner Model is required",
+        "The Chat Planner Model is required"
       ),
       CHAT_PLANNER_AGENT_MODEL_TEMP: Yup.number()
         .required("The Planner Model Temperature is required")
@@ -114,7 +114,7 @@ export default function AISettingsForm({
             ({
               name: p.name,
               // Could have extra plugin info/settings
-            }) as SelectedPluginType,
+            }) as SelectedPluginType
         );
 
       // Add SELECTED_PLUGINS to the payload
@@ -175,7 +175,6 @@ export default function AISettingsForm({
         </div>
         <div className="mb-6 col-md-6">
           <label htmlFor="openai-model">Chat Agent Model:</label>
-
           <Select
             options={AVAILABLE_AI_CHAT_MODELS}
             id="openai-model"
@@ -305,7 +304,7 @@ export default function AISettingsForm({
                             `CHAT_PLUGIN_${plugin.name}`,
                             always_active_plugins.includes(plugin.name)
                               ? true
-                              : !!checked,
+                              : !!checked
                           );
                         }}
                         name={`CHAT_PLUGIN_${plugin.name}`}

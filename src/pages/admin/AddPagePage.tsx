@@ -1,3 +1,4 @@
+import { TextEditor2 } from "@/components/TextEditor2";
 import { addPage } from "@api/admin";
 import GoBackButton from "@components/GoBackButton";
 import SuperButton from "@components/SuperButton";
@@ -81,10 +82,15 @@ export default function AddPagePage() {
 
               <div className="mb-4">
                 <label htmlFor="content">Content:</label>
-                <TextEditor
+                {/* <TextEditor
                   onEditorChange={(content: string) =>
                     formik.setFieldValue("content", content)
                   }
+                /> */}
+                <TextEditor2
+                  onEditorChange={(content: string) => {
+                    formik.setFieldValue("content", content);
+                  }}
                 />
               </div>
 
